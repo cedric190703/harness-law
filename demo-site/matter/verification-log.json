@@ -1,0 +1,1159 @@
+{
+  "matter": {
+    "title": "Asset purchase agreement vs closing checklist",
+    "instruction": "Compare the attached APA against the closing checklist and produce a categorized, severity-rated deviation report.",
+    "produced_by": "Legora",
+    "produced_on": "4 October 2026",
+    "original_citations": 30,
+    "task_source": "Harvey Legal Agent Benchmark, corporate-ma/compare-closing-checklist-against-ma-agreement",
+    "runs": {
+      "of": 38,
+      "plain": 26,
+      "with_method": 38,
+      "note": "Criteria passed on the benchmark's official rubric, graded by two AI judges. One run each."
+    }
+  },
+  "documents": [
+    {
+      "file": "asset-purchase-agreement.docx",
+      "tier": "primary",
+      "read": true,
+      "used": true,
+      "note": "The signed agreement. It governs."
+    },
+    {
+      "file": "closing-checklist.docx",
+      "tier": "secondary",
+      "read": true,
+      "used": true,
+      "note": "Counsel's working summary of the agreement. This is the document being checked."
+    }
+  ],
+  "path": [
+    {
+      "step": "Took the report's statements one by one",
+      "detail": "23 statements: 12 deviations and 11 terms the report says are consistent."
+    },
+    {
+      "step": "Found the passage behind each statement in both documents",
+      "detail": "For a defined term, the definition itself rather than a clause that happens to repeat the figure."
+    },
+    {
+      "step": "Recomputed every figure that can be recomputed",
+      "detail": "Percentages of the purchase price, the closing payment, the monthly fees."
+    },
+    {
+      "step": "Proved the statements that had no citation",
+      "detail": "The report cited nothing for 12 statements, including all 11 it calls consistent. Each now has both passages."
+    },
+    {
+      "step": "Read the agreement's closing deliverables against the checklist",
+      "detail": "Sections 8.1 and 8.2, item by item, looking for anything the checklist leaves out."
+    },
+    {
+      "step": "Searched the checklist for each item that seemed to be missing",
+      "detail": "An omission cannot be quoted, so it is shown by a search that returns nothing."
+    },
+    {
+      "step": "Checked every quote against the documents a second time, by program",
+      "detail": "A separate checker opens the files and confirms each quote is really there."
+    }
+  ],
+  "claims": [
+    {
+      "id": "S1",
+      "group": "Critical",
+      "cited": 4,
+      "status": "verified",
+      "text": "The agreement is inconsistent on the Buyer's identity: the cover page and signature block name Vanguard Industrial Holdings, Inc., while the preamble and operative provisions name Saxonbrook Industrial Holdings, Inc., and the Buyer's notice email uses the domain vanguardindustrial.com.",
+      "sources": [
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Cover page",
+          "quote": "VANGUARD INDUSTRIAL HOLDINGS, INC.",
+          "rank": ""
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Signature block",
+          "quote": "BUYER: ... VANGUARD INDUSTRIAL HOLDINGS, INC. ... Name: Marcus Ellsworth",
+          "rank": ""
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Preamble",
+          "quote": "by and between Saxonbrook Industrial Holdings, Inc., a Delaware corporation (\"Buyer\")",
+          "rank": ""
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 11.1, notices",
+          "quote": "Email: dhu@vanguardindustrial.com",
+          "rank": ""
+        },
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Title block",
+          "quote": "Saxonbrook Industrial Holdings, Inc. (\"Buyer\")"
+        }
+      ],
+      "check": "Found both names in the agreement itself. The running page header also says Vanguard.",
+      "short": "Buyer's identity",
+      "hl": {
+        "diff": [
+          "VANGUARD INDUSTRIAL HOLDINGS, INC.",
+          "Saxonbrook Industrial Holdings, Inc.",
+          "vanguardindustrial.com"
+        ]
+      }
+    },
+    {
+      "id": "S2",
+      "group": "High",
+      "cited": 2,
+      "status": "computed",
+      "text": "Escrow Amount: the checklist states $5,500,000; the agreement defines it as $5,250,000.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Escrow Amount: $5,500,000 (five million five hundred thousand dollars), representing approximately 6% of the Purchase Price"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Escrow Amount",
+          "quote": "\"Escrow Amount\" means Five Million Two Hundred Fifty Thousand Dollars ($5,250,000), representing six percent (6%) of the Purchase Price",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found both figures. 6% of $87,500,000 is $5,250,000, so the agreement's figure is the one that matches its own percentage.",
+      "technical": "0.06 * 87_500_000 == 5_250_000",
+      "note": "The original report cited the definition of Closing Cash Payment for this figure. The defining clause is the definition of Escrow Amount, shown here.",
+      "short": "Escrow Amount",
+      "hl": {
+        "diff": [
+          "$5,500,000",
+          "$5,250,000"
+        ],
+        "same": [
+          "6%"
+        ]
+      }
+    },
+    {
+      "id": "S3",
+      "group": "High",
+      "cited": 2,
+      "status": "computed",
+      "text": "Closing Cash Payment: the checklist states $78,500,000; the agreement states $78,750,000.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Closing Cash Payment: $78,500,000 (seventy-eight million five hundred thousand dollars)"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Closing Cash Payment",
+          "quote": "\"Closing Cash Payment\" means an amount equal to Seventy-Eight Million Seven Hundred Fifty Thousand Dollars ($78,750,000)",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Recomputed both. Purchase price less escrow less holdback gives $78,750,000 with the agreement's escrow and $78,500,000 with the checklist's, so this error follows from the escrow error.",
+      "technical": "87_500_000 - 5_250_000 - 3_500_000 == 78_750_000; 87_500_000 - 5_500_000 - 3_500_000 == 78_500_000",
+      "short": "Closing Cash Payment",
+      "hl": {
+        "diff": [
+          "$78,500,000",
+          "$78,750,000"
+        ]
+      }
+    },
+    {
+      "id": "S4",
+      "group": "High",
+      "cited": 2,
+      "status": "computed",
+      "text": "Holdback Amount: the checklist says it is 5% of the Purchase Price; the agreement says 4%.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Holdback Amount: $3,500,000 (three million five hundred thousand dollars), representing 5% of the Purchase Price"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Holdback Amount",
+          "quote": "\"Holdback Amount\" means Three Million Five Hundred Thousand Dollars ($3,500,000), representing four percent (4%) of the Purchase Price",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found both. $3,500,000 is 4% of $87,500,000, so the dollar amount agrees and only the checklist's percentage is wrong.",
+      "technical": "3_500_000 / 87_500_000 == 0.04",
+      "short": "Holdback percentage",
+      "hl": {
+        "diff": [
+          "5%",
+          "4%"
+        ],
+        "same": [
+          "$3,500,000"
+        ]
+      }
+    },
+    {
+      "id": "S5",
+      "group": "High",
+      "cited": 3,
+      "status": "computed",
+      "text": "General Indemnification Cap: the checklist states $8,500,000; the agreement states $8,750,000 (10% of the Purchase Price).",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Seller's General Indemnification Cap: $8,500,000 (eight million five hundred thousand dollars), representing approximately 10% of the Purchase Price"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of General Indemnification Cap",
+          "quote": "\"General Indemnification Cap\" means Eight Million Seven Hundred Fifty Thousand Dollars ($8,750,000), which amount represents ten percent (10%) of the Purchase Price",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found both. 10% of $87,500,000 is $8,750,000.",
+      "technical": "0.10 * 87_500_000 == 8_750_000",
+      "short": "Indemnification Cap",
+      "hl": {
+        "diff": [
+          "$8,500,000",
+          "$8,750,000"
+        ],
+        "same": [
+          "10%"
+        ]
+      }
+    },
+    {
+      "id": "S6",
+      "group": "High",
+      "cited": 3,
+      "status": "verified",
+      "text": "Escrow Period: the checklist states 24 months (release around May 15, 2027); the agreement defines it as 18 months, expiring November 15, 2026.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Escrow Period: Twenty-four (24) months following the Closing Date"
+        },
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part VI, item PC-3",
+          "quote": "Escrow Release ... ~May 15, 2027"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Escrow Period",
+          "quote": "\"Escrow Period\" means the period of eighteen (18) months following the Closing Date. If the Closing occurs on May 15, 2025, the Escrow Period shall expire on November 15, 2026.",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found all three passages word for word.",
+      "short": "Escrow Period",
+      "hl": {
+        "diff": [
+          "Twenty-four (24) months",
+          "eighteen (18) months",
+          "~May 15, 2027",
+          "November 15, 2026"
+        ]
+      }
+    },
+    {
+      "id": "S7",
+      "group": "High",
+      "cited": 2,
+      "status": "verified",
+      "text": "De Minimis Collar: the agreement sets a $150,000 threshold below which no working capital adjustment is made; the checklist's description of the adjustment omits it.",
+      "sources": [
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of De Minimis Collar",
+          "quote": "\"De Minimis Collar\" means One Hundred Fifty Thousand Dollars ($150,000), as described in Section 2.6(d)",
+          "rank": "Defining clause"
+        },
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Working Capital Adjustment: Dollar-for-dollar adjustment for any deviation from the Target Net Working Capital of $6,800,000."
+        }
+      ],
+      "absent": [
+        {
+          "file": "closing-checklist.docx",
+          "terms": [
+            "De Minimis Collar",
+            "150,000"
+          ]
+        }
+      ],
+      "check": "Found the collar in the agreement, then searched the whole checklist for it. It is not there.",
+      "short": "De Minimis Collar",
+      "hl": {
+        "diff": [
+          "$150,000"
+        ]
+      }
+    },
+    {
+      "id": "S8",
+      "group": "High",
+      "cited": 4,
+      "status": "computed",
+      "text": "Transition services fee: the checklist states $50,000 per month ($300,000 total); the agreement states $45,000 per month ($270,000 in aggregate).",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part IV, item S-4",
+          "quote": "The monthly fee for transition services shall be $50,000 per month for a total of $300,000 over the six-month term."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 8.1(d)",
+          "quote": "at a fee of Forty-Five Thousand Dollars ($45,000) per month (for an aggregate fee of Two Hundred Seventy Thousand Dollars ($270,000))",
+          "rank": ""
+        }
+      ],
+      "check": "Found both. Six months at each rate gives $300,000 and $270,000.",
+      "technical": "6 * 50_000 == 300_000; 6 * 45_000 == 270_000",
+      "short": "Transition services fee",
+      "hl": {
+        "diff": [
+          "$50,000",
+          "$300,000",
+          "$45,000",
+          "$270,000"
+        ]
+      }
+    },
+    {
+      "id": "S9",
+      "group": "High",
+      "cited": 3,
+      "status": "verified",
+      "text": "Non-competition term: the checklist states 3 years; the agreement states 4 years.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part IV, item S-5",
+          "quote": "The Non-Competition Agreement shall have a term of three (3) years from the Closing Date"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 8.1(e)",
+          "quote": "providing for a non-competition period of four (4) years following the Closing Date",
+          "rank": ""
+        }
+      ],
+      "check": "Found both passages word for word.",
+      "short": "Non-competition term",
+      "hl": {
+        "diff": [
+          "three (3) years",
+          "four (4) years"
+        ]
+      }
+    },
+    {
+      "id": "S10",
+      "group": "High",
+      "cited": 3,
+      "status": "verified",
+      "text": "Outside Date: the checklist states July 14, 2025 and cites Section 9.1(b); the agreement defines it as August 14, 2025 under Section 10.1(b).",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Outside Date: July 14, 2025. If the Closing has not occurred by the Outside Date, either party may terminate the APA in accordance with Section 9.1(b)"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Outside Date",
+          "quote": "\"Outside Date\" means August 14, 2025, as described in Section 10.1(b).",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found both passages word for word.",
+      "short": "Outside Date",
+      "hl": {
+        "diff": [
+          "July 14, 2025",
+          "Section 9.1(b)",
+          "August 14, 2025",
+          "Section 10.1(b)"
+        ]
+      }
+    },
+    {
+      "id": "S11",
+      "group": "Medium",
+      "cited": 3,
+      "status": "verified",
+      "text": "Good Standing Certificates: the checklist lists only Oregon; the agreement requires certificates from Oregon and Washington.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part IV, item S-7",
+          "quote": "Certificate of Good Standing (or Certificate of Existence) for Cascade Precision Components, LLC issued by the Oregon Secretary of State."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 8.1(h)",
+          "quote": "of the State of Oregon and the State of Washington",
+          "rank": ""
+        }
+      ],
+      "absent": [
+        {
+          "file": "closing-checklist.docx",
+          "terms": [
+            "Washington"
+          ]
+        }
+      ],
+      "check": "Found both passages, then searched the checklist for Washington. It does not appear anywhere.",
+      "short": "Good Standing Certificates",
+      "hl": {
+        "diff": [
+          "the State of Washington"
+        ],
+        "same": [
+          "Oregon"
+        ]
+      }
+    },
+    {
+      "id": "S12",
+      "group": "Medium",
+      "cited": 0,
+      "status": "partly",
+      "text": "Cross-reference errors: the checklist cites Article IX provisions where Article X (Termination) provisions are meant.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "terminate the APA in accordance with Section 9.1(b)"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 10.1(b)",
+          "quote": "the right to terminate this Agreement under this Section 10.1(b)",
+          "rank": ""
+        },
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "to secure Seller's indemnification obligations under Article X of the APA"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Article headings",
+          "quote": "ARTICLE IX — INDEMNIFICATION",
+          "rank": ""
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Article headings",
+          "quote": "ARTICLE X — TERMINATION",
+          "rank": ""
+        }
+      ],
+      "check": "True as stated, and it also runs the other way: the checklist cites indemnification as Article X in three places, where the agreement's indemnification article is Article IX.",
+      "note": "The original report gave no citation for this statement.",
+      "short": "Cross-references",
+      "hl": {
+        "diff": [
+          "Section 9.1(b)",
+          "Section 10.1(b)",
+          "Article X of the APA",
+          "ARTICLE IX — INDEMNIFICATION"
+        ]
+      }
+    },
+    {
+      "id": "S13",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "Purchase Price ($87,500,000) is consistent between the two documents.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Purchase Price: $87,500,000 (eighty-seven million five hundred thousand dollars)."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Purchase Price",
+          "quote": "\"Purchase Price\" means Eighty-Seven Million Five Hundred Thousand Dollars ($87,500,000), subject to adjustment as provided in Section 2.6.",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found the same figure in both documents.",
+      "short": "Purchase Price",
+      "hl": {
+        "same": [
+          "$87,500,000"
+        ]
+      }
+    },
+    {
+      "id": "S14",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "Target Net Working Capital ($6,800,000) is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Target Net Working Capital: $6,800,000 (six million eight hundred thousand dollars)"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Target NWC",
+          "quote": "\"Target NWC\" means Six Million Eight Hundred Thousand Dollars ($6,800,000)",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found the same figure in both documents.",
+      "short": "Target Net Working Capital",
+      "hl": {
+        "same": [
+          "$6,800,000"
+        ]
+      }
+    },
+    {
+      "id": "S15",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "Indemnification Basket ($875,000) is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Indemnification Basket: $875,000 (eight hundred seventy-five thousand dollars), representing 1% of the Purchase Price"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Basket",
+          "quote": "\"Basket\" means Eight Hundred Seventy-Five Thousand Dollars ($875,000), which amount represents one percent (1%) of the Purchase Price",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found the same figure and the same percentage in both documents.",
+      "short": "Indemnification Basket",
+      "hl": {
+        "same": [
+          "$875,000",
+          "1%"
+        ]
+      }
+    },
+    {
+      "id": "S16",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "Mini-Basket ($50,000) is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Mini-Basket: $50,000 per individual claim."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Mini-Basket",
+          "quote": "\"Mini-Basket\" means Fifty Thousand Dollars ($50,000), as described in Section 9.4(b).",
+          "rank": "Defining clause"
+        }
+      ],
+      "check": "Found the same figure in both documents.",
+      "short": "Mini-Basket",
+      "hl": {
+        "same": [
+          "$50,000"
+        ]
+      }
+    },
+    {
+      "id": "S17",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "Fundamental Representations Cap (the Purchase Price) and survival (36 months) are consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Fundamental Representations Cap: Equal to the full Purchase Price ($87,500,000)."
+        },
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Fundamental Representations Survival: Thirty-six (36) months following the Closing Date."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 9.4(d)",
+          "quote": "with respect to Fundamental Representations shall not exceed an amount equal to the Purchase Price",
+          "rank": ""
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 9.1",
+          "quote": "shall survive the Closing for a period of thirty-six (36) months following the Closing Date",
+          "rank": ""
+        }
+      ],
+      "check": "Found the cap and the survival period in both documents.",
+      "short": "Fundamental Representations",
+      "hl": {
+        "same": [
+          "Thirty-six (36) months",
+          "thirty-six (36) months",
+          "Purchase Price"
+        ]
+      }
+    },
+    {
+      "id": "S18",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "General Survival Period (18 months) is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "General Survival Period: Eighteen (18) months following the Closing Date."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 9.1",
+          "quote": "for a period of eighteen (18) months following the Closing Date (the \"General Survival Period\")",
+          "rank": ""
+        }
+      ],
+      "check": "Found the same period in both documents.",
+      "short": "General Survival Period",
+      "hl": {
+        "same": [
+          "Eighteen (18) months",
+          "eighteen (18) months"
+        ]
+      }
+    },
+    {
+      "id": "S19",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "partly",
+      "text": "Reverse Break-Up Fee ($2,625,000) is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Reverse Break-Up Fee: $2,625,000 (two million six hundred twenty-five thousand dollars), representing 3% of the Purchase Price, payable by Buyer to Seller in the event of termination by Seller pursuant to Section 9.1(d) of the APA."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Art. I, definition of Reverse Break-Up Fee",
+          "quote": "\"Reverse Break-Up Fee\" means Two Million Six Hundred Twenty-Five Thousand Dollars ($2,625,000), representing three percent (3%) of the Purchase Price",
+          "rank": "Defining clause"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 10.3",
+          "quote": "In the event this Agreement is terminated by Seller pursuant to Section 10.1(e)",
+          "rank": ""
+        }
+      ],
+      "check": "The amount is the same in both documents. The trigger is not: the checklist points to Section 9.1(d), the agreement to Section 10.1(e).",
+      "technical": "0.03 * 87_500_000 == 2_625_000",
+      "short": "Reverse Break-Up Fee",
+      "hl": {
+        "same": [
+          "$2,625,000",
+          "3%"
+        ],
+        "diff": [
+          "Section 9.1(d)",
+          "Section 10.1(e)"
+        ]
+      }
+    },
+    {
+      "id": "S20",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "partly",
+      "text": "Accrued PTO (about $387,000) is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Accrued PTO Liability (Assumed): Estimated at approximately $387,000 as of the anticipated Closing Date."
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 2.3",
+          "quote": "estimated at approximately Three Hundred Eighty-Seven Thousand Dollars ($387,000) as of the date hereof, which amount shall be adjusted to reflect the actual accrued balances as of the Closing Date",
+          "rank": ""
+        }
+      ],
+      "check": "The amount is the same. The reference date is not: the checklist gives the estimate as of the anticipated Closing Date, the agreement as of its signing date, to be adjusted at Closing.",
+      "short": "Accrued PTO",
+      "hl": {
+        "same": [
+          "$387,000"
+        ],
+        "diff": [
+          "as of the anticipated Closing Date",
+          "as of the date hereof"
+        ]
+      }
+    },
+    {
+      "id": "S21",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "computed",
+      "text": "The employee offer threshold is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part I, summary of key deal terms",
+          "quote": "Employee Matters: Buyer shall offer employment to at least 85% of Seller's 127 full-time employees (i.e., at least 108 employees)"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 6.8(a)",
+          "quote": "offer employment to at least eighty-five percent (85%) of Seller's one hundred twenty-seven (127) full-time employees",
+          "rank": ""
+        }
+      ],
+      "check": "Found the same threshold in both documents. 85% of 127 is 107.95, which rounds up to the 108 both documents state.",
+      "technical": "math.ceil(0.85 * 127) == 108",
+      "short": "Employee offer threshold",
+      "hl": {
+        "same": [
+          "85%",
+          "127"
+        ]
+      }
+    },
+    {
+      "id": "S22",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "The Scheduled Closing Date is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Title block",
+          "quote": "Scheduled Closing Date: May 15, 2025"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 3.1",
+          "quote": "shall take place on May 15, 2025 (the \"Closing Date\")",
+          "rank": ""
+        }
+      ],
+      "check": "Found the same date in both documents.",
+      "short": "Scheduled Closing Date",
+      "hl": {
+        "same": [
+          "May 15, 2025"
+        ]
+      }
+    },
+    {
+      "id": "S23",
+      "group": "Stated as consistent",
+      "cited": 0,
+      "status": "verified",
+      "text": "The treatment of the Aeromet litigation is consistent.",
+      "sources": [
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part III, item P-8",
+          "quote": "confirm that such matter remains an Excluded Liability under Section 2.4(d) of the APA"
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 2.4(d)",
+          "quote": "(d) Pending Litigation. Any and all liabilities arising from or relating to the pending litigation styled Aeromet Supply Corp. v. Cascade Precision Components, LLC, Case No. 3:24-cv-01187 (D. Or.)",
+          "rank": ""
+        }
+      ],
+      "check": "Found the litigation listed as an excluded liability in item (d) of Section 2.4 of the agreement, as the checklist says.",
+      "short": "Aeromet litigation",
+      "hl": {
+        "same": [
+          "Section 2.4(d)",
+          "(d) Pending Litigation"
+        ]
+      }
+    }
+  ],
+  "missing": [
+    {
+      "id": "M1",
+      "title": "FIRPTA certificate",
+      "text": "The agreement requires a FIRPTA certificate from the Seller, both as a closing deliverable and as a condition to the Buyer's obligation to close. The checklist does not list it.",
+      "sources": [
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 8.1(f)",
+          "quote": "(f) FIRPTA Certificate. A certificate of non-foreign status of Seller",
+          "rank": ""
+        },
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 7.1(h)",
+          "quote": "(h) FIRPTA Certificate. Buyer shall have received the FIRPTA Certificate described in Section 8.1(f)",
+          "rank": ""
+        }
+      ],
+      "absent": [
+        {
+          "file": "closing-checklist.docx",
+          "terms": [
+            "FIRPTA",
+            "non-foreign"
+          ]
+        }
+      ],
+      "short": "FIRPTA certificate",
+      "hl": {
+        "diff": [
+          "FIRPTA Certificate"
+        ]
+      }
+    },
+    {
+      "id": "M2",
+      "title": "Northwind Aerospace consent",
+      "text": "The agreement lists the consent of Northwind Aerospace, Inc. as a Required Consent. The checklist's list of Required Consents does not include it.",
+      "sources": [
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "Schedule 7.1(d), item (iii)",
+          "quote": "(iii) the consent of Northwind Aerospace, Inc. under the Northwind Supply Agreement dated April 12, 2021",
+          "rank": ""
+        },
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part III, item P-2",
+          "quote": "The Required Consents are as follows:"
+        }
+      ],
+      "absent": [
+        {
+          "file": "closing-checklist.docx",
+          "terms": [
+            "Northwind"
+          ]
+        }
+      ],
+      "short": "Northwind Aerospace consent",
+      "hl": {
+        "diff": [
+          "Northwind Aerospace, Inc."
+        ]
+      }
+    },
+    {
+      "id": "M3",
+      "title": "Title insurance commitments",
+      "text": "The agreement requires title insurance commitments for the owned real property as a Seller closing deliverable. The checklist tracks a title search before closing but does not list the commitments as a deliverable.",
+      "sources": [
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 8.1(l)",
+          "quote": "(l) Title Insurance Commitments. Commitments for title insurance from Cascadia Title & Guaranty Co. for all Owned Real Property",
+          "rank": ""
+        },
+        {
+          "file": "closing-checklist.docx",
+          "side": "checklist",
+          "locator": "Part III, item P-6",
+          "quote": "Item P-6: Title Search and Insurance. Order title search for Seller's owned real property"
+        }
+      ],
+      "absent": [
+        {
+          "file": "closing-checklist.docx",
+          "terms": [
+            "Title Insurance Commitments",
+            "Commitments for title insurance",
+            "title commitment"
+          ]
+        }
+      ],
+      "short": "Title insurance commitments",
+      "hl": {
+        "diff": [
+          "Title Insurance Commitments"
+        ]
+      }
+    },
+    {
+      "id": "M4",
+      "title": "Landlord estoppel certificates",
+      "text": "The agreement requires estoppel certificates from landlords under the assigned leases, as a condition to closing and as a Seller deliverable. The checklist does not mention them.",
+      "sources": [
+        {
+          "file": "asset-purchase-agreement.docx",
+          "side": "agreement",
+          "locator": "§ 7.1(f)",
+          "quote": "(f) Estoppel Certificates. Buyer shall have received estoppel certificates from all landlords under Assigned Real Property Leases",
+          "rank": ""
+        }
+      ],
+      "absent": [
+        {
+          "file": "closing-checklist.docx",
+          "terms": [
+            "estoppel"
+          ]
+        }
+      ],
+      "short": "Landlord estoppel certificates",
+      "hl": {
+        "diff": [
+          "Estoppel Certificates"
+        ]
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "section": "§ 8.1(a)",
+      "requirement": "Bill of Sale",
+      "checklist_item": "S-1",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.1(b)",
+      "requirement": "Assignment and Assumption Agreement",
+      "checklist_item": "S-2",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.1(c)",
+      "requirement": "IP Assignment Agreement",
+      "checklist_item": "S-3",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.1(d)",
+      "requirement": "Transition Services Agreement",
+      "checklist_item": "S-4",
+      "status": "differs"
+    },
+    {
+      "section": "§ 8.1(e)",
+      "requirement": "Non-Competition Agreement",
+      "checklist_item": "S-5",
+      "status": "differs"
+    },
+    {
+      "section": "§ 8.1(f)",
+      "requirement": "FIRPTA Certificate",
+      "checklist_item": "",
+      "status": "missing"
+    },
+    {
+      "section": "§ 8.1(g)",
+      "requirement": "Secretary's Certificate",
+      "checklist_item": "S-6",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.1(h)",
+      "requirement": "Good Standing Certificates",
+      "checklist_item": "S-7",
+      "status": "differs"
+    },
+    {
+      "section": "§ 8.1(i)",
+      "requirement": "Payoff Letter",
+      "checklist_item": "S-8",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.1(j)",
+      "requirement": "Required Consents",
+      "checklist_item": "S-9",
+      "status": "differs"
+    },
+    {
+      "section": "§ 8.1(k)",
+      "requirement": "Estoppel Certificates",
+      "checklist_item": "",
+      "status": "missing"
+    },
+    {
+      "section": "§ 8.1(l)",
+      "requirement": "Title Insurance Commitments",
+      "checklist_item": "",
+      "status": "missing"
+    },
+    {
+      "section": "§ 8.1(m)",
+      "requirement": "Seller's Closing Certificate",
+      "checklist_item": "S-10",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.2(a)",
+      "requirement": "Closing Cash Payment",
+      "checklist_item": "B-1",
+      "status": "differs"
+    },
+    {
+      "section": "§ 8.2(b)",
+      "requirement": "Escrow Amount",
+      "checklist_item": "B-1",
+      "status": "differs"
+    },
+    {
+      "section": "§ 8.2(c)",
+      "requirement": "Assignment and Assumption Agreement",
+      "checklist_item": "B-2",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.2(d)",
+      "requirement": "Transition Services Agreement",
+      "checklist_item": "B-3",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.2(e)",
+      "requirement": "Escrow Agreement",
+      "checklist_item": "B-4",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.2(f)",
+      "requirement": "Secretary's Certificate",
+      "checklist_item": "B-5",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.2(g)",
+      "requirement": "Good Standing Certificate",
+      "checklist_item": "B-6",
+      "status": "listed"
+    },
+    {
+      "section": "§ 8.2(h)",
+      "requirement": "Buyer's Closing Certificate",
+      "checklist_item": "B-7",
+      "status": "listed"
+    }
+  ],
+  "review_order": [
+    "S19",
+    "S20",
+    "S12",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S10",
+    "S11",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18",
+    "S21",
+    "S22",
+    "S23"
+  ]
+}

@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Visa Review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+  /* Layout: a cobalt "desk" carries the pitch and the live check; the work happens on white paper laid on it.
+     One committed look (no dark variant): the redline palette lawyers already read. */
+  :root {
+    color-scheme: light;
+    --cobalt: #1a36b8; --cobalt-deep: #12277f; --on-cobalt: #ffffff; --on-cobalt-soft: #c9d3ff;
+    --desk: #eceff7; --paper: #ffffff; --ink: #0f1633; --muted: #586080; --line: #d6dae8; --soft: #f3f5fb;
+    --hi: #ffe14a; --red: #d42f27; --red-soft: #fde8e6; --green: #15734a; --green-soft: #e1f3e8; --blue-soft: #e6ebfc;
+    --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --doc: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--desk); color: var(--ink); font: 15.5px/1.5 var(--display); }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--hi); outline-offset: 2px; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding-inline: 20px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  /* top bar */
+  .bar { background: var(--cobalt); color: var(--on-cobalt); }
+  .bar .wrap { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 21px; letter-spacing: -.01em; cursor: pointer; margin-right: auto; background: none; border: 0; color: inherit; padding: 0; }
+  .seal { display: inline-grid; place-items: center; width: 30px; height: 30px; border: 2px solid var(--hi); color: var(--hi); border-radius: 50%; font: italic 600 15px var(--doc); transform: rotate(-10deg); }
+  .bar .timer { font-family: var(--mono); font-size: 13.5px; color: var(--on-cobalt-soft); }
+  .bar label { font-size: 13.5px; color: var(--on-cobalt-soft); display: flex; align-items: center; gap: 8px; }
+  .initials { width: 62px; padding: 6px 8px; border: 2px solid var(--on-cobalt-soft); border-radius: 6px; background: transparent; color: var(--on-cobalt); text-transform: uppercase; text-align: center; letter-spacing: .1em; font-family: var(--mono); }
+  .initials::placeholder { color: var(--on-cobalt-soft); opacity: .7; }
+  .initials.need { border-color: var(--hi); box-shadow: 0 0 0 4px rgba(255, 225, 74, .35); }
+
+  /* buttons */
+  .btn { padding: 9px 16px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--paper); font-weight: 500; }
+  .btn:hover { border-color: var(--cobalt); }
+  .btn.go { background: var(--cobalt); color: var(--on-cobalt); border-color: var(--cobalt); font-weight: 600; }
+  .btn.big { background: var(--hi); color: var(--ink); border-color: var(--hi); font-weight: 800; font-size: 18px; padding: 14px 24px; border-radius: 10px; }
+  .btn.big:hover { transform: translateY(-1px); box-shadow: 0 6px 0 var(--cobalt-deep); border-color: var(--hi); }
+  .btn.ghost { background: transparent; color: var(--on-cobalt); border-color: var(--on-cobalt-soft); }
+  .linkish { border: 0; background: none; padding: 0; color: var(--cobalt); text-decoration: underline; font-weight: 500; }
+  input[type=file] { display: none; }
+
+  /* home */
+  .hero { background: var(--cobalt); color: var(--on-cobalt); padding-block: 54px 64px; }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--on-cobalt-soft); }
+  .hero h1 { font-size: clamp(42px, 8vw, 88px); line-height: .98; letter-spacing: -.035em; font-weight: 800; margin: 14px 0 22px; text-wrap: balance; }
+  .hero h1 em { font-style: normal; background: var(--hi); color: var(--ink); padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .hero p.lead { font-size: clamp(17px, 2.2vw, 21px); max-width: 640px; margin: 0 0 28px; color: var(--on-cobalt); }
+  .hero .cta { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .hero .cta small { color: var(--on-cobalt-soft); font-size: 14px; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: -34px; background: var(--paper); border-radius: 12px; box-shadow: 0 10px 30px rgba(15, 22, 51, .12); overflow: hidden; }
+  .fact { padding: 20px 22px; border-right: 1px solid var(--line); min-width: 0; }
+  .fact:last-child { border-right: 0; }
+  .fact b { display: block; font-size: 34px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+  .fact span { display: block; margin-top: 4px; }
+  .fact small { display: block; margin-top: 6px; color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
+  .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-block: 34px 18px; }
+  .how div { min-width: 0; }
+  .how .n { font-family: var(--mono); font-weight: 600; color: var(--cobalt); }
+  .how b { display: block; font-size: 19px; margin: 2px 0 4px; }
+  .how p { margin: 0; color: var(--muted); }
+  .matters { display: grid; gap: 10px; margin-block: 8px 22px; }
+  .matter { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 14px 18px; }
+  .matter b { display: block; font-size: 18px; }
+  .matter span { display: block; color: var(--muted); }
+  .matter small { display: block; color: var(--muted); font-family: var(--mono); font-size: 11.5px; margin-top: 2px; }
+  .fine { color: var(--muted); font-size: 13px; max-width: 780px; margin-block: 18px 44px; }
+
+  /* the live check */
+  .run { background: var(--cobalt); color: var(--on-cobalt); padding-block: 30px 46px; min-height: calc(100vh - 56px); overflow-x: clip; }
+  .run h1 { font-size: clamp(26px, 4vw, 40px); letter-spacing: -.02em; font-weight: 800; margin: 6px 0 4px; text-wrap: balance; }
+  .run .phase { color: var(--on-cobalt-soft); min-height: 1.5em; margin: 0 0 18px; }
+  .rungrid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .sheet { background: var(--paper); color: var(--ink); border-radius: 10px; padding: 16px 18px; box-shadow: 0 14px 34px rgba(8, 14, 50, .35); }
+  .sheet h2 { font-size: 12px; font-family: var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
+  .ln { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 3.5px 6px; border-radius: 5px; font-size: 14.5px; color: var(--muted); }
+  .ln .ic { font-family: var(--mono); font-weight: 600; text-align: center; }
+  .ln .cit { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .ln.checking { background: var(--hi); color: var(--ink); }
+  .ln.ok { color: var(--ink); } .ln.ok .ic { color: var(--green); }
+  .ln.look { color: var(--ink); background: linear-gradient(transparent 55%, var(--hi) 55%); } .ln.look .ic { color: var(--ink); }
+  .ln.bad { color: var(--red); } .ln.bad .ic { color: var(--red); }
+  .count { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .ct { border: 1.5px solid rgba(255, 255, 255, .28); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+  .ct b { display: block; font-family: var(--mono); font-size: 34px; font-weight: 600; line-height: 1.1; }
+  .ct span { color: var(--on-cobalt-soft); font-size: 13.5px; }
+  .ct.hot { border-color: var(--hi); } .ct.hot b { color: var(--hi); }
+  .ct.alarm { background: var(--red); border-color: var(--red); } .ct.alarm span { color: var(--on-cobalt); }
+  .flags { margin-top: 14px; display: grid; gap: 8px; }
+  .flag { background: var(--paper); color: var(--ink); border-left: 8px solid var(--red); border-radius: 4px 10px 10px 4px; padding: 9px 12px; animation: slide .45s cubic-bezier(.2, .9, .3, 1.2) both; }
+  .flag small { display: block; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+  .flag b { color: var(--red); }
+  @keyframes slide { from { transform: translateX(46px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .verdict { margin-top: 18px; animation: slide .5s both; }
+  .again { border: 1.5px solid rgba(255, 255, 255, .28); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+  .bars { display: grid; gap: 8px; margin-block: 10px 6px; }
+  .bars div { display: grid; grid-template-columns: 118px minmax(0, 1fr) 70px; gap: 10px; align-items: center; font-size: 14.5px; }
+  .bars i { display: block; height: 14px; border-radius: 3px; background: linear-gradient(90deg, var(--on-cobalt-soft) var(--w), rgba(255, 255, 255, .14) var(--w)); }
+  .bars .win i { background: linear-gradient(90deg, var(--hi) var(--w), rgba(255, 255, 255, .14) var(--w)); }
+  .bars b { font-family: var(--mono); font-weight: 600; text-align: right; }
+  .bars .win b { color: var(--hi); }
+  .again small { color: var(--on-cobalt-soft); font-size: 12.5px; }
+  .skip { margin-top: 14px; }
+
+  /* review */
+  .head { padding-block: 22px 4px; }
+  .head h1 { font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -.02em; font-weight: 800; margin: 2px 0 6px; text-wrap: balance; }
+  .head .sum { font-size: 17.5px; margin: 0; max-width: 880px; }
+  .head .sum b.r { color: var(--red); } .head .sum b.y { background: var(--hi); padding: 0 .2em; }
+  .tiles { display: flex; flex-wrap: wrap; gap: 10px; margin-block: 16px; }
+  .tile { background: var(--paper); border-radius: 10px; padding: 10px 14px; min-width: 132px; border: 1.5px solid var(--line); }
+  .tile b { display: block; font-family: var(--mono); font-size: 23px; font-weight: 600; }
+  .tile span { color: var(--muted); font-size: 12.5px; }
+  .tile.alarm { background: var(--red); border-color: var(--red); color: var(--on-cobalt); } .tile.alarm span { color: var(--on-cobalt); }
+  .tile.hot { background: var(--hi); border-color: var(--hi); } .tile.hot span { color: var(--ink); }
+  .progress { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
+  .progress i { display: block; height: 100%; background: var(--cobalt); transition: width .3s; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; align-items: center; }
+  .tabs button { border: 1.5px solid transparent; border-radius: 999px; background: none; padding: 7px 14px; color: var(--muted); white-space: nowrap; font-weight: 500; }
+  .tabs button.on { background: var(--ink); color: var(--paper); font-weight: 600; }
+  .tabs button.red.on { background: var(--red); }
+  .tabs .right { margin-left: auto; }
+  .cols { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 14px; align-items: start; padding-bottom: 44px; }
+  .card { background: var(--paper); border-radius: 12px; border: 1.5px solid var(--line); overflow: hidden; min-width: 0; }
+  #queue { max-height: 74vh; overflow: auto; }
+  .row { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); cursor: pointer; align-items: center; }
+  .row:last-child { border-bottom: 0; }
+  .row.sel { background: var(--blue-soft); box-shadow: inset 4px 0 0 var(--cobalt); }
+  .row .n { color: var(--muted); font-family: var(--mono); font-size: 12.5px; }
+  .row .t { font-weight: 600; }
+  .row.done .t { color: var(--muted); font-weight: 500; }
+  .divider { padding: 6px 14px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--soft); border-bottom: 1px solid var(--line); }
+  .chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; margin: 0 6px 4px 0; white-space: nowrap; background: var(--soft); color: var(--muted); }
+  .chip.failed, .chip.missing { background: var(--red); color: var(--on-cobalt); }
+  .chip.partly, .chip.inference, .chip.practice, .chip.secondary_only, .chip.differs { background: var(--hi); color: var(--ink); }
+  .chip.computed { background: var(--blue-soft); color: var(--cobalt); }
+  .chip.verified, .chip.listed { background: var(--green-soft); color: var(--green); }
+  .stamp { display: inline-grid; place-items: center; min-width: 34px; height: 34px; padding: 0 5px; border: 2px solid var(--cobalt); color: var(--cobalt); border-radius: 50%; font: italic 600 13px var(--doc); transform: rotate(-10deg); animation: thump .28s cubic-bezier(.2, 1.6, .4, 1) both; }
+  .stamp.flagged { border-color: var(--red); color: var(--red); border-radius: 6px; font: 600 11px var(--mono); }
+  @keyframes thump { from { transform: rotate(-10deg) scale(2.2); opacity: 0; } to { transform: rotate(-10deg) scale(1); opacity: 1; } }
+  .detail { padding: 20px 22px 22px; }
+  .lab { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .detail h2 { font: 600 21px/1.35 var(--doc); margin: 6px 0 8px; text-wrap: balance; }
+  .detail .why { color: var(--muted); margin: 0 0 12px; }
+  .sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-block: 12px; }
+  .side { background: var(--soft); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+  .side .lab { display: block; margin-bottom: 8px; }
+  .src { margin-bottom: 14px; }
+  .src:last-child { margin-bottom: 0; }
+  .src .loc { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .src .loc b { color: var(--cobalt); }
+  blockquote { margin: 0 0 6px; padding: 8px 12px; background: var(--paper); border-radius: 6px; font: 400 15.5px/1.5 var(--doc); box-shadow: 0 1px 0 var(--line); }
+  mark.diff { background: var(--red-soft); color: var(--red); font-weight: 600; padding: 0 .15em; border-radius: 3px; }
+  mark.same { background: none; color: var(--green); font-weight: 600; box-shadow: inset 0 -2px 0 var(--green); }
+  .absent { font-size: 14px; border: 1.5px dashed var(--line); border-radius: 8px; padding: 9px 11px; background: var(--paper); margin-top: 8px; }
+  .note { background: linear-gradient(transparent 0, transparent 100%), var(--hi); border-radius: 8px; padding: 8px 12px; margin-block: 12px; }
+  .detail h3 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 16px 0 6px; font-weight: 600; }
+  details summary { color: var(--muted); font-size: 13px; cursor: pointer; }
+  code { font: 12.5px var(--mono); background: var(--soft); padding: 1px 5px; border-radius: 4px; word-break: break-word; }
+  .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .actions .said { color: var(--muted); font-size: 13.5px; }
+  .keys { color: var(--muted); font-size: 12.5px; margin-left: auto; }
+  kbd { font: 600 11.5px var(--mono); border: 1.5px solid var(--line); border-bottom-width: 3px; border-radius: 5px; padding: 0 5px; background: var(--paper); }
+  .cards { display: grid; gap: 14px; padding-bottom: 44px; }
+  .card.out { border-left: 8px solid var(--red); }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th { text-align: left; font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  tr.miss td { background: var(--red-soft); }
+  .scroll { overflow-x: auto; }
+  ol.path { margin: 0; padding: 16px 20px 16px 44px; }
+  ol.path li { margin-block: 8px; }
+  ol.path small { display: block; color: var(--muted); font-size: 14px; }
+
+  /* sign-off record */
+  .record { background: var(--paper); border-radius: 12px; padding: 30px 32px; margin-block: 18px 44px; border: 1.5px solid var(--line); }
+  .record h1 { font: 600 30px/1.2 var(--doc); margin: 4px 0; }
+  .record .meta { color: var(--muted); margin-bottom: 18px; }
+
+  @media (max-width: 860px) {
+    .facts, .how, .rungrid, .cols, .sides, .matter { grid-template-columns: minmax(0, 1fr); }
+    .fact { border-right: 0; border-bottom: 1px solid var(--line); }
+    #queue { max-height: 44vh; }
+    .keys { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .flag, .verdict, .stamp { animation: none; } }
+  @media print {
+    .bar, .noprint { display: none !important; }
+    body { background: #fff; font-size: 11.5px; }
+    .record { border: 0; padding: 0; margin: 0; }
+    .chip, .stamp, tr.miss td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap">
+  <button class="brand" id="brand"><span class="seal">V</span>Visa</button>
+  <span class="timer" id="timer"></span>
+  <label id="who" hidden>Your initials <input class="initials" id="initials" maxlength="4" placeholder="AB"></label>
+</div></header>
+<main id="view"></main>
+
+<script id="demo" type="application/json">[{"matter": {"title": "Asset purchase agreement vs closing checklist", "instruction": "Compare the attached APA against the closing checklist and produce a categorized, severity-rated deviation report.", "produced_by": "Legora", "produced_on": "4 October 2026", "original_citations": 30, "task_source": "Harvey Legal Agent Benchmark, corporate-ma/compare-closing-checklist-against-ma-agreement", "runs": {"of": 38, "plain": 26, "with_method": 38, "note": "Criteria passed on the benchmark's official rubric, graded by two AI judges. One run each."}}, "documents": [{"file": "asset-purchase-agreement.docx", "tier": "primary", "read": true, "used": true, "note": "The signed agreement. It governs."}, {"file": "closing-checklist.docx", "tier": "secondary", "read": true, "used": true, "note": "Counsel's working summary of the agreement. This is the document being checked."}], "path": [{"step": "Took the report's statements one by one", "detail": "23 statements: 12 deviations and 11 terms the report says are consistent."}, {"step": "Found the passage behind each statement in both documents", "detail": "For a defined term, the definition itself rather than a clause that happens to repeat the figure."}, {"step": "Recomputed every figure that can be recomputed", "detail": "Percentages of the purchase price, the closing payment, the monthly fees."}, {"step": "Proved the statements that had no citation", "detail": "The report cited nothing for 12 statements, including all 11 it calls consistent. Each now has both passages."}, {"step": "Read the agreement's closing deliverables against the checklist", "detail": "Sections 8.1 and 8.2, item by item, looking for anything the checklist leaves out."}, {"step": "Searched the checklist for each item that seemed to be missing", "detail": "An omission cannot be quoted, so it is shown by a search that returns nothing."}, {"step": "Checked every quote against the documents a second time, by program", "detail": "A separate checker opens the files and confirms each quote is really there."}], "claims": [{"id": "S1", "group": "Critical", "cited": 4, "status": "verified", "text": "The agreement is inconsistent on the Buyer's identity: the cover page and signature block name Vanguard Industrial Holdings, Inc., while the preamble and operative provisions name Saxonbrook Industrial Holdings, Inc., and the Buyer's notice email uses the domain vanguardindustrial.com.", "sources": [{"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Cover page", "quote": "VANGUARD INDUSTRIAL HOLDINGS, INC.", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Signature block", "quote": "BUYER: ... VANGUARD INDUSTRIAL HOLDINGS, INC. ... Name: Marcus Ellsworth", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Preamble", "quote": "by and between Saxonbrook Industrial Holdings, Inc., a Delaware corporation (\"Buyer\")", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 11.1, notices", "quote": "Email: dhu@vanguardindustrial.com", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "closing-checklist.docx", "side": "checklist", "locator": "Title block", "quote": "Saxonbrook Industrial Holdings, Inc. (\"Buyer\")", "quote_found": true, "quote_match": "exact"}], "check": "Found both names in the agreement itself. The running page header also says Vanguard.", "short": "Buyer's identity", "hl": {"diff": ["VANGUARD INDUSTRIAL HOLDINGS, INC.", "Saxonbrook Industrial Holdings, Inc.", "vanguardindustrial.com"]}}, {"id": "S2", "group": "High", "cited": 2, "status": "computed", "text": "Escrow Amount: the checklist states $5,500,000; the agreement defines it as $5,250,000.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Escrow Amount: $5,500,000 (five million five hundred thousand dollars), representing approximately 6% of the Purchase Price", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Escrow Amount", "quote": "\"Escrow Amount\" means Five Million Two Hundred Fifty Thousand Dollars ($5,250,000), representing six percent (6%) of the Purchase Price", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found both figures. 6% of $87,500,000 is $5,250,000, so the agreement's figure is the one that matches its own percentage.", "technical": "0.06 * 87_500_000 == 5_250_000", "note": "The original report cited the definition of Closing Cash Payment for this figure. The defining clause is the definition of Escrow Amount, shown here.", "short": "Escrow Amount", "hl": {"diff": ["$5,500,000", "$5,250,000"], "same": ["6%"]}}, {"id": "S3", "group": "High", "cited": 2, "status": "computed", "text": "Closing Cash Payment: the checklist states $78,500,000; the agreement states $78,750,000.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Closing Cash Payment: $78,500,000 (seventy-eight million five hundred thousand dollars)", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Closing Cash Payment", "quote": "\"Closing Cash Payment\" means an amount equal to Seventy-Eight Million Seven Hundred Fifty Thousand Dollars ($78,750,000)", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Recomputed both. Purchase price less escrow less holdback gives $78,750,000 with the agreement's escrow and $78,500,000 with the checklist's, so this error follows from the escrow error.", "technical": "87_500_000 - 5_250_000 - 3_500_000 == 78_750_000; 87_500_000 - 5_500_000 - 3_500_000 == 78_500_000", "short": "Closing Cash Payment", "hl": {"diff": ["$78,500,000", "$78,750,000"]}}, {"id": "S4", "group": "High", "cited": 2, "status": "computed", "text": "Holdback Amount: the checklist says it is 5% of the Purchase Price; the agreement says 4%.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Holdback Amount: $3,500,000 (three million five hundred thousand dollars), representing 5% of the Purchase Price", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Holdback Amount", "quote": "\"Holdback Amount\" means Three Million Five Hundred Thousand Dollars ($3,500,000), representing four percent (4%) of the Purchase Price", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found both. $3,500,000 is 4% of $87,500,000, so the dollar amount agrees and only the checklist's percentage is wrong.", "technical": "3_500_000 / 87_500_000 == 0.04", "short": "Holdback percentage", "hl": {"diff": ["5%", "4%"], "same": ["$3,500,000"]}}, {"id": "S5", "group": "High", "cited": 3, "status": "computed", "text": "General Indemnification Cap: the checklist states $8,500,000; the agreement states $8,750,000 (10% of the Purchase Price).", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Seller's General Indemnification Cap: $8,500,000 (eight million five hundred thousand dollars), representing approximately 10% of the Purchase Price", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of General Indemnification Cap", "quote": "\"General Indemnification Cap\" means Eight Million Seven Hundred Fifty Thousand Dollars ($8,750,000), which amount represents ten percent (10%) of the Purchase Price", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found both. 10% of $87,500,000 is $8,750,000.", "technical": "0.10 * 87_500_000 == 8_750_000", "short": "Indemnification Cap", "hl": {"diff": ["$8,500,000", "$8,750,000"], "same": ["10%"]}}, {"id": "S6", "group": "High", "cited": 3, "status": "verified", "text": "Escrow Period: the checklist states 24 months (release around May 15, 2027); the agreement defines it as 18 months, expiring November 15, 2026.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Escrow Period: Twenty-four (24) months following the Closing Date", "quote_found": true, "quote_match": "exact"}, {"file": "closing-checklist.docx", "side": "checklist", "locator": "Part VI, item PC-3", "quote": "Escrow Release ... ~May 15, 2027", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Escrow Period", "quote": "\"Escrow Period\" means the period of eighteen (18) months following the Closing Date. If the Closing occurs on May 15, 2025, the Escrow Period shall expire on November 15, 2026.", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found all three passages word for word.", "short": "Escrow Period", "hl": {"diff": ["Twenty-four (24) months", "eighteen (18) months", "~May 15, 2027", "November 15, 2026"]}}, {"id": "S7", "group": "High", "cited": 2, "status": "verified", "text": "De Minimis Collar: the agreement sets a $150,000 threshold below which no working capital adjustment is made; the checklist's description of the adjustment omits it.", "sources": [{"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of De Minimis Collar", "quote": "\"De Minimis Collar\" means One Hundred Fifty Thousand Dollars ($150,000), as described in Section 2.6(d)", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}, {"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Working Capital Adjustment: Dollar-for-dollar adjustment for any deviation from the Target Net Working Capital of $6,800,000.", "quote_found": true, "quote_match": "exact"}], "absent": [{"file": "closing-checklist.docx", "terms": ["De Minimis Collar", "150,000"], "absent_confirmed": true, "terms_found": []}], "check": "Found the collar in the agreement, then searched the whole checklist for it. It is not there.", "short": "De Minimis Collar", "hl": {"diff": ["$150,000"]}}, {"id": "S8", "group": "High", "cited": 4, "status": "computed", "text": "Transition services fee: the checklist states $50,000 per month ($300,000 total); the agreement states $45,000 per month ($270,000 in aggregate).", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part IV, item S-4", "quote": "The monthly fee for transition services shall be $50,000 per month for a total of $300,000 over the six-month term.", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 8.1(d)", "quote": "at a fee of Forty-Five Thousand Dollars ($45,000) per month (for an aggregate fee of Two Hundred Seventy Thousand Dollars ($270,000))", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "Found both. Six months at each rate gives $300,000 and $270,000.", "technical": "6 * 50_000 == 300_000; 6 * 45_000 == 270_000", "short": "Transition services fee", "hl": {"diff": ["$50,000", "$300,000", "$45,000", "$270,000"]}}, {"id": "S9", "group": "High", "cited": 3, "status": "verified", "text": "Non-competition term: the checklist states 3 years; the agreement states 4 years.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part IV, item S-5", "quote": "The Non-Competition Agreement shall have a term of three (3) years from the Closing Date", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 8.1(e)", "quote": "providing for a non-competition period of four (4) years following the Closing Date", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "Found both passages word for word.", "short": "Non-competition term", "hl": {"diff": ["three (3) years", "four (4) years"]}}, {"id": "S10", "group": "High", "cited": 3, "status": "verified", "text": "Outside Date: the checklist states July 14, 2025 and cites Section 9.1(b); the agreement defines it as August 14, 2025 under Section 10.1(b).", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Outside Date: July 14, 2025. If the Closing has not occurred by the Outside Date, either party may terminate the APA in accordance with Section 9.1(b)", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Outside Date", "quote": "\"Outside Date\" means August 14, 2025, as described in Section 10.1(b).", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found both passages word for word.", "short": "Outside Date", "hl": {"diff": ["July 14, 2025", "Section 9.1(b)", "August 14, 2025", "Section 10.1(b)"]}}, {"id": "S11", "group": "Medium", "cited": 3, "status": "verified", "text": "Good Standing Certificates: the checklist lists only Oregon; the agreement requires certificates from Oregon and Washington.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part IV, item S-7", "quote": "Certificate of Good Standing (or Certificate of Existence) for Cascade Precision Components, LLC issued by the Oregon Secretary of State.", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 8.1(h)", "quote": "of the State of Oregon and the State of Washington", "rank": "", "quote_found": true, "quote_match": "exact"}], "absent": [{"file": "closing-checklist.docx", "terms": ["Washington"], "absent_confirmed": true, "terms_found": []}], "check": "Found both passages, then searched the checklist for Washington. It does not appear anywhere.", "short": "Good Standing Certificates", "hl": {"diff": ["the State of Washington"], "same": ["Oregon"]}}, {"id": "S12", "group": "Medium", "cited": 0, "status": "partly", "text": "Cross-reference errors: the checklist cites Article IX provisions where Article X (Termination) provisions are meant.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "terminate the APA in accordance with Section 9.1(b)", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 10.1(b)", "quote": "the right to terminate this Agreement under this Section 10.1(b)", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "to secure Seller's indemnification obligations under Article X of the APA", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Article headings", "quote": "ARTICLE IX — INDEMNIFICATION", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Article headings", "quote": "ARTICLE X — TERMINATION", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "True as stated, and it also runs the other way: the checklist cites indemnification as Article X in three places, where the agreement's indemnification article is Article IX.", "note": "The original report gave no citation for this statement.", "short": "Cross-references", "hl": {"diff": ["Section 9.1(b)", "Section 10.1(b)", "Article X of the APA", "ARTICLE IX — INDEMNIFICATION"]}}, {"id": "S13", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "Purchase Price ($87,500,000) is consistent between the two documents.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Purchase Price: $87,500,000 (eighty-seven million five hundred thousand dollars).", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Purchase Price", "quote": "\"Purchase Price\" means Eighty-Seven Million Five Hundred Thousand Dollars ($87,500,000), subject to adjustment as provided in Section 2.6.", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found the same figure in both documents.", "short": "Purchase Price", "hl": {"same": ["$87,500,000"]}}, {"id": "S14", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "Target Net Working Capital ($6,800,000) is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Target Net Working Capital: $6,800,000 (six million eight hundred thousand dollars)", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Target NWC", "quote": "\"Target NWC\" means Six Million Eight Hundred Thousand Dollars ($6,800,000)", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found the same figure in both documents.", "short": "Target Net Working Capital", "hl": {"same": ["$6,800,000"]}}, {"id": "S15", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "Indemnification Basket ($875,000) is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Indemnification Basket: $875,000 (eight hundred seventy-five thousand dollars), representing 1% of the Purchase Price", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Basket", "quote": "\"Basket\" means Eight Hundred Seventy-Five Thousand Dollars ($875,000), which amount represents one percent (1%) of the Purchase Price", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found the same figure and the same percentage in both documents.", "short": "Indemnification Basket", "hl": {"same": ["$875,000", "1%"]}}, {"id": "S16", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "Mini-Basket ($50,000) is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Mini-Basket: $50,000 per individual claim.", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Mini-Basket", "quote": "\"Mini-Basket\" means Fifty Thousand Dollars ($50,000), as described in Section 9.4(b).", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}], "check": "Found the same figure in both documents.", "short": "Mini-Basket", "hl": {"same": ["$50,000"]}}, {"id": "S17", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "Fundamental Representations Cap (the Purchase Price) and survival (36 months) are consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Fundamental Representations Cap: Equal to the full Purchase Price ($87,500,000).", "quote_found": true, "quote_match": "exact"}, {"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Fundamental Representations Survival: Thirty-six (36) months following the Closing Date.", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 9.4(d)", "quote": "with respect to Fundamental Representations shall not exceed an amount equal to the Purchase Price", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 9.1", "quote": "shall survive the Closing for a period of thirty-six (36) months following the Closing Date", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "Found the cap and the survival period in both documents.", "short": "Fundamental Representations", "hl": {"same": ["Thirty-six (36) months", "thirty-six (36) months", "Purchase Price"]}}, {"id": "S18", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "General Survival Period (18 months) is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "General Survival Period: Eighteen (18) months following the Closing Date.", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 9.1", "quote": "for a period of eighteen (18) months following the Closing Date (the \"General Survival Period\")", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "Found the same period in both documents.", "short": "General Survival Period", "hl": {"same": ["Eighteen (18) months", "eighteen (18) months"]}}, {"id": "S19", "group": "Stated as consistent", "cited": 0, "status": "partly", "text": "Reverse Break-Up Fee ($2,625,000) is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Reverse Break-Up Fee: $2,625,000 (two million six hundred twenty-five thousand dollars), representing 3% of the Purchase Price, payable by Buyer to Seller in the event of termination by Seller pursuant to Section 9.1(d) of the APA.", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Art. I, definition of Reverse Break-Up Fee", "quote": "\"Reverse Break-Up Fee\" means Two Million Six Hundred Twenty-Five Thousand Dollars ($2,625,000), representing three percent (3%) of the Purchase Price", "rank": "Defining clause", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 10.3", "quote": "In the event this Agreement is terminated by Seller pursuant to Section 10.1(e)", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "The amount is the same in both documents. The trigger is not: the checklist points to Section 9.1(d), the agreement to Section 10.1(e).", "technical": "0.03 * 87_500_000 == 2_625_000", "short": "Reverse Break-Up Fee", "hl": {"same": ["$2,625,000", "3%"], "diff": ["Section 9.1(d)", "Section 10.1(e)"]}}, {"id": "S20", "group": "Stated as consistent", "cited": 0, "status": "partly", "text": "Accrued PTO (about $387,000) is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Accrued PTO Liability (Assumed): Estimated at approximately $387,000 as of the anticipated Closing Date.", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 2.3", "quote": "estimated at approximately Three Hundred Eighty-Seven Thousand Dollars ($387,000) as of the date hereof, which amount shall be adjusted to reflect the actual accrued balances as of the Closing Date", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "The amount is the same. The reference date is not: the checklist gives the estimate as of the anticipated Closing Date, the agreement as of its signing date, to be adjusted at Closing.", "short": "Accrued PTO", "hl": {"same": ["$387,000"], "diff": ["as of the anticipated Closing Date", "as of the date hereof"]}}, {"id": "S21", "group": "Stated as consistent", "cited": 0, "status": "computed", "text": "The employee offer threshold is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part I, summary of key deal terms", "quote": "Employee Matters: Buyer shall offer employment to at least 85% of Seller's 127 full-time employees (i.e., at least 108 employees)", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 6.8(a)", "quote": "offer employment to at least eighty-five percent (85%) of Seller's one hundred twenty-seven (127) full-time employees", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "Found the same threshold in both documents. 85% of 127 is 107.95, which rounds up to the 108 both documents state.", "technical": "math.ceil(0.85 * 127) == 108", "short": "Employee offer threshold", "hl": {"same": ["85%", "127"]}}, {"id": "S22", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "The Scheduled Closing Date is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Title block", "quote": "Scheduled Closing Date: May 15, 2025", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 3.1", "quote": "shall take place on May 15, 2025 (the \"Closing Date\")", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "Found the same date in both documents.", "short": "Scheduled Closing Date", "hl": {"same": ["May 15, 2025"]}}, {"id": "S23", "group": "Stated as consistent", "cited": 0, "status": "verified", "text": "The treatment of the Aeromet litigation is consistent.", "sources": [{"file": "closing-checklist.docx", "side": "checklist", "locator": "Part III, item P-8", "quote": "confirm that such matter remains an Excluded Liability under Section 2.4(d) of the APA", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 2.4(d)", "quote": "(d) Pending Litigation. Any and all liabilities arising from or relating to the pending litigation styled Aeromet Supply Corp. v. Cascade Precision Components, LLC, Case No. 3:24-cv-01187 (D. Or.)", "rank": "", "quote_found": true, "quote_match": "exact"}], "check": "Found the litigation listed as an excluded liability in item (d) of Section 2.4 of the agreement, as the checklist says.", "short": "Aeromet litigation", "hl": {"same": ["Section 2.4(d)", "(d) Pending Litigation"]}}], "missing": [{"id": "M1", "title": "FIRPTA certificate", "text": "The agreement requires a FIRPTA certificate from the Seller, both as a closing deliverable and as a condition to the Buyer's obligation to close. The checklist does not list it.", "sources": [{"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 8.1(f)", "quote": "(f) FIRPTA Certificate. A certificate of non-foreign status of Seller", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 7.1(h)", "quote": "(h) FIRPTA Certificate. Buyer shall have received the FIRPTA Certificate described in Section 8.1(f)", "rank": "", "quote_found": true, "quote_match": "exact"}], "absent": [{"file": "closing-checklist.docx", "terms": ["FIRPTA", "non-foreign"], "absent_confirmed": true, "terms_found": []}], "short": "FIRPTA certificate", "hl": {"diff": ["FIRPTA Certificate"]}}, {"id": "M2", "title": "Northwind Aerospace consent", "text": "The agreement lists the consent of Northwind Aerospace, Inc. as a Required Consent. The checklist's list of Required Consents does not include it.", "sources": [{"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "Schedule 7.1(d), item (iii)", "quote": "(iii) the consent of Northwind Aerospace, Inc. under the Northwind Supply Agreement dated April 12, 2021", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "closing-checklist.docx", "side": "checklist", "locator": "Part III, item P-2", "quote": "The Required Consents are as follows:", "quote_found": true, "quote_match": "exact"}], "absent": [{"file": "closing-checklist.docx", "terms": ["Northwind"], "absent_confirmed": true, "terms_found": []}], "short": "Northwind Aerospace consent", "hl": {"diff": ["Northwind Aerospace, Inc."]}}, {"id": "M3", "title": "Title insurance commitments", "text": "The agreement requires title insurance commitments for the owned real property as a Seller closing deliverable. The checklist tracks a title search before closing but does not list the commitments as a deliverable.", "sources": [{"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 8.1(l)", "quote": "(l) Title Insurance Commitments. Commitments for title insurance from Cascadia Title & Guaranty Co. for all Owned Real Property", "rank": "", "quote_found": true, "quote_match": "exact"}, {"file": "closing-checklist.docx", "side": "checklist", "locator": "Part III, item P-6", "quote": "Item P-6: Title Search and Insurance. Order title search for Seller's owned real property", "quote_found": true, "quote_match": "exact"}], "absent": [{"file": "closing-checklist.docx", "terms": ["Title Insurance Commitments", "Commitments for title insurance", "title commitment"], "absent_confirmed": true, "terms_found": []}], "short": "Title insurance commitments", "hl": {"diff": ["Title Insurance Commitments"]}}, {"id": "M4", "title": "Landlord estoppel certificates", "text": "The agreement requires estoppel certificates from landlords under the assigned leases, as a condition to closing and as a Seller deliverable. The checklist does not mention them.", "sources": [{"file": "asset-purchase-agreement.docx", "side": "agreement", "locator": "§ 7.1(f)", "quote": "(f) Estoppel Certificates. Buyer shall have received estoppel certificates from all landlords under Assigned Real Property Leases", "rank": "", "quote_found": true, "quote_match": "exact"}], "absent": [{"file": "closing-checklist.docx", "terms": ["estoppel"], "absent_confirmed": true, "terms_found": []}], "short": "Landlord estoppel certificates", "hl": {"diff": ["Estoppel Certificates"]}}], "coverage": [{"section": "§ 8.1(a)", "requirement": "Bill of Sale", "checklist_item": "S-1", "status": "listed"}, {"section": "§ 8.1(b)", "requirement": "Assignment and Assumption Agreement", "checklist_item": "S-2", "status": "listed"}, {"section": "§ 8.1(c)", "requirement": "IP Assignment Agreement", "checklist_item": "S-3", "status": "listed"}, {"section": "§ 8.1(d)", "requirement": "Transition Services Agreement", "checklist_item": "S-4", "status": "differs"}, {"section": "§ 8.1(e)", "requirement": "Non-Competition Agreement", "checklist_item": "S-5", "status": "differs"}, {"section": "§ 8.1(f)", "requirement": "FIRPTA Certificate", "checklist_item": "", "status": "missing"}, {"section": "§ 8.1(g)", "requirement": "Secretary's Certificate", "checklist_item": "S-6", "status": "listed"}, {"section": "§ 8.1(h)", "requirement": "Good Standing Certificates", "checklist_item": "S-7", "status": "differs"}, {"section": "§ 8.1(i)", "requirement": "Payoff Letter", "checklist_item": "S-8", "status": "listed"}, {"section": "§ 8.1(j)", "requirement": "Required Consents", "checklist_item": "S-9", "status": "differs"}, {"section": "§ 8.1(k)", "requirement": "Estoppel Certificates", "checklist_item": "", "status": "missing"}, {"section": "§ 8.1(l)", "requirement": "Title Insurance Commitments", "checklist_item": "", "status": "missing"}, {"section": "§ 8.1(m)", "requirement": "Seller's Closing Certificate", "checklist_item": "S-10", "status": "listed"}, {"section": "§ 8.2(a)", "requirement": "Closing Cash Payment", "checklist_item": "B-1", "status": "differs"}, {"section": "§ 8.2(b)", "requirement": "Escrow Amount", "checklist_item": "B-1", "status": "differs"}, {"section": "§ 8.2(c)", "requirement": "Assignment and Assumption Agreement", "checklist_item": "B-2", "status": "listed"}, {"section": "§ 8.2(d)", "requirement": "Transition Services Agreement", "checklist_item": "B-3", "status": "listed"}, {"section": "§ 8.2(e)", "requirement": "Escrow Agreement", "checklist_item": "B-4", "status": "listed"}, {"section": "§ 8.2(f)", "requirement": "Secretary's Certificate", "checklist_item": "B-5", "status": "listed"}, {"section": "§ 8.2(g)", "requirement": "Good Standing Certificate", "checklist_item": "B-6", "status": "listed"}, {"section": "§ 8.2(h)", "requirement": "Buyer's Closing Certificate", "checklist_item": "B-7", "status": "listed"}], "review_order": ["S19", "S20", "S12", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S13", "S14", "S15", "S16", "S17", "S18", "S21", "S22", "S23"], "independent_check": {"quotes": 63, "found": 63, "not_found": 0, "unreadable": 0, "absences": 6, "absences_confirmed": 6, "documents_missing_from_log": []}}]</script>
+<script>
+const VERDICT = {
+  failed: ['Quote not found', 'A passage given for this statement does not appear in the document. Treat the statement as unproven.'],
+  partly: ['Needs a look', 'Part of this statement holds and part does not. The values that differ are marked in red.'],
+  inference: ['Judgment', 'This is legal analysis. It is not stated in the documents.'],
+  practice: ['Market practice', 'This rests on professional custom, not on a document in the file.'],
+  secondary_only: ['Secondary only', 'Supported only by a document that describes the source, not by the source itself.'],
+  computed: ['Recomputed', 'The passages were found word for word and the figures were recomputed from them.'],
+  verified: ['Proven', 'The passages behind this statement were found word for word in the documents.']
+};
+const COVER = { listed: 'Listed', differs: 'Listed, with a difference', missing: 'Missing' };
+const ROLE = { relied: ['Relied on', 'verified'], consulted: ['Read, not relied on', ''], set_aside: ['Set aside', 'partly'], unreadable: ['Could not be read', 'failed'] };
+const roleOf = d => ROLE[d.role] ? d.role : d.read === false ? 'unreadable' : d.used ? 'relied' : 'consulted';
+const SIDE = { checklist: 'Closing checklist', agreement: 'Purchase agreement' };
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const plural = (k, one, many) => k + ' ' + (k === 1 ? one : many);
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem('paraphe:' + k)); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem('paraphe:' + k, JSON.stringify(v)); } catch {} }
+};
+const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let log = null, claims = [], missing = [], marks = {}, key = '', view = 'home', tab = 'statements', selected = null, started = 0, tick = null, runTimer = null;
+const demos = [].concat(JSON.parse($('demo').textContent));  // one or several demo matters
+
+function kindOf(c) {
+  const bad = (c.sources || []).some(s => s.quote_found === false) || (c.absent || []).some(a => a.absent_confirmed === false);
+  return bad ? 'failed' : (VERDICT[c.status] && c.status !== 'failed' ? c.status : 'inference');
+}
+const settled = c => c.kind === 'computed' || c.kind === 'verified';
+const label = c => c.short || c.title || c.text;
+
+function load(data, name) {
+  log = data;
+  const byId = Object.fromEntries((log.claims || []).map(c => [c.id, c]));
+  const seen = new Set();
+  const ordered = (log.review_order || []).filter(id => byId[id] && !seen.has(id) && seen.add(id)).map(id => byId[id]);
+  const all = ordered.concat((log.claims || []).filter(c => !seen.has(c.id))).map(c => ({ ...c, kind: kindOf(c) }));
+  // anything the checker could not find outranks the agent's own ordering
+  claims = all.filter(c => c.kind === 'failed').concat(all.filter(c => c.kind !== 'failed'));
+  missing = (log.missing || []).map(m => ({ ...m, kind: kindOf({ ...m, status: 'verified' }) }));
+  key = 'marks:' + name;
+  marks = store.get(key) || {};
+  selected = claims.length ? claims[0].id : null;
+  tab = 'statements';
+}
+
+function startReview() {
+  started = started || Date.now();
+  clearInterval(tick);
+  tick = setInterval(renderTimer, 1000);
+  go('review');
+}
+
+function go(v) {
+  clearTimeout(runTimer);
+  view = v;
+  $('who').hidden = v === 'home' || v === 'run';
+  render();
+  window.scrollTo(0, 0);
+}
+
+const items = () => claims.concat(missing);
+const doneCount = () => items().filter(c => marks[c.id]).length;
+
+function renderTimer() {
+  if (!started || view === 'home' || view === 'run') { $('timer').textContent = ''; return; }
+  const done = items().length && doneCount() === items().length;
+  if (done) clearInterval(tick);
+  const s = Math.floor((Date.now() - started) / 1000);
+  $('timer').textContent = 'Review time ' + String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+}
+
+function render() {
+  ({ home: renderHome, run: renderRun, review: renderReview, record: renderRecord })[view]();
+  renderTimer();
+}
+
+/* ---------- home ---------- */
+function renderHome() {
+  const m = demos.length && demos[0].matter;
+  $('view').innerHTML = `
+    <section class="hero"><div class="wrap">
+      <span class="eyebrow">Vu l'article… · The verification layer for legal AI</span>
+      <h1>The AI wrote it.<br><em>You sign it.</em></h1>
+      <p class="lead">Visa plugs into any legal AI (ChatGPT, Legora, Claude, Mistral) and makes its work checkable: every claim tied to its proof, every omission flagged. <b>No proof, no green.</b></p>
+      <div class="cta">
+        ${m ? `<button class="btn big" id="runDemo">Check a real ${esc(m.produced_by)} report</button>` : ''}
+        <small>${m ? esc(m.title) + '. Takes ten seconds.' : ''}</small>
+      </div>
+    </div></section>
+    <div class="wrap">
+      <section class="facts">
+        <div class="fact"><b>22%</b><span>of legal teams highly trust what generative AI writes. 83% have access to it.</span><small>Filevine, Legal AI Trust Index 2026</small></div>
+        <div class="fact"><b>2,137</b><span>court cases worldwide in which AI-invented citations reached a filing.</span><small>Charlotin database, HEC Paris, 3 Oct 2026</small></div>
+        <div class="fact"><b>Every output</b><span>must be checked and validated by the lawyer, with a method that can be shown.</span><small>CNB guide on AI and ethics, March 2026</small></div>
+      </section>
+      <section class="how">
+        <div><span class="n">1</span><b>Bring the AI's work</b><p>A report from Legora, Harvey, ChatGPT or Copilot, with the documents it was written from.</p></div>
+        <div><span class="n">2</span><b>Review what matters</b><p>Each statement sits beside the passages that prove it. Differences are marked. Doubtful ones come first.</p></div>
+        <div><span class="n">3</span><b>Initial and export</b><p>Your initials on each statement become a record that travels with the document.</p></div>
+      </section>
+      <section class="matters">
+        <span class="lab">Demo matters</span>
+        ${demos.map((d, i) => `<div class="matter">
+          <div><b>${esc(d.matter.title)}</b><span>Report by ${esc(d.matter.produced_by)}, ${esc(d.matter.produced_on)} · ${plural((d.documents || []).length, 'document', 'documents')} · ${plural((d.claims || []).length, 'statement', 'statements')}</span><small>${esc(d.matter.task_source || '')}</small></div>
+          <button class="btn go" data-demo="${i}">Check this report</button>
+        </div>`).join('')}
+      </section>
+      <p>Have a verification log from your own run? <label class="linkish" style="cursor:pointer">Open it<input type="file" id="file" accept=".json,application/json"></label></p>
+      <p class="fine">About the demo matters: the documents are public or synthetic. The statements are the ones the named tool made in its report on those documents. The verification pass was prepared for this demo, and every quote in it was then confirmed against the documents by Visa's checker. The on-screen check replays those results.</p>
+    </div>`;
+  if (m) $('runDemo').onclick = () => { load(demos[0], 'demo-0'); go('run'); };
+  document.querySelectorAll('[data-demo]').forEach(b => b.onclick = () => { load(demos[+b.dataset.demo], 'demo-' + b.dataset.demo); go('run'); });
+  $('file').onchange = async e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    try { load(JSON.parse(await f.text()), f.name + ':' + f.size); startReview(); }
+    catch (err) { $('view').querySelector('.fine, p:last-child').textContent = 'That file could not be read as a verification log: ' + err.message; }
+  };
+}
+
+/* ---------- the live check (a replay of the stored results) ---------- */
+function renderRun() {
+  const m = log.matter || {};
+  const original = (log.claims || []).map(c => claims.find(x => x.id === c.id));  // the report's own order
+  const cover = log.coverage || [];
+  $('view').innerHTML = `<section class="run"><div class="wrap">
+    <span class="eyebrow">${esc(m.produced_by || 'AI')} report · ${esc(m.title || '')}</span>
+    <h1 id="runTitle">Checking ${plural(original.length, 'statement', 'statements')} against ${plural((log.documents || []).length, 'document', 'documents')}</h1>
+    <p class="phase" id="phase">Reading the documents.</p>
+    <div class="rungrid">
+      <div class="sheet"><h2>What the report says</h2>
+        ${original.map(c => `<div class="ln" id="ln-${esc(c.id)}"><span class="ic">·</span><span>${esc(label(c))}</span><span class="cit">${'cited' in c ? (c.cited ? c.cited + ' cit.' : 'no citation') : ''}</span></div>`).join('')}
+      </div>
+      <div>
+        <div class="count">
+          <div class="ct"><b id="cQuotes">0</b><span>quotes found word for word</span></div>
+          <div class="ct"><b id="cProven">0</b><span>statements proven</span></div>
+          <div class="ct" id="boxLook"><b id="cLook">0</b><span>need a lawyer's eyes</span></div>
+          <div class="ct" id="boxOut"><b id="cOut">0</b><span>required items left out</span></div>
+        </div>
+        <div class="flags" id="flags"></div>
+        <div id="verdict"></div>
+        <button class="btn ghost skip" id="skip">Skip to the result</button>
+      </div>
+    </div>
+  </div></section>`;
+
+  let quotes = 0, proven = 0, look = 0, out = 0;
+  const steps = [];
+  original.forEach(c => {
+    steps.push(() => { $('ln-' + c.id).className = 'ln checking'; $('phase').textContent = 'Finding the passages behind: ' + label(c) + '.'; });
+    steps.push(() => {
+      const ok = settled(c), bad = c.kind === 'failed';
+      const ln = $('ln-' + c.id);
+      ln.className = 'ln ' + (bad ? 'bad' : ok ? 'ok' : 'look');
+      ln.querySelector('.ic').textContent = bad ? '✕' : ok ? '✓' : '!';
+      quotes += (c.sources || []).filter(s => s.quote_found !== false).length;
+      if (ok) proven++; else look++;
+      $('cQuotes').textContent = quotes; $('cProven').textContent = proven; $('cLook').textContent = look;
+      if (look) $('boxLook').className = 'ct hot';
+    });
+  });
+  if (missing.length) {
+    steps.push(() => { $('phase').textContent = cover.length ? 'Now the other direction: reading the agreement\'s ' + cover.length + ' closing deliverables against the report.' : 'Now the other direction: what do the documents require that the report never mentions?'; });
+    missing.forEach(mi => steps.push(() => {
+      out++;
+      $('cOut').textContent = out; $('boxOut').className = 'ct alarm';
+      quotes += (mi.sources || []).filter(s => s.quote_found !== false).length; $('cQuotes').textContent = quotes;
+      const where = (mi.sources || []).filter(s => s.side === 'agreement').map(s => s.locator).join(', ');
+      $('flags').insertAdjacentHTML('beforeend', `<div class="flag"><b>Left out:</b> ${esc(mi.title)}<small>Required by ${esc(where)}. Not in the report.</small></div>`);
+    }));
+  }
+  const finish = () => {
+    $('skip').hidden = true;
+    $('runTitle').textContent = missing.length ? 'The report looked finished. ' + plural(missing.length, 'required item is', 'required items are') + ' not in it.' : 'Every statement checked.';
+    $('phase').textContent = (m.original_citations ? 'The original gave ' + m.original_citations + ' citations, all with the same weight. ' : '') + claims.filter(c => c.cited === 0).length + ' of its statements had none.';
+    const r = m.runs;
+    $('verdict').innerHTML = `<div class="verdict">${r ? `<div class="again">
+      <span class="eyebrow">Same tool, same documents, run again with the Visa method</span>
+      <div class="bars">
+        <div><span>${esc(m.produced_by)} alone</span><i style="--w:${100 * r.plain / r.of}%"></i><b>${r.plain} of ${r.of}</b></div>
+        <div class="win"><span>With the method</span><i style="--w:${100 * r.with_method / r.of}%"></i><b>${r.with_method} of ${r.of}</b></div>
+      </div>
+      <small>${esc(r.note)}</small>
+    </div>` : ''}<button class="btn big" id="toReview">Review and sign off</button></div>`;
+    $('toReview').onclick = startReview;
+  };
+  let i = 0;
+  const pace = k => k < original.length * 2 ? (k % 2 ? 150 : 110) : 620;
+  const next = () => {
+    if (i >= steps.length) return finish();
+    steps[i++]();
+    runTimer = setTimeout(next, pace(i));
+  };
+  $('skip').onclick = () => { clearTimeout(runTimer); while (i < steps.length) steps[i++](); finish(); };
+  if (calm) $('skip').onclick(); else runTimer = setTimeout(next, 700);
+}
+
+/* ---------- review ---------- */
+function renderReview() {
+  const m = log.matter || {};
+  const attention = claims.filter(c => !settled(c)).length;
+  const uncited = claims.filter(c => c.cited === 0).length;
+  const ic = log.independent_check;
+  const by = m.produced_by ? esc(m.produced_by) + "'s report" : 'The document';
+  const tiles = [['', doneCount() + ' / ' + items().length, 'initialled or flagged'], [attention ? 'hot' : '', attention, 'need your attention']];
+  if (missing.length) tiles.push(['alarm', missing.length, 'required items left out']);
+  if (claims.some(c => 'cited' in c)) tiles.push(['', uncited, 'had no citation in the original']);
+  if (ic) tiles.push(['', ic.found + ' / ' + ic.quotes, 'quotes confirmed by the checker']);
+  const tabs = [['statements', 'Statements ' + claims.length, ''], ['missing', 'Left out ' + missing.length, 'red'], ['coverage', 'Coverage', ''], ['documents', 'Documents ' + (log.documents || []).length, ''], ['method', 'How it was checked', '']]
+    .filter(([id]) => id !== 'coverage' || (log.coverage || []).length).filter(([id]) => id !== 'missing' || missing.length);
+  $('view').innerHTML = `<div class="wrap">
+    <section class="head">
+      <span class="lab">${m.produced_by ? 'Report by ' + esc(m.produced_by) + ', ' + esc(m.produced_on) : 'Review'}</span>
+      <h1>${esc(m.title || 'Review')}</h1>
+      <p class="sum">${by} makes ${plural(claims.length, 'statement', 'statements')}. <b>${claims.length - attention}</b> ${claims.length - attention === 1 ? 'is' : 'are'} proven from the documents and <b class="y">${attention} ${attention === 1 ? 'needs' : 'need'} your attention</b>.${missing.length ? ' <b class="r">' + plural(missing.length, 'required item is', 'required items are') + ' missing from it.</b>' : ''}</p>
+      <div class="tiles">${tiles.map(([c, b, s]) => `<div class="tile ${c}"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join('')}</div>
+      <div class="progress"><i style="width:${items().length ? Math.round(100 * doneCount() / items().length) : 0}%"></i></div>
+    </section>
+    <nav class="tabs noprint">
+      ${tabs.map(([id, text, c]) => `<button data-tab="${id}" class="${c} ${tab === id ? 'on' : ''}">${text}</button>`).join('')}
+      <button class="btn right" id="toRecord">Sign-off record</button>
+    </nav>
+    <div id="tab"></div></div>`;
+  $('toRecord').onclick = () => go('record');
+  ({ statements: tabStatements, missing: tabMissing, coverage: tabCoverage, documents: tabDocuments, method: tabMethod })[tab]();
+}
+
+function stamp(id) {
+  const k = marks[id];
+  if (!k) return '';
+  return k.d === 'flag' ? '<span class="stamp flagged">FLAG</span>' : `<span class="stamp">${esc(k.by || 'ok')}</span>`;
+}
+
+function tabStatements() {
+  const first = claims.findIndex(settled);
+  $('tab').innerHTML = `<div class="cols">
+    <div class="card"><div id="queue">${claims.map((c, i) => `
+      ${i === first && i > 0 ? '<div class="divider">Proven from the documents</div>' : ''}
+      <div class="row ${c.id === selected ? 'sel' : ''} ${marks[c.id] ? 'done' : ''}" data-id="${esc(c.id)}">
+        <div class="n">${String(i + 1).padStart(2, '0')}</div>
+        <div><div class="t">${esc(label(c))}</div><span class="chip ${c.kind}">${VERDICT[c.kind][0]}</span>${c.cited === 0 ? '<span class="chip">No citation in original</span>' : ''}</div>
+        <div>${stamp(c.id)}</div>
+      </div>`).join('')}</div></div>
+    <div class="card"><div class="detail" id="detail"></div></div>
+  </div>`;
+  renderDetail();
+  const sel = document.querySelector('.row.sel');
+  if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'nearest' });
+}
+
+// wrap the values named in hl.diff / hl.same so the eye lands on what differs and what matches
+function hi(text, hl) {
+  const toks = [...((hl && hl.diff) || []).map(t => [t, 'diff']), ...((hl && hl.same) || []).map(t => [t, 'same'])].sort((a, b) => b[0].length - a[0].length);
+  if (!toks.length) return esc(text);
+  const re = new RegExp(toks.map(([t]) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+  let out = '', last = 0, m;
+  while ((m = re.exec(text))) {
+    out += esc(text.slice(last, m.index)) + `<mark class="${toks.find(([t]) => t === m[0])[1]}">${esc(m[0])}</mark>`;
+    last = m.index + m[0].length;
+  }
+  return out + esc(text.slice(last));
+}
+
+function sourceHtml(s, hl) {
+  const badge = s.quote_found === true ? `<span class="chip verified">${s.quote_match === 'loose' ? 'Found, ignoring punctuation' : 'Found word for word'}</span>`
+    : s.quote_found === false ? '<span class="chip failed">Not found in the document</span>'
+    : s.quote_found === null ? '<span class="chip">Could not be checked</span>' : '';
+  return `<div class="src"><div class="loc">${esc(s.locator)}${s.rank ? ' · <b>' + esc(s.rank) + '</b>' : ''}</div><blockquote>${hi(s.quote, hl)}</blockquote>${badge}</div>`;
+}
+
+function absentHtml(a) {
+  const terms = (a.terms || []).map(t => '“' + esc(t) + '”').join(', ');
+  const result = a.absent_confirmed === true ? '<span class="chip missing">No result</span>'
+    : a.absent_confirmed === false ? `<span class="chip failed">Found: ${esc((a.terms_found || []).join(', '))}</span>` : '';
+  return `<div class="absent">Searched the whole document for ${terms}. ${result}</div>`;
+}
+
+function evidenceHtml(c) {
+  const groups = {}, absentBy = {};
+  (c.sources || []).forEach(s => (groups[s.side || s.file] = groups[s.side || s.file] || []).push(s));
+  (c.absent || []).forEach(a => { const side = /checklist/i.test(a.file || '') ? 'checklist' : a.file; (absentBy[side] = absentBy[side] || []).push(a); });
+  const sides = [...new Set(Object.keys(groups).concat(Object.keys(absentBy)))].sort((a, b) => (a === 'checklist' ? -1 : b === 'checklist' ? 1 : 0));
+  if (!sides.length) return '<p class="why">No passage. This rests on reasoning alone.</p>';
+  return `<div class="sides">${sides.map(k => `<div class="side"><span class="lab">${esc(SIDE[k] || k)}</span>${(groups[k] || []).map(s => sourceHtml(s, c.hl)).join('')}${(absentBy[k] || []).map(absentHtml).join('')}</div>`).join('')}</div>`;
+}
+
+function actionsHtml(id, keys) {
+  const k = marks[id];
+  const said = k ? `<span class="said">${k.d === 'flag' ? 'Flagged' : 'Initialled'} by ${esc(k.by || 'reviewer')} at ${esc(new Date(k.at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))}</span>` : '';
+  return `<div class="actions noprint"><button class="btn go" data-mark="ok" data-for="${esc(id)}">Initial</button><button class="btn" data-mark="flag" data-for="${esc(id)}">Flag</button>${k ? `<button class="btn" data-mark="" data-for="${esc(id)}">Undo</button>` : ''}${said}${keys ? '<span class="keys"><kbd>I</kbd> initial <kbd>F</kbd> flag <kbd>↓</kbd><kbd>↑</kbd> move</span>' : ''}</div>`;
+}
+
+function renderDetail() {
+  const c = claims.find(x => x.id === selected);
+  if (!c) { $('detail').innerHTML = ''; return; }
+  const rev = (log.revisions || []).filter(r => r.claim === c.id);
+  $('detail').innerHTML = `
+    <span class="chip ${c.kind}">${VERDICT[c.kind][0]}</span>${c.group ? `<span class="chip">${esc(c.group)}</span>` : ''}${'cited' in c ? `<span class="chip">${c.cited === 0 ? 'No citation in the original report' : plural(c.cited, 'citation', 'citations') + ' in the original report'}</span>` : ''}
+    <div class="lab" style="margin-top:10px">The report says</div>
+    <h2>${esc(c.text)}</h2>
+    <p class="why">${VERDICT[c.kind][1]}</p>
+    ${rev.map(r => `<div class="note"><b>Corrected.</b> Before: ${esc(r.before)} ${esc(r.reason)}</div>`).join('')}
+    ${evidenceHtml(c)}
+    ${c.check ? `<h3>How it was checked</h3><p style="margin:0">${esc(c.check)}</p>` : ''}
+    ${c.note ? `<div class="note">${esc(c.note)}</div>` : ''}
+    ${c.technical ? `<details style="margin-top:10px"><summary>Technical detail</summary><code>${esc(c.technical)}</code></details>` : ''}
+    ${actionsHtml(c.id, true)}`;
+}
+
+function tabMissing() {
+  $('tab').innerHTML = `<div class="cards">${missing.map(mi => `
+    <div class="card out"><div class="detail">
+      <span class="chip missing">Left out</span><span class="chip">Not mentioned in the report</span> ${stamp(mi.id)}
+      <h2>${esc(mi.title)}</h2>
+      <p class="why">${esc(mi.text)}</p>
+      ${evidenceHtml(mi)}
+      ${actionsHtml(mi.id, false)}
+    </div></div>`).join('')}</div>`;
+}
+
+function tabCoverage() {
+  const rows = log.coverage || [];
+  const n = s => rows.filter(r => r.status === s).length;
+  $('tab').innerHTML = `
+    <p class="sum" style="margin:0 0 12px;font-size:17px">The agreement lists ${plural(rows.length, 'closing deliverable', 'closing deliverables')}. The checklist has ${n('listed')} as they stand, ${n('differs')} with a difference, and leaves out ${n('missing')}.</p>
+    <div class="card scroll" style="margin-bottom:44px"><table>
+      <tr><th>Agreement</th><th>Requirement</th><th>Checklist item</th><th>Result</th></tr>
+      ${rows.map(r => `<tr class="${r.status === 'missing' ? 'miss' : ''}"><td class="mono">${esc(r.section)}</td><td>${esc(r.requirement)}</td><td class="mono">${esc(r.checklist_item || 'none')}</td><td><span class="chip ${esc(r.status)}">${esc(COVER[r.status] || r.status)}</span></td></tr>`).join('')}
+    </table></div>`;
+}
+
+function tabDocuments() {
+  const docs = log.documents || [];
+  const n = r => docs.filter(d => roleOf(d) === r).length;
+  const parts = [[n('relied'), 'relied on'], [n('consulted'), 'read but not relied on'], [n('set_aside'), 'set aside'], [n('unreadable'), 'could not be read']].filter(([k]) => k);
+  $('tab').innerHTML = `
+    <p class="sum" style="margin:0 0 12px;font-size:17px">${plural(docs.length, 'document', 'documents')} in the file: ${parts.map(([k, t]) => k + ' ' + t).join(', ')}.</p>
+    <div class="card scroll" style="margin-bottom:44px"><table>
+      <tr><th>Document</th><th>Status</th><th>Why</th></tr>
+      ${docs.map(d => { const r = roleOf(d); return `<tr class="${r === 'unreadable' ? 'miss' : ''}"><td class="mono">${esc(d.file)}</td><td><span class="chip ${ROLE[r][1]}">${esc(d.role_label || ROLE[r][0])}</span></td><td>${esc(d.note)}</td></tr>`; }).join('')}
+    </table></div>`;
+}
+
+function tabMethod() {
+  const ic = log.independent_check;
+  $('tab').innerHTML = `<div class="cards">
+    <div class="card"><ol class="path">${(log.path || []).map(p => `<li><b>${esc(p.step)}</b>${p.detail ? `<small>${esc(p.detail)}</small>` : ''}</li>`).join('') || '<li>No narrative in this log.</li>'}</ol></div>
+    ${ic ? `<div class="card"><div class="detail"><span class="lab">Independent check</span>
+      <p style="margin:6px 0 0">A separate program opened the documents and looked for every quote. It found ${ic.found} of ${ic.quotes}${ic.not_found ? ', and could not find ' + ic.not_found : ''}.${ic.absences ? ' It also confirmed ' + ic.absences_confirmed + ' of ' + ic.absences + ' claims that something is absent from a document.' : ''}</p></div></div>` : ''}
+  </div>`;
+}
+
+/* ---------- sign-off record ---------- */
+function renderRecord() {
+  const m = log.matter || {};
+  const ic = log.independent_check;
+  const decided = id => { const k = marks[id]; return k ? (k.d === 'flag' ? 'Flagged' : 'Initialled') + ' ' + esc(k.by || '') + ', ' + esc(new Date(k.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })) : 'Not yet reviewed'; };
+  const where = c => [...new Set((c.sources || []).map(s => (SIDE[s.side] || s.file) + ', ' + s.locator))].map(esc).join('<br>');
+  $('view').innerHTML = `<div class="wrap">
+    <p class="noprint" style="margin:18px 0 0;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="backR">Back to the review</button><button class="btn go" id="print">Print or save as PDF</button></p>
+    <section class="record">
+      <span class="lab">Sign-off record</span>
+      <h1>${esc(m.title || 'Review')}</h1>
+      <div class="meta">${m.produced_by ? 'Document reviewed: report by ' + esc(m.produced_by) + ', ' + esc(m.produced_on) + '. ' : ''}Record generated ${esc(new Date().toLocaleString([], { dateStyle: 'long', timeStyle: 'short' }))}. ${doneCount()} of ${items().length} items reviewed.</div>
+      <div class="scroll"><table>
+        <tr><th>#</th><th>Statement</th><th>Finding</th><th>Checked against</th><th>Reviewer</th></tr>
+        ${claims.map((c, i) => `<tr><td class="mono">${i + 1}</td><td>${esc(c.text)}${c.note ? '<br><i>' + esc(c.note) + '</i>' : ''}</td><td><span class="chip ${c.kind}">${VERDICT[c.kind][0]}</span></td><td>${where(c)}</td><td>${decided(c.id)}</td></tr>`).join('')}
+      </table></div>
+      ${missing.length ? `<h3 class="lab" style="margin:26px 0 6px">Required by the documents and left out of the report</h3>
+      <div class="scroll"><table>
+        <tr><th>#</th><th>Item</th><th>Required by</th><th>Reviewer</th></tr>
+        ${missing.map((c, i) => `<tr class="miss"><td class="mono">${i + 1}</td><td><b>${esc(c.title)}</b><br>${esc(c.text)}</td><td>${where(c)}</td><td>${decided(c.id)}</td></tr>`).join('')}
+      </table></div>` : ''}
+      ${ic ? `<p class="meta" style="margin:22px 0 0">Quotes confirmed against the documents: ${ic.found} of ${ic.quotes}.${ic.absences ? ' Absences confirmed by search: ' + ic.absences_confirmed + ' of ' + ic.absences + '.' : ''}</p>` : ''}
+    </section></div>`;
+  $('backR').onclick = () => go('review');
+  $('print').onclick = () => window.print();
+}
+
+/* ---------- events ---------- */
+$('brand').onclick = () => go('home');
+$('initials').value = store.get('initials') || '';
+$('initials').oninput = e => { store.set('initials', e.target.value.trim().toUpperCase()); e.target.classList.remove('need'); };
+
+function mark(id, d) {
+  const by = $('initials').value.trim().toUpperCase();
+  if (d && !by) { $('initials').classList.add('need'); $('initials').focus(); return; }
+  if (d) marks[id] = { d, by, at: new Date().toISOString() }; else delete marks[id];
+  store.set(key, marks);
+  if (d && tab === 'statements') {  // move on to the next statement not yet reviewed
+    const next = claims.find(c => !marks[c.id]);
+    if (next) selected = next.id;
+  }
+  render();
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-tab]');
+  if (t) { tab = t.dataset.tab; render(); return; }
+  const row = e.target.closest('.row[data-id]');
+  if (row) { selected = row.dataset.id; tabStatements(); return; }
+  const b = e.target.closest('[data-mark]');
+  if (b) mark(b.dataset.for, b.dataset.mark);
+});
+
+document.addEventListener('keydown', e => {
+  if (view !== 'review' || tab !== 'statements' || e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
+  const i = claims.findIndex(c => c.id === selected);
+  const k = e.key.toLowerCase();
+  if (k === 'arrowdown' || k === 'j') { selected = claims[Math.min(claims.length - 1, i + 1)].id; tabStatements(); e.preventDefault(); }
+  else if (k === 'arrowup' || k === 'k') { selected = claims[Math.max(0, i - 1)].id; tabStatements(); e.preventDefault(); }
+  else if (k === 'i') mark(selected, 'ok');
+  else if (k === 'f') mark(selected, 'flag');
+});
+
+render();
+</script>
+</body>
+</html>
