@@ -1,6 +1,8 @@
 # Saul: A Verification Layer for Legal AI Agents
 
-**Saul team — LLM x Law Hackathon Paris #2 (Stanford Law × Mistral AI), 4 October 2026**
+**Mickael Dali · Cédric Brzyski · Baptiste Ferszterowski · Himanshu Garg · Boumanzah Youssef**
+
+*Saul team — LLM x Law Hackathon Paris #2 (Stanford Law × Mistral AI), 4 October 2026*
 
 *Code: `saul/app` (application), `skills/` (agent skills), `bench/` (benchmark harness).*
 
