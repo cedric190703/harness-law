@@ -102,12 +102,39 @@ open .cache/cartes/<nom>/carte.html
 Si le script signale un extrait introuvable, recopie l'extrait exact puis
 relance `conclure`. Ne change pas ton verdict pour faire passer un élément au vert.
 
-## 6. Répondre
+## 6. Proposer les corrections : `reecritures.json`
+
+`conclure` liste les passages orange ou rouges. Le script tranche seul les cas
+sans texte sûr (décision introuvable : « source à trouver » ; circulaire sans
+texte de rang supérieur vérifié dans la réponse ; texte pas en vigueur : « à
+réécrire à la main »). Pour les autres, il indique « à proposer », avec les
+fichiers `textes/<clé>.txt` utilisables et la référence exacte à citer.
+
+```json
+[
+  { "id": "A4", "source": "A4-1",
+    "passage": "le passage réécrit, juste à la date des faits, qui cite la source comme indiqué",
+    "extrait": "copie EXACTE d'au moins dix mots du texte de cette source",
+    "explication": "une phrase : ce qui change et pourquoi" }
+]
+```
+
+- Garde la phrase d'origine ; change seulement ce qui est faux ou imprécis.
+- Cite uniquement la référence donnée par le script. Toute autre référence
+  (article, pourvoi, numéro de texte) fait écarter la proposition.
+- Si le texte ne permet pas d'écrire un passage juste, n'écris rien pour cette
+  affirmation : elle reste « à réécrire à la main ».
+
+Relance `conclure` : le panneau de détail de la carte montre la proposition
+(barré / souligné), sa source et l'extrait vérifié mot pour mot.
+
+## 7. Répondre
 
 En 5 à 8 lignes, en français courant :
 
 - le compte : « 12 affirmations : 7 vérifiées, 3 à revoir, 2 fausses » ;
-- une ligne par rouge et par orange, avec la raison en mots simples ;
+- une ligne par rouge et par orange, avec la raison en mots simples et la
+  correction retenue s'il y en a une ;
 - le chemin de la carte ;
 - ce qui n'a pas pu être vérifié : base non connectée, date des faits inconnue,
   affirmations sans source.

@@ -2,6 +2,7 @@ import { avecCache } from "./cache";
 
 export const MODELE_EXTRACTION = process.env.MISTRAL_MODEL_EXTRACTION ?? "mistral-large-latest";
 export const MODELE_JUGE = process.env.MISTRAL_MODEL_JUGE ?? "mistral-large-latest";
+export const MODELE_REDACTEUR = process.env.MISTRAL_MODEL_REDACTEUR ?? MODELE_JUGE;
 
 interface Message {
   role: "system" | "user";

@@ -165,6 +165,46 @@ describe("conclusion : sans preuve, rien n'est vert", () => {
   });
 });
 
+describe("réécritures proposées par l'agent", () => {
+  const PERIODE = {
+    id: "A2",
+    source: "A2-1",
+    passage: "Sa période d'essai est de deux mois, renouvelable une fois (pièce n° 1).",
+    extrait: "La période d'essai est fixée à deux mois, renouvelable une fois",
+    explication: "Le contrat prévoit deux mois, pas six.",
+  };
+  test("chaque orange ou rouge reçoit une proposition ou ce qu'il reste à faire", async () => {
+    const carte = conclure(await preparation(), [SOUTIENT_A1, CONTREDIT_A2], "t", [PERIODE]);
+    const r = Object.fromEntries(carte.resultats.map((x) => [x.affirmation.id, x.reecriture ?? null]));
+    expect(r.A1).toBeNull(); // vert
+    expect(r.A4).toBeNull(); // gris
+    expect(r.A2?.type).toBe("remplacer");
+    expect(r.A2?.propose).toBe(PERIODE.passage);
+    expect(r.A2?.source?.citation).toBe("pièce n° 1");
+    expect(r.A3?.type).toBe("rang_superieur"); // circulaire, aucun texte de rang supérieur vérifié dans la réponse
+    expect(r.A5?.type).toBe("source_a_trouver");
+    expect(r.A5?.propose).toBe("Le contrat a été signé le 3 mars 2020 [source à trouver].");
+  });
+  test("sans extrait retrouvé mot pour mot, pas de proposition", async () => {
+    const invente = { ...PERIODE, extrait: "La période d'essai est fixée à deux mois, non renouvelable" };
+    const carte = conclure(await preparation(), [SOUTIENT_A1, CONTREDIT_A2], "t", [invente]);
+    const a2 = carte.resultats[1].reecriture;
+    expect(a2?.type).toBe("a_la_main");
+    expect(a2?.propose).toBeNull();
+  });
+  test("la carte affiche la réécriture dans les données de la page", async () => {
+    const html = rendreCarte(conclure(await preparation(), [SOUTIENT_A1, CONTREDIT_A2], "t", [PERIODE]));
+    const json = JSON.parse(html.split('<script id="donnees" type="application/json">')[1].split("</script>")[0]);
+    expect(json.revisions.A2).toEqual({
+      prefixe: "Sa période d'essai est de ",
+      retire: "six mois",
+      ajoute: "deux mois, renouvelable une fois",
+      suffixe: " (pièce n° 1).",
+    });
+    expect(html).toContain("function blocReecriture");
+  });
+});
+
 describe("version en vigueur à la date des faits", () => {
   const article: SourceOfficielle = {
     base: "Légifrance",

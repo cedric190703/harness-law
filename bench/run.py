@@ -136,7 +136,8 @@ def main() -> None:
     if args.tool_choice:
         env["BENCH_MISTRAL_TOOL_CHOICE"] = args.tool_choice
     key_for = {"claude": "ANTHROPIC_API_KEY", "mistral": "MISTRAL_API_KEY", "codestral": "MISTRAL_API_KEY", "magistral": "MISTRAL_API_KEY", "gpt": "OPENAI_API_KEY", "o": "OPENAI_API_KEY"}
-    needed = sorted({key for name in [args.model.split("/")[-1], *args.judges]
+    # Un juge claude-code-* passe par l'abonnement Claude Code (bench/lab.py) : pas de clé API.
+    needed = sorted({key for name in [args.model.split("/")[-1], *args.judges] if not name.startswith("claude-code")
                      for prefix, key in key_for.items() if name.startswith(prefix)})
     missing = [k for k in needed if not env.get(k)]
     if missing:

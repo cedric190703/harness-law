@@ -2,6 +2,8 @@
 
 import { useMemo, useRef, useState } from "react";
 import { DATE_FAITS_DEMO, MEMO_DEMO } from "@/demo/memo";
+import { memoFinalEnTexte, preuve, revision, type Boucle, type Difference } from "@/lib/boucle";
+import { diffMots, resumePourAvocat, type Point } from "@/lib/correction";
 import { RANGS } from "@/lib/hierarchie";
 import type {
   Affirmation,
@@ -39,6 +41,8 @@ export default function Visa() {
   const [selection, setSelection] = useState<string | null>(null);
   const [erreur, setErreur] = useState<string | null>(null);
   const [debut, setDebut] = useState<string>("");
+  const [vue, setVue] = useState<"verifie" | "corrige">("verifie");
+  const [boucle, setBoucle] = useState<Boucle | null>(null);
   const journalRef = useRef<HTMLDivElement>(null);
 
   async function lancer() {
@@ -48,6 +52,8 @@ export default function Visa() {
     setJournal([]);
     setSelection(null);
     setErreur(null);
+    setVue("verifie");
+    setBoucle(null);
     setDebut(new Date().toISOString());
     const res = await fetch("/api/verifier", {
       method: "POST",
@@ -82,6 +88,9 @@ export default function Visa() {
       setDateRetenue(e.dateFaits);
     } else if (e.type === "resultat") {
       setResultats((r) => ({ ...r, [e.resultat.affirmation.id]: e.resultat }));
+    } else if (e.type === "boucle") {
+      setBoucle(e.boucle);
+      setVue("corrige");
     } else if (e.type === "erreur") {
       setErreur(e.message);
     }
@@ -93,7 +102,21 @@ export default function Visa() {
     return s;
   }, [resultats]);
 
-  const choisi = selection ? resultats[selection] : null;
+  // Après la boucle, l'état courant est celui de la dernière version (mêmes identifiants qu'en version 1).
+  const finale = boucle ? boucle.versions[boucle.versions.length - 1] : null;
+  const courants = useMemo(
+    () => (finale ? Object.fromEntries(finale.resultats.map((r) => [r.affirmation.id, r])) : resultats),
+    [finale, resultats],
+  );
+  const choisi = selection ? courants[selection] : null;
+
+  /** Ouvre le détail d'une affirmation et amène son passage à l'écran. */
+  function montrer(id: string) {
+    setSelection(id);
+    requestAnimationFrame(() =>
+      document.querySelector(`[data-aff="${id}"]`)?.scrollIntoView({ block: "center", behavior: "smooth" }),
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -134,15 +157,33 @@ export default function Visa() {
         <>
           <div className="no-print grid flex-1 grid-cols-1 gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <section className="border-r border-trait p-6">
-              <Synthese synthese={synthese} total={affirmations.length} enCours={phase === "analyse"} date={dateRetenue} />
-              <Document texte={texte} affirmations={affirmations} resultats={resultats} selection={selection} choisir={setSelection} />
+              <Synthese
+                synthese={synthese}
+                total={affirmations.length}
+                enCours={phase === "analyse"}
+                date={dateRetenue}
+                compteurs={!boucle}
+              />
+              <ResumeAvocat resultats={courants} enCours={phase === "analyse"} montrer={montrer} />
+              <Versions boucle={boucle} enCours={phase === "analyse"} v1={synthese} />
+              <Onglets vue={vue} setVue={setVue} boucle={boucle} />
+              {vue === "verifie" ? (
+                <Document texte={texte} affirmations={affirmations} resultats={resultats} selection={selection} choisir={setSelection} />
+              ) : (
+                <MemoFinal boucle={boucle} enCours={phase === "analyse"} selection={selection} choisir={setSelection} />
+              )}
             </section>
             <section className="flex flex-col bg-white">
               <div className="flex-1 overflow-auto p-6">
                 {choisi ? (
-                  <Detail r={choisi} dateFaits={dateRetenue} />
+                  <Detail r={choisi} dateFaits={dateRetenue} boucle={boucle} />
                 ) : (
-                  <Liste affirmations={affirmations} resultats={resultats} choisir={setSelection} />
+                  <Liste
+                    affirmations={affirmations}
+                    resultats={courants}
+                    supprimes={finale?.supprimes ?? []}
+                    choisir={setSelection}
+                  />
                 )}
                 {erreur && <p className="mt-4 rounded bg-rouge-fond p-3 text-sm text-rouge">{erreur}</p>}
               </div>
@@ -157,6 +198,7 @@ export default function Visa() {
             resultats={resultats}
             journal={journal}
             synthese={synthese}
+            boucle={boucle}
           />
         </>
       )}
@@ -223,11 +265,13 @@ function Synthese({
   total,
   enCours,
   date,
+  compteurs,
 }: {
   synthese: Record<Statut, number>;
   total: number;
   enCours: boolean;
   date: string;
+  compteurs: boolean;
 }) {
   const faits = synthese.vert + synthese.orange + synthese.rouge + synthese.gris;
   return (
@@ -236,11 +280,12 @@ function Synthese({
         {total === 0 ? "Lecture du texte…" : `${faits}/${total} affirmations vérifiées`}
         {enCours && total > 0 && faits < total && " …"}
       </span>
-      {(["rouge", "orange", "vert", "gris"] as Statut[]).map((s) => (
-        <span key={s} className={`rounded-full px-2.5 py-0.5 ${STYLE[s].fond} ${STYLE[s].texte}`}>
-          {synthese[s]} {STYLE[s].libelle.toLowerCase()}
-        </span>
-      ))}
+      {compteurs &&
+        (["rouge", "orange", "vert", "gris"] as Statut[]).map((s) => (
+          <span key={s} className={`rounded-full px-2.5 py-0.5 ${STYLE[s].fond} ${STYLE[s].texte}`}>
+            {synthese[s]} {STYLE[s].libelle.toLowerCase()}
+          </span>
+        ))}
       {date && <span className="ml-auto text-gris">Date des faits : {formatDate(date)}</span>}
     </div>
   );
@@ -286,6 +331,7 @@ function Document({
         return (
           <mark
             key={i}
+            data-aff={s.id}
             onClick={() => choisir(s.id!)}
             className={`cursor-pointer rounded-sm border-b-2 px-0.5 text-encre ${st.fond} ${st.trait} ${
               selection === s.id ? "ring-2 ring-accent" : ""
@@ -300,13 +346,265 @@ function Document({
   );
 }
 
+/** Le résumé pour l'avocat : ce qu'il faut corriger avant d'envoyer, ce qu'il faut relire, ce qui est vérifié. */
+function ResumeAvocat({
+  resultats,
+  enCours,
+  montrer,
+}: {
+  resultats: Record<string, ResultatAffirmation>;
+  enCours: boolean;
+  montrer: (id: string) => void;
+}) {
+  const r = useMemo(() => resumePourAvocat(Object.values(resultats)), [resultats]);
+  if (Object.keys(resultats).length === 0) return null;
+  const ligne = (statut: Statut, titre: string, points: Point[], vide: string) => (
+    <div className="grid grid-cols-[11rem_minmax(0,1fr)] items-baseline gap-x-2">
+      <span className={`font-semibold ${STYLE[statut].texte}`}>
+        {titre} ({points.length})
+      </span>
+      <div className="flex flex-wrap gap-1.5">
+        {points.length === 0 ? (
+          <span className="text-gris">{enCours ? "…" : vide}</span>
+        ) : (
+          points.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => montrer(p.id)}
+              title={p.resume}
+              className={`rounded-full border px-2.5 py-0.5 text-left text-[13px] hover:shadow-sm ${STYLE[statut].fond} ${STYLE[statut].trait}`}
+            >
+              <span className="font-semibold">{p.id}</span> · {p.motif}
+            </button>
+          ))
+        )}
+      </div>
+    </div>
+  );
+  return (
+    <div className="mb-5 space-y-2 rounded-lg border border-trait bg-white p-4 text-sm">
+      {ligne("rouge", "À corriger avant envoi", r.aCorriger, "rien")}
+      {ligne("orange", "À relire", r.aRelire, "rien")}
+      <div className="grid grid-cols-[11rem_minmax(0,1fr)] items-baseline gap-x-2">
+        <span className={`font-semibold ${STYLE.vert.texte}`}>Vérifié ({r.verifies})</span>
+        <span>
+          {r.verifies} affirmation{r.verifies > 1 ? "s" : ""} conforme{r.verifies > 1 ? "s" : ""} au texte officiel
+          {r.nonVerifiables > 0 && (
+            <span className="text-gris">
+              {" "}
+              · {r.nonVerifiables} non vérifiable{r.nonVerifiables > 1 ? "s" : ""}, à contrôler à la main
+            </span>
+          )}
+          {enCours && " …"}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** Les versions successives du mémo, avec le compte à chaque tour. */
+function Versions({ boucle, enCours, v1 }: { boucle: Boucle | null; enCours: boolean; v1: Record<Statut, number> }) {
+  const versions = boucle?.versions ?? [];
+  const compte = (s: Record<Statut, number>) => (
+    <span className="whitespace-nowrap">
+      <span className="text-rouge">{s.rouge} faux</span> · <span className="text-orange">{s.orange} à revoir</span> ·{" "}
+      <span className="text-vert">{s.vert} vérifiés</span>
+    </span>
+  );
+  return (
+    <div className="mb-4 rounded-lg border border-trait bg-white p-3 text-sm">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span className="font-semibold">Version 1</span> {compte(versions[0]?.synthese ?? v1)}
+        {versions.slice(1).map((v) => (
+          <span key={v.numero} className="flex items-center gap-2">
+            <span className="text-gris">→</span>
+            <span className="font-semibold">Version {v.numero}</span> {compte(v.synthese)}
+          </span>
+        ))}
+        {enCours && (
+          <span className="text-gris">
+            → {boucle ? "l'IA corrige…" : "vérification de la version 1…"}
+          </span>
+        )}
+      </div>
+      {boucle?.arret && !enCours && <p className="mt-1 text-gris">{boucle.arret}</p>}
+      <p className="mt-1 text-[12px] text-gris">
+        À chaque tour, Visa renvoie à l&apos;IA qui a écrit le mémo les passages faux ou à revoir, avec la preuve. Une correction
+        n&apos;est gardée que si sa revérification la met en vert ou en orange.
+      </p>
+    </div>
+  );
+}
+
+function Onglets({
+  vue,
+  setVue,
+  boucle,
+}: {
+  vue: "verifie" | "corrige";
+  setVue: (v: "verifie" | "corrige") => void;
+  boucle: Boucle | null;
+}) {
+  const n = boucle ? boucle.versions.length : 0;
+  const onglet = (v: "verifie" | "corrige", libelle: string) => (
+    <button
+      onClick={() => setVue(v)}
+      className={`-mb-px border-b-2 px-3 py-1.5 text-sm ${
+        vue === v ? "border-accent font-medium text-accent" : "border-transparent text-gris hover:text-encre"
+      }`}
+    >
+      {libelle}
+    </button>
+  );
+  return (
+    <div className="mb-3 flex gap-1 border-b border-trait">
+      {onglet("verifie", "Version 1, vérifiée")}
+      {onglet("corrige", n > 1 ? `Mémo final (version ${n}), en révision` : "Mémo final, en révision")}
+    </div>
+  );
+}
+
+/** Le passage en mode révision : barré ce qui est retiré, souligné ce que l'IA a corrigé. */
+function PassageRevise({ d }: { d: Difference }) {
+  if (d.apres === null) return <del className="bg-rouge-fond/60 text-rouge decoration-rouge">{d.avant}</del>;
+  if (d.tour === null) {
+    const st = STYLE[d.resultat?.statut ?? "gris"];
+    return (
+      <>
+        <span className={`border-b-2 border-dashed ${st.trait} ${st.fond}`}>{d.avant}</span>
+        <span className={`ml-1 whitespace-nowrap rounded px-1 font-sans text-[11px] font-semibold ${st.fond} ${st.texte}`}>
+          {d.resultat?.statut === "rouge" ? "reste faux" : "à relire"}
+        </span>
+      </>
+    );
+  }
+  const m = diffMots(d.avant, d.apres);
+  // Souligné de la couleur de la revérification : vert, ou orange s'il reste à relire.
+  const st = STYLE[d.resultat?.statut ?? "vert"];
+  return (
+    <>
+      {m.prefixe}
+      {m.retire && <del className="bg-rouge-fond/60 text-rouge decoration-rouge">{m.retire}</del>}
+      {m.retire && m.ajoute && " "}
+      {m.ajoute && (
+        <ins className={`underline decoration-current decoration-2 underline-offset-2 ${st.fond} ${st.texte}`}>{m.ajoute}</ins>
+      )}
+      {m.suffixe}
+    </>
+  );
+}
+
+function Revision({ boucle, selection, choisir }: { boucle: Boucle; selection?: string | null; choisir?: (id: string) => void }) {
+  const { segments, differences } = useMemo(() => revision(boucle), [boucle]);
+  return (
+    <>
+      <article className="whitespace-pre-wrap rounded-lg border border-trait bg-white p-6 font-serif text-[15.5px] leading-[1.75]">
+        {segments.map((s, i) => {
+          if ("texte" in s) return <span key={i}>{s.texte}</span>;
+          const d = s.difference;
+          return (
+            <span
+              key={i}
+              data-aff={d.id}
+              onClick={() => choisir?.(d.id)}
+              className={`${choisir ? "cursor-pointer" : ""} rounded-sm ${selection === d.id ? "ring-2 ring-accent" : ""}`}
+            >
+              <PassageRevise d={d} />
+              <sup className="ml-0.5 font-sans text-[10px] font-semibold text-accent">[{d.note}]</sup>
+            </span>
+          );
+        })}
+      </article>
+      {differences.length > 0 && (
+        <ol className="mt-4 space-y-2 text-[13px]">
+          {differences.map((d) => (
+            <li key={d.id} className="flex gap-2">
+              <span className="w-7 shrink-0 font-semibold text-accent">[{d.note}]</span>
+              <div className="min-w-0">
+                <button onClick={() => choisir?.(d.id)} className="font-semibold">
+                  {d.id}
+                </button>{" "}
+                ·{" "}
+                {d.apres === null ? (
+                  <span>supprimé par l&apos;IA (tour {d.tour})</span>
+                ) : d.tour === null ? (
+                  <span className={STYLE[d.resultat!.statut].texte}>
+                    {d.resultat!.statut === "rouge" ? "reste faux" : "à relire"} : {d.resultat!.message}
+                  </span>
+                ) : (
+                  <>
+                    <span className={STYLE[d.resultat!.statut].texte}>
+                      corrigé par l&apos;IA (tour {d.tour}), revérifié : {STYLE[d.resultat!.statut].libelle.toLowerCase()}
+                    </span>
+                    <div className="mt-0.5 text-gris">{preuve(d.resultat)}</div>
+                  </>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
+    </>
+  );
+}
+
+function MemoFinal({
+  boucle,
+  enCours,
+  selection,
+  choisir,
+}: {
+  boucle: Boucle | null;
+  enCours: boolean;
+  selection: string | null;
+  choisir: (id: string) => void;
+}) {
+  const [copie, setCopie] = useState<"" | "ok" | "echec">("");
+  if (!boucle) {
+    return (
+      <p className="text-sm text-gris">
+        {enCours ? "La boucle de correction démarre une fois la version 1 vérifiée…" : "Pas de boucle de correction."}
+      </p>
+    );
+  }
+  const b = boucle;
+  async function copier() {
+    try {
+      await navigator.clipboard.writeText(memoFinalEnTexte(b));
+      setCopie("ok");
+    } catch {
+      setCopie("echec");
+    }
+    setTimeout(() => setCopie(""), 2500);
+  }
+  return (
+    <div>
+      <div className="mb-3 flex flex-wrap items-center gap-3 text-sm">
+        <p className="flex-1 text-gris">
+          Différences entre la version 1 et la version {b.versions.length} : barré, ce que l&apos;IA a retiré ; souligné, ce
+          qu&apos;elle a corrigé et que Visa a revérifié. En pointillé, ce qui reste signalé.
+        </p>
+        <button
+          onClick={copier}
+          className="rounded-md border border-accent px-3 py-1.5 font-medium text-accent hover:bg-accent hover:text-white"
+        >
+          {copie === "ok" ? "Copié" : copie === "echec" ? "Copie impossible" : "Copier le mémo final"}
+        </button>
+      </div>
+      <Revision boucle={b} selection={selection} choisir={choisir} />
+    </div>
+  );
+}
+
 function Liste({
   affirmations,
   resultats,
+  supprimes,
   choisir,
 }: {
   affirmations: Affirmation[];
   resultats: Record<string, ResultatAffirmation>;
+  supprimes: string[];
   choisir: (id: string) => void;
 }) {
   const ordre: (Statut | "attente")[] = ["rouge", "orange", "gris", "vert", "attente"];
@@ -319,6 +617,14 @@ function Liste({
       <p className="mb-3 text-sm text-gris">Cliquez sur une affirmation pour voir la preuve.</p>
       {tries.map((a) => {
         const r = resultats[a.id];
+        if (supprimes.includes(a.id)) {
+          return (
+            <div key={a.id} className="rounded-lg border-l-4 border-trait bg-gris-fond p-3 text-left">
+              <div className="text-xs font-semibold text-gris">{a.id} · Supprimé par l&apos;IA</div>
+              <div className="mt-1 text-sm text-gris line-through">{a.resume}</div>
+            </div>
+          );
+        }
         const st = STYLE[r?.statut ?? "attente"];
         return (
           <button
@@ -331,8 +637,11 @@ function Liste({
                 {a.id} · {st.libelle}
               </span>
             </div>
-            <div className="mt-1 text-sm">{a.resume}</div>
+            <div className="mt-1 text-sm">{r && r.affirmation.passage !== a.passage ? r.affirmation.resume : a.resume}</div>
             {r && r.statut !== "vert" && <div className="mt-1 text-xs text-gris">{r.message}</div>}
+            {r && r.affirmation.passage !== a.passage && (
+              <div className="mt-1 text-xs font-medium text-vert">Corrigé par l&apos;IA, revérifié</div>
+            )}
           </button>
         );
       })}
@@ -340,7 +649,7 @@ function Liste({
   );
 }
 
-function Detail({ r, dateFaits }: { r: ResultatAffirmation; dateFaits: string }) {
+function Detail({ r, dateFaits, boucle }: { r: ResultatAffirmation; dateFaits: string; boucle: Boucle | null }) {
   const st = STYLE[r.statut];
   return (
     <div>
@@ -351,8 +660,35 @@ function Detail({ r, dateFaits }: { r: ResultatAffirmation; dateFaits: string })
         <p className="mt-1 font-serif text-[15px]">« {r.affirmation.passage} »</p>
         <p className="mt-2 text-sm">{r.message}</p>
       </div>
+      <Historique id={r.affirmation.id} boucle={boucle} />
       {r.verifications.map((v, i) => (
         <SourceDetail key={i} v={v} dateFaits={dateFaits} />
+      ))}
+    </div>
+  );
+}
+
+/** Ce que la boucle a fait de ce passage : version 1, puis chaque tentative de l'IA. */
+function Historique({ id, boucle }: { id: string; boucle: Boucle | null }) {
+  if (!boucle) return null;
+  const v1 = boucle.versions[0].resultats.find((r) => r.affirmation.id === id);
+  const tentatives = boucle.tours.flatMap((t) => t.tentatives.filter((x) => x.id === id).map((x) => ({ ...x, tour: t.numero })));
+  if (!v1 || tentatives.length === 0) return null;
+  return (
+    <div className="mt-4 rounded-lg border border-trait bg-white p-4 text-sm">
+      <div className="text-xs font-bold uppercase tracking-wide text-gris">Correction par l&apos;IA</div>
+      <div className="mt-2">
+        <span className="font-medium">Version 1</span> ·{" "}
+        <span className={STYLE[v1.statut].texte}>{STYLE[v1.statut].libelle.toLowerCase()}</span>
+        <p className="font-serif text-[14px] text-gris">« {v1.affirmation.passage} »</p>
+      </div>
+      {tentatives.map((t) => (
+        <div key={t.tour} className="mt-2 border-t border-trait pt-2">
+          <span className="font-medium">Tour {t.tour}</span> ·{" "}
+          <span className={t.retenue ? "text-vert" : "text-rouge"}>{t.retenue ? "correction gardée" : "correction rejetée"}</span>
+          <span className="text-gris"> ({t.raison})</span>
+          <p className="font-serif text-[14px]">{t.propose ? `« ${t.propose} »` : "Passage supprimé."}</p>
+        </div>
       ))}
     </div>
   );
@@ -481,6 +817,7 @@ const COULEUR_ACTEUR: Record<EntreeJournal["acteur"], string> = {
   Chercheur: "text-[#0e7490]",
   Règles: "text-[#4d7c0f]",
   "Avocat adverse": "text-rouge",
+  Rédacteur: "text-[#be185d]",
 };
 
 function Journal({ entrees, refConteneur }: { entrees: EntreeJournal[]; refConteneur: React.RefObject<HTMLDivElement | null> }) {
@@ -509,7 +846,9 @@ function Audit(p: {
   resultats: Record<string, ResultatAffirmation>;
   journal: EntreeJournal[];
   synthese: Record<Statut, number>;
+  boucle: Boucle | null;
 }) {
+  const b = p.boucle;
   return (
     <div className="hidden p-10 text-[12px] print:block">
       <h1 className="font-serif text-2xl font-semibold">Journal d&apos;audit Visa</h1>
@@ -551,6 +890,42 @@ function Audit(p: {
           </div>
         );
       })}
+      {b && (
+        <>
+          <h2 className="mt-6 font-serif text-lg font-semibold">Tours de correction</h2>
+          <p>
+            {b.versions.map((v) => `Version ${v.numero} : ${v.synthese.rouge} fausses, ${v.synthese.orange} à revoir, ${v.synthese.vert} vérifiées`).join(" → ")}.{" "}
+            {b.arret}
+          </p>
+          {b.tours.map((t) => (
+            <div key={t.numero} className="mt-3 break-inside-avoid border-t border-trait pt-2">
+              <div className="font-semibold">Tour {t.numero}</div>
+              <div>
+                Signalé à l&apos;IA : {t.signales.map((x) => `${x.id} (${STYLE[x.statut].libelle.toLowerCase()} : ${x.message})`).join(" ; ")}
+              </div>
+              {t.tentatives.map((x) => (
+                <div key={x.id} className="pl-3">
+                  {x.id} — {x.retenue ? "corrigé" : "correction rejetée"} ({x.raison}) : {x.propose ? `« ${x.propose} »` : "passage supprimé"}
+                </div>
+              ))}
+            </div>
+          ))}
+          <div className="mt-3">
+            Reste :{" "}
+            {(() => {
+              const reste = b.versions[b.versions.length - 1].resultats.filter((r) => r.statut === "rouge" || r.statut === "orange");
+              return reste.length === 0
+                ? "rien de faux ni à revoir."
+                : reste.map((r) => `${r.affirmation.id} (${STYLE[r.statut].libelle.toLowerCase()} : ${r.message})`).join(" ; ");
+            })()}
+          </div>
+          <div className="break-before-page">
+            <h2 className="mt-6 font-serif text-lg font-semibold">Mémo final (version {b.versions.length}), en révision</h2>
+            <p className="mb-2 text-gris">Barré : retiré par l&apos;IA. Souligné : corrigé par l&apos;IA et revérifié par Visa.</p>
+            <Revision boucle={b} />
+          </div>
+        </>
+      )}
       <h2 className="mt-6 font-serif text-lg font-semibold">Journal des opérations</h2>
       {p.journal.map((e, i) => (
         <div key={i} className="font-mono text-[10px]">

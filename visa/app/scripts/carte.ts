@@ -9,9 +9,17 @@
  */
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { conclure, preparer, type Decoupage, type JugementSaisi, type Preparation } from "@/lib/carte";
+import {
+  conclure,
+  preparer,
+  type Decoupage,
+  type JugementSaisi,
+  type Preparation,
+  type ReecritureSaisie,
+} from "@/lib/carte";
 import { rendreCarte } from "@/lib/carte-html";
 import { pire } from "@/lib/controles";
+import { MENTION, planifier } from "@/lib/correction";
 import type { Piece } from "@/lib/sources";
 import type { Statut } from "@/lib/types";
 
@@ -129,7 +137,14 @@ async function commandeConclure(dossier: string) {
   const manquants = [...attendus].filter((id) => !jugements.some((j) => j.id === id));
   if (manquants.length > 0) console.warn(`Éléments non jugés (restent gris) : ${manquants.join(", ")}`);
 
-  const carte = conclure(preparation, jugements, new Date().toISOString());
+  let reecritures: ReecritureSaisie[] = [];
+  try {
+    reecritures = await lireJson<ReecritureSaisie[]>(path.join(dossier, "reecritures.json"));
+  } catch {
+    // Facultatif : sans réécriture, les passages à corriger restent « à réécrire à la main ».
+  }
+
+  const carte = conclure(preparation, jugements, new Date().toISOString(), reecritures);
   await writeFile(path.join(dossier, "resultat.json"), JSON.stringify(carte, null, 2));
   const html = path.join(dossier, "carte.html");
   await writeFile(html, rendreCarte(carte));
@@ -146,6 +161,27 @@ async function commandeConclure(dossier: string) {
   );
   if (ecartes.length > 0) {
     console.log(`\nExtraits introuvables mot pour mot (verdict écarté) : ${ecartes.join(", ")}. Recopie l'extrait exact puis relance.`);
+  }
+
+  const aCorriger = carte.resultats.filter((r) => r.reecriture);
+  if (aCorriger.length > 0) {
+    const proposees = aCorriger.filter((r) => r.reecriture?.type === "remplacer").length;
+    console.log(`\nCorrections : ${proposees} réécriture(s) retenue(s) sur ${aCorriger.length} passage(s) à corriger.`);
+    for (const r of aCorriger) {
+      const e = r.reecriture!;
+      const plan = planifier(r, carte.resultats, carte.dateFaits);
+      const saisie = reecritures.some((x) => x.id === r.affirmation.id);
+      if (e.type === "remplacer") {
+        console.log(`  ${r.affirmation.id.padEnd(4)} réécrit — ${e.source?.citation}`);
+      } else if (plan?.cas === "rediger" && !saisie) {
+        console.log(`  ${r.affirmation.id.padEnd(4)} à proposer dans reecritures.json, sur :`);
+        for (const c of plan.candidats) {
+          console.log(`         ${c.cle.padEnd(6)} ${path.join(dossier, "textes", `${c.cle}.txt`)}  citer ainsi : « ${c.citation} »`);
+        }
+      } else {
+        console.log(`  ${r.affirmation.id.padEnd(4)} ${MENTION[e.type]} — ${e.motif}`);
+      }
+    }
   }
   console.log(`\nCarte : ${path.resolve(html)}`);
 }
