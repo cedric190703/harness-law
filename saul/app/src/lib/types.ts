@@ -85,7 +85,7 @@ export interface ResultatAffirmation {
 
 export interface EntreeJournal {
   t: string;
-  acteur: "Extracteur" | "Chercheur" | "Règles" | "Avocat adverse" | "Visa";
+  acteur: "Extracteur" | "Chercheur" | "Règles" | "Avocat adverse" | "Saul";
   action: string;
   detail?: string;
   modele?: string;

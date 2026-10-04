@@ -28,7 +28,7 @@ const NOMS_CONTROLES: Record<Controle["nom"], string> = {
   contenu: "Dit vraiment ça",
 };
 
-export default function Visa() {
+export default function Saul() {
   const [texte, setTexte] = useState("");
   const [dateFaits, setDateFaits] = useState("");
   const [phase, setPhase] = useState<"saisie" | "analyse" | "fini">("saisie");
@@ -99,7 +99,7 @@ export default function Visa() {
     <div className="flex min-h-screen flex-col">
       <header className="no-print flex items-center justify-between border-b border-trait bg-white px-6 py-3">
         <div className="flex items-baseline gap-3">
-          <span className="font-serif text-2xl font-semibold tracking-tight text-accent">Visa</span>
+          <span className="font-serif text-2xl font-semibold tracking-tight text-accent">Saul</span>
           <span className="text-sm text-gris">Chaque phrase, vérifiée sur le texte officiel.</span>
         </div>
         {phase !== "saisie" && (
@@ -176,7 +176,7 @@ function Saisie(p: {
     <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
       <h1 className="font-serif text-3xl font-semibold">Votre IA a écrit une note. Peut-on la plaider ?</h1>
       <p className="mt-2 text-gris">
-        Collez un texte produit par ChatGPT, Legora, Hector ou tout autre outil. Visa retrouve chaque source sur
+        Collez un texte produit par ChatGPT, Legora, Hector ou tout autre outil. Saul retrouve chaque source sur
         Légifrance et Judilibre, vérifie qu&apos;elle existe, qu&apos;elle était en vigueur à la date des faits, son rang,
         et qu&apos;elle dit vraiment ce qu&apos;on lui fait dire.
       </p>
@@ -476,7 +476,7 @@ function Pastille({ statut }: { statut: Statut }) {
 }
 
 const COULEUR_ACTEUR: Record<EntreeJournal["acteur"], string> = {
-  Visa: "text-accent",
+  Saul: "text-accent",
   Extracteur: "text-[#6d28d9]",
   Chercheur: "text-[#0e7490]",
   Règles: "text-[#4d7c0f]",
@@ -512,7 +512,7 @@ function Audit(p: {
 }) {
   return (
     <div className="hidden p-10 text-[12px] print:block">
-      <h1 className="font-serif text-2xl font-semibold">Journal d&apos;audit Visa</h1>
+      <h1 className="font-serif text-2xl font-semibold">Journal d&apos;audit Saul</h1>
       <p className="mt-1 text-gris">
         Vérification lancée le {new Date(p.debut).toLocaleString("fr-FR")} · Date des faits retenue : {formatDate(p.dateFaits)} ·
         Empreinte du texte : {p.journal[0]?.empreinte ?? "—"}

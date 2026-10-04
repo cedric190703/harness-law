@@ -409,7 +409,7 @@ const JS = `
     corps.appendChild(document.createTextNode(t.slice(pos)));
   })();
 
-  document.getElementById("pied").textContent = "Généré le " + new Date(carte.generee).toLocaleString("fr-FR") + " par le skill « vérifier les sources » de Visa. Sans preuve, rien n'est vert.";
+  document.getElementById("pied").textContent = "Généré le " + new Date(carte.generee).toLocaleString("fr-FR") + " par le skill « vérifier les sources » de Saul. Sans preuve, rien n'est vert.";
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") choisir(null); });
   zone.addEventListener("click", function (e) { if (e.target === zone || e.target.classList.contains("gouttiere") || e.target.classList.contains("colonne")) choisir(null); });
   remplirPanneau();

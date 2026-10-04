@@ -176,7 +176,7 @@ async function execute(p:Project,r:Run){
     event(p,r,'tool',scaffold.stdout+scaffold.stderr,{nodeId:'skill-7',tool:'ledger_to_report.py'});
     if(scaffold.code)throw new Error('Impossible de produire le brouillon depuis le registre.');
     atomic(path.join(dir,'export-context.json'),{project:p.name,run:r.id,skillHash:r.skillHash,documents:r.documents});
-    const exported=await python(p,r,path.join(ROOT,'visa/app/scripts/harness/export.py'),[dir]);
+    const exported=await python(p,r,path.join(ROOT,'saul/app/scripts/harness/export.py'),[dir]);
     event(p,r,'tool',exported.stdout+exported.stderr,{nodeId:'skill-7',tool:'export.py'});
     if(exported.code)throw new Error('La génération des exports a échoué. '+exported.stderr.slice(-2000));
     step(p,r,7,'passed');step(p,r,8,'running');

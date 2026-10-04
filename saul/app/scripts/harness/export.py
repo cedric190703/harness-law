@@ -31,7 +31,7 @@ def main():
     doc.styles['Caption'].font.color.rgb=RGBColor.from_string('555555')
     doc.styles['Caption'].font.size=Pt(8)
     doc.styles['Caption'].font.bold=False
-    sec.header.paragraphs[0].text='VISA  ·  CONFIDENTIEL  ·  BROUILLON À RELIRE'
+    sec.header.paragraphs[0].text='SAUL  ·  CONFIDENTIEL  ·  BROUILLON À RELIRE'
     sec.footer.paragraphs[0].text='Dossier '+context['project']+'  ·  '
     field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');sec.footer.paragraphs[0]._p.append(field)
     def table(headers,records):

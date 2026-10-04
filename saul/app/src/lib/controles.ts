@@ -14,7 +14,7 @@ import type {
 import { contientVerbatim } from "./verbatim";
 
 /**
- * Les règles de Visa, sans appel au modèle : partagées par l'app (moteur.ts)
+ * Les règles de Saul, sans appel au modèle : partagées par l'app (moteur.ts)
  * et par le skill « carte des sources » (scripts/carte.ts).
  */
 

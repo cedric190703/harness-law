@@ -25,7 +25,7 @@ import { contientVerbatim } from "./verbatim";
 
 /**
  * Le skill « carte des sources » : l'agent qui l'utilise découpe la réponse et
- * joue l'avocat adverse ; les règles de Visa (controles.ts) tranchent. Rien
+ * joue l'avocat adverse ; les règles de Saul (controles.ts) tranchent. Rien
  * n'est vert sans un extrait retrouvé mot pour mot dans le texte officiel.
  */
 

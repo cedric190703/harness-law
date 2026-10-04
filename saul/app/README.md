@@ -1,4 +1,4 @@
-# Visa — harness juridique local
+# Saul — harness juridique local
 
 L’application reçoit une mission et ses pièces, exécute Claude Code ou Mistral Vibe avec le skill `skills/cross-document-review` de la branche `youssef/bench-revue`, contrôle les sorties et permet de relire le livrable section par section avec ses preuves.
 
@@ -8,21 +8,21 @@ Depuis la racine du dépôt :
 
 ```sh
 python3 -m venv .venv
-.venv/bin/pip install -r visa/app/scripts/harness/requirements.txt
-cd visa/app
+.venv/bin/pip install -r saul/app/scripts/harness/requirements.txt
+cd saul/app
 bun install --frozen-lockfile
 bun run dev --hostname 127.0.0.1
 ```
 
 Ouvrir http://127.0.0.1:3000. Installer et authentifier au préalable le CLI du fournisseur choisi. La page « Skills et agents » vérifie la présence des exécutables ; elle ne garantit pas que leur authentification est valide. Le bouton de découverte prépare deux pièces fictives ; l’analyse utilise réellement le fournisseur et consomme le budget saisi.
 
-`bun run check` lance lint, types et tests. `bun run build`, puis `bun run start --hostname 127.0.0.1` servent la version compilée. Exécuter ces commandes depuis `visa/app` et conserver le dépôt complet, car le serveur appelle les scripts du skill à sa racine. L’ancien parcours de vérification des sources officielles reste disponible sur `/verification` avec sa configuration existante.
+`bun run check` lance lint, types et tests. `bun run build`, puis `bun run start --hostname 127.0.0.1` servent la version compilée. Exécuter ces commandes depuis `saul/app` et conserver le dépôt complet, car le serveur appelle les scripts du skill à sa racine. L’ancien parcours de vérification des sources officielles reste disponible sur `/verification` avec sa configuration existante.
 
 ## Paramètres facultatifs
 
 | Variable | Valeur par défaut | Utilité |
 | --- | --- | --- |
-| `LEGAL_DATA_DIR` | `visa/app/.harness-data` | Stockage local des projets et missions ; utiliser un chemin absolu pour le déplacer |
+| `LEGAL_DATA_DIR` | `saul/app/.harness-data` | Stockage local des projets et missions ; utiliser un chemin absolu pour le déplacer |
 | `LEGAL_PYTHON` | `.venv/bin/python` à la racine, sinon `python3` | Python disposant des dépendances d’extraction et d’export |
 | `LEGAL_CLAUDE_BIN` | `~/.local/bin/claude`, sinon `claude` dans le PATH | CLI Claude Code |
 | `LEGAL_VIBE_BIN` | `~/.local/bin/vibe`, sinon `vibe` dans le PATH | CLI Mistral Vibe |

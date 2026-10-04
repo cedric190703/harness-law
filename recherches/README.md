@@ -9,7 +9,7 @@ Ce qu'on a appris le matin du hackathon, avant de coder. Chaque fichier sépare 
 | [03-marche-francais.md](03-marche-francais.md) | Hector AI, les outils français, ce que vivent les petits cabinets, les règles du CNB |
 | [04-verification-et-due-diligence.md](04-verification-et-due-diligence.md) | Hallucinations (chiffres, affaires), outils de vérification, données ouvertes, due diligence IA |
 | [05-api-legifrance-judilibre.md](05-api-legifrance-judilibre.md) | Comment interroger Légifrance et Judilibre (accès, appels utiles, pièges) |
-| [06-idee-visa.md](06-idee-visa.md) | L'idée retenue le matin : Visa, la démo, les cas à tester |
+| [06-idee-saul.md](06-idee-saul.md) | L'idée retenue le matin : Saul, la démo, les cas à tester |
 
 ## Ce qui est ressorti de la réunion d'équipe
 

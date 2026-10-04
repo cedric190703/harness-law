@@ -1,6 +1,6 @@
-# L'idée du matin : Visa
+# L'idée du matin : Saul
 
-Brief écrit le 4 octobre 2026 vers 10h, à partir des recherches de ce dossier. Le code de Visa vit dans un autre dépôt ; ici, seulement l'idée, la démo et les cas à tester.
+Brief écrit le 4 octobre 2026 vers 10h, à partir des recherches de ce dossier. Le code de Saul vit dans un autre dépôt ; ici, seulement l'idée, la démo et les cas à tester.
 
 ## Le hackathon (vérifié sur la page Luma)
 
@@ -19,17 +19,16 @@ Brief écrit le 4 octobre 2026 vers 10h, à partir des recherches de ce dossier.
 5. **Le CNB exige la traçabilité depuis mars 2026** (guide déontologie & IA) : documenter les usages de l'IA. Aucun outil ne fournit ce journal.
 6. **Les petits sont oubliés.** Legora et Harvey vendent sur devis aux gros cabinets (~95 k$/an en moyenne pour Legora). 36 % des avocats exercent seuls (~27 000). Hector fait déjà le contentieux pour cabinets, Ordalie coûte 75 €/mois.
 
-## L'idée recommandée : **Visa**
+## L'idée recommandée : **Saul**
 
-> « Vu l'article… » : le visa est la liste des textes en tête d'un jugement.
-> **Visa vérifie chaque phrase d'une réponse d'IA juridique sur le texte officiel, et garde la preuve.**
+> **Saul vérifie chaque phrase d'une réponse d'IA juridique sur le texte officiel, et garde la preuve.**
 
 **On ne construit pas une IA juridique de plus. On construit le contrôle technique de toutes les autres.**
 Ça marche sur ChatGPT, Legora, Hector, Doctrine. On est complémentaires des partenaires du jury, pas concurrents.
 
-### Ce que fait Visa
+### Ce que fait Saul
 
-L'avocat colle un mémo, des conclusions ou une note écrite avec l'IA, puis il indique la date des faits. Visa :
+L'avocat colle un mémo, des conclusions ou une note écrite avec l'IA, puis il indique la date des faits. Saul :
 
 1. **Découpe** le texte en affirmations, chacune avec sa source citée.
 2. **Retrouve la source officielle** : Légifrance pour les articles et lois, Judilibre pour les décisions.
@@ -47,7 +46,7 @@ L'avocat colle un mémo, des conclusions ou une note écrite avec l'IA, puis il 
 
 Accroche : *« Le 29 décembre 2025, le tribunal administratif d'Orléans a relevé 17 références inventées dans la requête d'un avocat. »*
 
-On colle un mémo de licenciement / clause de non-concurrence, écrit « par ChatGPT », qui a l'air parfait. Visa affiche 12 affirmations : 7 vertes, 3 orange, 2 rouges. On clique :
+On colle un mémo de licenciement / clause de non-concurrence, écrit « par ChatGPT », qui a l'air parfait. Saul affiche 12 affirmations : 7 vertes, 3 orange, 2 rouges. On clique :
 
 - 🔴 un arrêt de la Cour de cassation qui **n'existe pas** ;
 - 🔴 un vrai arrêt qui **ne dit pas ce qu'on lui fait dire** ;
