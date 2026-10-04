@@ -47,7 +47,7 @@ Les identifiants du fournisseur sont ceux du CLI local. Les documents restent st
 
 ## Limites de cette version
 
-Application locale mono-utilisateur, sans authentification d’équipe ni isolation système complète. Les routes refusent les hôtes distants et les mutations d’une autre origine. Le processus Node doit rester actif : ce moteur ne convient pas à une fonction serverless. Un redémarrage marque les missions en cours comme interrompues ; il faut les relancer. Deux missions simultanées au maximum, une par projet.
+Application mono-utilisateur, sans authentification d’équipe ni isolation système complète. En mode local, les routes refusent les hôtes distants. Les mutations d’une autre origine sont toujours refusées. Le processus Node doit rester actif : ce moteur ne convient pas à une fonction serverless. Un redémarrage marque les missions en cours comme interrompues ; il faut les relancer. Deux missions simultanées au maximum, une par projet.
 
 Les CLIs ont des outils de lecture/écriture autorisés, sans shell ni contournement global des permissions. Cela ne constitue pas une sandbox OS. Un déploiement d’équipe nécessite notamment un worker isolé, une file durable, une authentification et un stockage protégé.
 
@@ -63,3 +63,11 @@ Le budget est transmis au CLI et borne les deux tentatives (moitié du budget pa
 - Vibe : arguments vérifiés sur le CLI installé et normalisation des événements testée ; pas de mission juridique complète exécutée avec ce fournisseur.
 
 Les tests unitaires ne certifient ni l’exhaustivité d’un audit juridique ni la qualité des conclusions sur un dossier réel.
+
+## Hébergement protégé
+
+Le mode `SAUL_EN_LIGNE=1` accepte les connexions distantes et exige `SAUL_MOT_DE_PASSE` : sans mot de passe configuré, l’accès renvoie 503. Les pages et API demandent une authentification HTTP Basic ; utiliser HTTPS. Les fichiers statiques publics ne contiennent pas les pièces. Le nom d’utilisateur est libre ; le mot de passe est celui de la configuration du serveur.
+
+Le déploiement utilise un compte système dédié `saul`, un service persistant et un répertoire de données séparé (`LEGAL_DATA_DIR`). Les secrets sont dans `/etc/saul.env`, accessible à root uniquement, et transmis par systemd. Le service et ses agents ne tournent pas comme root. La version hébergée indique que les missions s’exécutent sur le serveur et sélectionne Mistral par défaut. La présence d’un CLI ne signifie pas que son compte fournisseur est connecté.
+
+Le service `saul` écoute sur `10.0.1.1:3077`, accessible au proxy depuis son réseau interne. Le proxy force HTTPS sur `saul.159-69-41-115.sslip.io`. Les pièces et journaux persistent dans `/home/saul/data` ; un redémarrage interrompt les missions actives. Attendre leur fin avant une mise à jour.

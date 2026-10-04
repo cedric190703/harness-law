@@ -22,7 +22,7 @@ export default function HarnessApp({online=false}:{online?:boolean}){
   const router=useRouter();
  const [projects,setProjects]=useState<Project[]>([]),[agentList,setAgentList]=useState<AgentInfo[]>([]),[view,setView]=useState<'dashboard'|'projects'|'workspace'|'skills'>('dashboard');
  const [projectId,setProjectId]=useState<string>(),[runId,setRunId]=useState<string>(),[tab,setTab]=useState<'chat'|'graph'|'document'|'files'>('chat');
- const [creating,setCreating]=useState(false),[name,setName]=useState(''),[description,setDescription]=useState(''),[prompt,setPrompt]=useState(''),[provider,setProvider]=useState<Provider>('claude'),[budget,setBudget]=useState(3);
+ const [creating,setCreating]=useState(false),[name,setName]=useState(''),[description,setDescription]=useState(''),[prompt,setPrompt]=useState(''),[provider,setProvider]=useState<Provider>(online?'vibe':'claude'),[budget,setBudget]=useState(3);
  const [busy,setBusy]=useState(false),[error,setError]=useState(''),[loaded,setLoaded]=useState(false),[search,setSearch]=useState(''),[focus,setFocus]=useState<string>(),[sectionId,setSectionId]=useState<string>();
  const [skillContent,setSkillContent]=useState(''),[showSkill,setShowSkill]=useState(false);
  const fileInput=useRef<HTMLInputElement>(null),bottom=useRef<HTMLDivElement>(null);
