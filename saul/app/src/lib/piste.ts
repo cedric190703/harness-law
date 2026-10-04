@@ -1,8 +1,8 @@
 import { avecCache } from "./cache";
 
 /**
- * Accès aux API officielles via PISTE (piste.gouv.fr) : Légifrance (DILA) et Judilibre (Cour de cassation).
- * Bac à sable et production ont des identifiants distincts : PISTE_ENV=sandbox|prod.
+ * Access to the official APIs through PISTE (piste.gouv.fr): Légifrance (DILA) and Judilibre (Cour de cassation).
+ * Sandbox and production have separate credentials: PISTE_ENV=sandbox|prod.
  */
 const PROD = process.env.PISTE_ENV === "prod";
 const OAUTH = PROD
@@ -30,7 +30,7 @@ async function obtenirJeton(): Promise<string> {
       scope: "openid",
     }),
   });
-  if (!res.ok) throw new Error(`PISTE OAuth ${res.status} : ${await res.text()}`);
+  if (!res.ok) throw new Error(`PISTE OAuth ${res.status}: ${await res.text()}`);
   const d = await res.json();
   jeton = { valeur: d.access_token, expire: Date.now() + (d.expires_in ?? 3600) * 1000 };
   return jeton.valeur;
@@ -53,7 +53,7 @@ async function appel<T>(url: string, init: RequestInit): Promise<T | null> {
       continue;
     }
     if (res.status === 404 || res.status === 204) return null;
-    if (!res.ok) throw new Error(`${url} → ${res.status} : ${(await res.text()).slice(0, 300)}`);
+    if (!res.ok) throw new Error(`${url} → ${res.status}: ${(await res.text()).slice(0, 300)}`);
     const texte = await res.text();
     return texte ? (JSON.parse(texte) as T) : null;
   }

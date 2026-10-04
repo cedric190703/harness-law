@@ -1,11 +1,11 @@
 /**
- * Skill « vérifier les sources » (.claude/skills/verifier-sources) : la partie mécanique.
+ * The « verify the sources » skill (.claude/skills/verifier-sources): the mechanical part.
  *
  *   bun scripts/carte.ts preparer <dossier> [--date AAAA-MM-JJ] [--titre "…"]
  *   bun scripts/carte.ts conclure <dossier>
  *
- * À lancer depuis app/ : Bun y lit .env.local (clés PISTE) et le cache des sources.
- * Le dossier contient reponse.txt, affirmations.json, et éventuellement pieces/*.txt.
+ * Run it from app/: Bun reads .env.local there (PISTE keys) and the source cache.
+ * The folder holds reponse.txt, affirmations.json and, optionally, pieces/*.txt.
  */
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -62,7 +62,7 @@ async function commandePreparer(dossier: string) {
       .find((l) => l.trim())
       ?.trim()
       .slice(0, 90) ??
-    "Réponse vérifiée";
+    "Answer checked";
 
   const { preparation, erreurs } = await preparer(reponse, decoupage, {
     titre,
@@ -70,7 +70,7 @@ async function commandePreparer(dossier: string) {
     pieces,
   });
   if (!preparation) {
-    console.error("À corriger dans affirmations.json avant de continuer :");
+    console.error("Fix these in affirmations.json before going on:");
     for (const e of erreurs) console.error(`  - ${e}`);
     process.exit(1);
   }
@@ -88,31 +88,31 @@ async function commandePreparer(dossier: string) {
     await writeFile(
       path.join(textes, `${e.id}.txt`),
       [
-        `ÉLÉMENT ${e.id} — à juger par l'avocat adverse`,
-        `AFFIRMATION : ${a?.passage ?? ""}`,
-        `RÉSUMÉ : ${a?.resume ?? ""}`,
-        `SOURCE CITÉE : ${e.citee.brut}`,
-        `DATE DES FAITS : ${preparation.dateFaits}`,
+        `ITEM ${e.id} — to be judged by opposing counsel`,
+        `STATEMENT: ${a?.passage ?? ""}`,
+        `SUMMARY: ${a?.resume ?? ""}`,
+        `SOURCE CITED: ${e.citee.brut}`,
+        `DATE OF THE FACTS: ${preparation.dateFaits}`,
         `TEXTE OFFICIEL : ${e.officielle?.titre ?? ""}${v ? ` (version en vigueur du ${v.debut ?? "?"} au ${v.fin ?? "aujourd'hui"})` : ""}`,
-        "----- début du texte officiel -----",
+        "----- start of the official text -----",
         e.texteAJuger,
-        "----- fin du texte officiel -----",
+        "----- end of the official text -----",
         "",
       ].join("\n"),
     );
   }
 
-  const origine = { saisie: "saisie", texte: "trouvée dans le texte", "aujourd'hui": "INCONNUE : date du jour" };
-  console.log(`Date des faits : ${preparation.dateFaits} (${origine[preparation.origineDate]})`);
+  const origine = { entered: "as entered", text: "found in the text", today: "UNKNOWN: today's date" };
+  console.log(`Date of the facts: ${preparation.dateFaits} (${origine[preparation.origineDate]})`);
   console.log(
-    `${preparation.affirmations.length} affirmations, ${preparation.elements.length} sources citées, ${pieces.length} pièce(s). ` +
-      `Bases officielles : ${preparation.basesConnectees ? "connectées" : "NON connectées (tout ce qui vient de Légifrance ou Judilibre restera gris)"}.`,
+    `${preparation.affirmations.length} statements, ${preparation.elements.length} sources cited, ${pieces.length} document(s). ` +
+      `Official databases: ${preparation.basesConnectees ? "connected" : "NOT connected (anything from Légifrance or Judilibre will stay grey)"}.`,
   );
-  console.log(`\nÀ juger (${aJuger.length}) : lis chaque fichier, puis écris ${path.join(dossier, "jugements.json")}`);
+  console.log(`\nTo judge (${aJuger.length}): read each file, then write ${path.join(dossier, "jugements.json")}`);
   for (const e of aJuger) console.log(`  ${e.id.padEnd(6)} ${path.join(textes, `${e.id}.txt`)}   (${e.officielle?.titre ?? ""})`);
   const tranches = preparation.elements.filter((e) => e.texteAJuger === null);
   if (tranches.length > 0) {
-    console.log(`\nDéjà tranchés sans jugement (${tranches.length}) :`);
+    console.log(`\nAlready settled without a verdict (${tranches.length}):`);
     for (const e of tranches) {
       const statut = pire(e.controles.map((c) => c.statut));
       const raison = e.controles.find((c) => c.statut === statut)?.message ?? "";
@@ -120,7 +120,7 @@ async function commandePreparer(dossier: string) {
     }
   }
   const sansSource = preparation.affirmations.filter((a) => a.sources.length === 0);
-  if (sansSource.length > 0) console.log(`\nSans source citée (gris) : ${sansSource.map((a) => a.id).join(", ")}`);
+  if (sansSource.length > 0) console.log(`\nNo source cited (grey): ${sansSource.map((a) => a.id).join(", ")}`);
 }
 
 async function commandeConclure(dossier: string) {
@@ -129,19 +129,19 @@ async function commandeConclure(dossier: string) {
   try {
     jugements = await lireJson<JugementSaisi[]>(path.join(dossier, "jugements.json"));
   } catch {
-    console.warn("Pas de jugements.json : tout ce qui devait être jugé restera gris.");
+    console.warn("No jugements.json: anything that needed judging will stay grey.");
   }
   const attendus = new Set(preparation.elements.filter((e) => e.texteAJuger !== null).map((e) => e.id));
   const inconnus = jugements.filter((j) => !attendus.has(j.id)).map((j) => j.id);
-  if (inconnus.length > 0) console.warn(`Jugements ignorés (aucun élément à juger avec cet identifiant) : ${inconnus.join(", ")}`);
+  if (inconnus.length > 0) console.warn(`Verdicts ignored (no item to judge carries that id): ${inconnus.join(", ")}`);
   const manquants = [...attendus].filter((id) => !jugements.some((j) => j.id === id));
-  if (manquants.length > 0) console.warn(`Éléments non jugés (restent gris) : ${manquants.join(", ")}`);
+  if (manquants.length > 0) console.warn(`Items left unjudged (they stay grey): ${manquants.join(", ")}`);
 
   let reecritures: ReecritureSaisie[] = [];
   try {
     reecritures = await lireJson<ReecritureSaisie[]>(path.join(dossier, "reecritures.json"));
   } catch {
-    // Facultatif : sans réécriture, les passages à corriger restent « à réécrire à la main ».
+    // Optional: with no rewrite, the passages to fix stay “to be rewritten by hand”.
   }
 
   const carte = conclure(preparation, jugements, new Date().toISOString(), reecritures);
@@ -151,7 +151,7 @@ async function commandeConclure(dossier: string) {
 
   const s = carte.synthese;
   console.log(
-    `${carte.resultats.length} affirmations : ${s.vert} vérifiées, ${s.orange} à revoir, ${s.rouge} fausses, ${s.gris} non vérifiées.`,
+    `${carte.resultats.length} statements: ${s.vert} verified, ${s.orange} to review, ${s.rouge} false, ${s.gris} not verified.`,
   );
   for (const r of carte.resultats) {
     console.log(`  ${r.affirmation.id.padEnd(4)} ${PASTILLE[r.statut]} ${r.statut === "vert" ? r.affirmation.resume : r.message}`);
@@ -160,21 +160,21 @@ async function commandeConclure(dossier: string) {
     r.verifications.filter((v) => v.jugement && !v.jugement.extraitRetrouve).map(() => r.affirmation.id),
   );
   if (ecartes.length > 0) {
-    console.log(`\nExtraits introuvables mot pour mot (verdict écarté) : ${ecartes.join(", ")}. Recopie l'extrait exact puis relance.`);
+    console.log(`\nExcerpts not found word for word (verdict set aside): ${ecartes.join(", ")}. Copy the exact excerpt, then run again.`);
   }
 
   const aCorriger = carte.resultats.filter((r) => r.reecriture);
   if (aCorriger.length > 0) {
     const proposees = aCorriger.filter((r) => r.reecriture?.type === "remplacer").length;
-    console.log(`\nCorrections : ${proposees} réécriture(s) retenue(s) sur ${aCorriger.length} passage(s) à corriger.`);
+    console.log(`\nCorrections: ${proposees} rewrite(s) kept out of ${aCorriger.length} passage(s) to fix.`);
     for (const r of aCorriger) {
       const e = r.reecriture!;
       const plan = planifier(r, carte.resultats, carte.dateFaits);
       const saisie = reecritures.some((x) => x.id === r.affirmation.id);
       if (e.type === "remplacer") {
-        console.log(`  ${r.affirmation.id.padEnd(4)} réécrit — ${e.source?.citation}`);
+        console.log(`  ${r.affirmation.id.padEnd(4)} rewritten — ${e.source?.citation}`);
       } else if (plan?.cas === "rediger" && !saisie) {
-        console.log(`  ${r.affirmation.id.padEnd(4)} à proposer dans reecritures.json, sur :`);
+        console.log(`  ${r.affirmation.id.padEnd(4)} to propose in reecritures.json, based on:`);
         for (const c of plan.candidats) {
           console.log(`         ${c.cle.padEnd(6)} ${path.join(dossier, "textes", `${c.cle}.txt`)}  citer ainsi : « ${c.citation} »`);
         }
@@ -183,7 +183,7 @@ async function commandeConclure(dossier: string) {
       }
     }
   }
-  console.log(`\nCarte : ${path.resolve(html)}`);
+  console.log(`\nSource map: ${path.resolve(html)}`);
 }
 
 const [commande, dossier] = process.argv.slice(2);

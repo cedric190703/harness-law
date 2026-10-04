@@ -1,24 +1,24 @@
 import type { SourceCitee } from "./types";
 
 /**
- * Pyramide des normes (simplifiée) — à faire valider par les juristes de l'équipe.
- * Plus le rang est petit, plus la norme est haute.
+ * Hierarchy of norms (simplified) — to be confirmed by the team's lawyers.
+ * The lower the rank number, the higher the norm.
  */
 export const RANGS = [
   { rang: 1, libelle: "Constitution" },
-  { rang: 2, libelle: "Traités et droit de l'UE" },
-  { rang: 3, libelle: "Loi / ordonnance" },
-  { rang: 4, libelle: "Décret" },
-  { rang: 5, libelle: "Arrêté" },
-  { rang: 6, libelle: "Circulaire / instruction" },
-  { rang: 7, libelle: "Jurisprudence (interprétation)" },
+  { rang: 2, libelle: "Treaties and EU law" },
+  { rang: 3, libelle: "Statute / ordinance" },
+  { rang: 4, libelle: "Decree" },
+  { rang: 5, libelle: "Ministerial order" },
+  { rang: 6, libelle: "Circular / instruction" },
+  { rang: 7, libelle: "Case law (interpretation)" },
 ] as const;
 
 export function libelleRang(rang: number): string {
-  return RANGS.find((r) => r.rang === rang)?.libelle ?? "Inconnu";
+  return RANGS.find((r) => r.rang === rang)?.libelle ?? "Unknown";
 }
 
-/** Rang d'un article de code d'après son préfixe : L = loi, R/D = décret, A = arrêté. */
+/** Rank of a code article from its prefix: L = statute, R/D = decree, A = ministerial order. */
 export function rangArticle(numero: string): number {
   const p = numero.trim().toUpperCase()[0];
   if (p === "R" || p === "D") return 4;

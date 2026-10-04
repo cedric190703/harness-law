@@ -13,7 +13,7 @@ export type TypeSource =
   | "piece"
   | "autre";
 
-/** Une source telle que citée dans le texte de l'IA. */
+/** A source as cited in the AI's text. */
 export interface SourceCitee {
   brut: string;
   type: TypeSource;
@@ -27,7 +27,7 @@ export interface SourceCitee {
 
 export interface Affirmation {
   id: string;
-  /** Copie exacte du passage dans le texte soumis (sert au surlignage). */
+  /** Exact copy of the passage in the submitted text (used for highlighting). */
   passage: string;
   resume: string;
   sources: SourceCitee[];
@@ -40,9 +40,9 @@ export interface VersionTexte {
   texte: string;
 }
 
-/** Une source retrouvée dans une base officielle (ou une pièce du dossier). */
+/** A source found in an official database (or a document in the case file). */
 export interface SourceOfficielle {
-  base: "Légifrance" | "Judilibre" | "Dossier";
+  base: "Légifrance" | "Judilibre" | "Case file";
   id: string;
   titre: string;
   url: string | null;
@@ -50,7 +50,7 @@ export interface SourceOfficielle {
   rangLibelle: string;
   etat: string | null;
   date: string | null;
-  /** Texte de la version courante (ou de la décision). */
+  /** Text of the current version (or of the decision). */
   texte: string;
   versions: VersionTexte[];
 }
@@ -119,7 +119,7 @@ export interface ResultatAffirmation {
 
 export interface EntreeJournal {
   t: string;
-  acteur: "Extracteur" | "Chercheur" | "Règles" | "Avocat adverse" | "Rédacteur" | "Saul";
+  acteur: "Extractor" | "Researcher" | "Rules" | "Opposing counsel" | "Drafter" | "Saul";
   action: string;
   detail?: string;
   modele?: string;

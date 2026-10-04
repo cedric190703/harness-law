@@ -1,4 +1,4 @@
-/** Normalisation agressive pour comparer deux textes juridiques au mot près. */
+/** Aggressive normalisation, to compare two legal texts word for word. */
 export function normaliser(t: string): string {
   return t
     .normalize("NFD")
@@ -10,8 +10,8 @@ export function normaliser(t: string): string {
 }
 
 /**
- * Le passage cité figure-t-il réellement dans le texte officiel ?
- * C'est le garde-fou qui empêche le juge lui-même d'halluciner.
+ * Does the quoted passage really appear in the official text?
+ * This is the safeguard that stops the judge itself from hallucinating.
  */
 export function contientVerbatim(texteOfficiel: string, extrait: string): boolean {
   const e = normaliser(extrait);

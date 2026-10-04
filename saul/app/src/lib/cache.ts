@@ -12,8 +12,8 @@ export function empreinte(valeur: unknown): string {
 }
 
 /**
- * Cache disque : les réponses des bases officielles et du modèle sont gardées
- * pour que la démo rejoue à l'identique, même si le wifi tombe.
+ * Disk cache: the official databases' and the model's responses are kept
+ * so the demo replays identically, even if the wifi drops.
  */
 export async function avecCache<T>(
   espace: string,

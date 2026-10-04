@@ -17,18 +17,18 @@ import type {
 } from "@/lib/types";
 
 const STYLE: Record<Statut | "attente", { fond: string; trait: string; texte: string; libelle: string }> = {
-  vert: { fond: "bg-vert-fond", trait: "border-vert", texte: "text-vert", libelle: "Vérifié" },
-  orange: { fond: "bg-orange-fond", trait: "border-orange", texte: "text-orange", libelle: "À revoir" },
-  rouge: { fond: "bg-rouge-fond", trait: "border-rouge", texte: "text-rouge", libelle: "Faux" },
-  gris: { fond: "bg-gris-fond", trait: "border-gris", texte: "text-gris", libelle: "Non vérifiable" },
-  attente: { fond: "bg-gris-fond/60 animate-pulse", trait: "border-trait", texte: "text-gris", libelle: "En cours…" },
+  vert: { fond: "bg-vert-fond", trait: "border-vert", texte: "text-vert", libelle: "Verified" },
+  orange: { fond: "bg-orange-fond", trait: "border-orange", texte: "text-orange", libelle: "To review" },
+  rouge: { fond: "bg-rouge-fond", trait: "border-rouge", texte: "text-rouge", libelle: "False" },
+  gris: { fond: "bg-gris-fond", trait: "border-gris", texte: "text-gris", libelle: "Not verifiable" },
+  attente: { fond: "bg-gris-fond/60 animate-pulse", trait: "border-trait", texte: "text-gris", libelle: "Running…" },
 };
 
 const NOMS_CONTROLES: Record<Controle["nom"], string> = {
-  existe: "Existe",
-  date: "En vigueur à la date des faits",
-  rang: "Rang dans la hiérarchie",
-  contenu: "Dit vraiment ça",
+  existe: "Exists",
+  date: "In force at the date of the facts",
+  rang: "Rank in the hierarchy",
+  contenu: "Really says that",
 };
 
 export default function Saul() {
@@ -103,7 +103,7 @@ export default function Saul() {
     return s;
   }, [resultats]);
 
-  // Après la boucle, l'état courant est celui de la dernière version (mêmes identifiants qu'en version 1).
+  // After the loop, the current state is the last version's (same ids as version 1).
   const finale = boucle ? boucle.versions[boucle.versions.length - 1] : null;
   const courants = useMemo(
     () => (finale ? Object.fromEntries(finale.resultats.map((r) => [r.affirmation.id, r])) : resultats),
@@ -111,7 +111,7 @@ export default function Saul() {
   );
   const choisi = selection ? courants[selection] : null;
 
-  /** Ouvre le détail d'une affirmation et amène son passage à l'écran. */
+  /** Opens a statement's detail and brings its passage into view. */
   function montrer(id: string) {
     setSelection(id);
     requestAnimationFrame(() =>
@@ -124,7 +124,7 @@ export default function Saul() {
       <header className="no-print flex items-center justify-between border-b border-trait bg-white px-6 py-3">
         <div className="flex items-baseline gap-3">
           <span className="font-serif text-2xl font-semibold tracking-tight text-accent">Saul</span>
-          <span className="text-sm text-gris">Chaque phrase, vérifiée sur le texte officiel.</span>
+          <span className="text-sm text-gris">Every sentence, checked against the official text.</span>
           <Link href="/" className="no-print text-sm text-accent underline-offset-2 hover:underline">
             ← Espace de travail
           </Link>
@@ -136,7 +136,7 @@ export default function Saul() {
               disabled={phase !== "fini"}
               className="rounded-md border border-accent px-3 py-1.5 text-sm font-medium text-accent hover:bg-accent hover:text-white disabled:opacity-40"
             >
-              Exporter le journal d&apos;audit
+              Export the audit log
             </button>
             <button
               onClick={() => setPhase("saisie")}
@@ -220,16 +220,16 @@ function Saisie(p: {
 }) {
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
-      <h1 className="font-serif text-3xl font-semibold">Votre IA a écrit une note. Peut-on la plaider ?</h1>
+      <h1 className="font-serif text-3xl font-semibold">Your AI wrote a note. Can you argue it?</h1>
       <p className="mt-2 text-gris">
-        Collez un texte produit par ChatGPT, Legora, Hector ou tout autre outil. Saul retrouve chaque source sur
-        Légifrance et Judilibre, vérifie qu&apos;elle existe, qu&apos;elle était en vigueur à la date des faits, son rang,
-        et qu&apos;elle dit vraiment ce qu&apos;on lui fait dire.
+        Paste a text produced by ChatGPT, Legora, Hector or any other tool. Saul finds every source on Légifrance
+        and Judilibre, checks that it exists, that it was in force at the date of the facts, where it ranks, and that
+        it really says what it is made to say.
       </p>
       <textarea
         value={p.texte}
         onChange={(e) => p.setTexte(e.target.value)}
-        placeholder="Collez ici la note, les conclusions ou la consultation…"
+        placeholder="Paste the note, the pleadings or the opinion here…"
         className="mt-6 h-80 w-full rounded-lg border border-trait bg-white p-4 font-serif text-[15px] leading-relaxed outline-none focus:border-accent"
       />
       <div className="mt-4 flex flex-wrap items-center gap-4">
@@ -249,14 +249,14 @@ function Saisie(p: {
           }}
           className="text-sm text-accent underline"
         >
-          Charger l&apos;exemple
+          Load the example
         </button>
         <button
           onClick={p.lancer}
           disabled={!p.texte.trim()}
           className="ml-auto rounded-lg bg-accent px-5 py-2.5 font-medium text-white disabled:opacity-40"
         >
-          Vérifier
+          Verify
         </button>
       </div>
       {p.erreur && <p className="mt-4 rounded bg-rouge-fond p-3 text-sm text-rouge">{p.erreur}</p>}
@@ -281,7 +281,7 @@ function Synthese({
   return (
     <div className="mb-5 flex flex-wrap items-center gap-2 text-sm">
       <span className="mr-2 font-medium">
-        {total === 0 ? "Lecture du texte…" : `${faits}/${total} affirmations vérifiées`}
+        {total === 0 ? "Reading the text…" : `${faits}/${total} statements checked`}
         {enCours && total > 0 && faits < total && " …"}
       </span>
       {compteurs &&
@@ -350,7 +350,7 @@ function Document({
   );
 }
 
-/** Le résumé pour l'avocat : ce qu'il faut corriger avant d'envoyer, ce qu'il faut relire, ce qui est vérifié. */
+/** The summary for the lawyer: what to fix before sending, what to re-read, what is verified. */
 function ResumeAvocat({
   resultats,
   enCours,
@@ -387,16 +387,16 @@ function ResumeAvocat({
   );
   return (
     <div className="mb-5 space-y-2 rounded-lg border border-trait bg-white p-4 text-sm">
-      {ligne("rouge", "À corriger avant envoi", r.aCorriger, "rien")}
-      {ligne("orange", "À relire", r.aRelire, "rien")}
+      {ligne("rouge", "Fix before sending", r.aCorriger, "nothing")}
+      {ligne("orange", "To re-read", r.aRelire, "nothing")}
       <div className="grid grid-cols-[11rem_minmax(0,1fr)] items-baseline gap-x-2">
-        <span className={`font-semibold ${STYLE.vert.texte}`}>Vérifié ({r.verifies})</span>
+        <span className={`font-semibold ${STYLE.vert.texte}`}>Verified ({r.verifies})</span>
         <span>
-          {r.verifies} affirmation{r.verifies > 1 ? "s" : ""} conforme{r.verifies > 1 ? "s" : ""} au texte officiel
+          {r.verifies} statement{r.verifies > 1 ? "s" : ""} conforming to the official text
           {r.nonVerifiables > 0 && (
             <span className="text-gris">
               {" "}
-              · {r.nonVerifiables} non vérifiable{r.nonVerifiables > 1 ? "s" : ""}, à contrôler à la main
+              · {r.nonVerifiables} not verifiable, to check by hand
             </span>
           )}
           {enCours && " …"}
@@ -406,13 +406,13 @@ function ResumeAvocat({
   );
 }
 
-/** Les versions successives du mémo, avec le compte à chaque tour. */
+/** The successive versions of the memo, with the count at each round. */
 function Versions({ boucle, enCours, v1 }: { boucle: Boucle | null; enCours: boolean; v1: Record<Statut, number> }) {
   const versions = boucle?.versions ?? [];
   const compte = (s: Record<Statut, number>) => (
     <span className="whitespace-nowrap">
-      <span className="text-rouge">{s.rouge} faux</span> · <span className="text-orange">{s.orange} à revoir</span> ·{" "}
-      <span className="text-vert">{s.vert} vérifiés</span>
+      <span className="text-rouge">{s.rouge} false</span> · <span className="text-orange">{s.orange} to review</span> ·{" "}
+      <span className="text-vert">{s.vert} verified</span>
     </span>
   );
   return (
@@ -427,14 +427,14 @@ function Versions({ boucle, enCours, v1 }: { boucle: Boucle | null; enCours: boo
         ))}
         {enCours && (
           <span className="text-gris">
-            → {boucle ? "l'IA corrige…" : "vérification de la version 1…"}
+            → {boucle ? "the AI is correcting…" : "checking version 1…"}
           </span>
         )}
       </div>
       {boucle?.arret && !enCours && <p className="mt-1 text-gris">{boucle.arret}</p>}
       <p className="mt-1 text-[12px] text-gris">
-        À chaque tour, Saul renvoie à l&apos;IA qui a écrit le mémo les passages faux ou à revoir, avec la preuve. Une correction
-        n&apos;est gardée que si sa revérification la met en vert ou en orange.
+        At each round, Saul sends the false or questionable passages back to the AI that wrote the memo, with the evidence. A
+        correction is kept only if re-checking turns it green or orange.
       </p>
     </div>
   );
@@ -462,13 +462,13 @@ function Onglets({
   );
   return (
     <div className="mb-3 flex gap-1 border-b border-trait">
-      {onglet("verifie", "Version 1, vérifiée")}
-      {onglet("corrige", n > 1 ? `Mémo final (version ${n}), en révision` : "Mémo final, en révision")}
+      {onglet("verifie", "Version 1, checked")}
+      {onglet("corrige", n > 1 ? `Final memo (version ${n}), in revision` : "Final memo, in revision")}
     </div>
   );
 }
 
-/** Le passage en mode révision : barré ce qui est retiré, souligné ce que l'IA a corrigé. */
+/** The passage in revision mode: struck through what was removed, underlined what the AI corrected. */
 function PassageRevise({ d }: { d: Difference }) {
   if (d.apres === null) return <del className="bg-rouge-fond/60 text-rouge decoration-rouge">{d.avant}</del>;
   if (d.tour === null) {
@@ -477,13 +477,13 @@ function PassageRevise({ d }: { d: Difference }) {
       <>
         <span className={`border-b-2 border-dashed ${st.trait} ${st.fond}`}>{d.avant}</span>
         <span className={`ml-1 whitespace-nowrap rounded px-1 font-sans text-[11px] font-semibold ${st.fond} ${st.texte}`}>
-          {d.resultat?.statut === "rouge" ? "reste faux" : "à relire"}
+          {d.resultat?.statut === "rouge" ? "still false" : "to re-read"}
         </span>
       </>
     );
   }
   const m = diffMots(d.avant, d.apres);
-  // Souligné de la couleur de la revérification : vert, ou orange s'il reste à relire.
+  // Underlined in the colour of the re-check: green, or orange if it still needs review.
   const st = STYLE[d.resultat?.statut ?? "vert"];
   return (
     <>
@@ -530,15 +530,15 @@ function Revision({ boucle, selection, choisir }: { boucle: Boucle; selection?: 
                 </button>{" "}
                 ·{" "}
                 {d.apres === null ? (
-                  <span>supprimé par l&apos;IA (tour {d.tour})</span>
+                  <span>deleted by the AI (round {d.tour})</span>
                 ) : d.tour === null ? (
                   <span className={STYLE[d.resultat!.statut].texte}>
-                    {d.resultat!.statut === "rouge" ? "reste faux" : "à relire"} : {d.resultat!.message}
+                    {d.resultat!.statut === "rouge" ? "still false" : "to re-read"}: {d.resultat!.message}
                   </span>
                 ) : (
                   <>
                     <span className={STYLE[d.resultat!.statut].texte}>
-                      corrigé par l&apos;IA (tour {d.tour}), revérifié : {STYLE[d.resultat!.statut].libelle.toLowerCase()}
+                      corrected by the AI (round {d.tour}), re-checked: {STYLE[d.resultat!.statut].libelle.toLowerCase()}
                     </span>
                     <div className="mt-0.5 text-gris">{preuve(d.resultat)}</div>
                   </>
@@ -567,7 +567,7 @@ function MemoFinal({
   if (!boucle) {
     return (
       <p className="text-sm text-gris">
-        {enCours ? "La boucle de correction démarre une fois la version 1 vérifiée…" : "Pas de boucle de correction."}
+        {enCours ? "The correction loop starts once version 1 is checked…" : "No correction loop."}
       </p>
     );
   }
@@ -585,14 +585,14 @@ function MemoFinal({
     <div>
       <div className="mb-3 flex flex-wrap items-center gap-3 text-sm">
         <p className="flex-1 text-gris">
-          Différences entre la version 1 et la version {b.versions.length} : barré, ce que l&apos;IA a retiré ; souligné, ce
-          qu&apos;elle a corrigé et que Saul a revérifié. En pointillé, ce qui reste signalé.
+          Differences between version 1 and version {b.versions.length}: struck through, what the AI removed; underlined, what
+          it corrected and Saul re-checked. Dotted, what is still flagged.
         </p>
         <button
           onClick={copier}
           className="rounded-md border border-accent px-3 py-1.5 font-medium text-accent hover:bg-accent hover:text-white"
         >
-          {copie === "ok" ? "Copié" : copie === "echec" ? "Copie impossible" : "Copier le mémo final"}
+          {copie === "ok" ? "Copied" : copie === "echec" ? "Copy failed" : "Copy the final memo"}
         </button>
       </div>
       <Revision boucle={b} selection={selection} choisir={choisir} />
@@ -615,16 +615,16 @@ function Liste({
   const tries = [...affirmations].sort(
     (a, b) => ordre.indexOf(resultats[a.id]?.statut ?? "attente") - ordre.indexOf(resultats[b.id]?.statut ?? "attente"),
   );
-  if (affirmations.length === 0) return <p className="text-gris">L&apos;extracteur lit le texte…</p>;
+  if (affirmations.length === 0) return <p className="text-gris">The extractor is reading the text…</p>;
   return (
     <div className="space-y-2">
-      <p className="mb-3 text-sm text-gris">Cliquez sur une affirmation pour voir la preuve.</p>
+      <p className="mb-3 text-sm text-gris">Click a statement to see the evidence.</p>
       {tries.map((a) => {
         const r = resultats[a.id];
         if (supprimes.includes(a.id)) {
           return (
             <div key={a.id} className="rounded-lg border-l-4 border-trait bg-gris-fond p-3 text-left">
-              <div className="text-xs font-semibold text-gris">{a.id} · Supprimé par l&apos;IA</div>
+              <div className="text-xs font-semibold text-gris">{a.id} · Deleted by the AI</div>
               <div className="mt-1 text-sm text-gris line-through">{a.resume}</div>
             </div>
           );
@@ -644,7 +644,7 @@ function Liste({
             <div className="mt-1 text-sm">{r && r.affirmation.passage !== a.passage ? r.affirmation.resume : a.resume}</div>
             {r && r.statut !== "vert" && <div className="mt-1 text-xs text-gris">{r.message}</div>}
             {r && r.affirmation.passage !== a.passage && (
-              <div className="mt-1 text-xs font-medium text-vert">Corrigé par l&apos;IA, revérifié</div>
+              <div className="mt-1 text-xs font-medium text-vert">Corrected by the AI, re-checked</div>
             )}
           </button>
         );
@@ -689,9 +689,9 @@ function Historique({ id, boucle }: { id: string; boucle: Boucle | null }) {
       {tentatives.map((t) => (
         <div key={t.tour} className="mt-2 border-t border-trait pt-2">
           <span className="font-medium">Tour {t.tour}</span> ·{" "}
-          <span className={t.retenue ? "text-vert" : "text-rouge"}>{t.retenue ? "correction gardée" : "correction rejetée"}</span>
+          <span className={t.retenue ? "text-vert" : "text-rouge"}>{t.retenue ? "correction kept" : "correction rejected"}</span>
           <span className="text-gris"> ({t.raison})</span>
-          <p className="font-serif text-[14px]">{t.propose ? `« ${t.propose} »` : "Passage supprimé."}</p>
+          <p className="font-serif text-[14px]">{t.propose ? `“${t.propose}”` : "Passage deleted."}</p>
         </div>
       ))}
     </div>
@@ -706,7 +706,7 @@ function SourceDetail({ v, dateFaits }: { v: VerificationSource; dateFaits: stri
     <div className="mt-5 rounded-lg border border-trait p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="text-xs uppercase tracking-wide text-gris">Source citée</div>
+          <div className="text-xs uppercase tracking-wide text-gris">Source cited</div>
           <div className="font-medium">{v.citee.brut}</div>
           {o && (
             <div className="mt-0.5 text-sm text-gris">
@@ -753,7 +753,7 @@ function SourceDetail({ v, dateFaits }: { v: VerificationSource; dateFaits: stri
                   v.jugement.extraitRetrouve ? "text-vert" : "text-rouge"
                 }`}
               >
-                {v.jugement.extraitRetrouve ? "✓ retrouvé mot pour mot dans le texte officiel" : "✗ introuvable dans le texte officiel"}
+                {v.jugement.extraitRetrouve ? "✓ found word for word in the official text" : "✗ not found in the official text"}
               </span>
             </blockquote>
           )}
@@ -763,19 +763,19 @@ function SourceDetail({ v, dateFaits }: { v: VerificationSource; dateFaits: stri
       {v.versionApplicable && courante && v.versionApplicable !== courante && (
         <div className="mt-4">
           <button onClick={() => setVoirVersions(!voirVersions)} className="text-sm text-accent underline">
-            {voirVersions ? "Masquer" : "Comparer"} la version du {formatDate(dateFaits)} et la version actuelle
+            {voirVersions ? "Hide" : "Compare"} the version of {formatDate(dateFaits)} and the current one
           </button>
           {voirVersions && (
             <div className="mt-2 grid grid-cols-2 gap-3 text-[13px]">
-              <VersionBloc titre={`Applicable aux faits (${formatDate(v.versionApplicable.debut)} → ${formatDate(v.versionApplicable.fin)})`} texte={v.versionApplicable.texte} />
-              <VersionBloc titre={`Actuelle (depuis le ${formatDate(courante.debut)})`} texte={courante.texte} />
+              <VersionBloc titre={`Applicable to the facts (${formatDate(v.versionApplicable.debut)} → ${formatDate(v.versionApplicable.fin)})`} texte={v.versionApplicable.texte} />
+              <VersionBloc titre={`Current (since ${formatDate(courante.debut)})`} texte={courante.texte} />
             </div>
           )}
         </div>
       )}
       {!v.versionApplicable && o?.texte && (
         <details className="mt-4 text-sm">
-          <summary className="cursor-pointer text-accent">Lire le texte officiel</summary>
+          <summary className="cursor-pointer text-accent">Read the official text</summary>
           <p className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap font-serif text-[13px] text-gris">{o.texte.slice(0, 6000)}</p>
         </details>
       )}
@@ -794,7 +794,7 @@ function VersionBloc({ titre, texte }: { titre: string; texte: string }) {
 
 function Pyramide({ rang }: { rang: number | null }) {
   return (
-    <div className="flex shrink-0 flex-col items-center gap-[2px]" title="Hiérarchie des normes">
+    <div className="flex shrink-0 flex-col items-center gap-[2px]" title="Hierarchy of norms">
       {RANGS.slice(0, 6).map((r, i) => (
         <div
           key={r.rang}
@@ -804,7 +804,7 @@ function Pyramide({ rang }: { rang: number | null }) {
         />
       ))}
       <div className="mt-1 text-[10px] text-gris">
-        {rang === null ? "—" : rang === 0 ? "pièce" : rang === 7 ? "jurisprudence" : RANGS.find((x) => x.rang === rang)?.libelle}
+        {rang === null ? "—" : rang === 0 ? "document" : rang === 7 ? "case law" : RANGS.find((x) => x.rang === rang)?.libelle}
       </div>
     </div>
   );
@@ -817,11 +817,11 @@ function Pastille({ statut }: { statut: Statut }) {
 
 const COULEUR_ACTEUR: Record<EntreeJournal["acteur"], string> = {
   Saul: "text-accent",
-  Extracteur: "text-[#6d28d9]",
-  Chercheur: "text-[#0e7490]",
-  Règles: "text-[#4d7c0f]",
-  "Avocat adverse": "text-rouge",
-  Rédacteur: "text-[#be185d]",
+  Extractor: "text-[#6d28d9]",
+  Researcher: "text-[#0e7490]",
+  Rules: "text-[#4d7c0f]",
+  "Opposing counsel": "text-rouge",
+  Drafter: "text-[#be185d]",
 };
 
 function Journal({ entrees, refConteneur }: { entrees: EntreeJournal[]; refConteneur: React.RefObject<HTMLDivElement | null> }) {
@@ -855,38 +855,38 @@ function Audit(p: {
   const b = p.boucle;
   return (
     <div className="hidden p-10 text-[12px] print:block">
-      <h1 className="font-serif text-2xl font-semibold">Journal d&apos;audit Saul</h1>
+      <h1 className="font-serif text-2xl font-semibold">Saul audit log</h1>
       <p className="mt-1 text-gris">
-        Vérification lancée le {new Date(p.debut).toLocaleString("fr-FR")} · Date des faits retenue : {formatDate(p.dateFaits)} ·
-        Empreinte du texte : {p.journal[0]?.empreinte ?? "—"}
+        Check started on {new Date(p.debut).toLocaleString("en-GB")} · Date of the facts used: {formatDate(p.dateFaits)} ·
+        Text hash: {p.journal[0]?.empreinte ?? "—"}
       </p>
       <p className="mt-1">
-        Résultat : {p.synthese.vert} vérifiées, {p.synthese.orange} à revoir, {p.synthese.rouge} fausses, {p.synthese.gris} non
-        vérifiables.
+        Result: {p.synthese.vert} verified, {p.synthese.orange} to review, {p.synthese.rouge} false, {p.synthese.gris} not
+        verifiable.
       </p>
-      <h2 className="mt-6 font-serif text-lg font-semibold">Affirmations</h2>
+      <h2 className="mt-6 font-serif text-lg font-semibold">Statements</h2>
       {p.affirmations.map((a) => {
         const r = p.resultats[a.id];
         return (
           <div key={a.id} className="mt-3 break-inside-avoid border-t border-trait pt-2">
             <div className="font-semibold">
-              {a.id} — {r ? STYLE[r.statut].libelle : "non traitée"}
+              {a.id} — {r ? STYLE[r.statut].libelle : "not processed"}
             </div>
-            <div className="font-serif italic">« {a.passage} »</div>
+            <div className="font-serif italic">“{a.passage}”</div>
             {r?.verifications.map((v, i) => (
               <div key={i} className="mt-1 pl-3">
                 <div>
-                  Source : {v.citee.brut}
+                  Source: {v.citee.brut}
                   {v.officielle && ` → ${v.officielle.base}, ${v.officielle.titre}${v.officielle.url ? ` (${v.officielle.url})` : ""}`}
                 </div>
                 {v.controles.map((c, j) => (
                   <div key={j}>
-                    [{c.statut}] {NOMS_CONTROLES[c.nom]} : {c.message}
+                    [{c.statut}] {NOMS_CONTROLES[c.nom]}: {c.message}
                   </div>
                 ))}
                 {v.jugement?.extrait && (
                   <div>
-                    Extrait officiel ({v.jugement.extraitRetrouve ? "vérifié mot pour mot" : "non retrouvé"}) : « {v.jugement.extrait} »
+                    Official excerpt ({v.jugement.extraitRetrouve ? "verified word for word" : "not found"}): “{v.jugement.extrait}”
                   </div>
                 )}
               </div>
@@ -898,55 +898,55 @@ function Audit(p: {
         <>
           <h2 className="mt-6 font-serif text-lg font-semibold">Tours de correction</h2>
           <p>
-            {b.versions.map((v) => `Version ${v.numero} : ${v.synthese.rouge} fausses, ${v.synthese.orange} à revoir, ${v.synthese.vert} vérifiées`).join(" → ")}.{" "}
+            {b.versions.map((v) => `Version ${v.numero}: ${v.synthese.rouge} false, ${v.synthese.orange} to review, ${v.synthese.vert} verified`).join(" → ")}.{" "}
             {b.arret}
           </p>
           {b.tours.map((t) => (
             <div key={t.numero} className="mt-3 break-inside-avoid border-t border-trait pt-2">
               <div className="font-semibold">Tour {t.numero}</div>
               <div>
-                Signalé à l&apos;IA : {t.signales.map((x) => `${x.id} (${STYLE[x.statut].libelle.toLowerCase()} : ${x.message})`).join(" ; ")}
+                Flagged to the AI: {t.signales.map((x) => `${x.id} (${STYLE[x.statut].libelle.toLowerCase()}: ${x.message})`).join(" ; ")}
               </div>
               {t.tentatives.map((x) => (
                 <div key={x.id} className="pl-3">
-                  {x.id} — {x.retenue ? "corrigé" : "correction rejetée"} ({x.raison}) : {x.propose ? `« ${x.propose} »` : "passage supprimé"}
+                  {x.id} — {x.retenue ? "corrected" : "correction rejected"} ({x.raison}): {x.propose ? `“${x.propose}”` : "passage deleted"}
                 </div>
               ))}
             </div>
           ))}
           <div className="mt-3">
-            Reste :{" "}
+            Remaining:{" "}
             {(() => {
               const reste = b.versions[b.versions.length - 1].resultats.filter((r) => r.statut === "rouge" || r.statut === "orange");
               return reste.length === 0
-                ? "rien de faux ni à revoir."
-                : reste.map((r) => `${r.affirmation.id} (${STYLE[r.statut].libelle.toLowerCase()} : ${r.message})`).join(" ; ");
+                ? "nothing false or to review."
+                : reste.map((r) => `${r.affirmation.id} (${STYLE[r.statut].libelle.toLowerCase()}: ${r.message})`).join(" ; ");
             })()}
           </div>
           <div className="break-before-page">
-            <h2 className="mt-6 font-serif text-lg font-semibold">Mémo final (version {b.versions.length}), en révision</h2>
-            <p className="mb-2 text-gris">Barré : retiré par l&apos;IA. Souligné : corrigé par l&apos;IA et revérifié par Saul.</p>
+            <h2 className="mt-6 font-serif text-lg font-semibold">Final memo (version {b.versions.length}), in revision</h2>
+            <p className="mb-2 text-gris">Struck through: removed by the AI. Underlined: corrected by the AI and re-checked by Saul.</p>
             <Revision boucle={b} />
           </div>
         </>
       )}
-      <h2 className="mt-6 font-serif text-lg font-semibold">Journal des opérations</h2>
+      <h2 className="mt-6 font-serif text-lg font-semibold">Operations log</h2>
       {p.journal.map((e, i) => (
         <div key={i} className="font-mono text-[10px]">
           {e.t} · {e.acteur} · {e.action}
           {e.detail ? ` — ${e.detail}` : ""}
-          {e.modele ? ` [modèle ${e.modele}]` : ""}
+          {e.modele ? ` [model ${e.modele}]` : ""}
         </div>
       ))}
       <div className="mt-8 border-t border-trait pt-4">
-        Validé par l&apos;avocat : ______________________ Date : __________ Signature : __________
+        Approved by the lawyer: ______________________ Date: __________ Signature: __________
       </div>
     </div>
   );
 }
 
 function formatDate(d: string | null | undefined): string {
-  if (!d) return "aujourd'hui";
+  if (!d) return "today";
   const [a, m, j] = d.split("-");
   return `${j}/${m}/${a}`;
 }

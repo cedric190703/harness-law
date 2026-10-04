@@ -4,14 +4,14 @@ import type { Evenement } from "@/lib/types";
 
 export const maxDuration = 300;
 
-/** Flux NDJSON : chaque ligne est un événement (journal des agents, affirmations, résultats). */
+/** NDJSON stream: every line is one event (agent log, statements, results). */
 export async function POST(request: Request) {
   const { texte, dateFaits, pieces } = (await request.json()) as {
     texte: string;
     dateFaits?: string | null;
     pieces?: Piece[];
   };
-  if (!texte?.trim()) return Response.json({ erreur: "Texte vide" }, { status: 400 });
+  if (!texte?.trim()) return Response.json({ erreur: "Empty text" }, { status: 400 });
 
   const encodeur = new TextEncoder();
   const flux = new ReadableStream({

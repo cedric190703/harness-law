@@ -30,40 +30,40 @@ export { versionALaDate } from "./controles";
 
 type Emettre = (e: Evenement) => void;
 
-const PROMPT_EXTRACTION = `Tu es l'extracteur de Saul, un outil qui vérifie les textes juridiques français produits par une IA.
-Découpe le texte en AFFIRMATIONS JURIDIQUES vérifiables (une règle, une solution jurisprudentielle, un délai, un montant, un fait tiré d'une pièce).
-Ignore les phrases de politesse, de transition ou purement rhétoriques.
+const PROMPT_EXTRACTION = `You are Saul's extractor. Saul checks French legal texts produced by an AI.
+Split the text into verifiable LEGAL STATEMENTS (a rule, a holding, a time limit, an amount, a fact drawn from a case document).
+Ignore courtesies, transitions and purely rhetorical sentences.
 
-Pour chaque affirmation :
-- "passage" : COPIE EXACTE, caractère pour caractère, de la phrase ou du membre de phrase dans le texte (il servira à la surligner). Ne reformule jamais.
-- "resume" : l'affirmation reformulée en une phrase simple.
-- "sources" : chaque source citée À L'APPUI de cette affirmation (tableau vide si aucune source n'est citée). Pour chacune :
-  - "brut" : la référence telle qu'écrite
-  - "type" : "article_code" | "decision" | "loi" | "ordonnance" | "decret" | "arrete" | "circulaire" | "piece" | "autre"
-  - "code" : nom du code pour un article (ex. "Code du travail"), sinon null
-  - "numero" : numéro de l'article (ex. "L1235-3") ou du texte (ex. "2017-1387") ou de la pièce, sinon null
-  - "juridiction" : pour une décision (ex. "Cass. soc.", "Conseil d'État", "CA Paris"), sinon null
-  - "date" : date de la décision ou du texte au format AAAA-MM-JJ, sinon null
-  - "numero_affaire" : numéro de pourvoi ou de requête (ex. "00-45.135"), sinon null
-  - "titre" : intitulé si donné, sinon null
+For each statement:
+- "passage": an EXACT COPY, character for character, of the sentence or clause in the text (it is used to highlight it). Never rephrase.
+- "resume": the statement restated in one plain sentence, in English.
+- "sources": every source cited IN SUPPORT of that statement (an empty array if none is cited). For each one:
+  - "brut": the reference exactly as written in the text, in French
+  - "type": "article_code" | "decision" | "loi" | "ordonnance" | "decret" | "arrete" | "circulaire" | "piece" | "autre"
+  - "code": the code's name for an article (e.g. "Code du travail"), otherwise null
+  - "numero": the article number (e.g. "L1235-3"), the text number (e.g. "2017-1387") or the document number, otherwise null
+  - "juridiction": for a decision (e.g. "Cass. soc.", "Conseil d'État", "CA Paris"), otherwise null
+  - "date": the date of the decision or the text, as YYYY-MM-DD, otherwise null
+  - "numero_affaire": the appeal or application number (e.g. "00-45.135"), otherwise null
+  - "titre": the title if given, otherwise null
 
-Si le texte mentionne la date des faits (licenciement, signature, sinistre…), renseigne "date_faits" (AAAA-MM-JJ), sinon null.
-Réponds en JSON : {"date_faits": ..., "affirmations": [...]}`;
+If the text mentions the date of the facts (dismissal, signature, loss…), fill in "date_faits" (YYYY-MM-DD), otherwise null.
+Answer in JSON: {"date_faits": ..., "affirmations": [...]}`;
 
-export const PROMPT_JUGE = `Tu es l'AVOCAT DE LA PARTIE ADVERSE. On te soumet une affirmation tirée des écritures de ton adversaire, et le texte OFFICIEL de la source qu'il cite (dans la version applicable à la date des faits).
-Ton travail : vérifier, sans complaisance, si la source dit vraiment ce qu'on lui fait dire.
+export const PROMPT_JUGE = `You are COUNSEL FOR THE OPPOSING PARTY. You are given a statement taken from your opponent's pleadings, and the OFFICIAL text of the source it cites (in the version applicable at the date of the facts).
+Your job: check, without indulgence, whether the source really says what it is made to say.
 
-Règles :
-- Tu ne juges QUE sur le texte officiel fourni. N'utilise pas tes connaissances pour combler un manque.
-- "extrait" doit être une COPIE EXACTE (mot pour mot) d'un passage du texte officiel, d'au moins une dizaine de mots, qui fonde ton verdict. Elle sera vérifiée automatiquement : si elle ne figure pas dans le texte, ton verdict est rejeté.
-- "raisonnement" : 2 à 5 étapes courtes, compréhensibles par un avocat (ce que dit l'affirmation → ce que dit le texte → l'écart éventuel → la conclusion).
-- "verdict" :
-  - "SOUTIENT" : le texte dit bien cela
-  - "PARTIEL" : le texte dit quelque chose de proche mais l'affirmation exagère, omet une condition ou une exception
-  - "NE_SOUTIENT_PAS" : le texte ne dit pas cela, ou dit le contraire
-  - "HORS_SUJET" : le texte ne traite pas de la question
-- "correction" : ce que dit vraiment le texte, en une phrase (vide si SOUTIENT).
-Réponds en JSON : {"verdict": ..., "raisonnement": [...], "extrait": ..., "correction": ...}`;
+Rules:
+- You judge ONLY on the official text provided. Do not use your own knowledge to fill a gap.
+- "extrait" must be an EXACT COPY (word for word) of a passage of the official text, at least ten words long, that grounds your verdict. It is checked automatically: if it does not appear in the text, your verdict is rejected. Keep it in the original French of the source.
+- "raisonnement": 2 to 5 short steps a lawyer can follow, in English (what the statement says → what the text says → the gap, if any → the conclusion).
+- "verdict":
+  - "SOUTIENT": the text does say this
+  - "PARTIEL": the text says something close, but the statement overstates it, or omits a condition or an exception
+  - "NE_SOUTIENT_PAS": the text does not say this, or says the opposite
+  - "HORS_SUJET": the text does not deal with the question
+- "correction": what the text really says, in one sentence, in English (empty if SOUTIENT).
+Answer in JSON: {"verdict": ..., "raisonnement": [...], "extrait": ..., "correction": ...}`;
 
 function maintenant() {
   return new Date().toISOString();
@@ -93,15 +93,15 @@ export async function verifierTexte(
 
   journal({
     acteur: "Saul",
-    action: "Texte reçu",
-    detail: `${texte.length} caractères, ${pieces.length} pièce(s) du dossier`,
+    action: "Text received",
+    detail: `${texte.length} characters, ${pieces.length} case-file document(s)`,
     empreinte: empreinte(texte).slice(0, 16),
   });
   if (!pisteConfigure()) {
-    journal({ acteur: "Saul", action: "Bases officielles non configurées : les sources seront marquées « non vérifiées »." });
+    journal({ acteur: "Saul", action: "Official databases are not configured: sources will be marked “not verified”." });
   }
 
-  journal({ acteur: "Extracteur", action: "Découpage du texte en affirmations…", modele: MODELE_EXTRACTION });
+  journal({ acteur: "Extractor", action: "Splitting the text into statements…", modele: MODELE_EXTRACTION });
   const extraction = await mistralJson<{ date_faits: string | null; affirmations: Omit<Affirmation, "id">[] }>(
     MODELE_EXTRACTION,
     [
@@ -116,13 +116,13 @@ export async function verifierTexte(
   }));
   const dateFaits = dateFaitsSaisie || extraction.date_faits || new Date().toISOString().slice(0, 10);
   journal({
-    acteur: "Extracteur",
-    action: `${affirmations.length} affirmations, ${affirmations.reduce((n, a) => n + a.sources.length, 0)} sources citées`,
+    acteur: "Extractor",
+    action: `${affirmations.length} statements, ${affirmations.reduce((n, a) => n + a.sources.length, 0)} sources cited`,
     detail: dateFaitsSaisie
-      ? `Date des faits saisie : ${dateFaits}`
+      ? `Date of the facts, as entered: ${dateFaits}`
       : extraction.date_faits
-        ? `Date des faits détectée dans le texte : ${dateFaits}`
-        : `Date des faits inconnue : on vérifie à la date du jour (${dateFaits})`,
+        ? `Date of the facts, detected in the text: ${dateFaits}`
+        : `Date of the facts unknown: checking against today (${dateFaits})`,
     modele: MODELE_EXTRACTION,
   });
   emettre({ type: "affirmations", affirmations, dateFaits });
@@ -136,14 +136,14 @@ export async function verifierTexte(
     3,
   );
 
-  // 5. Relancer l'IA qui a écrit le mémo sur les passages signalés, puis revérifier ses corrections (2 tours au plus).
+  // 5. Send the flagged passages back to the AI that wrote the memo, then re-check its corrections (2 rounds at most).
   const b = await boucler(
     { texte, resultats },
     {
       corriger: async (t, problemes) => {
         journal({
-          acteur: "Rédacteur",
-          action: `renvoie ${problemes.length} passage(s) signalé(s) à l'IA, avec leur preuve : ${problemes.map((p) => p.id).join(", ")}`,
+          acteur: "Drafter",
+          action: `sending ${problemes.length} flagged passage(s) back to the AI, with their evidence: ${problemes.map((p) => p.id).join(", ")}`,
           modele: MODELE_REDACTEUR,
         });
         return corrigerMemo(t, problemes, dateFaits);
@@ -158,8 +158,8 @@ export async function verifierTexte(
   const synthese = b.versions[b.versions.length - 1].synthese;
   journal({
     acteur: "Saul",
-    action: "Vérification terminée",
-    detail: `version ${b.versions.length} : ${synthese.vert} vertes, ${synthese.orange} à revoir, ${synthese.rouge} fausses, ${synthese.gris} non vérifiables`,
+    action: "Check complete",
+    detail: `version ${b.versions.length}: ${synthese.vert} verified, ${synthese.orange} to review, ${synthese.rouge} false, ${synthese.gris} not verifiable`,
   });
   emettre({ type: "fin", synthese });
 }
@@ -168,8 +168,8 @@ function journalTour(b: Boucle, journal: (e: Omit<EntreeJournal, "t">) => void, 
   const tour = b.tours[b.tours.length - 1];
   for (const t of tour.tentatives) {
     journal({
-      acteur: "Rédacteur",
-      action: `${t.id} · ${t.retenue ? "correction gardée" : "correction rejetée"} (${t.raison})`,
+      acteur: "Drafter",
+      action: `${t.id} · ${t.retenue ? "correction kept" : "correction rejected"} (${t.raison})`,
       detail: t.propose ? `« ${t.propose.slice(0, 160)}${t.propose.length > 160 ? "…" : ""} »` : undefined,
     });
   }
@@ -178,14 +178,14 @@ function journalTour(b: Boucle, journal: (e: Omit<EntreeJournal, "t">) => void, 
     acteur: "Saul",
     action:
       v.numero === tour.numero + 1
-        ? `Tour ${tour.numero} : version ${v.numero}`
-        : `Tour ${tour.numero} : aucune correction gardée, version ${v.numero} inchangée`,
-    detail: `${v.synthese.rouge} fausses, ${v.synthese.orange} à revoir, ${v.synthese.vert} vertes, ${v.synthese.gris} non vérifiables`,
+        ? `Round ${tour.numero}: version ${v.numero}`
+        : `Round ${tour.numero}: no correction kept, version ${v.numero} unchanged`,
+    detail: `${v.synthese.rouge} false, ${v.synthese.orange} to review, ${v.synthese.vert} verified, ${v.synthese.gris} not verifiable`,
   });
   emettre({ type: "boucle", boucle: b });
 }
 
-/** Revérifie un passage corrigé par l'IA : ses sources sont extraites et contrôlées comme les autres. */
+/** Re-checks a passage the AI corrected: its sources are extracted and checked like any other. */
 async function reverifierPassage(
   id: string,
   passage: string,
@@ -241,38 +241,38 @@ async function verifierSource(
     statut: pire(controles.map((c) => c.statut)),
   });
 
-  // 1. Existe ?
-  journal({ acteur: "Chercheur", action: `${a.id} · recherche de « ${s.brut} »` });
+  // 1. Does it exist?
+  journal({ acteur: "Researcher", action: `${a.id} · looking up “${s.brut}”` });
   const recherche = await rechercherSource(s, pieces);
   tracer(recherche.trace);
   const officielle = recherche.officielle;
   if (!officielle) return fin(recherche.controles, null, null, null);
 
-  // 2 et 3. En vigueur à la date des faits ? Quel rang ?
+  // 2 and 3. In force at the date of the facts? What rank?
   const dateEtRang = controlerDateEtRang(s, officielle, dateFaits);
   tracer(dateEtRang.trace);
   const version = dateEtRang.version;
   const controles = [...recherche.controles, ...dateEtRang.controles];
 
-  // 4. Dit-elle vraiment ça ? (avocat adverse)
+  // 4. Does it really say that? (opposing counsel)
   const texte = texteApplicable(officielle, version);
   if (!texte) {
-    controles.push({ nom: "contenu", statut: "gris", message: "Texte officiel vide : contenu non vérifié." });
+    controles.push({ nom: "contenu", statut: "gris", message: "The official text is empty: content not checked." });
     return fin(controles, officielle, version, null);
   }
-  journal({ acteur: "Avocat adverse", action: `${a.id} · conteste l'affirmation…`, modele: MODELE_JUGE });
+  journal({ acteur: "Opposing counsel", action: `${a.id} · challenging the statement…`, modele: MODELE_JUGE });
   const brut = await mistralJson<Omit<Jugement, "extraitRetrouve">>(MODELE_JUGE, [
     { role: "system", content: PROMPT_JUGE },
     {
       role: "user",
-      content: `AFFIRMATION : ${a.passage}\nRÉSUMÉ : ${a.resume}\nSOURCE CITÉE : ${s.brut}\nDATE DES FAITS : ${dateFaits}\n\nTEXTE OFFICIEL (${officielle.titre}${version ? `, version en vigueur du ${version.debut} au ${version.fin ?? "aujourd'hui"}` : ""}) :\n${texte.slice(0, 15000)}`,
+      content: `STATEMENT: ${a.passage}\nSUMMARY: ${a.resume}\nSOURCE CITED: ${s.brut}\nDATE OF THE FACTS: ${dateFaits}\n\nOFFICIAL TEXT (${officielle.titre}${version ? `, version in force from ${version.debut} to ${version.fin ?? "today"}` : ""}):\n${texte.slice(0, 15000)}`,
     },
   ]);
   const jugement = jugementVerifie(brut, texte);
   controles.push(controlerContenu(jugement));
   journal({
-    acteur: "Avocat adverse",
-    action: `${a.id} · verdict ${jugement.verdict}${jugement.extraitRetrouve ? " (extrait vérifié mot pour mot)" : " (extrait NON retrouvé, verdict écarté)"}`,
+    acteur: "Opposing counsel",
+    action: `${a.id} · verdict ${jugement.verdict}${jugement.extraitRetrouve ? " (excerpt verified word for word)" : " (excerpt NOT found, verdict set aside)"}`,
     modele: MODELE_JUGE,
   });
   return fin(controles, officielle, version, jugement);
