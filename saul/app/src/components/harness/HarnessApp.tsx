@@ -36,7 +36,7 @@ export default function HarnessApp({online=false}:{online?:boolean}){
  function open(p:Project){setProjectId(p.id);setRunId(undefined);setTab('chat');setFocus(undefined);setSectionId(undefined);setError('');setPrompt('');setPending([]);setUseCaseId(undefined)}
  function reset(){setProjectId(undefined);setRunId(undefined);setTab('chat');setFocus(undefined);setSectionId(undefined);setError('');setPrompt('');setPending([]);setUseCaseId(undefined)}
  async function guarded(fn:()=>Promise<void>){setBusy(true);setError('');try{await fn()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
- function stage(files:FileList|File[]|null){if(!files)return;setError('');setPending(old=>[...old,...Array.from(files).filter(f=>!old.some(x=>x.name===f.name&&x.size===f.size))])}
+ function stage(files:FileList|File[]|null){if(!files)return;const incoming=Array.from(files);setError('');setPending(old=>[...old,...incoming.filter(f=>!old.some(x=>x.name===f.name&&x.size===f.size))])}
  async function addToMatter(files:FileList|File[]|null){if(!files?.length||!project)return;await guarded(async()=>{const data=new FormData();Array.from(files).forEach(f=>data.append('files',f));await api(`projects/${project.id}/documents`,{method:'POST',body:data});await refresh()});if(addInput.current)addInput.current.value=''}
  /** The mission and its documents are sent together: the project is created on the way through if needed. */
  async function send(){
