@@ -39,7 +39,16 @@ Clés nécessaires dans `.env` : `MISTRAL_API_KEY` et `ANTHROPIC_API_KEY`. `OPEN
 ## État
 
 - [x] Skill v1 : méthode, scripts d'extraction et de contrôle
-- [ ] Script qui lance les deux conditions et calcule les scores
+- [x] Script qui lance les deux conditions et calcule les scores (`bench/run.py`)
 - [ ] Premier lancement sur 1 tâche, pour mesurer le coût et la durée
 - [ ] Mise au point sur les 5 tâches de développement
 - [ ] Mesure sur les 10 tâches de test (Mistral, puis Claude)
+
+## Lancer
+
+```bash
+cp .env.example .env               # puis remplir les clés
+python3 bench/run.py --model mistral-medium-3.5 --set one     # 1 tâche, avec et sans skill
+python3 bench/run.py --model claude-sonnet-5-5 --set dev --parallel 4
+python3 bench/run.py --summary
+```
