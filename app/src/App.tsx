@@ -1,199 +1,193 @@
-// L'ossature. Six écrans, dans l'ordre où un juriste traverse un audit :
-// ce qu'on a reçu, ce qu'on cherche, ce qu'on a trouvé, d'où cela vient,
-// ce que le vendeur en dit, et ce qu'on en fait au contrat.
+// L'ossature : un écran, deux volets.
+//
+// À gauche le rapport, lu comme un document. À droite la preuve du passage
+// qu'on vient de cliquer, le parcours des agents ou les pièces — et, dessous,
+// le journal en direct. Rien d'autre : pas de menu à six entrées, pas d'écran
+// à retrouver. Le juriste lit son rapport, et vérifie à côté.
 
-import { useEffect } from "react";
-import { DataRoom } from "./views/DataRoom";
-import { Chantiers } from "./views/Chantiers";
-import { Tableau } from "./views/Tableau";
-import { Constats } from "./views/Constats";
-import { Vendeur } from "./views/Vendeur";
-import { Spa } from "./views/Spa";
+import { useEffect, useState } from "react";
+import { Dossiers } from "./views/Dossiers";
+import { Rapport } from "./views/Rapport";
+import { Preuve } from "./views/Preuve";
+import { Parcours } from "./views/Parcours";
+import { Pieces } from "./views/Pieces";
+import { JournalDAudit } from "./views/Audit";
+import { LecteurDocument } from "./views/LecteurDocument";
+import { Journal } from "./components/Journal";
 import { Gravite } from "./components/ui";
 import {
   GRAVITES,
-  aller,
-  chargerAudit,
+  allerOnglet,
+  chargerDossiers,
   compterGravites,
-  formaterDate,
+  constatChoisi,
+  depuis,
+  fermerDossier,
+  ouvrirDocument,
+  poser,
   relancerAudit,
   useEtat,
-  type Ecran,
+  type Onglet,
 } from "./store";
 
-const ECRANS: { id: Ecran; num: string; nom: string; sur: string; intro: string }[] = [
-  {
-    id: "dataroom",
-    num: "1",
-    nom: "La data room",
-    sur: "Ce qui est arrivé",
-    intro:
-      "Chaque fichier a été ouvert. Les doublons et les brouillons sont écartés avec leur motif, et ce qui n'a pas pu être lu est dit.",
-  },
-  {
-    id: "chantiers",
-    num: "2",
-    nom: "Les chantiers",
-    sur: "Ce qu'on cherche",
-    intro:
-      "Les constats suivent les chantiers de l'audit, pas l'arborescence du vendeur. Chaque chantier dit aussi où ses conclusions s'arrêtent.",
-  },
-  {
-    id: "tableau",
-    num: "3",
-    nom: "Le tableau",
-    sur: "Ce qui a été relevé",
-    intro: "Une ligne par question d'audit. Chaque cellule porte le document, la clause et la page dont elle vient.",
-  },
-  {
-    id: "constats",
-    num: "4",
-    nom: "Les constats",
-    sur: "D'où cela vient",
-    intro:
-      "L'extrait du document et le texte rédigé, côte à côte, avec le chemin complet qui y mène. La vérification devient une relecture ciblée.",
-  },
-  {
-    id: "vendeur",
-    num: "5",
-    nom: "Les réponses du vendeur",
-    sur: "Ce qu'il en dit",
-    intro: "Chaque réponse éprouvée contre les pièces, avec le constat et le passage qui la contredisent.",
-  },
-  {
-    id: "spa",
-    num: "6",
-    nom: "Au contrat de cession",
-    sur: "Ce qu'on en fait",
-    intro:
-      "Chaque risque traduit en garantie, condition suspensive ou ajustement de prix, avec le renvoi qui le justifie.",
-  },
+const ONGLETS: { id: Onglet; nom: string }[] = [
+  { id: "preuve", nom: "La preuve" },
+  { id: "parcours", nom: "Le parcours" },
+  { id: "pieces", nom: "Les pièces" },
 ];
 
 export function App() {
-  const ecran = useEtat((e) => e.ecran);
+  const dossierOuvert = useEtat((e) => e.dossierOuvert);
   const audit = useEtat((e) => e.audit);
   const erreur = useEtat((e) => e.erreur);
   const enCours = useEtat((e) => e.enCours);
+  const chargement = useEtat((e) => e.chargement);
+  const onglet = useEtat((e) => e.onglet);
+  const choisi = useEtat((e) => e.choisi);
+  const documentOuvert = useEtat((e) => e.documentOuvert);
+  const [lecture, setLecture] = useState<{ id: string; passage: string | null } | null>(null);
 
   useEffect(() => {
-    chargerAudit();
+    chargerDossiers();
   }, []);
 
-  if (erreur && !audit) {
-    return (
-      <div className="demarrage">
-        <div className="carte" style={{ maxWidth: 560 }}>
-          <h2>L'audit n'a pas pu être chargé</h2>
-          <p className="sous" style={{ marginTop: 8 }}>{erreur}</p>
-          <p className="sous">Le serveur de développement doit tourner : <code>npm run dev</code>.</p>
-          <button className="bouton fort" onClick={chargerAudit}>Réessayer</button>
-        </div>
-      </div>
-    );
-  }
+  const constat = choisi && audit ? constatChoisi() : null;
 
-  if (!audit) {
-    return (
-      <div className="demarrage">
-        <div>
-          <div className="marque" style={{ padding: 0, justifyContent: "center" }}>
-            <span className="sceau">V</span>
-            <div><b>Visa</b><small>Due diligence tracée</small></div>
-          </div>
-          <p className="sous" style={{ marginTop: 18, textAlign: "center" }}>Lecture de la data room…</p>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div className="ecran">
+      <header className="barre">
+        <button className="marque" onClick={fermerDossier} title="Revenir aux dossiers">
+          <span className="sceau">V</span>
+          <span className="nom-marque">Visa</span>
+        </button>
 
-  const courant = ECRANS.find((e) => e.id === ecran)!;
+        {audit ? (
+          <>
+            <span className="separateur" />
+            <button className="fil-ariane" onClick={fermerDossier}>
+              {audit.nomDossier}
+            </button>
+            <Sommaire audit={audit} />
+            <div className="barre-actions">
+              <button className="bouton sm" onClick={relancerAudit} disabled={Boolean(enCours)}>
+                {enCours ? "passage en cours…" : "⟳ relancer"}
+              </button>
+            </div>
+          </>
+        ) : (
+          <span className="accroche">
+            Chaque information du rapport porte le chemin qui y mène.
+          </span>
+        )}
+      </header>
+
+      {erreur && (
+        <div className="bandeau attention compact bandeau-barre">
+          <span className="pastille">▲</span>
+          <span>{erreur}</span>
+          <button className="bouton discret sm" style={{ marginLeft: "auto" }} onClick={() => poser({ erreur: null })}>
+            ✕
+          </button>
+        </div>
+      )}
+
+      {!dossierOuvert && <Dossiers />}
+
+      {dossierOuvert && !audit && (
+        <div className="vide">
+          {chargement ? "Passage de l'audit sur les pièces du dossier…" : "Aucun audit pour ce dossier."}
+        </div>
+      )}
+
+      {dossierOuvert && audit && (
+        <div className="deux-volets">
+          <section className="volet-gauche">
+            <Rapport audit={audit} />
+          </section>
+
+          <section className="volet-droit">
+            <nav className="onglets">
+              {ONGLETS.map((o) => (
+                <button key={o.id} className={`onglet-droit ${onglet === o.id ? "actif" : ""}`} onClick={() => allerOnglet(o.id)}>
+                  {o.nom}
+                  {o.id === "parcours" && <span className="compte-onglet">{audit.journal.length}</span>}
+                  {o.id === "pieces" && <span className="compte-onglet">{audit.documents.length}</span>}
+                </button>
+              ))}
+            </nav>
+            <div className="volet-corps">
+              {onglet === "preuve" && (
+                <Preuve audit={audit} constat={constat} onLire={(id, passage) => setLecture({ id, passage })} />
+              )}
+              {onglet === "parcours" && <Parcours audit={audit} />}
+              {onglet === "pieces" && <Pieces audit={audit} />}
+            </div>
+            <Journal audit={audit} enDirect={enCours} />
+          </section>
+        </div>
+      )}
+
+      {audit && <JournalDAudit audit={audit} />}
+
+      {lecture && (
+        <LecteurDocument id={lecture.id} surligner={lecture.passage} onFermer={() => setLecture(null)} />
+      )}
+      {documentOuvert && <LecteurDocument id={documentOuvert} onFermer={() => ouvrirDocument(null)} />}
+    </div>
+  );
+}
+
+/** Le sommaire de la barre : tout ce qu'il faut savoir d'un coup d'œil. */
+function Sommaire({ audit }: { audit: Parameters<typeof Rapport>[0]["audit"] }) {
   const g = compterGravites(audit.constats);
+  const cv = audit.couverture;
+  const aRevoir = audit.changements.aRevoir.length;
   const relus = audit.constats.filter((c) => c.relu).length;
 
   return (
-    <div className="app">
-      <aside className="cote">
-        <div className="marque">
-          <span className="sceau">V</span>
-          <div>
-            <b>Visa</b>
-            <small>Due diligence tracée</small>
-          </div>
-        </div>
-
-        <div className="cote-titre">L'audit, dans l'ordre</div>
-        {ECRANS.map((e) => (
-          <button key={e.id} className={`onglet ${ecran === e.id ? "actif" : ""}`} onClick={() => aller(e.id)}>
-            <span className="num">{e.num}</span>
-            {e.nom}
-            {e.id === "dataroom" && <span className="apres">{audit.documents.length}</span>}
-            {e.id === "constats" && <span className="apres">{relus}/{audit.constats.length}</span>}
-            {e.id === "tableau" && <span className="apres">{audit.constats.length}</span>}
-            {e.id === "vendeur" && (
-              <span className="apres">{audit.epreuves.filter((x) => x.verdict === "inexacte").length}</span>
-            )}
-            {e.id === "spa" && <span className="apres">{audit.mecanismes.length}</span>}
-          </button>
-        ))}
-
-        <div className="cote-pied">
-          <div style={{ marginBottom: 7 }}>
-            <b>{audit.operation.split(" — ")[0]}</b>
-            <br />
-            {audit.cible}
-          </div>
-          <div>Audit au {formaterDate(audit.dateReference)}</div>
-          <div style={{ marginTop: 9, lineHeight: 1.5 }}>
-            Toute information
-            <br />
-            porte son chemin.
-          </div>
-        </div>
-      </aside>
-
-      <main className="corps">
-        <div className="entete">
-          <div style={{ minWidth: 0 }}>
-            <div className="sur-titre">Étape {courant.num} · {courant.sur}</div>
-            <h1>{courant.nom}</h1>
-            <p className="intro">{courant.intro}</p>
-          </div>
-          <div className="actions">
-            {ecran !== "dataroom" && (
-              <span className="rangee" style={{ gap: 7 }}>
-                {GRAVITES.filter((x) => g[x]).map((x) => (
-                  <Gravite key={x} gravite={x} texte={`${g[x]} ${x}`} />
-                ))}
-              </span>
-            )}
-            <button className="bouton" onClick={relancerAudit} disabled={Boolean(enCours)}>
-              {enCours ? "Audit en cours…" : "Relancer l'audit"}
-            </button>
-          </div>
-        </div>
-
-        {enCours && (
-          <div className="progression">
-            {audit.etapes.map((et) => {
-              const fait = enCours.find((x) => x.etape === et.id);
-              return (
-                <span key={et.id} className={`pas-progression ${fait ? "fait" : ""}`}>
-                  {fait ? "✓" : "○"} {et.titre}
-                  {fait && <small>{fait.detail}</small>}
-                </span>
-              );
-            })}
-          </div>
-        )}
-
-        {ecran === "dataroom" && <DataRoom audit={audit} />}
-        {ecran === "chantiers" && <Chantiers audit={audit} />}
-        {ecran === "tableau" && <Tableau audit={audit} />}
-        {ecran === "constats" && <Constats audit={audit} />}
-        {ecran === "vendeur" && <Vendeur audit={audit} />}
-        {ecran === "spa" && <Spa audit={audit} />}
-      </main>
+    <div className="sommaire">
+      <span className="bloc-sommaire" title={`${cv.depouilles} pièces dépouillées sur ${cv.total} versées`}>
+        <b>
+          {cv.depouilles}/{cv.total}
+        </b>
+        lues
+      </span>
+      {cv.illisibles.length > 0 && (
+        <span className="bloc-sommaire alerte" title="Pièces que Visa n'a pas pu lire">
+          <b>{cv.illisibles.length}</b>
+          non lue{cv.illisibles.length > 1 ? "s" : ""}
+        </span>
+      )}
+      {cv.demandesManquantes > 0 && (
+        <span className="bloc-sommaire alerte" title="Lignes de la liste de demandes restées sans réponse">
+          <b>{cv.demandesManquantes}</b>
+          manquantes
+        </span>
+      )}
+      <span className="separateur" />
+      {GRAVITES.filter((x) => g[x]).map((x) => (
+        <Gravite key={x} gravite={x} texte={`${g[x]} ${x}`} />
+      ))}
+      <span className="separateur" />
+      <span className="bloc-sommaire" title="Constats que vous avez relus">
+        <b>
+          {relus}/{audit.constats.length}
+        </b>
+        relus
+      </span>
+      {aRevoir > 0 && (
+        <button
+          className="bloc-sommaire perime-puce"
+          onClick={() => poser({ onglet: "preuve", choisi: audit.changements.aRevoir[0].cle })}
+          title="Des pièces arrivées depuis ont changé des constats que vous aviez validés"
+        >
+          <b>{aRevoir}</b>
+          relecture{aRevoir > 1 ? "s" : ""} périmée{aRevoir > 1 ? "s" : ""}
+        </button>
+      )}
+      <span className="bloc-sommaire discret" title={`Dernier passage ${depuis(audit.lanceLe)}`}>
+        {depuis(audit.lanceLe)}
+      </span>
     </div>
   );
 }

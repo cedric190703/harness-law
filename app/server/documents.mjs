@@ -181,6 +181,47 @@ export function situer(doc, passage) {
   return { page: page?.numero ?? 1, ligne };
 }
 
+const MOIS = [
+  "janvier", "février", "mars", "avril", "mai", "juin",
+  "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+];
+
+/** « 15 septembre 2026 » → « 2026-09-15 ». Null si ce n'est pas une date. */
+export function dateFrancaise(texte) {
+  const m = texte.match(/\b(\d{1,2})(?:er)?\s+(\p{L}+)\s+(\d{4})\b/u);
+  if (!m) return null;
+  const mois = MOIS.findIndex((x) => x === m[2].toLowerCase());
+  if (mois === -1) return null;
+  return `${m[3]}-${String(mois + 1).padStart(2, "0")}-${String(Number(m[1])).padStart(2, "0")}`;
+}
+
+/**
+ * La date de l'acte : celle de sa signature, telle que le document la porte.
+ *
+ * Elle sert à ordonner plusieurs avenants au même contrat. Deux avenants
+ * successifs peuvent modifier la même clause, et c'est le dernier qui donne le
+ * texte en vigueur — jamais le premier rencontré dans l'arborescence.
+ */
+export function dateDeLActe(texte) {
+  const entete = texte.slice(0, 1200);
+  // Uniquement les tournures qui datent **l'acte lui-même**. Un « du 4 février
+  // 2021 » peut parfaitement désigner le contrat qu'une lettre cite : s'en
+  // servir ferait porter au document la date d'un autre.
+  for (const rx of [
+    /sign[ée]e?\s+(?:à\s+[\p{L}\s-]+,?\s+)?le\s+([^\n.;]{6,40})/iu,
+    /\bfait\s+à\s+[^,\n]+,\s*le\s+([^\n.;]{6,40})/iu,
+    /\bdat[ée]e?\s+du\s+([^\n.;]{6,40})/iu,
+    // « Nanterre, le 3 septembre 2026 » : l'en-tête d'une lettre.
+    /^[ \t]*\p{Lu}[\p{L}\s-]{2,30},\s*le\s+(\d{1,2}(?:er)?\s+\p{L}+\s+\d{4})/imu,
+    /\bmis(?:e)?\s+à\s+jour\s+le\s+([^\n.;]{6,40})/iu,
+  ]) {
+    const m = entete.match(rx);
+    const d = m && dateFrancaise(m[1]);
+    if (d) return d;
+  }
+  return null;
+}
+
 /** Un intitulé d'article, dans ces documents, est en majuscules. */
 function estUnIntitule(s) {
   const lettres = s.replace(/[^\p{L}]/gu, "");
@@ -247,6 +288,8 @@ export function trier(documents) {
     d.role = "retenu";
     d.motifTri = null;
     d.parentDe = null;
+    d.dateActe = d.lisible ? dateDeLActe(d.texte) : null;
+    d.dernierAvenant = false;
 
     if (!d.lisible) {
       d.role = "illisible";
@@ -317,8 +360,31 @@ export function trier(documents) {
       a.parentDe = parent.chemin;
       parent.avenants = [...(parent.avenants ?? []), a.chemin];
     } else {
-      a.motifTri = "Avenant dont le contrat d'origine n'a pas été retrouvé dans la data room.";
+      a.motifTri =
+        "Avenant dont le contrat d'origine n'a pas pu être identifié avec certitude. Il n'est rattaché à aucun contrat : rattachez-le à la main plutôt que de laisser l'audit deviner.";
     }
+  }
+
+  // Ordonner les avenants d'un même contrat par leur date, et désigner le
+  // dernier. Un avenant sans date est traité comme le plus ancien : on ne lui
+  // fait pas dire le droit en vigueur sans savoir quand il a été signé.
+  for (const parent of documents.filter((x) => x.avenants?.length)) {
+    const suite = parent.avenants
+      .map((chemin) => documents.find((d) => d.chemin === chemin))
+      .filter(Boolean)
+      .sort((a, b) => (a.dateActe ?? "0000-00-00").localeCompare(b.dateActe ?? "0000-00-00"));
+    suite.forEach((a, i) => {
+      a.rangAvenant = i + 1;
+      a.dernierAvenant = i === suite.length - 1;
+      if (!a.dateActe) {
+        a.motifTri = `${a.motifTri} Sa date de signature n'a pas pu être lue : son rang dans la suite des avenants est incertain.`;
+      } else if (suite.length > 1) {
+        a.motifTri = `Avenant du ${a.dateActe}, ${i + 1}ᵉ sur ${suite.length} au contrat « ${parent.nom} »${
+          i === suite.length - 1 ? " — c'est lui qui donne le texte en vigueur." : " — remplacé par un avenant postérieur."
+        }`;
+      }
+    });
+    parent.avenants = suite.map((a) => a.chemin);
   }
 
   return documents;
@@ -338,35 +404,82 @@ function clausesPerdues(tronque, complet) {
 }
 
 /**
- * Le contrat qu'un avenant modifie. On cherche la date et les parties que
- * l'avenant cite lui-même : c'est lui qui le dit, pas nous.
+ * Les mots en majuscules qui n'identifient personne : ils figurent dans tous les
+ * actes. S'en servir pour rattacher un avenant revient à tirer au sort.
+ */
+const MOTS_BANALS = new Set([
+  "ARTICLE", "ARTICLES", "CONTRAT", "AVENANT", "ENTRE", "PRÉAMBULE", "PREAMBULE",
+  "STIPULATIONS", "MODIFICATION", "MODIFICATIONS", "OBJET", "DURÉE", "DUREE",
+  "PRIX", "SIGNATURES", "SIGNATURE", "FOURNITURE", "EXCLUSIVE", "ENGAGEMENT",
+  "VOLUME", "MINIMUM", "RÉSILIATION", "RESILIATION", "JANVIER", "FÉVRIER",
+  "FEVRIER", "MARS", "AVRIL", "JUIN", "JUILLET", "AOÛT", "AOUT", "SEPTEMBRE",
+  "OCTOBRE", "NOVEMBRE", "DÉCEMBRE", "DECEMBRE", "EUROS", "TONNES", "NOTE",
+  "DISTRIBUTEUR", "FOURNISSEUR", "PRENEUR", "BAILLEUR", "GARANT", "SOCIÉTÉ",
+  "SOCIETE", "PRÉSENT", "PRESENT", "SUIVANTES", "REMPLACÉ", "REMPLACE",
+]);
+
+/**
+ * Le contrat qu'un avenant modifie.
+ *
+ * On ne devine pas : un rattachement faux déplace une clause d'un contrat à un
+ * autre et corrompt le rapport en silence. Deux indices seulement sont admis, et
+ * à défaut on renvoie null pour que l'avenant soit signalé comme non rattaché.
+ *
+ *   1. la date que l'avenant cite comme celle du contrat d'origine, confrontée
+ *      à la date d'acte des candidats ;
+ *   2. le nom propre qu'il nomme, cherché dans le NOM du candidat ou dans ses
+ *      parties — jamais n'importe où dans son texte.
  */
 function contratModifie(avenant, documents) {
-  const date = avenant.texte.match(/\bdu\s+(\d{1,2}(?:er)?\s+\p{L}+\s+\d{4})/u)?.[1];
   const candidats = documents.filter((d) => d.role === "retenu" && d !== avenant);
+  const entete = avenant.texte.slice(0, 1000);
+
+  // 1. La date du contrat d'origine, telle que l'avenant la cite.
+  const citee = entete.match(/\b(?:du|le|en date du)\s+(\d{1,2}(?:er)?\s+\p{L}+\s+\d{4})/iu);
+  const date = citee && dateFrancaise(citee[1]);
   if (date) {
-    const parDate = candidats.find((d) => d.texte.includes(date));
-    if (parDate) return parDate;
+    const parDate = candidats.filter((d) => d.dateActe === date);
+    if (parDate.length === 1) return parDate[0];
+    // Plusieurs contrats signés le même jour : on tranche par le nom propre.
+    if (parDate.length > 1) {
+      const parNom = parDate.find((d) => nomsPropres(entete).some((n) => d.nom.toUpperCase().includes(n)));
+      if (parNom) return parNom;
+      return null;
+    }
   }
-  // À défaut de date, le nom propre le plus présent dans l'avenant.
-  const noms = [...avenant.texte.matchAll(/\b([A-ZÀ-Ü]{4,})\b/g)].map((m) => m[1]);
-  const compte = new Map();
-  for (const n of noms) compte.set(n, (compte.get(n) ?? 0) + 1);
-  const frequents = [...compte.entries()].sort((a, b) => b[1] - a[1]).map(([n]) => n);
-  for (const n of frequents) {
-    const trouve = candidats.find((d) => d.nom.toUpperCase().includes(n) || d.texte.includes(n));
-    if (trouve) return trouve;
+
+  // 2. Le nom propre que l'avenant nomme, cherché dans le nom du candidat ou
+  //    dans son en-tête, là où les parties sont désignées.
+  for (const n of nomsPropres(entete)) {
+    const trouves = candidats.filter(
+      (d) => d.nom.toUpperCase().includes(n) || d.texte.slice(0, 700).toUpperCase().includes(n),
+    );
+    if (trouves.length === 1) return trouves[0];
   }
   return null;
+}
+
+/** Les noms propres d'un en-tête, du plus fréquent au moins fréquent. */
+function nomsPropres(texte) {
+  const compte = new Map();
+  for (const m of texte.matchAll(/\b([A-ZÀ-Ü][A-ZÀ-Ü'’-]{3,})\b/g)) {
+    const mot = m[1];
+    if (MOTS_BANALS.has(mot)) continue;
+    compte.set(mot, (compte.get(mot) ?? 0) + 1);
+  }
+  return [...compte.entries()].sort((a, b) => b[1] - a[1]).map(([n]) => n);
 }
 
 /**
  * Injecte dans un document le texte lu par reconnaissance de caractères.
  *
- * Le document devient exploitable, mais il garde la marque de son origine :
- * un passage lu par machine sur une image n'a pas la force d'un passage lu dans
- * un fichier texte. L'interface doit le dire, et le juriste doit pouvoir
- * confirmer sur l'original.
+ * Le document devient exploitable, mais il garde la marque de son origine : un
+ * passage lu par machine sur une image n'a pas la force d'un passage lu dans un
+ * fichier texte. L'interface doit le dire, et seul le juriste peut lever la
+ * réserve en ouvrant l'original.
+ *
+ * Rend false si le texte reconnu est trop maigre pour être exploité — auquel cas
+ * le document reste illisible, et le dit.
  */
 export function appliquerReconnaissance(doc, texte, modele) {
   if (!texte || texte.trim().length < 40) return false;
@@ -397,7 +510,12 @@ export async function chargerDataRoom(racine, { reconnaitre } = {}) {
     for (const d of docs.filter((x) => x.aReconnaitre)) {
       try {
         const lu = await reconnaitre(d);
-        if (lu) appliquerReconnaissance(d, lu.texte, lu.modele);
+        // Un appel qui réussit ne suffit pas : ce qui compte est que le texte
+        // soit effectivement entré dans le document. Sinon il reste illisible.
+        const applique = lu ? appliquerReconnaissance(d, lu.texte, lu.modele) : false;
+        if (lu && !applique) {
+          d.motifIllisible = `${d.motifIllisible} La reconnaissance n'a rendu que ${lu.texte.trim().length} caractères : trop peu pour être exploité.`;
+        }
       } catch (e) {
         d.motifIllisible = `${d.motifIllisible} La reconnaissance a échoué : ${e.message}`;
       }

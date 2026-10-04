@@ -16,14 +16,16 @@
 
 import { renderToString } from "react-dom/server";
 import { clauseDe, situer, LIGNES_PAR_PAGE, type DocumentLu } from "../server/documents.mjs";
-import { auditer } from "../server/harnais.mjs";
+import { auditer, enrichir } from "../server/harnais.mjs";
+import * as magasin from "../server/dossiers.mjs";
+import { rapportMarkdown, tableauCsv } from "../server/rapport.mjs";
 import { passagePresent } from "../server/extraction.mjs";
-import { DataRoom } from "../src/views/DataRoom";
-import { Chantiers } from "../src/views/Chantiers";
-import { Tableau } from "../src/views/Tableau";
-import { Constats } from "../src/views/Constats";
-import { Vendeur } from "../src/views/Vendeur";
-import { Spa } from "../src/views/Spa";
+import { Dossiers } from "../src/views/Dossiers";
+import { Rapport } from "../src/views/Rapport";
+import { Preuve } from "../src/views/Preuve";
+import { Parcours } from "../src/views/Parcours";
+import { Pieces } from "../src/views/Pieces";
+import { JournalDAudit } from "../src/views/Audit";
 import { poser } from "../src/store";
 import type { Audit } from "../src/types";
 
@@ -38,7 +40,9 @@ const ok = (t: string) => console.log(`  ✓ ${t}`);
 // On éprouve le corpus exact qui a servi à l'audit : un document scanné puis lu
 // par reconnaissance n'est plus le même que sur le disque.
 let documents: DocumentLu[] = [];
-const audit = (await auditer({ racine: "./dataroom", surCorpus: (d) => (documents = d) })) as unknown as Audit;
+const audit = enrichir(
+  await auditer({ dossier: "sodimex", surCorpus: (d) => (documents = d) }),
+) as unknown as Audit;
 const parId = new Map(documents.map((d) => [d.id, d]));
 
 // ------------------------------------------------------------------- 1. preuve
@@ -62,6 +66,24 @@ for (const c of audit.constats) {
   avecPreuve++;
 }
 ok(`${avecPreuve} constats appuyés sur un passage retrouvé`);
+
+// -------------------------------------------------------------- 1bis. identité
+titre("1bis. Les clés de constat sont-elles uniques et stables ?");
+const cles = new Map<string, string>();
+for (const c of audit.constats) {
+  if (!c.cle) {
+    rate(`${c.id} — sans clé stable : la relecture du juriste ne pourrait pas s'y rattacher.`);
+    continue;
+  }
+  const deja = cles.get(c.cle);
+  if (deja) rate(`${c.id} partage sa clé « ${c.cle} » avec ${deja} : une relecture porterait sur les deux.`);
+  else cles.set(c.cle, c.id);
+  // La clé ne doit pas dépendre du numéro affiché, qui se décale.
+  if (c.cle.includes(`.${c.id.split(".")[1] ?? "~"}`) && c.id.includes(".")) {
+    rate(`${c.id} — sa clé reprend son numéro affiché, donc elle se décalera aussi.`);
+  }
+}
+ok(`${cles.size} clés distinctes pour ${audit.constats.length} constats`);
 
 // -------------------------------------------------------------------- 2. renvoi
 titre("2. Le renvoi désigne-t-il l'endroit du passage ?");
@@ -191,15 +213,13 @@ if (somme !== cv.total) rate(`couverture : ${somme} documents classés pour ${cv
 ok(`${cv.total} documents, tous classés et chacun avec son motif`);
 
 // ------------------------------------------------------------------- 7. écrans
-titre("7. Les écrans se rendent-ils ?");
-poser({ audit });
+titre("7. Les volets se rendent-ils ?");
+poser({ audit, dossierOuvert: audit.dossier });
 for (const [nom, Vue] of [
-  ["La data room", DataRoom],
-  ["Les chantiers", Chantiers],
-  ["Le tableau", Tableau],
-  ["Les constats", Constats],
-  ["Les réponses du vendeur", Vendeur],
-  ["Au contrat de cession", Spa],
+  ["Le rapport", Rapport],
+  ["Le parcours", Parcours],
+  ["Les pièces", Pieces],
+  ["Le journal d'audit imprimé", JournalDAudit],
 ] as [string, (p: { audit: Audit }) => JSX.Element][]) {
   try {
     renderToString(<Vue audit={audit} />);
@@ -208,17 +228,180 @@ for (const [nom, Vue] of [
     rate(`${nom} — ${e instanceof Error ? e.message : e}`);
   }
 }
-// La fiche d'un constat : c'est là que vivent le fil et le droit applicable.
+try {
+  poser({ dossiers: await magasin.lister(), chargement: false });
+  renderToString(<Dossiers />);
+  ok("Les dossiers");
+} catch (e) {
+  rate(`Les dossiers — ${e instanceof Error ? e.message : e}`);
+}
+// La preuve de chaque constat : c'est le volet que le juriste ouvre le plus.
 for (const c of audit.constats) {
   try {
-    poser({ audit, constatOuvert: c.id });
-    renderToString(<Constats audit={audit} />);
+    renderToString(<Preuve audit={audit} constat={c} onLire={() => {}} />);
   } catch (e) {
-    rate(`fiche ${c.id} — ${e instanceof Error ? e.message : e}`);
+    rate(`la preuve de ${c.id} — ${e instanceof Error ? e.message : e}`);
   }
 }
-ok(`${audit.constats.length} fiches de constat`);
-poser({ constatOuvert: null });
+try {
+  renderToString(<Preuve audit={audit} constat={null} onLire={() => {}} />);
+} catch (e) {
+  rate(`la preuve sans constat choisi — ${e instanceof Error ? e.message : e}`);
+}
+ok(`${audit.constats.length} preuves de constat`);
+
+// ------------------------------------------------- 7bis. le rapport et le parcours
+titre("7bis. Le rapport lu et le parcours disent-ils la même chose que le registre ?");
+const blocsConstat = audit.blocs.filter((b) => b.type === "constat") as Extract<Audit["blocs"][number], { type: "constat" }>[];
+if (blocsConstat.length !== audit.constats.length) {
+  rate(`le rapport porte ${blocsConstat.length} constats pour ${audit.constats.length} au registre.`);
+}
+for (const b of blocsConstat) {
+  const c = audit.constats.find((x) => x.cle === b.cle);
+  if (!c) {
+    rate(`le rapport porte un constat « ${b.id} » qui n'est pas au registre.`);
+    continue;
+  }
+  // Le bloc affiche la correction du juriste quand il y en a une, sinon la
+  // rédaction : jamais autre chose.
+  if (b.texte !== (c.correction ?? c.redaction)) rate(`${c.id} — le rapport n'affiche ni la rédaction ni la correction.`);
+  if (b.gravite !== c.gravite) rate(`${c.id} — gravité ${b.gravite} au rapport, ${c.gravite} au registre.`);
+  if (b.renvoi.document !== c.provenance.nomRetenu) rate(`${c.id} — le renvoi du rapport ne désigne pas le document retenu.`);
+}
+// Le schéma doit porter une ligne par pièce, et dire ce qui n'a rien donné.
+const lignesPieces = audit.parcours.lignes.filter((l) => l.piece);
+if (lignesPieces.length !== audit.documents.length) {
+  rate(`le schéma porte ${lignesPieces.length} lignes de pièce pour ${audit.documents.length} pièces.`);
+}
+for (const l of audit.parcours.sansSuite) {
+  const ligne = audit.parcours.lignes.find((x) => x.id === l.id);
+  if (ligne?.exploitee) rate(`${l.nom} est annoncée sans suite alors que le schéma la dit exploitée.`);
+}
+for (const c of audit.constats) {
+  if (!c.provenance.retenu) continue;
+  const ligne = audit.parcours.lignes.find((x) => x.id === c.provenance.retenu);
+  if (ligne && !ligne.exploitee) rate(`${c.id} repose sur une pièce que le schéma dit n'avoir rien donné.`);
+}
+// Le journal nomme ses acteurs, et seulement ceux qui existent.
+const connus = new Set(audit.acteurs.map((a) => a.id));
+for (const e of audit.journal) {
+  if (!connus.has(e.acteur)) rate(`le journal nomme un acteur inconnu : ${e.acteur}.`);
+  if (!e.action) rate(`une entrée du journal (${e.acteur}) n'a pas d'action.`);
+}
+ok(`${audit.blocs.length} blocs, ${audit.parcours.pas.length} pas, ${audit.journal.length} entrées de journal`);
+
+// --------------------------------------------------------- 8. la plateforme
+titre("8. Un dossier se travaille-t-il sur plusieurs jours ?");
+const essai = `essai-${Date.now()}`;
+try {
+  const d = await magasin.creer({ nom: essai, operation: "Contrôle automatique", cote: "l'acquéreur" });
+
+  // Un dossier vide s'audite sans planter, et ne conclut rien.
+  const vide = (await auditer({ dossier: d.id })) as unknown as Audit;
+  if (vide.constats.length) rate(`un dossier sans pièce rend ${vide.constats.length} constats.`);
+  if (!vide.changements.premier) rate("le premier passage d'un dossier ne se déclare pas comme tel.");
+  await magasin.enregistrerAudit(d.id, vide);
+
+  // Une pièce versée est lue, et le changement est annoncé.
+  const piece = [
+    "CONTRAT DE PRESTATIONS",
+    "ENTRE ESSAI SERVICES SAS ET CIBLE SAS",
+    "Signe le 3 mars 2024.",
+    "",
+    "ARTICLE 9 - RESILIATION",
+    "Le contrat sera resilie de plein droit en cas de changement du controle de",
+    "Cible SAS au sens de l article L. 233-3 du code de commerce.",
+  ].join("\n");
+  await magasin.verser(d.id, [{ nom: "contrat essai.txt", contenu: Buffer.from(piece).toString("base64") }], "lot 1");
+  const un = (await auditer({ dossier: d.id })) as unknown as Audit;
+  if (!un.changements.documents.ajoutes.length) rate("une pièce versée n'apparaît pas dans les changements.");
+  // Le document est sans accents : la recherche doit tout de même le trouver.
+  if (!un.constats.length) rate("une clause de changement de contrôle sans accents n'est pas trouvée.");
+  for (const c of un.constats) {
+    const doc = documentsDe(un).get(c.provenance.retenu ?? "");
+    if (c.provenance.extrait && doc && !piece.includes(c.provenance.extrait)) {
+      rate(`${c.id} — l'extrait n'est pas recopié tel quel depuis la pièce versée.`);
+    }
+  }
+  await magasin.enregistrerAudit(d.id, un);
+
+  // Le juriste relit, puis une pièce change le constat : sa relecture est périmée.
+  const cible = un.constats[0];
+  if (cible) {
+    await magasin.ecrireTravail(d.id, { relus: [cible.id], notes: { [cible.id]: "Vu avec le client." } });
+    const relu = (await auditer({ dossier: d.id })) as unknown as Audit;
+    const porte = relu.constats.find((c) => c.id === cible.id);
+    if (!porte?.relu) rate("la relecture enregistrée n'est pas reprise au passage suivant.");
+    if (porte?.note !== "Vu avec le client.") rate("la note du juriste ne survit pas au passage suivant.");
+    await magasin.enregistrerAudit(d.id, relu);
+
+    const avenant = [
+      "AVENANT N 1 AU CONTRAT DE PRESTATIONS DU 3 MARS 2024",
+      "ENTRE ESSAI SERVICES SAS ET CIBLE SAS",
+      "Signe le 1 septembre 2026.",
+      "",
+      "ARTICLE 1 - MODIFICATION DE L ARTICLE 9",
+      "Le changement de controle de Cible SAS est assimile a une cession et requiert",
+      "l accord ecrit prealable du prestataire.",
+    ].join("\n");
+    await magasin.verser(d.id, [{ nom: "avenant essai.txt", contenu: Buffer.from(avenant).toString("base64") }], "lot 2");
+    const apres = (await auditer({ dossier: d.id })) as unknown as Audit;
+    const change = apres.changements.constats.modifies.some((c) => c.id === cible.id);
+    if (change && !apres.changements.aRevoir.some((c) => c.id === cible.id)) {
+      rate(`${cible.id} a changé après un versement sans que la relecture soit signalée périmée.`);
+    }
+    ok(
+      change
+        ? "un versement qui change un constat relu signale la relecture comme périmée"
+        : "un versement est annoncé dans les changements",
+    );
+  }
+
+  // Les exports sortent, et portent les renvois.
+  const md = rapportMarkdown(un);
+  const csv = tableauCsv(un);
+  if (!md.includes("Étendue de la revue")) rate("le rapport ne dit pas l'étendue de la revue.");
+  if (!md.includes(essai)) rate("le rapport ne nomme pas le dossier.");
+  if (csv.split("\r\n").length - 1 !== un.constats.length + 1) rate("le tableau n'a pas une ligne par constat.");
+  for (const c of un.constats) {
+    if (c.provenance.nomRetenu && !md.includes(c.provenance.nomRetenu)) {
+      rate(`${c.id} — le rapport ne porte pas le renvoi au document retenu.`);
+    }
+  }
+  ok("le rapport et le tableau sortent avec leurs renvois");
+
+  // Un identifiant malveillant ne doit pas sortir du répertoire des dossiers.
+  for (const mauvais of ["../secret", "a/../..", "..", "C:\\x", ""]) {
+    let refuse = false;
+    try {
+      magasin.cheminDossier(mauvais);
+    } catch {
+      refuse = true;
+    }
+    if (!refuse) rate(`l'identifiant « ${mauvais} » n'est pas refusé.`);
+  }
+  ok("les identifiants de dossier hors périmètre sont refusés");
+
+  await magasin.supprimer(d.id);
+  if ((await magasin.lister()).some((x) => x.id === d.id)) rate("le dossier d'essai n'a pas été supprimé.");
+} catch (e) {
+  rate(`la plateforme : ${e instanceof Error ? e.message : e}`);
+  await magasin.supprimer(magasin.identifiant(essai)).catch(() => {});
+}
+
+// Le dossier de démonstration ne se supprime pas par inadvertance.
+let protege = false;
+try {
+  await magasin.supprimer("sodimex");
+} catch {
+  protege = true;
+}
+if (!protege) rate("le dossier de démonstration a pu être supprimé.");
+ok("le dossier de démonstration est protégé");
+
+function documentsDe(a: Audit) {
+  return new Map(a.documents.map((d) => [d.id, d]));
+}
 
 // ------------------------------------------------------------------- synthèse
 const g = audit.constats.reduce<Record<string, number>>((a, c) => ({ ...a, [c.gravite]: (a[c.gravite] ?? 0) + 1 }), {});

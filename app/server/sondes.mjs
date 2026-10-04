@@ -11,6 +11,8 @@
 // le passage cité existe mot pour mot dans le document nommé. Une sonde qui se
 // trompe produit un constat rejeté, pas un constat faux.
 
+import { compiler, plier } from "./extraction.mjs";
+
 /** Les chantiers de l'audit, dans l'ordre où on les présente. */
 export const CHANTIERS = [
   { id: "corporate", nom: "Corporate", quoi: "Titres, pouvoirs, organes" },
@@ -25,6 +27,63 @@ export const CHANTIERS = [
 export const GRAVITES = ["critique", "élevée", "moyenne", "faible"];
 
 const euros = (n) => `${n.toLocaleString("fr-FR")} €`;
+
+/**
+ * La majorité qu'une clause d'agrément exige, lue dans la clause elle-même.
+ *
+ * La supposer reviendrait à écrire « deux tiers » sous une clause qui exige
+ * l'unanimité — et l'unanimité donne à chaque minoritaire un droit de veto sur
+ * l'opération. L'écart n'est pas de nuance.
+ */
+function majoriteExigee(texte) {
+  const t = plier(texte).toLowerCase();
+  if (/unanimite/.test(t)) return "à l'unanimité";
+  if (/deux tiers|2\/3/.test(t)) return "à la majorité des deux tiers";
+  if (/trois quarts|3\/4/.test(t)) return "à la majorité des trois quarts";
+  if (/majorite simple/.test(t)) return "à la majorité simple";
+  // Une majorité est exigée mais la clause ne la nomme pas d'une façon qu'on
+  // sache lire : mieux vaut ne rien dire que de nommer la mauvaise.
+  return null;
+}
+
+/**
+ * Le passage dit-il cela ? On interroge l'extrait **plié** — accents retirés de
+ * part et d'autre — parce qu'une data room mélange toujours les deux écritures.
+ * Un contrat saisi à la hâte écrit « resilie de plein droit », et une sonde qui
+ * exige l'accent prendrait la mauvaise branche en silence.
+ */
+function dit(trouvaille, motif) {
+  return compiler(motif).test(trouvaille.plie ?? trouvaille.extrait);
+}
+
+/** Le nom d'un fichier répond-il au motif ? Même pliage. */
+function ditNom(document, motif) {
+  return compiler(motif).test(plier(document.nom));
+}
+
+/**
+ * Entre plusieurs avenants au même contrat, celui qui donne le texte en vigueur
+ * est le dernier signé. Prendre le premier rencontré dans l'arborescence
+ * conduirait à lire un engagement périmé : c'est précisément l'erreur que les
+ * juristes font à la main quand les avenants sont rangés loin du contrat.
+ */
+/** « 5 600 tonnes par an, indemnité de 58 €/tonne manquante », lu dans le texte. */
+function chiffres(extrait) {
+  const volume = extrait.match(/minimum de\s+([\d\s]+)\s*tonnes/i)?.[1].replace(/\s+/g, " ").trim();
+  const indemnite = extrait.match(/indemnité de\s+(\d+)\s*euros par tonne/i)?.[1];
+  if (!volume) return "volume non lu";
+  return `${volume} tonnes par an${indemnite ? `, indemnité de ${indemnite} €/tonne manquante` : ""}`;
+}
+
+function dernierAvenant(trouvailles) {
+  const avenants = trouvailles.filter((t) => t.document.role === "avenant");
+  if (!avenants.length) return null;
+  const marque = avenants.find((t) => t.document.dernierAvenant);
+  if (marque) return marque;
+  return avenants.sort((a, b) =>
+    (b.document.dateActe ?? "0000-00-00").localeCompare(a.document.dateActe ?? "0000-00-00"),
+  )[0];
+}
 
 /**
  * Une sonde. `motifs` sert à trouver les passages ; `constater` reçoit les
@@ -42,15 +101,27 @@ export const SONDES = [
     pourquoi: "Une cession non agréée fragilise la chaîne de propriété des titres que l'acquéreur achète.",
     motifs: [/agr[ée]ment/i, /droit de pr[ée]emption/i, /sans que soit joint/i],
     constater(trouvailles) {
-      const regle = trouvailles.find((t) => /soumise à l'agrément/i.test(t.extrait));
-      const defaut = trouvailles.find((t) => /sans que soit joint/i.test(t.extrait));
+      const regle = trouvailles.find((t) => dit(t, /soumise à l'agrément/i));
+      const defaut = trouvailles.find((t) => dit(t, /sans que soit joint/i));
       const constats = [];
       if (regle) {
+        // La majorité se lit dans les statuts : la supposer reviendrait à
+        // écrire « deux tiers » sous une clause qui exige l'unanimité.
+        const majorite = majoriteExigee(regle.plie ?? regle.extrait);
         constats.push({
-          valeur: "Agrément des associés à la majorité des deux tiers pour toute cession à un tiers",
+          valeur: `Agrément des associés${majorite ? ` ${majorite}` : ""} pour toute cession à un tiers`,
           redaction:
-            "Les statuts soumettent toute cession d'actions à un tiers non associé à l'agrément préalable des associés, statuant à la majorité des deux tiers. L'acquisition projetée entre dans ce champ et devra être agréée.",
-          gravite: "moyenne",
+            "Les statuts soumettent toute cession d'actions à un tiers non associé à l'agrément préalable de la collectivité des associés" +
+            `${majorite ? `, statuant ${majorite}` : ""}. L'acquisition projetée entre dans ce champ et devra être agréée.`,
+          gravite: majorite === "à l'unanimité" ? "élevée" : "moyenne",
+          impact:
+            majorite === "à l'unanimité"
+              ? "L'unanimité donne à chaque associé minoritaire un droit de veto sur l'opération : son accord doit être obtenu avant la signature, et non constaté après."
+              : undefined,
+          spa: {
+            mecanisme: "condition suspensive",
+            redaction: `Obtention de l'agrément de la collectivité des associés${majorite ? ` ${majorite}` : ""}, et renonciation des associés à leur droit de préemption, avant la date de réalisation.`,
+          },
           appui: regle,
         });
       }
@@ -80,7 +151,7 @@ export const SONDES = [
     pourquoi: "C'est l'assiette de l'opération : il faut qu'elle se recoupe entre les statuts et le registre.",
     motifs: [/Le capital social est fixé/i, /Répartition\s*:/i],
     constater(trouvailles) {
-      const t = trouvailles.find((x) => /Répartition\s*:/i.test(x.extrait)) ?? trouvailles[0];
+      const t = trouvailles.find((x) => dit(x, /Répartition\s*:/i)) ?? trouvailles[0];
       if (!t) return [];
       return [{
         valeur: "2 400 000 € — 240 000 actions — A. Rieux 60,0 %, C. Vasseur 26,7 %, Participations Gerland 13,3 %",
@@ -108,10 +179,10 @@ export const SONDES = [
     ],
     constater(trouvailles) {
       const constats = [];
-      const pouvoir = trouvailles.find((t) => /ne peut consentir aucune sûreté/i.test(t.extrait));
-      const autorisation = trouvailles.find((t) => /garantie au profit de/i.test(t.extrait));
-      const montant = trouvailles.find((t) => /montant maximum de la garantie/i.test(t.extrait));
-      const debiteur = trouvailles.find((t) => /GERLAND LOGISTIQUE/i.test(t.extrait));
+      const pouvoir = trouvailles.find((t) => dit(t, /ne peut consentir aucune sûreté/i));
+      const autorisation = trouvailles.find((t) => dit(t, /garantie au profit de/i));
+      const montant = trouvailles.find((t) => dit(t, /montant maximum de la garantie/i));
+      const debiteur = trouvailles.find((t) => dit(t, /GERLAND LOGISTIQUE/i));
 
       if (montant) {
         constats.push({
@@ -172,7 +243,7 @@ export const SONDES = [
     constater(trouvailles, ctx) {
       // Le contrat lui-même est au dossier mais illisible. On ne conclut rien,
       // et on dit précisément ce que cela empêche de conclure.
-      const corrompu = ctx.illisibles.find((d) => /credit-bail|crédit-bail/i.test(d.nom));
+      const corrompu = ctx.illisibles.find((d) => ditNom(d, /credit-bail|crédit-bail/i));
       if (!corrompu) return [];
       return [{
         valeur: "Encours garanti : non établi",
@@ -202,7 +273,7 @@ export const SONDES = [
     motifs: [/changement\s+(?:direct\s+ou\s+indirect\s+)?d[eu]\s+contrôle/i, /assimilé à une cession/i],
     constater(trouvailles) {
       return trouvailles.map((t) => {
-        const resiliation = /résilié de plein droit/i.test(t.extrait);
+        const resiliation = dit(t, /résilié de plein droit/i);
         return {
           valeur: resiliation
             ? "Résiliation de plein droit, sans indemnité, sauf accord écrit préalable"
@@ -232,23 +303,27 @@ export const SONDES = [
     pourquoi: "Un engagement de volume se paie quand il n'est pas tenu. Et c'est souvent un avenant qui en fixe le chiffre.",
     motifs: [/volume annuel minimum de/i, /déficit de\s+\d/i],
     constater(trouvailles) {
-      // L'avenant l'emporte sur le contrat d'origine : c'est lui le texte en vigueur.
-      const parAvenant = trouvailles.find((t) => t.document.role === "avenant");
-      const origine = trouvailles.find((t) => t.document.role === "retenu" && /volume annuel minimum/i.test(t.extrait));
+      // L'avenant l'emporte sur le contrat d'origine, et entre plusieurs
+      // avenants c'est le dernier signé qui donne le texte en vigueur.
+      const parAvenant = dernierAvenant(trouvailles);
+      const origine = trouvailles.find((t) => t.document.role === "retenu" && dit(t, /volume annuel minimum/i));
       const retenu = parAvenant ?? origine;
       if (!retenu) return [];
       const constats = [{
         valeur: parAvenant
-          ? "5 600 tonnes par an, indemnité de 58 €/tonne manquante (avenant n° 2 du 28 juin 2024)"
+          ? `${chiffres(parAvenant.extrait)} (${parAvenant.document.nom}${parAvenant.document.dateActe ? `, ${parAvenant.document.dateActe}` : ""})`
           : "4 200 tonnes par an, indemnité de 42 €/tonne manquante",
         redaction: parAvenant
-          ? "L'engagement de volume en vigueur n'est pas celui du contrat d'origine. L'avenant n° 2 du 28 juin 2024 a porté le minimum annuel de 4 200 à 5 600 tonnes et l'indemnité de 42 à 58 euros par tonne manquante. C'est ce texte modifié qui est opposable à la cible."
+          ? `L'engagement de volume en vigueur n'est pas celui du contrat d'origine. « ${parAvenant.document.nom} »` +
+            `${parAvenant.document.dateActe ? `, signé le ${parAvenant.document.dateActe},` : ""} le remplace` +
+            `${parAvenant.document.rangAvenant > 1 ? ` — c'est le ${parAvenant.document.rangAvenant}ᵉ avenant au contrat, et le dernier signé` : ""}` +
+            `. C'est ce texte modifié qui est opposable à la cible : ${chiffres(parAvenant.extrait)}.`
           : "Le contrat fixe un volume annuel minimum de 4 200 tonnes, assorti d'une indemnité de 42 euros par tonne manquante.",
         gravite: "moyenne",
         ecrase: parAvenant && origine ? origine : null,
         appui: retenu,
       }];
-      const mise = trouvailles.find((t) => /déficit de\s+\d/i.test(t.extrait));
+      const mise = trouvailles.find((t) => dit(t, /déficit de\s+\d/i));
       if (mise) {
         constats.push({
           valeur: "Indemnité réclamée au titre de 2025 : 42 340 €",
@@ -274,7 +349,7 @@ export const SONDES = [
     pourquoi: "Un préavis de dénonciation allongé enferme l'acquéreur dans le contrat bien après le closing.",
     motifs: [/délai de dénonciation.{0,60}porté/i, /sauf dénonciation par l'une des parties/i],
     constater(trouvailles) {
-      const avenant = trouvailles.find((t) => t.document.role === "avenant");
+      const avenant = dernierAvenant(trouvailles);
       const t = avenant ?? trouvailles[0];
       if (!t) return [];
       return [{
@@ -326,7 +401,7 @@ export const SONDES = [
       jurisprudence: "clause de non-concurrence contrepartie financière nulle",
     },
     constater(trouvailles) {
-      const absente = trouvailles.find((t) => /Aucune contrepartie financière/i.test(t.extrait));
+      const absente = trouvailles.find((t) => dit(t, /Aucune contrepartie financière/i));
       if (!absente) return [];
       return [{
         valeur: "Clause de 24 mois sur toute la France, sans aucune contrepartie financière",
@@ -351,7 +426,7 @@ export const SONDES = [
     pourquoi: "Un accord non provisionné est une dette qui apparaît après le closing.",
     motifs: [/Aucune provision n'a été constituée/i, /dont intéressement 2025/i],
     constater(trouvailles) {
-      const t = trouvailles.find((x) => /Aucune provision n'a été constituée/i.test(x.extrait));
+      const t = trouvailles.find((x) => dit(x, /Aucune provision n'a été constituée/i));
       if (!t) return [];
       return [{
         valeur: "Solde d'intéressement 2025 estimé à 118 000 €, non provisionné",
@@ -405,7 +480,7 @@ export const SONDES = [
     pourquoi: "Un contrôle non clos est une dette latente dont il faut connaître le montant et le stade.",
     motifs: [/PROPOSITION DE RECTIFICATION/i, /TOTAL\s+195 300/],
     constater(trouvailles) {
-      const t = trouvailles.find((x) => /195 300/.test(x.extrait)) ?? trouvailles[0];
+      const t = trouvailles.find((x) => dit(x, /195 300/)) ?? trouvailles[0];
       if (!t) return [];
       return [{
         valeur: "195 300 € de rappels (IS 126 000, intérêts 18 900, majoration 40 % 50 400), contestés, procédure non close",
@@ -429,7 +504,7 @@ export const SONDES = [
     pourquoi: "Un crédit d'impôt contestable se reprend avec intérêts et majoration.",
     motifs: [/L'éligibilité de\s*\n?ces dépenses/i, /crédit d'impôt recherche/i],
     constater(trouvailles) {
-      const t = trouvailles.find((x) => /éligibilité/i.test(x.extrait));
+      const t = trouvailles.find((x) => dit(x, /éligibilité/i));
       if (!t) return [];
       return [{
         valeur: "41 000 € de crédit d'impôt recherche dont l'éligibilité n'est pas acquise",
@@ -455,8 +530,8 @@ export const SONDES = [
     pourquoi: "On compare ce qui est demandé à ce qui est provisionné. L'écart est le risque.",
     motifs: [/TOTAL DES DEMANDES/i, /litige prud'homal/i],
     constater(trouvailles) {
-      const demandes = trouvailles.find((t) => /TOTAL DES DEMANDES/i.test(t.extrait));
-      const provision = trouvailles.find((t) => /litige prud'homal/i.test(t.extrait));
+      const demandes = trouvailles.find((t) => dit(t, /TOTAL DES DEMANDES/i));
+      const provision = trouvailles.find((t) => dit(t, /litige prud'homal/i));
       if (!demandes) return [];
       return [{
         valeur: "Demandes de 214 500 € ; provision au bilan de 240 000 €",
@@ -481,7 +556,7 @@ export const SONDES = [
       "Confier des données sans acte de sous-traitance est une infraction autonome, sanctionnable indépendamment de tout incident.",
     motifs: [/Aucun acte juridique au sens de l'article 28/i, /recours à des transporteurs tiers/i],
     constater(trouvailles) {
-      const t = trouvailles.find((x) => /Aucun acte juridique/i.test(x.extrait));
+      const t = trouvailles.find((x) => dit(x, /Aucun acte juridique/i));
       if (!t) return [];
       return [{
         valeur: "Aucun acte article 28 avec le prestataire logistique ; 52 000 personnes concernées par an",

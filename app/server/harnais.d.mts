@@ -4,13 +4,17 @@
 export const ETAPES: { id: string; titre: string; quoi: string }[];
 
 export function auditer(options?: {
-  racine?: string;
+  /** Le dossier à auditer. */
+  dossier?: string;
+  /** Un répertoire de pièces hors dossier, pour les contrôles isolés. */
+  racine?: string | null;
   dateReference?: string;
   avancer?: (pas: { etape: string; etat: string; detail: string }) => void;
   /** Reçoit le corpus exact qui a servi, texte reconnu compris. */
   surCorpus?: (documents: import("./documents.mjs").DocumentLu[]) => void;
 }): Promise<unknown>;
 
-export function enregistrer(resultat: unknown, dossier?: string): Promise<string>;
-export function dernierAudit(dossier?: string): Promise<unknown>;
-export function texteDocument(racine: string, chemin: string): Promise<unknown>;
+export function texteDocument(dossier: string, quoi: string): Promise<unknown>;
+
+/** Ajoute le rapport en blocs et le schéma du parcours à un audit. */
+export function enrichir(audit: unknown): unknown;

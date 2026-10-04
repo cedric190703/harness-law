@@ -50,42 +50,64 @@ Deux corollaires que l'interface porte partout :
   Les constats issus d'un scan portent la mention « lu par reconnaissance » et
   demandent confirmation sur l'original.
 
-## Les six écrans
+## Un écran, deux volets
 
-| | Écran | Ce qu'il répond |
-|---|---|---|
-| 1 | **La data room** | Qu'est-ce qui a été lu, et qu'est-ce qui ne l'a pas été ? |
-| 2 | **Les chantiers** | Que cherche-t-on, et où les conclusions s'arrêtent-elles ? |
-| 3 | **Le tableau** | Qu'a-t-on relevé, et d'où cela vient-il ? |
-| 4 | **Les constats** | L'extrait et la rédaction côte à côte, avec le chemin complet. |
-| 5 | **Les réponses du vendeur** | Que dit-il, et que disent ses propres pièces ? |
-| 6 | **Au contrat de cession** | Qu'en fait-on : garantie, condition suspensive, prix ? |
-
-L'écran 4 est le cœur. L'extrait du document et le texte rédigé sont côte à côte,
-même largeur, même hauteur : le juriste lit les deux d'un seul regard. En dessous,
-le **fil de provenance** se déroule pas à pas —
+Il n'y a pas de menu à six entrées, pas d'écran à retrouver. **Le juriste lit son
+rapport à gauche et vérifie à droite.**
 
 ```
- La question ─► N parcourus ─┬─► ✓ document retenu (clause, page) ─┐
-                             ├─► ✕ écarté — version tronquée       │
-                             └─► ✕ écarté — brouillon non signé    │
-                                                                   ▼
-            Le passage copié ─► Ce qui est rédigé ─► Le droit ─► Le contrat
+┌─ Visa · Projet Sodimex · 16/21 lues · 1 non lue · 3 critiques · 4/20 relus ─ ⟳ ─┐
+├────────────────────────────────────┬───────────────────────────────────────────┤
+│ LE RAPPORT                         │ [ La preuve ] [ Le parcours ] [ Les pièces ]│
+│ lu comme un document               │                                           │
+│                                    │  ┌─ ce que dit la pièce ─┬─ ce qui est ─┐ │
+│ ⌐ 16 pièces dépouillées sur 21 ¬   │  │  « extrait copié »    │   rédigé     │ │
+│   1 non lue · 2 écartées           │  └───────────────────────┴──────────────┘ │
+│   13 demandes sans réponse         │  le chemin · le droit · au contrat        │
+│                                    │                                           │
+│ ## Corporate                       ├───────────────────────────────────────────┤
+│ ▌La garantie couvre la dette d'un  │ Journal des agents (en direct)            │
+│  tiers…                 CORP-03.2  │ 11:56:45 Chercheur cherche « sûretés »… │
+└────────────────────────────────────┴───────────────────────────────────────────┘
 ```
+
+**À gauche, le rapport.** Pas une liste de fiches : le rapport lui-même, avec ses
+intertitres et ses paragraphes. Les passages qui viennent d'un constat portent
+leur numéro en exposant et s'ouvrent d'un clic. Ce qui n'a pas été lu est posé en
+tête, avant les conclusions, parce que cela les borne.
+
+**À droite, trois onglets et rien de plus.**
+
+- **La preuve** — l'extrait de la pièce et le texte rédigé côte à côte, même
+  largeur. Puis le chemin, le droit applicable, la clause proposée. On corrige la
+  rédaction et on marque relu sans quitter l'écran.
+- **Le parcours** — une ligne par pièce, un point par passage, de gauche à droite
+  dans le temps. Une ligne pleine : la pièce a servi. Une ligne creuse : elle a
+  été ouverte et n'a rien donné.
+- **Les pièces** — le versement, la liste, les exports.
+
+**Sous le volet droit, le journal des agents**, en direct pendant un passage.
+Huit acteurs nommés — Trieur, Lecteur, Cadreur, Chercheur, Règles, Droit,
+Contradicteur, Rédacteur — et chaque ligne qui a établi un constat y mène.
 
 ## Le harnais
 
 Sept étapes, chacune consignée dans la trace de l'audit.
 
-| Étape | Ce qu'elle fait | Avec quoi |
+| Acteur | Ce qu'il fait | Avec quoi |
 |---|---|---|
-| Triage | Ouvre chaque fichier, écarte doublons et brouillons avec leur motif | lecture locale |
-| Reconnaissance | Lit les scans sans couche de texte | `mistral-ocr-latest` |
-| Périmètre | Confronte ce qui est arrivé à la liste de demandes | lecture locale |
-| Dépouillement | Cherche les clauses, question par question | motifs + barrière mot pour mot |
-| Droit | Vérifie que la clause relevée tient en droit | Légifrance et Judilibre |
-| Réponses | Éprouve chaque réponse du vendeur contre le registre | confrontation |
-| Contrat | Traduit chaque risque en mécanisme de cession | règles de l'audit |
+| **Trieur** | Ouvre chaque fichier, écarte doublons et brouillons avec leur motif | lecture locale |
+| **Lecteur** | Lit les scans sans couche de texte | `mistral-ocr-latest` |
+| **Cadreur** | Confronte ce qui est arrivé à la liste de demandes | lecture locale |
+| **Chercheur** | Cherche les clauses, question par question | motifs |
+| **Règles** | Vérifie chaque passage mot pour mot et établit le constat | barrière mot pour mot |
+| **Droit** | Contrôle que la clause relevée tient en droit | Légifrance et Judilibre |
+| **Contradicteur** | Éprouve chaque réponse du vendeur contre le registre | confrontation |
+| **Rédacteur** | Traduit chaque risque en mécanisme de cession | règles de l'audit |
+
+Chaque action du journal porte les **pièces qu'elle a touchées**. C'est ce qui
+permet au schéma du parcours de distinguer une pièce *ouverte* d'une pièce
+*exploitée* — et donc de montrer celles qui n'ont rien donné.
 
 L'interface **dit toujours quel moteur a répondu**. Annoncer un modèle qui n'a pas
 tourné serait la première entorse à la promesse du produit : le champ `moteur` du
@@ -123,6 +145,24 @@ Le savoir-faire est écrit, relisible par un juriste, dans [`skills/`](skills) :
 
 Aucun document réel, aucune donnée personnelle.
 
+## Ce qui sort de l'application
+
+Trois formats, et chacun répond à un usage différent.
+
+| Sortie | Pour quoi | Ce qu'elle porte |
+|---|---|---|
+| **Le journal d'audit** (impression → PDF) | La pièce du dossier client | L'étendue de la revue, chaque constat avec son passage et son renvoi, les réponses du vendeur, les clauses, le journal des agents, et la ligne de signature |
+| **Le rapport** (`.md`) | Le texte à reprendre dans ses conclusions | L'étendue de la revue en tête, puis les constats par chantier avec leurs renvois en italique |
+| **Le tableau** (`.csv`) | Le tableur, pour trier et chiffrer | Une ligne par constat : clé stable, document, clause, page, origine du texte, pièces écartées, passage, rédaction, mécanisme, relu |
+
+Le journal d'audit imprimé n'est pas une copie de l'écran : c'est ce qu'un
+relecteur doit pouvoir contrôler **sans l'application**. Un constat ne s'y coupe
+jamais entre deux pages, les renvois sont en clair, et la dernière page porte la
+signature — parce que la vérification reste celle de l'avocat.
+
+Le rapport et le tableau reprennent **la correction du juriste** quand il en a
+écrit une, pas la rédaction d'origine.
+
 ## Le jeu de test
 
 `npm run verif` contrôle les promesses du produit, dans l'ordre de leur
@@ -138,11 +178,24 @@ importance, sans navigateur :
    retrouvé ;
 7. la couverture est exacte — la somme des documents classés égale le nombre de
    fichiers versés, et le compte des non-lus ne peut pas être minoré ;
-8. chaque écran se rend, y compris la fiche de chaque constat.
+8. le rapport lu dit la même chose que le registre — même rédaction, même
+   gravité, même renvoi — et le schéma ne dit pas qu'une pièce a servi quand rien
+   n'en a été tiré ;
+9. chaque volet se rend, y compris la preuve de chacun des constats ;
+10. un dossier se travaille sur plusieurs jours : relecture et notes survivent à
+    un nouveau passage, un versement est annoncé, les identifiants hors périmètre
+    sont refusés.
 
-Ce jeu de test a attrapé deux erreurs réelles pendant la construction : des
-renvois de clause qui désignaient l'article précédent, et un constat qui se
-déclarait « non établi » alors que son passage le prouvait.
+Ce jeu de test a attrapé plusieurs erreurs réelles pendant la construction : des
+renvois de clause qui désignaient l'article précédent, un constat qui se déclarait
+« non établi » alors que son passage le prouvait, et des identifiants de constat
+positionnels auxquels la relecture du juriste se rattachait — un versement les
+décalait, et la validation changeait de constat.
+
+Le schéma du parcours a lui aussi servi de contrôle : en montrant une pièce
+retenue dont rien n'avait été tiré, il a révélé que les motifs de recherche
+exigeaient une espace littérale là où les documents juridiques coupent leurs
+lignes. Deux questions d'audit trouvaient le vide en silence.
 
 ## Les clés
 
@@ -165,20 +218,28 @@ de non-concurrence.
 
 ```
 server/
-  documents.mjs     lecture, pagination, détection de clause, triage
-  sondes.mjs        les 15 questions d'audit — le savoir-faire
-  extraction.mjs    le moteur et la barrière mot pour mot
+  documents.mjs     lecture, pagination, détection de clause, triage, dates d'acte
+  sondes.mjs        les questions d'audit — le savoir-faire
+  extraction.mjs    le moteur, le pliage des accents, la barrière mot pour mot
+  journal.mjs       les huit acteurs, et le schéma du parcours
+  redaction.mjs     le rapport en blocs, pour être lu comme un document
   piste.mjs         Légifrance et Judilibre
   mistral.mjs       reconnaissance de caractères, et état réel du modèle
-  harnais.mjs       les sept étapes et la trace
-  api.mjs           /api/audit, /api/document, /api/etat, relance en flux
+  dossiers.mjs      les dossiers, l'historique, le travail du juriste
+  rapport.mjs       les exports .md et .csv
+  harnais.mjs       l'enchaînement, la trace, l'écart avec le passage précédent
+  api.mjs           les dossiers, l'audit en flux, le versement, les exports
 src/
   types.ts          le vocabulaire de l'audit
-  store.ts          l'état : l'écran, le constat ouvert, les filtres
-  components/       le fil de provenance, les pièces partagées
-  views/            les six écrans et le lecteur de document
+  store.ts          l'état : le dossier, le constat choisi, l'onglet
+  views/Rapport.tsx le volet gauche — le rapport lu comme un document
+  views/Preuve.tsx  le volet droit — la pièce et la rédaction côte à côte
+  views/Parcours.tsx  le schéma en couloirs
+  views/Pieces.tsx  le versement, la liste, les exports
+  views/Audit.tsx   la sortie imprimée
+  components/Journal.tsx  le journal des agents, en direct
 skills/             les trois méthodes
-dataroom/           les 21 fichiers de démonstration
+dossiers/sodimex/   le dossier de démonstration : 21 pièces, l'historique
 verif/jeuDeTest.tsx le jeu de test
 ```
 

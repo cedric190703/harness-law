@@ -1,0 +1,11 @@
+{
+  "id": "sodimex",
+  "nom": "Projet Sodimex",
+  "operation": "Acquisition de 100 % des titres",
+  "cible": "SODIMEX SAS, RCS Lyon 412 785 339",
+  "cote": "l'acquéreur",
+  "dateReference": "2026-10-04",
+  "ouvertLe": "2026-09-12T09:00:00+02:00",
+  "responsable": "Associé en charge",
+  "demonstration": true
+}

@@ -63,58 +63,257 @@ a { color: var(--marine-clair); }
 ::-webkit-scrollbar-thumb { background: var(--trait-fort); border-radius: 6px; border: 3px solid var(--papier); }
 ::-webkit-scrollbar-track { background: transparent; }
 
-/* ---------------- ossature ---------------- */
+/* ---------------- un écran, deux volets ---------------- */
 
-.app { display: grid; grid-template-columns: 252px 1fr; height: 100%; }
+.ecran { display: flex; flex-direction: column; height: 100%; min-height: 0; }
 
-.cote {
-  background: var(--papier-2);
-  border-right: 1px solid var(--trait);
-  display: flex; flex-direction: column; gap: 4px;
-  padding: 26px 16px 18px;
+/* La barre : la marque, le dossier, le sommaire, les actions. Une seule ligne. */
+.barre {
+  display: flex; align-items: center; gap: 14px; flex: none;
+  padding: 0 18px; height: 52px;
+  background: var(--carte); border-bottom: 1px solid var(--trait);
 }
-.marque { display: flex; align-items: center; gap: 11px; padding: 0 6px 22px; }
+.marque { display: flex; align-items: center; gap: 9px; background: none; border: 0; cursor: pointer; flex: none; padding: 0; }
 .marque .sceau {
-  width: 36px; height: 36px; flex: none;
-  display: grid; place-items: center;
-  border-radius: 10px; background: var(--marine); color: #f6efdd;
-  font-family: var(--serif); font-size: 19px; line-height: 1;
+  width: 27px; height: 27px; display: grid; place-items: center; border-radius: 7px;
+  background: var(--marine); color: #f6efdd; font-family: var(--serif); font-size: 15px;
 }
-.marque b { display: block; font-family: var(--serif); font-size: 19px; font-weight: 500; }
-.marque small { display: block; color: var(--encre-3); font-size: 11.5px; line-height: 1.35; }
+.nom-marque { font-family: var(--serif); font-size: 18px; font-weight: 500; }
+.marque:hover .nom-marque { color: var(--marine); }
+.separateur { width: 1px; height: 22px; background: var(--trait); flex: none; }
+.accroche { color: var(--encre-3); font-size: 13.5px; }
+.fil-ariane {
+  background: none; border: 0; cursor: pointer; flex: none; padding: 0;
+  font-family: var(--serif); font-size: 16px; color: var(--encre);
+}
+.fil-ariane:hover { color: var(--marine); text-decoration: underline; }
+.barre-actions { margin-left: auto; flex: none; display: flex; gap: 8px; }
 
-.cote-titre {
-  padding: 16px 8px 6px; color: var(--encre-3);
-  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; font-weight: 600;
+/* Le sommaire : tout ce qu'il faut savoir d'un coup d'œil, sans quitter l'écran. */
+.sommaire { display: flex; align-items: center; gap: 11px; flex-wrap: wrap; min-width: 0; }
+.bloc-sommaire {
+  display: flex; align-items: baseline; gap: 5px; flex: none;
+  font-size: 11.5px; color: var(--encre-3); background: none; border: 0; padding: 0;
 }
-.onglet {
-  display: flex; align-items: center; gap: 11px; width: 100%;
-  padding: 9px 10px; border: 0; background: none; border-radius: var(--rayon-sm);
-  cursor: pointer; text-align: left; color: var(--encre-2); font-weight: 450;
+.bloc-sommaire b { font-size: 14px; color: var(--encre); font-variant-numeric: tabular-nums; }
+.bloc-sommaire.alerte b { color: var(--critique); }
+.bloc-sommaire.discret { font-style: italic; }
+.perime-puce {
+  cursor: pointer; padding: 3px 9px; border-radius: 999px;
+  background: var(--critique-pale); color: #74190f;
 }
-.onglet:hover { background: #ece8df; color: var(--encre); }
-.onglet.actif { background: var(--carte); color: var(--marine); font-weight: 600; box-shadow: var(--ombre); }
-.onglet .num {
-  width: 21px; height: 21px; flex: none; display: grid; place-items: center;
-  border-radius: 50%; background: var(--trait); color: var(--encre-2);
-  font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
-}
-.onglet.actif .num { background: var(--marine); color: #fff; }
-.onglet .apres { margin-left: auto; font-size: 12px; color: var(--encre-3); font-variant-numeric: tabular-nums; }
-.cote-pied { margin-top: auto; padding: 14px 8px 0; border-top: 1px solid var(--trait); color: var(--encre-3); font-size: 11.5px; }
-.cote-pied b { color: var(--encre-2); }
+.perime-puce b { color: #74190f; }
+.perime-puce:hover { background: #f6d8d3; }
+.bandeau-barre { margin: 0; border-radius: 0; border-left: 0; border-right: 0; }
 
-.corps { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
-.entete {
-  padding: 24px 36px 18px; border-bottom: 1px solid var(--trait);
-  background: var(--papier); display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap;
+/* Les deux volets. Le rapport à gauche, la vérification à droite. */
+.deux-volets {
+  flex: 1; min-height: 0;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
-.entete .intro { color: var(--encre-2); max-width: 62ch; margin: 7px 0 0; }
-.entete .actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
-.vue { flex: 1; overflow: auto; padding: 28px 36px 56px; }
-.vue.pleine { padding: 0; display: flex; flex-direction: column; }
-.large { max-width: 1120px; }
-.lisible { max-width: 76ch; }
+.volet-gauche { overflow: auto; background: var(--papier); border-right: 1px solid var(--trait); }
+.volet-droit { display: flex; flex-direction: column; min-height: 0; background: var(--carte); }
+.onglets { display: flex; gap: 2px; flex: none; padding: 0 14px; border-bottom: 1px solid var(--trait); }
+.onglet-droit {
+  display: flex; align-items: center; gap: 7px;
+  background: none; border: 0; border-bottom: 2px solid transparent; cursor: pointer;
+  padding: 11px 13px; color: var(--encre-3); font-weight: 550; font-size: 13.5px;
+}
+.onglet-droit:hover { color: var(--encre); }
+.onglet-droit.actif { color: var(--marine); border-bottom-color: var(--marine); }
+.compte-onglet {
+  font-size: 10.5px; padding: 1px 6px; border-radius: 999px;
+  background: var(--papier-2); color: var(--encre-3); font-variant-numeric: tabular-nums;
+}
+.volet-corps { flex: 1; overflow: auto; padding: 18px 20px 26px; min-height: 0; }
+
+/* ---------------- le rapport, lu comme un document ---------------- */
+
+.rapport-lu {
+  max-width: 76ch; margin: 0 auto; padding: 30px 32px 64px;
+  font-size: 15px; line-height: 1.68;
+}
+.rapport-lu h1 { font-size: 26px; margin-bottom: 4px; }
+.rapport-lu h2 { font-size: 19px; margin: 32px 0 10px; padding-bottom: 5px; border-bottom: 1px solid var(--trait); }
+.rapport-lu h3 { font-size: 15.5px; margin: 20px 0 7px; color: var(--encre-2); }
+.rapport-lu p { margin: 0 0 13px; }
+.rapport-lu p.discret { color: var(--encre-3); font-size: 13.5px; }
+.fin-rapport { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--trait); color: var(--encre-3); font-size: 12px; }
+
+/* Ce qui n'a pas été lu, posé en tête : cela borne tout ce qui suit. */
+.bornes {
+  background: var(--papier-2); border: 1px solid var(--trait);
+  border-left: 3px solid var(--laiton); border-radius: 0 var(--rayon-sm) var(--rayon-sm) 0;
+  padding: 14px 17px; margin: 18px 0 8px; font-size: 13.5px; line-height: 1.55;
+}
+.bornes-tete b { font-size: 14.5px; }
+.borne { margin-top: 9px; }
+.borne summary { cursor: pointer; font-weight: 600; color: var(--encre-2); font-size: 13px; }
+.borne.grave summary { color: #8d3c1e; }
+.borne summary:hover { color: var(--encre); }
+.borne ul { margin: 7px 0 0; padding-left: 18px; color: var(--encre-2); font-size: 12.5px; line-height: 1.55; }
+.borne li { margin-bottom: 4px; }
+
+/* Un constat : le passage du rapport qui s'ouvre sur sa preuve. */
+.bloc-constat { margin: 0 -14px 16px; padding: 0 14px; border-left: 3px solid transparent; }
+.bloc-constat.g-critique { border-left-color: var(--critique); }
+.bloc-constat.g-elevee { border-left-color: var(--elevee); }
+.bloc-constat.g-moyenne { border-left-color: var(--moyenne); }
+.bloc-constat.g-faible { border-left-color: var(--faible); }
+.bloc-constat.actif { background: var(--marine-pale); border-radius: 0 var(--rayon-sm) var(--rayon-sm) 0; }
+.constat-texte {
+  display: block; width: 100%; text-align: left; background: none; border: 0;
+  padding: 10px 0 6px; cursor: pointer; color: inherit; font: inherit;
+}
+.constat-texte:hover p { background: #fdf6df; }
+.chapeau { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 6px; }
+.chapeau .question { font-size: 12.5px; color: var(--encre-3); font-weight: 600; }
+.chapeau .vu { font-size: 11.5px; color: var(--faible); font-weight: 650; }
+.chapeau .vu.ecrit { color: var(--marine-clair); }
+.constat-texte p { margin: 0; border-radius: 3px; transition: background 0.12s; }
+.exposant { font-size: 10px; font-weight: 700; color: var(--marine-clair); margin-left: 3px; vertical-align: super; }
+.renvoi-ligne { display: block; margin-top: 6px; font-size: 12px; color: var(--encre-3); }
+.bloc-constat .impact { font-size: 13.5px; color: var(--encre-2); margin: 0 0 6px; }
+.note-juriste {
+  font-size: 13px; color: var(--marine); background: var(--marine-pale);
+  padding: 8px 12px; border-radius: var(--rayon-sm); margin: 0;
+}
+
+.bloc-epreuve { margin-bottom: 18px; padding-left: 14px; border-left: 3px solid var(--trait-fort); }
+.bloc-epreuve.v-inexacte { border-left-color: var(--critique); }
+.bloc-epreuve.v-non-vérifiable { border-left-color: var(--inconnu); }
+.bloc-epreuve .verdict { font-size: 11.5px; font-weight: 650; text-transform: uppercase; letter-spacing: 0.05em; color: var(--encre-3); }
+.bloc-epreuve.v-inexacte .verdict { color: var(--critique); }
+.affirmation { font-family: var(--serif); font-size: 15.5px; font-style: italic; color: var(--encre-2); }
+
+.bloc-clause { margin-bottom: 16px; padding: 12px 15px; background: var(--marine-pale); border-radius: var(--rayon-sm); }
+.bloc-clause p { margin: 0; font-size: 14px; }
+.bloc-clause .code { font-size: 11.5px; }
+
+/* ---------------- la preuve ---------------- */
+
+.preuve { display: flex; flex-direction: column; gap: 16px; }
+.preuve-tete { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.vide-volet-plein { padding: 40px 8px; color: var(--encre-3); }
+.vide-volet-plein h3 { color: var(--encre); margin-bottom: 7px; }
+.vide-volet { color: var(--encre-3); font-size: 13.5px; font-style: italic; line-height: 1.6; }
+.bandeau.compact { padding: 9px 12px; font-size: 12.5px; }
+
+/* Le cœur : la pièce et la rédaction, côte à côte, même largeur. */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.duo-tete { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+.duo-tete .etiquette { margin-bottom: 0; }
+.duo-tete > :last-child { margin-left: auto; }
+.duo-renvoi { font-size: 12px; color: var(--encre-3); margin-bottom: 9px; line-height: 1.45; }
+blockquote.verbatim {
+  margin: 0; padding: 12px 15px; background: var(--papier-2);
+  border-left: 3px solid var(--laiton); border-radius: 0 var(--rayon-sm) var(--rayon-sm) 0;
+  font-size: 13.5px; line-height: 1.6; white-space: pre-wrap;
+}
+blockquote.verbatim.petit { font-size: 12.5px; padding: 10px 12px; }
+.redaction { font-size: 13.5px; line-height: 1.6; margin: 0; }
+.avis-ocr.compact { padding: 8px 11px; font-size: 12px; margin-bottom: 9px; }
+
+.chemin .puces-chemin { display: flex; flex-wrap: wrap; gap: 6px; }
+.puce-chemin {
+  font-size: 11.5px; padding: 3px 10px; border-radius: 999px;
+  background: var(--papier-2); border: 1px solid var(--trait); color: var(--encre-2);
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.puce-chemin.retenu { background: var(--faible-pale); border-color: #c5d9cd; color: #35523f; font-weight: 600; }
+.puce-chemin.ecarte { color: var(--encre-3); }
+
+.bloc-droit, .bloc-spa { padding: 13px 15px; border-radius: var(--rayon-sm); background: var(--papier-2); }
+.bloc-spa { background: var(--marine-pale); }
+.bloc-spa p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.6; }
+.droit-ref { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; font-family: var(--serif); font-size: 14.5px; margin-bottom: 7px; }
+.jurisprudence { margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--trait); }
+.decision { padding: 6px 0; }
+.decision .resume { line-height: 1.45; }
+
+/* ---------------- le parcours en couloirs ---------------- */
+
+.puce-acteur {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  font-size: 11.5px; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--trait); background: var(--carte); color: var(--encre-2);
+  font-variant-numeric: tabular-nums;
+}
+.puce-acteur i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--encre-3)); flex: none; }
+.puce-acteur:hover { border-color: var(--trait-fort); }
+.puce-acteur.actif { background: var(--marine); border-color: var(--marine); color: #fff; }
+
+.schema {
+  overflow-x: auto; background: var(--papier-2);
+  border: 1px solid var(--trait); border-radius: var(--rayon-sm); padding: 8px 10px;
+}
+.schema text.ligne-nom { font: 10.5px var(--sans); fill: var(--encre-2); }
+.schema text.ligne-nom.creuse { fill: var(--encre-3); font-style: italic; }
+.schema text.ligne-nom.r-illisible { fill: var(--critique); }
+.schema line.rail { stroke: var(--trait-fort); stroke-width: 1; }
+.schema line.rail.creux { stroke: var(--trait); stroke-dasharray: 2 4; }
+.schema circle.point { cursor: default; }
+.schema circle.point.cliquable { cursor: pointer; }
+.schema circle.point.cliquable:hover { r: 6; }
+
+.sans-suite {
+  margin-top: 14px; padding: 12px 15px; border-radius: var(--rayon-sm);
+  background: var(--inconnu-pale); font-size: 13px; line-height: 1.55; color: #54514a;
+}
+.sans-suite ul { margin: 7px 0 0; padding-left: 18px; }
+.toutes-actions { margin-top: 14px; font-size: 13px; }
+.toutes-actions summary { cursor: pointer; color: var(--encre-3); }
+.actions-liste { margin-top: 9px; max-height: 320px; overflow: auto; }
+.action-ligne {
+  display: grid; grid-template-columns: 58px 92px 1fr auto; gap: 9px; align-items: baseline;
+  padding: 5px 0; border-bottom: 1px solid var(--trait); font-size: 12.5px;
+}
+.action-ligne .heure { color: var(--encre-3); font-variant-numeric: tabular-nums; font-size: 11.5px; }
+
+/* ---------------- les pièces ---------------- */
+
+.liste-pieces { display: flex; flex-direction: column; gap: 3px; }
+.piece {
+  display: flex; align-items: flex-start; gap: 10px; width: 100%; text-align: left;
+  background: none; border: 0; border-left: 3px solid var(--trait); padding: 8px 11px;
+  border-radius: 0 6px 6px 0; cursor: pointer; color: inherit;
+}
+.piece:hover { background: var(--papier-2); }
+.piece.r-retenu { border-left-color: var(--faible); }
+.piece.r-avenant { border-left-color: var(--moyenne); }
+.piece.r-ecarte { border-left-color: var(--trait-fort); }
+.piece.r-illisible { border-left-color: var(--critique); }
+.piece.r-liste-demandes, .piece.r-reponses-vendeur { border-left-color: var(--marine-clair); }
+.piece .signe { color: var(--encre-3); flex: none; width: 12px; font-size: 11px; padding-top: 2px; }
+.piece .quoi { min-width: 0; flex: 1; }
+.piece .nom { display: block; font-size: 13px; font-weight: 550; word-break: break-word; }
+.piece .motif { display: block; font-size: 11.5px; color: var(--encre-3); line-height: 1.4; margin-top: 2px; }
+.piece .compte {
+  flex: none; font-size: 11px; font-weight: 650; color: var(--marine);
+  background: var(--marine-pale); border-radius: 999px; padding: 1px 7px;
+}
+.bloc-dossier { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--trait); }
+
+/* ---------------- le journal des agents ---------------- */
+
+.journal { flex: none; background: #15151a; border-top: 1px solid #2a2a33; }
+.journal-tete {
+  padding: 7px 14px 4px; font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #7c7c86; font-weight: 600;
+}
+.journal-corps {
+  height: 164px; overflow: auto; padding: 0 14px 10px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11.5px; line-height: 1.6;
+}
+.journal-ligne { display: flex; gap: 8px; align-items: baseline; }
+.journal-ligne .h { color: #5f5f68; flex: none; }
+.journal-ligne .a { font-weight: 700; flex: none; min-width: 92px; }
+.journal-ligne .x { color: #d2d2d8; min-width: 0; }
+.journal-ligne .d { color: #86868f; }
+.journal-ligne .c {
+  background: none; border: 0; cursor: pointer; color: #93c5fd; font: inherit; flex: none; padding: 0;
+}
+.journal-ligne .c:hover { text-decoration: underline; }
 
 /* ---------------- éléments ---------------- */
 
@@ -198,121 +397,6 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
 .g-bord-moyenne { border-left: 4px solid var(--moyenne); }
 .g-bord-faible { border-left: 4px solid var(--faible); }
 
-/* ---------------- le schéma du contrôle ---------------- */
-
-.flux { flex: 1; min-height: 520px; background: var(--papier); position: relative; }
-.flux .react-flow__attribution { display: none; }
-.flux .react-flow__handle { opacity: 0; pointer-events: none; }
-.flux .react-flow__controls {
-  box-shadow: var(--ombre); border-radius: var(--rayon-sm); overflow: hidden; border: 1px solid var(--trait);
-}
-.flux .react-flow__controls-button { background: var(--carte); border-bottom: 1px solid var(--trait); fill: var(--encre-2); }
-.flux .react-flow__controls-button:hover { background: var(--papier-2); }
-
-.noeud {
-  width: 236px; background: var(--carte); border: 1px solid var(--trait);
-  border-radius: var(--rayon); box-shadow: var(--ombre); padding: 13px 15px 14px;
-  cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
-  text-align: left; position: relative; overflow: hidden;
-}
-.noeud:hover { box-shadow: var(--ombre-forte); transform: translateY(-1px); }
-.noeud.ouvert { border-color: var(--marine); box-shadow: 0 0 0 3px var(--marine-pale), var(--ombre-forte); }
-.noeud .filet { position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--trait-fort); }
-.noeud.e-vert .filet { background: var(--vert); }
-.noeud.e-orange .filet { background: var(--orange); }
-.noeud.e-rouge .filet { background: var(--rouge); }
-.noeud.e-gris .filet { background: var(--gris); }
-.noeud.e-cours .filet { background: var(--marine-clair); }
-.noeud.attente { opacity: 0.55; }
-.noeud .rang {
-  font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--encre-3); display: block; margin-bottom: 3px;
-}
-.noeud .nom { font-family: var(--serif); font-size: 15.5px; font-weight: 500; display: block; line-height: 1.25; }
-.noeud .quoi { color: var(--encre-2); font-size: 12.5px; line-height: 1.45; margin-top: 6px; display: block; }
-.noeud .pied { display: flex; align-items: center; gap: 8px; margin-top: 11px; }
-.noeud .compte {
-  font-size: 12px; font-weight: 600; color: var(--marine); font-variant-numeric: tabular-nums;
-}
-.noeud .outil { font-size: 11px; color: var(--encre-3); margin-left: auto; text-align: right; line-height: 1.3; }
-
-.petit-noeud { width: 196px; padding: 11px 13px 12px; }
-.petit-noeud .nom { font-size: 14px; font-family: var(--sans); font-weight: 600; }
-.petit-noeud .quoi { font-size: 12px; margin-top: 4px; }
-
-/* Le pouls d'une étape en cours : discret, jamais clignotant. */
-@keyframes pouls { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
-.en-cours-point {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--marine-clair);
-  animation: pouls 1.4s ease-in-out infinite; flex: none;
-}
-
-/* ---------------- le tiroir des tâches ---------------- */
-
-.tiroir {
-  position: absolute; top: 14px; right: 14px; bottom: 14px; width: 420px;
-  background: var(--carte); border: 1px solid var(--trait); border-radius: var(--rayon);
-  box-shadow: var(--ombre-forte); display: flex; flex-direction: column; overflow: hidden; z-index: 6;
-}
-.tiroir header { padding: 18px 20px 14px; border-bottom: 1px solid var(--trait); }
-.tiroir header .rangee { align-items: flex-start; }
-.tiroir header h3 { margin-bottom: 5px; }
-.tiroir .liste { overflow: auto; padding: 8px 8px 16px; }
-.tache {
-  display: block; width: 100%; text-align: left; border: 0; background: none;
-  padding: 10px 12px; border-radius: var(--rayon-sm); cursor: default;
-}
-.tache.cliquable { cursor: pointer; }
-.tache.cliquable:hover { background: var(--papier-2); }
-.tache .haut { display: flex; align-items: flex-start; gap: 9px; }
-.tache .marque-etat { flex: none; width: 16px; margin-top: 2px; text-align: center; font-size: 12px; }
-.tache .marque-etat.ok { color: var(--vert); }
-.tache .marque-etat.attente { color: var(--trait-fort); }
-.tache .lib { font-weight: 500; line-height: 1.4; font-size: 14px; }
-.tache .det { color: var(--encre-3); font-size: 12.5px; line-height: 1.45; margin: 3px 0 0 25px; }
-
-/* ---------------- le rapport ---------------- */
-
-.rapport { display: grid; grid-template-columns: minmax(0, 1fr) 432px; gap: 22px; align-items: start; }
-@media (max-width: 1180px) { .rapport { grid-template-columns: 1fr; } }
-
-.ligne {
-  display: block; width: 100%; text-align: left; cursor: pointer;
-  background: var(--carte); border: 1px solid var(--trait); border-left-width: 4px;
-  border-radius: var(--rayon-sm); padding: 14px 16px; margin-bottom: 9px;
-  transition: box-shadow 0.12s, border-color 0.12s;
-}
-.ligne:hover { box-shadow: var(--ombre); }
-.ligne.ouvert { border-color: var(--marine); box-shadow: 0 0 0 3px var(--marine-pale); }
-.ligne.b-vert { border-left-color: var(--vert); }
-.ligne.b-orange { border-left-color: var(--orange); }
-.ligne.b-rouge { border-left-color: var(--rouge); }
-.ligne.b-gris { border-left-color: var(--gris); }
-.ligne .tete { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
-.ligne .ref { font-size: 11.5px; font-weight: 700; color: var(--encre-3); letter-spacing: 0.06em; }
-.ligne .cit { font-size: 12.5px; color: var(--marine-clair); font-weight: 550; }
-.ligne .txt { line-height: 1.55; }
-.ligne .dit { color: var(--encre-2); font-size: 13.5px; margin-top: 7px; }
-.ligne .vu { margin-left: auto; font-size: 11.5px; color: var(--vert); font-weight: 600; }
-
-.panneau { position: sticky; top: 0; }
-.panneau .ferme { margin-left: auto; }
-.citation {
-  background: var(--papier-2); border-left: 3px solid var(--laiton);
-  padding: 13px 16px; border-radius: 0 var(--rayon-sm) var(--rayon-sm) 0;
-  font-size: 14.5px; line-height: 1.65; color: var(--encre);
-}
-.citation mark { background: #fdf0bd; padding: 1px 2px; border-radius: 2px; }
-.controles-liste { display: flex; flex-direction: column; gap: 2px; }
-.controle-ligne { padding: 11px 0; border-top: 1px solid var(--trait); }
-.controle-ligne:first-child { border-top: 0; }
-.controle-ligne .q { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 14px; }
-.controle-ligne .r { color: var(--encre-2); font-size: 13.5px; line-height: 1.5; margin-top: 4px; }
-.controle-ligne .p {
-  font-size: 12px; color: var(--encre-3); margin-top: 5px;
-  padding-left: 10px; border-left: 2px solid var(--trait);
-}
-
 /* ---------------- divers ---------------- */
 
 .vide { text-align: center; padding: 64px 20px; color: var(--encre-3); }
@@ -338,407 +422,143 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
 }
 .etapes-ruban .pas.fait { background: var(--marine-pale); color: var(--marine); border-color: #d2dcea; font-weight: 550; }
 
-/* ---------------- le fil du raisonnement ----------------
-   Les pas apparaissent un par un. L'animation n'est pas décorative : elle dit
-   qu'un verdict est le bout d'une chaîne, et non une opinion rendue d'un bloc. */
-
-.fil { min-height: 560px; }
-
-/* La phrase vérifiée, rappelée au-dessus du fil. */
-.fil-entete {
-  padding: 15px 24px 14px; border-bottom: 1px solid var(--trait);
-  background: var(--papier); flex: none;
-}
-.fil-phrase {
-  display: flex; align-items: flex-start; gap: 11px;
-  font-family: var(--serif); font-size: 17px; line-height: 1.4; max-width: 94ch;
-}
-.fil-phrase > span:last-child { padding-top: 1px; }
-.fil-cite { color: var(--encre-3); font-size: 12.5px; margin-top: 7px; }
-.fil-cite b { color: var(--marine-clair); }
-
-/* Le suiveur : où en est le fil. */
-.fil-barre {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--carte); border: 1px solid var(--trait); border-radius: var(--rayon);
-  box-shadow: var(--ombre); padding: 9px 13px;
-}
-.fil-compte { font-size: 12.5px; color: var(--encre-2); white-space: nowrap; }
-.fil-compte b { font-variant-numeric: tabular-nums; }
-.fil-jauge { width: 130px; height: 5px; border-radius: 999px; background: var(--papier-2); overflow: hidden; }
-.fil-jauge > span {
-  display: block; height: 100%; background: var(--marine);
-  transition: width 0.42s cubic-bezier(0.22, 0.9, 0.3, 1);
-}
-
-/* L'apparition d'un pas. */
-@keyframes pas-apparait {
-  from { opacity: 0; transform: translateY(16px) scale(0.93); }
-  to { opacity: 1; transform: none; }
-}
-/* Le halo du pas qui vient de tomber : il attire l'œil une fois, puis s'éteint. */
-@keyframes pas-halo {
-  0% { box-shadow: 0 0 0 0 rgba(47, 74, 115, 0.3), var(--ombre); }
-  70% { box-shadow: 0 0 0 12px rgba(47, 74, 115, 0), var(--ombre); }
-  100% { box-shadow: 0 0 0 0 rgba(47, 74, 115, 0), var(--ombre); }
-}
-
-.pas-noeud {
-  background: var(--carte); border: 1px solid var(--trait); border-radius: var(--rayon);
-  box-shadow: var(--ombre); padding: 13px 16px 14px 19px; cursor: pointer;
-  position: relative; overflow: hidden; text-align: left;
-  display: flex; flex-direction: column;
-  animation: pas-apparait 0.42s cubic-bezier(0.22, 0.9, 0.3, 1) both;
-  transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
-}
-.pas-noeud:hover { box-shadow: var(--ombre-forte); transform: translateY(-2px); }
-.pas-noeud.ouvert { border-color: var(--marine); box-shadow: 0 0 0 3px var(--marine-pale), var(--ombre-forte); }
-.pas-noeud.dernier { animation: pas-apparait 0.42s cubic-bezier(0.22, 0.9, 0.3, 1) both, pas-halo 1.6s ease-out 0.42s; }
-.pas-noeud .filet { position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--trait-fort); }
-.pas-noeud.p-vert .filet { background: var(--vert); }
-.pas-noeud.p-orange .filet { background: var(--orange); }
-.pas-noeud.p-rouge .filet { background: var(--rouge); }
-.pas-noeud.p-gris .filet { background: var(--gris); }
-
-.pas-haut { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
-.pas-ordre {
-  width: 19px; height: 19px; flex: none; display: grid; place-items: center;
-  border-radius: 50%; background: var(--marine); color: #fff;
-  font-size: 10.5px; font-weight: 700; font-variant-numeric: tabular-nums;
-}
-.pas-genre {
-  font-size: 10px; text-transform: uppercase; letter-spacing: 0.09em;
-  color: var(--encre-3); font-weight: 700;
-}
-.pas-jeton { margin-left: auto; }
-.pas-jeton .jeton { padding: 2px 8px 2px 7px; font-size: 11px; }
-.pas-titre { font-family: var(--serif); font-size: 15.5px; line-height: 1.25; margin-bottom: 6px; }
-.pas-constat {
-  font-size: 12.5px; line-height: 1.45; color: var(--encre-2);
-  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-}
-.pas-constat.pas-sans { color: var(--encre-3); }
-.pas-outil { margin-top: auto; padding-top: 7px; font-size: 10.5px; color: var(--encre-3); }
-
-.pas-controle { padding-top: 11px; padding-bottom: 11px; }
-.pas-controle .pas-titre { font-family: var(--sans); font-weight: 650; font-size: 14px; }
-.pas-controle .pas-constat { -webkit-line-clamp: 2; }
-
-/* La conclusion : la seule carte qui s'autorise un fond coloré. */
-.pas-conclusion { border-width: 1.5px; }
-.pas-conclusion .pas-titre { font-size: 17px; }
-.pas-conclusion.p-vert { background: var(--vert-pale); border-color: var(--vert); }
-.pas-conclusion.p-orange { background: var(--orange-pale); border-color: var(--orange); }
-.pas-conclusion.p-rouge { background: var(--rouge-pale); border-color: var(--rouge); }
-.pas-conclusion.p-gris { background: var(--gris-pale); border-color: var(--gris); }
-.pas-conclusion .pas-constat { color: var(--encre); font-weight: 500; }
-
-/* Le tiroir du fil laisse voir l'en-tête de l'écran. */
-.fil-tiroir { top: auto; height: calc(100% - 140px); bottom: 14px; }
-.requete {
-  margin: 0; padding: 11px 13px; border-radius: var(--rayon-sm);
-  background: #1c2f4e; color: #dce5f2; overflow-x: auto;
-  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11.5px; line-height: 1.55;
-}
-
-/* Quelqu'un qui préfère moins de mouvement voit le fil complet, sans animation. */
-@media (prefers-reduced-motion: reduce) {
-  .pas-noeud, .pas-noeud.dernier { animation: none; }
-  .fil-jauge > span, .barre > span { transition: none; }
-  .en-cours-point { animation: none; }
-}
-
-/* ---------------- la data room ---------------- */
-
-.sur-titre {
-  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
-  color: var(--encre-3); font-weight: 650; margin-bottom: 5px;
-}
-.demarrage { height: 100%; display: grid; place-items: center; padding: 24px; }
-.bandeau.attention { background: #fbf1e3; border-color: #e9d4b2; color: #6e4d16; }
-.carte.alerte-bord { border-left: 4px solid var(--critique); }
-.chiffre.alerte b { color: var(--critique); }
-.chiffre.calme b { color: var(--faible); }
-
-.table-docs { display: flex; flex-direction: column; gap: 6px; }
-.doc-ligne {
-  display: flex; align-items: flex-start; gap: 12px; width: 100%; text-align: left;
-  background: var(--carte); border: 1px solid var(--trait); border-left-width: 3px;
-  border-radius: var(--rayon-sm); padding: 12px 15px; cursor: pointer;
-}
-.doc-ligne:hover { box-shadow: var(--ombre); }
-.doc-ligne.r-retenu { border-left-color: var(--faible); }
-.doc-ligne.r-avenant { border-left-color: var(--moyenne); }
-.doc-ligne.r-ecarte { border-left-color: var(--trait-fort); background: var(--papier-2); }
-.doc-ligne.r-illisible { border-left-color: var(--critique); }
-.doc-ligne.r-liste-demandes, .doc-ligne.r-reponses-vendeur { border-left-color: var(--marine-clair); }
-.doc-ligne .marque { width: 14px; flex: none; color: var(--encre-3); text-align: center; padding-top: 1px; }
-.doc-ligne .quoi { min-width: 0; flex: 1; }
-.doc-ligne .nom { font-weight: 550; word-break: break-word; }
-.doc-ligne .meta { color: var(--encre-3); font-size: 12px; margin-top: 2px; }
-.doc-ligne .motif { font-size: 12.5px; color: var(--encre-2); margin-top: 5px; line-height: 1.45; }
-.doc-ligne .motif.grave { color: #8d3c1e; }
-.doc-ligne .droite { margin-left: auto; flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.compte-constats { font-size: 11.5px; font-weight: 650; color: var(--marine); }
-
-.code {
-  font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; font-weight: 700;
-  color: var(--encre-3); flex: none; padding-top: 2px;
-}
-.code.gros { font-size: 15px; color: var(--marine); font-family: var(--serif); font-weight: 500; width: 30px; }
-.code.manquant { color: var(--critique); }
-.code.partiel { color: var(--moyenne); }
-
-.ligne-plate {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 10px 0; border-top: 1px solid var(--trait);
-}
-.ligne-plate:first-of-type { border-top: 0; }
-.ligne-plate .droite { margin-left: auto; flex: none; }
-.demande { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; }
-
-/* ---------------- les chantiers ---------------- */
-
-.carte.chantier { display: flex; flex-direction: column; }
-.liste-constats { display: flex; flex-direction: column; gap: 5px; margin-top: 14px; }
-.mini-constat {
-  display: block; width: 100%; text-align: left; cursor: pointer;
-  background: var(--papier-2); border: 0; border-left: 3px solid var(--trait-fort);
-  border-radius: 0 6px 6px 0; padding: 8px 11px;
-}
-.mini-constat:hover { background: #ece8df; }
-.mini-constat .q { display: block; font-size: 13px; font-weight: 550; }
-.mini-constat .v { display: block; font-size: 12px; color: var(--encre-3); margin-top: 2px; line-height: 1.4; }
-.borne {
-  margin-top: auto; padding-top: 13px; border-top: 1px dashed var(--trait-fort);
-  font-size: 12.5px; color: var(--encre-2); line-height: 1.5; display: flex; flex-direction: column; gap: 6px;
-}
-.croisement { padding: 9px 0; border-top: 1px solid var(--trait); font-size: 13.5px; }
-.croisement:first-of-type { border-top: 0; }
-.lien-constat {
-  background: none; border: 0; padding: 0; cursor: pointer;
-  color: var(--marine-clair); font-weight: 600; font-size: inherit; text-align: left;
-}
-.lien-constat:hover { text-decoration: underline; }
-
-/* ---------------- le tableau ---------------- */
-
-.grille { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-.grille th {
-  text-align: left; padding: 11px 14px; background: var(--papier-2);
-  border-bottom: 1px solid var(--trait-fort);
-  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
-  color: var(--encre-3); font-weight: 650; white-space: nowrap;
-}
-.grille td { padding: 12px 14px; border-bottom: 1px solid var(--trait); vertical-align: top; line-height: 1.45; }
-.grille tr:last-child td { border-bottom: 0; }
-.grille tr.cliquable { cursor: pointer; }
-.grille tr.cliquable:hover td { background: var(--papier-2); }
-
-/* Le renvoi : document, clause, page. Ce qu'un juriste recopie. */
-.renvoi { display: flex; flex-direction: column; gap: 1px; font-size: 12.5px; min-width: 0; }
-.renvoi.compact { font-size: 12px; }
-.renvoi .doc { font-weight: 600; color: var(--encre); word-break: break-word; }
-.renvoi .cl { color: var(--marine-clair); }
-.renvoi .pg { color: var(--encre-3); }
-
-/* ---------------- la fiche d'un constat ---------------- */
-
-.fiche-tete { padding: 20px 36px 18px; border-bottom: 1px solid var(--trait); flex: none; }
-.fiche-titre { display: flex; align-items: center; gap: 10px; margin: 9px 0 7px; flex-wrap: wrap; }
-.fiche-titre .ref { font-size: 12px; font-weight: 700; color: var(--encre-3); font-family: ui-monospace, Menlo, monospace; }
-
-/* Le cœur : l'extrait et la rédaction côte à côte, même largeur. */
-.cote-a-cote {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: var(--trait); border-bottom: 1px solid var(--trait); flex: none;
-}
-.volet { background: var(--carte); padding: 18px 24px 22px; min-width: 0; }
-.volet-tete { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
-.volet-tete .etiquette { margin-bottom: 0; flex: none; }
-.volet-tete > :last-child { margin-left: auto; text-align: right; }
-.vide-volet { color: var(--encre-3); font-size: 14px; line-height: 1.6; font-style: italic; }
-
-blockquote.verbatim {
-  margin: 0; padding: 14px 17px; background: var(--papier-2);
-  border-left: 3px solid var(--laiton); border-radius: 0 var(--rayon-sm) var(--rayon-sm) 0;
-  font-size: 14.5px; line-height: 1.65; white-space: pre-wrap;
-}
-blockquote.verbatim.petit { font-size: 13px; padding: 10px 13px; margin-top: 7px; }
-.redaction { font-size: 14.5px; line-height: 1.65; margin: 0; }
-.redaction.impact { color: var(--encre-2); }
-.redaction.clause-proposee {
-  padding: 13px 16px; background: var(--marine-pale); border-radius: var(--rayon-sm);
-  border-left: 3px solid var(--marine-clair);
-}
-
-.ecartes-bande {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  padding: 12px 36px; background: var(--papier-2); border-bottom: 1px solid var(--trait); flex: none;
-}
-.ecarte-puce {
-  font-size: 12px; color: var(--encre-2); background: var(--carte);
-  border: 1px solid var(--trait); border-radius: 999px; padding: 4px 12px;
-  max-width: 54ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.ecarte-puce b { color: var(--encre); }
-
-/* ---------------- le droit applicable ---------------- */
-
-.droit-bande { padding: 18px 36px 22px; border-bottom: 1px solid var(--trait); background: var(--carte); flex: none; }
-.droit-bande.non-verifie { background: var(--inconnu-pale); color: #54514a; font-size: 14px; }
-.droit-colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
-.droit-ref {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  font-family: var(--serif); font-size: 15.5px; margin-bottom: 4px;
-}
-.droit-ref .sous { font-family: var(--sans); }
-.decision { padding: 9px 0; border-top: 1px solid var(--trait); }
-.decision .resume { line-height: 1.45; margin-top: 2px; }
-
-/* ---------------- les réponses du vendeur ---------------- */
-
-.carte.epreuve { border-left: 4px solid var(--trait-fort); }
-.carte.epreuve.t-critique { border-left-color: var(--critique); }
-.carte.epreuve.t-inconnu { border-left-color: var(--inconnu); }
-.carte.epreuve.t-faible { border-left-color: var(--faible); }
-blockquote.affirmation {
-  margin: 0; font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--encre);
-}
-.appuis { margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--trait); }
-.appui { margin-bottom: 13px; }
-.appui:last-child { margin-bottom: 0; }
-
-/* ---------------- au contrat de cession ---------------- */
-
-.carte.meca { padding: 16px 20px; }
-.meca-nom { font-family: var(--serif); font-size: 18px; text-transform: capitalize; }
-.ligne .meca { color: var(--marine-clair); font-weight: 600; font-size: 12px; margin-left: 12px; }
-
-/* ---------------- le lecteur de document ---------------- */
-
-.voile {
-  position: fixed; inset: 0; background: rgba(27, 26, 23, 0.42);
-  display: grid; place-items: center; padding: 32px; z-index: 40;
-  animation: voile-entre 0.16s ease-out;
-}
-@keyframes voile-entre { from { opacity: 0; } to { opacity: 1; } }
-.lecteur {
-  background: var(--carte); border-radius: var(--rayon); box-shadow: var(--ombre-forte);
-  width: min(840px, 100%); max-height: 100%; display: flex; flex-direction: column; overflow: hidden;
-}
-.lecteur header { display: flex; align-items: flex-start; gap: 14px; padding: 18px 22px 15px; border-bottom: 1px solid var(--trait); }
-.lecteur header > :last-child { margin-left: auto; }
-.corps-lecteur { overflow: auto; padding: 0 22px 24px; }
-.page { padding-top: 18px; }
-.numero-page {
-  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--encre-3); font-weight: 650; padding-bottom: 7px; border-bottom: 1px solid var(--trait);
-}
-.corps-lecteur pre {
-  margin: 12px 0 0; white-space: pre-wrap; word-break: break-word;
-  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; line-height: 1.65;
-}
-.corps-lecteur mark { background: #fdf0bd; padding: 1px 2px; border-radius: 2px; }
-
-/* ---------------- l'avancement d'un relancement ---------------- */
-
-.progression {
-  display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 36px;
-  background: var(--marine-pale); border-bottom: 1px solid #d2dcea; flex: none;
-}
-.pas-progression {
-  font-size: 12px; color: var(--encre-3); background: var(--carte);
-  border: 1px solid var(--trait); border-radius: 999px; padding: 5px 12px;
-}
-.pas-progression.fait { color: var(--marine); border-color: #c3d1e4; font-weight: 600; }
-.pas-progression small { display: block; font-weight: 400; color: var(--encre-3); font-size: 11px; }
-
-/* ---------------- les tons du fil de provenance ---------------- */
-
-.pas-noeud.t-retenu { border-color: var(--vert); }
-.pas-noeud.t-retenu .filet { background: var(--vert); }
-.pas-noeud.t-ecarte { background: var(--papier-2); opacity: 0.82; }
-.pas-noeud.t-ecarte .filet { background: var(--trait-fort); }
-.pas-noeud.t-inconnu .filet { background: var(--inconnu); }
-.pas-noeud.t-gravite.g-critique { background: var(--critique-pale); border-color: var(--critique); }
-.pas-noeud.t-gravite.g-critique .filet { background: var(--critique); }
-.pas-noeud.t-gravite.g-elevee { background: var(--elevee-pale); border-color: var(--elevee); }
-.pas-noeud.t-gravite.g-elevee .filet { background: var(--elevee); }
-.pas-noeud.t-gravite.g-moyenne { background: var(--moyenne-pale); border-color: var(--moyenne); }
-.pas-noeud.t-gravite.g-moyenne .filet { background: var(--moyenne); }
-.pas-noeud.t-gravite.g-faible { background: var(--faible-pale); border-color: var(--faible); }
-.pas-noeud.t-gravite.g-faible .filet { background: var(--faible); }
-.pas-rang {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-  color: #fff; background: var(--marine); border-radius: 999px; padding: 2px 7px; flex: none;
-}
-.pas-noeud.t-ecarte .pas-rang { background: var(--encre-3); }
-.pas-noeud.t-retenu .pas-rang { background: var(--vert); }
-.pas-corps {
-  font-size: 12.5px; line-height: 1.45; color: var(--encre-2);
-  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-}
-.pas-petit .pas-corps { -webkit-line-clamp: 2; }
-.pas-corps.verbatim { font-style: italic; color: var(--encre); }
-.pas-bas { margin-top: auto; padding-top: 6px; font-size: 10.5px; color: var(--encre-3); line-height: 1.35; }
-.pas-petit .pas-titre { font-family: var(--sans); font-size: 13px; font-weight: 650; }
-
 /* ---------------- responsive ---------------- */
 
-@media (max-width: 1080px) {
-  .app { grid-template-columns: 1fr; }
-  .cote { flex-direction: row; align-items: center; overflow-x: auto; padding: 12px 16px; border-right: 0; border-bottom: 1px solid var(--trait); }
-  .marque { padding: 0 16px 0 0; flex: none; }
-  .cote-titre, .cote-pied { display: none; }
-  .onglet { width: auto; white-space: nowrap; }
-  .entete, .vue { padding-left: 20px; padding-right: 20px; }
-  .vue > div > div[style*="330px"] { grid-template-columns: 1fr !important; }
-  .tiroir, .fil-tiroir { position: static; width: auto; height: auto; max-height: 420px; margin: 14px; }
-  .cote-a-cote, .droit-colonnes { grid-template-columns: 1fr; }
-  .fiche-tete, .ecartes-bande, .droit-bande, .spa-bande, .progression { padding-left: 20px; padding-right: 20px; }
-  .grille { font-size: 12.5px; }
+@media (max-width: 1100px) {
+  .deux-volets { grid-template-columns: 1fr; }
+  .volet-gauche { border-right: 0; border-bottom: 1px solid var(--trait); max-height: 52vh; }
+  .rapport-lu { padding: 22px 18px 40px; }
+  .duo { grid-template-columns: 1fr; }
+  .barre { height: auto; flex-wrap: wrap; padding: 9px 14px; gap: 10px; }
+  .sommaire { order: 3; width: 100%; }
+  .barre-actions { margin-left: 0; }
+  .journal-corps { height: 120px; }
 }
 
-/* ---------------- l'export PDF du journal ----------------
-   Le journal est la pièce qu'on met au dossier : à l'impression, on retire
-   l'ossature de l'application et on laisse le document seul. */
+/* ---------------- la sortie imprimée ----------------
+   C'est la pièce qu'on met au dossier client. À l'écran elle n'existe pas ; à
+   l'impression, elle est seule, et l'application disparaît. */
+
+.impression { display: none; }
 
 @media print {
   :root { --papier: #fff; --carte: #fff; }
-  body { font-size: 11pt; }
-  .cote, .entete .actions, .bouton { display: none !important; }
-  .app { display: block; height: auto; }
-  .corps { overflow: visible; }
-  .entete { padding: 0 0 14px; border-bottom: 1.5px solid #000; }
-  .vue { overflow: visible; padding: 18px 0 0; }
-  .carte {
-    box-shadow: none; border: 0; border-top: 1px solid #ccc; border-radius: 0;
-    padding: 14px 0; break-inside: avoid;
+  body { background: #fff; font-size: 10.5pt; }
+  .ecran > *:not(.impression), .voile { display: none !important; }
+  .impression { display: block; padding: 0; color: #000; }
+  .impression h1 { font-size: 18pt; margin-bottom: 3mm; }
+  .impression h2 {
+    font-size: 13pt; margin: 8mm 0 3mm; padding-bottom: 1mm;
+    border-bottom: 0.4pt solid #000; break-after: avoid;
   }
-  .carte:first-child { border-top: 0; }
-  .jeton { border: 1px solid currentColor; background: none !important; }
-  .grille { break-inside: auto; }
-  .grille tr { break-inside: avoid; }
-  .puces-chiffres { grid-template-columns: repeat(4, 1fr); }
-  .chiffre { border: 0; border-left: 2px solid #000; border-radius: 0; padding: 4px 0 4px 12px; }
-  .bandeau { border: 1px solid #999; background: none; color: #000; }
+  .impression h3 { font-size: 11pt; margin: 5mm 0 2mm; break-after: avoid; }
+  .impression p { margin: 0 0 2.5mm; line-height: 1.45; }
+  .impression ul { margin: 0 0 3mm; padding-left: 6mm; }
+  .impression li { margin-bottom: 1mm; }
+  .chapeau-impression { color: #444; font-size: 9pt; line-height: 1.5; }
+
+  /* Un constat ne se coupe jamais en deux pages : on le lit d'un bloc. */
+  .constat-impression {
+    break-inside: avoid; margin-bottom: 4mm; padding-top: 2.5mm;
+    border-top: 0.4pt solid #bbb;
+  }
+  .titre-constat { font-weight: 700; margin-bottom: 1.5mm; }
+  .extrait-impression {
+    margin: 0 0 1.5mm; padding-left: 4mm; border-left: 1.5pt solid #777;
+    font-style: italic; font-size: 9.5pt;
+  }
+  .renvoi-impression { color: #444; font-size: 9pt; }
+
+  .journal-impression { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .journal-impression td { padding: 0.6mm 2mm 0.6mm 0; vertical-align: top; border-bottom: 0.2pt solid #ddd; }
+  .journal-impression td:first-child { width: 16mm; color: #666; }
+  .journal-impression td:nth-child(2) { width: 24mm; font-weight: 600; }
+  .journal-impression td:last-child { width: 32mm; color: #666; }
+  .journal-impression tr { break-inside: avoid; }
+
+  .signature {
+    margin-top: 10mm; padding-top: 4mm; border-top: 0.6pt solid #000;
+    font-size: 9.5pt; line-height: 2; break-inside: avoid;
+  }
 }
 
-/* La bande du mécanisme de cession, sur la fiche d'un constat. */
-.spa-bande {
-  display: grid; grid-template-columns: 210px 1fr; gap: 22px; align-items: start;
-  padding: 18px 36px 22px; border-bottom: 1px solid var(--trait); background: var(--carte); flex: none;
-}
-@media (max-width: 1080px) { .spa-bande { grid-template-columns: 1fr; gap: 12px; } }
+/* ---------------- les dossiers ---------------- */
 
-/* L'avertissement d'un texte lu par machine. Il doit se voir sans alarmer :
-   le document est exploitable, il demande seulement confirmation. */
-.avis-ocr {
-  display: flex; align-items: flex-start; gap: 11px;
-  background: var(--inconnu-pale); border: 1px solid #ddd9d1;
-  border-radius: var(--rayon-sm); padding: 11px 14px; margin-bottom: 12px;
-  font-size: 13px; line-height: 1.5; color: #54514a;
+.marque { background: none; border: 0; cursor: pointer; width: 100%; text-align: left; }
+.marque:hover b { color: var(--marine); }
+.onglet.retour { color: var(--encre-3); font-size: 12.5px; padding-left: 10px; margin-bottom: 4px; }
+.onglet .apres.alerte { color: var(--critique); font-weight: 650; }
+
+.dossier-carte {
+  background: var(--carte); border: 1px solid var(--trait); border-radius: var(--rayon);
+  box-shadow: var(--ombre); margin-bottom: 12px; overflow: hidden;
 }
-.avis-ocr .jeton { flex: none; }
-.renvoi .pg.ocr { color: var(--inconnu); font-style: italic; }
+.dossier-carte:hover { border-color: var(--trait-fort); box-shadow: var(--ombre-forte); }
+.dossier-corps {
+  display: flex; align-items: center; gap: 22px; width: 100%; text-align: left;
+  background: none; border: 0; padding: 18px 22px; cursor: pointer;
+}
+.dossier-corps .quoi { min-width: 0; flex: 1; }
+.dossier-corps .nom { font-family: var(--serif); font-size: 18px; }
+.dossier-corps .meta { color: var(--encre-3); font-size: 12.5px; margin-top: 3px; }
+.compteurs { display: flex; gap: 20px; flex: none; }
+.compteurs > span { display: flex; flex-direction: column; font-size: 11px; color: var(--encre-3); text-align: right; }
+.compteurs b { font-family: var(--serif); font-size: 19px; font-weight: 500; color: var(--encre); line-height: 1.1; }
+.compteurs .quand { justify-content: flex-end; font-style: italic; }
+.dossier-pied {
+  display: flex; align-items: center; gap: 9px; justify-content: flex-end;
+  padding: 9px 22px; border-top: 1px solid var(--trait); background: var(--papier-2);
+}
+.bouton.danger { border-color: var(--critique); color: var(--critique); }
+.bouton.danger:hover { background: var(--critique-pale); }
+select.champ { appearance: none; background-image: none; }
+
+/* ---------------- le versement de pièces ---------------- */
+
+.depot {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  min-height: 118px; padding: 20px; cursor: pointer; text-align: center;
+  border: 2px dashed var(--trait-fort); border-radius: var(--rayon); background: var(--papier-2);
+  color: var(--encre-2); transition: border-color 0.15s, background 0.15s;
+}
+.depot:hover, .depot.survol { border-color: var(--marine-clair); background: var(--marine-pale); }
+.depot.occupe { cursor: default; opacity: 0.7; }
+.depot b { font-family: var(--serif); font-size: 16px; font-weight: 500; color: var(--encre); }
+.depot span { font-size: 12.5px; color: var(--encre-3); }
+
+.passages { display: flex; flex-direction: column; gap: 2px; }
+.passage { display: flex; align-items: baseline; gap: 10px; padding: 6px 0; border-top: 1px solid var(--trait); }
+.passage:first-child { border-top: 0; }
+.passage .quand { font-weight: 600; font-size: 13px; width: 108px; flex: none; }
+.passage.courant .quand { color: var(--marine); }
+
+/* ---------------- ce qui a changé ---------------- */
+
+.carte.changements { margin-top: 16px; }
+.perime {
+  background: var(--critique-pale); border-radius: var(--rayon-sm);
+  padding: 14px 16px; font-size: 13.5px; line-height: 1.55; color: #74190f;
+}
+.perime > b { color: #5e1109; }
+.perime-ligne {
+  display: flex; flex-direction: column; gap: 4px; width: 100%; text-align: left;
+  background: var(--carte); border: 1px solid #eccfc9; border-radius: var(--rayon-sm);
+  padding: 10px 13px; margin-top: 10px; cursor: pointer; color: var(--encre);
+}
+.perime-ligne:hover { border-color: var(--critique); }
+.ecart { display: block; font-size: 12.5px; color: var(--encre-2); padding-left: 2px; }
+.ecart i { font-style: normal; color: var(--encre-3); margin-right: 7px; }
+.ecart s { color: var(--encre-3); }
+.lot { margin: 0; padding-left: 17px; font-size: 13px; line-height: 1.6; color: var(--encre-2); }
+.lot li { word-break: break-word; }
+
+/* ---------------- la rédaction du juriste ---------------- */
+
+.origine-redaction { margin-top: 12px; font-size: 13px; }
+.origine-redaction summary { cursor: pointer; color: var(--encre-3); }
+.origine-redaction summary:hover { color: var(--encre); }
+.origine-redaction .redaction {
+  margin-top: 9px; padding: 11px 14px; background: var(--papier-2);
+  border-radius: var(--rayon-sm); font-size: 13.5px; color: var(--encre-2);
+}
+.bandeau-large { margin: 14px 36px 0; }
