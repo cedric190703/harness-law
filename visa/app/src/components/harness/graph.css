@@ -1,0 +1,92 @@
+/* Graph canvas: clear hierarchy, stable card dimensions and accessible contrast. */
+.legal-app .graph-refined{background:#f5f8f5;border:1px solid #cbd8cf;border-radius:14px;box-shadow:0 3px 18px #24423006;isolation:isolate}
+.legal-app .graph-refined .graph-toolbar{background:#fff;padding:17px 20px;gap:16px;border-bottom:0;flex-wrap:wrap}
+.legal-app .graph-refined .graph-title{display:flex!important;align-items:center;gap:12px;min-width:0}
+.graph-title-icon{display:grid;place-items:center;background:#eaf1e9;color:#32533d;width:42px;height:42px;border:1px solid #d5e1d3;border-radius:11px;flex-shrink:0}
+.legal-app .graph-title b{font-size:16px;font-weight:600;letter-spacing:-.3px;color:#20342a}
+.legal-app .graph-title div>span{display:block;color:#58685f;font-size:12px;margin-top:3px}
+.legal-app .graph-refined .graph-toolbar .inline-actions{gap:7px;width:auto;flex-wrap:wrap;justify-content:flex-start}
+.legal-app .graph-refined .graph-toolbar button{font-size:12px;padding:9px 11px;border-color:#d5ded7;white-space:nowrap}
+.legal-app .graph-refined .graph-toolbar .fullscreen-button{background:#2e513c;color:#fff;border-color:#2e513c}
+.legal-app .graph-refined .graph-toolbar .fullscreen-button:hover{background:#203e2c}
+.graph-filters{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid #d7e1d9;padding:0 20px 15px;background:#fff;flex-shrink:0;flex-wrap:wrap}
+.graph-filters>div{display:flex;gap:20px;flex-wrap:wrap}
+.legal-app .graph-refined .tool-toggle{display:flex;align-items:center;gap:7px;font-size:12px;color:#46594e;cursor:pointer}
+.legal-app .graph-refined .tool-toggle input{width:15px;height:15px;margin:0;accent-color:#365e42}
+.graph-filters>span{display:flex;align-items:center;gap:6px;font-size:11px;color:#586a60}
+.legal-app .graph-refined .graph-body{min-height:220px;overflow:hidden}
+.legal-app .graph-refined .graph-body .react-flow{background:radial-gradient(ellipse at 40% 15%,#fff 0,#f3f7f3 75%)}
+.legal-app .graph-refined .trace-card{--node-color:#476855;--node-tint:#eff5ee;width:300px;height:216px;padding:16px 18px 0;border:1px solid #cbd8d0;border-top:4px solid var(--node-color);border-radius:12px;background:#fff;box-shadow:0 4px 12px #203b2b0b,0 1px 2px #203b2b08;color:#23382b;display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.legal-app .graph-refined .trace-card.document{--node-color:#356ea1;--node-tint:#edf4fb}
+.legal-app .graph-refined .trace-card.skill{--node-color:#7b5ca7;--node-tint:#f3eff9}
+.legal-app .graph-refined .trace-card.tool{--node-color:#666180;--node-tint:#f1f0f6}
+.legal-app .graph-refined .trace-card.input{--node-color:#a16b16;--node-tint:#fbf4e7}
+.legal-app .graph-refined .trace-card.finding{--node-color:#a46a1e;--node-tint:#fbf3e9}
+.legal-app .graph-refined .trace-card.check{--node-color:#307c72;--node-tint:#ecf6f3}
+.legal-app .graph-refined .trace-card.section{--node-color:#386644;--node-tint:#eef5eb}
+.legal-app .graph-refined .trace-card.pending{opacity:1;background:#fafbf9}
+.legal-app .graph-refined .trace-card.failed{border-color:#b76752}
+.legal-app .graph-refined .trace-card.selected{border-color:var(--node-color);box-shadow:0 0 0 3px #446e4933,0 10px 25px #234a2d18}
+.legal-app .graph-refined .trace-card.related{border-left-color:var(--node-color);border-right-color:var(--node-color)}
+.legal-app .graph-refined .trace-card:hover{box-shadow:0 6px 20px #24453218}
+.legal-app .graph-refined .trace-overline{color:var(--node-color);font-size:11px;letter-spacing:.35px;font-weight:600;gap:9px;flex-shrink:0}
+.trace-icon{display:grid;place-items:center;width:32px;height:32px;background:var(--node-tint);border-radius:8px}
+.trace-overline>svg:last-child{margin-left:auto}
+.legal-app .graph-refined .trace-card strong{font-size:16px;line-height:1.35;letter-spacing:-.2px;color:#233329;margin:12px 0 7px;font-weight:600;min-height:43px;overflow-wrap:anywhere;flex-shrink:0}
+.legal-app .graph-refined .trace-preview{font-size:12px;line-height:1.55;color:#516057;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;max-height:38px}
+.legal-app .graph-refined .trace-preview.is-quote{color:#315e51;font-family:Georgia,serif;font-size:13px}
+.legal-app .graph-refined .trace-caption{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto;border-top:1px solid #e3e9e3;height:39px;flex-shrink:0;padding:0;font-size:11px;color:#52655a}
+.trace-status{display:flex;gap:5px;align-items:center}
+.trace-status.passed{color:#2e6240}.trace-status.warning{color:#855412}.trace-status.failed{color:#a33c29}.trace-status.running{color:#345c9b}
+.legal-app .graph-refined .trace-card .react-flow__handle{width:8px;height:8px;background:var(--node-color);border:2px solid #fff}
+.legal-app .graph-refined .react-flow__node:focus-visible{outline:3px solid #325d45;outline-offset:5px;border-radius:13px}
+.legal-app .graph-refined .react-flow__controls{box-shadow:0 2px 12px #26433218;border:1px solid #cbd9cf;border-radius:9px;overflow:hidden}
+.legal-app .graph-refined .react-flow__controls-button{width:32px;height:32px;color:#304c39;padding:8px}
+.legal-app .graph-refined .react-flow__minimap{display:block;width:170px;height:110px;border:1px solid #cbd8ce;box-shadow:0 2px 8px #24422b0c}
+.legal-app .graph-refined .graph-legend{background:#fff;gap:16px;padding:12px 20px;border-color:#d6e0d7}
+.legal-app .graph-refined .graph-legend span{font-size:11px;color:#4a5e50}
+.legal-app .graph-refined .graph-legend i{width:8px;height:8px;border-radius:3px}
+.graph-navigation-hint{margin-left:auto}
+.legal-app .graph-refined .graph-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:13px;color:#53645a;padding:30px;text-align:center}
+.graph-empty b{font-size:17px;color:#2f4b3a}
+/* Full screen uses the browser API when available and a viewport overlay otherwise. */
+.legal-app .graph-refined.graph-fullscreen,.legal-app .graph-refined:fullscreen{position:fixed;inset:0;z-index:1000;width:100vw;height:100dvh;max-width:none;max-height:none;min-height:0;margin:0;border:0;border-radius:0;background:#f5f8f5;box-shadow:none}
+.legal-app .graph-refined.graph-fullscreen .graph-toolbar{padding:20px 28px}
+.legal-app .graph-refined.graph-fullscreen .graph-filters{padding:0 28px 16px}
+.legal-app .graph-refined.graph-fullscreen .graph-title b{font-size:20px}
+/* Inspector: factual detail, evidence, history and navigable relationships. */
+.legal-app .graph-refined .graph-inspector{width:380px;max-width:46%;position:relative;inset:auto;flex-shrink:0;padding:22px 24px 30px;overflow:auto;border-left:1px solid #cbd8cf;background:#fff;box-shadow:-6px 0 20px #23422c05;z-index:5;color:#293d30;scrollbar-gutter:stable}
+.inspector-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.node-type-label{font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#36583f}
+.node-type-label.document{color:#356ea1}.node-type-label.skill{color:#735397}.node-type-label.finding{color:#91601d}.node-type-label.check{color:#307469}
+.legal-app .graph-refined .graph-inspector h3{font-size:20px;line-height:1.35;letter-spacing:-.4px;color:#1f3428;margin:16px 0 12px;overflow-wrap:anywhere}
+.legal-app .graph-refined .node-purpose{font-size:13px;line-height:1.75;color:#56655d;margin:15px 0 20px}
+.legal-app .graph-refined .detail-section{border-top:1px solid #e0e7e1;padding:20px 0}
+.legal-app .graph-refined .detail-section h4{display:flex;align-items:center;gap:7px;margin:0 0 12px;font-size:13px;font-weight:600;color:#293f31}
+.detail-section h4>span{margin-left:auto;background:#eef3ed;border-radius:5px;padding:2px 6px;font-size:11px;color:#526858}
+.legal-app .graph-refined .detail-section p{font-size:13px;line-height:1.8;color:#384c3e;overflow-wrap:anywhere;white-space:pre-wrap}
+.legal-app .graph-refined p.detail-note{font-size:12px;color:#5c6c61;margin:10px 0 0}
+.legal-app .graph-refined .quote-section blockquote{margin:12px 0;background:#f0f6f1;border-left:3px solid #3e7b5b;padding:14px 16px;color:#233f30;font:15px/1.85 Georgia,serif;border-radius:0 8px 8px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.legal-app .graph-refined p.quote-location{font-size:12px;color:#476650}
+.detail-fields{margin:0;display:grid;gap:12px}.detail-fields>div{display:grid;grid-template-columns:100px minmax(0,1fr);gap:10px;font-size:12px;line-height:1.65}.detail-fields dt{color:#5b6b60}.detail-fields dd{margin:0;overflow-wrap:anywhere;color:#263c2d}
+.technical-detail{border:1px solid #d9e2da;border-radius:8px;margin-top:15px;background:#f8faf7;padding:11px 12px;font-size:12px;color:#4e6255}
+.technical-detail summary{cursor:pointer;font-weight:500}.technical-detail summary svg{display:inline;vertical-align:middle;margin-right:5px}.technical-detail code{display:block;font:11px/1.7 monospace;overflow-wrap:anywhere;color:#435b4a;margin-top:12px}.technical-detail .detail-fields{margin-top:14px}
+.finding-labels{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.finding-labels>span{font-size:11px;padding:5px 8px;border-radius:5px;background:#eef3eb;color:#39533e}.finding-labels>span.finding-priority{background:#fff1db;color:#81500d}
+.value-comparison{display:grid;grid-template-columns:1fr 20px 1fr;gap:10px;align-items:center}.value-comparison>div{background:#f6f8f5;border:1px solid #dce5db;border-radius:8px;padding:12px;min-width:0}.value-comparison span{font-size:11px;color:#526859;display:block;margin-bottom:7px}.value-comparison strong{font-size:15px;font-weight:600;line-height:1.6;overflow-wrap:anywhere;color:#27422e}.value-comparison>svg{color:#657b69}
+.legal-app .graph-refined .recommendation{background:#f4f7ef;border:1px solid #dce5d2;border-radius:9px;padding:15px;margin-bottom:18px}
+.node-event{border:1px solid #dbe3dc;border-radius:8px;margin:8px 0;overflow:hidden}.node-event summary{cursor:pointer;background:#f6f8f5;padding:11px 12px;font-size:12px;line-height:1.7;color:#3e5545}.node-event time{font-size:11px;float:right;color:#596b5e}.node-event pre,.legal-app .graph-refined .tool-output{font:12px/1.7 monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}.node-event pre{padding:12px;color:#354b3d;max-height:450px;overflow:auto}
+.legal-app .graph-refined .node-connections button{display:flex;width:100%;text-align:left;justify-content:flex-start;padding:11px 12px;border-color:#dbe4dc;margin-top:7px;gap:10px;font-size:12px;line-height:1.6}.node-connections button>span{flex:1;min-width:0;overflow-wrap:anywhere}.node-connections button small{display:block;font-size:10px;color:#5c6f61;margin-bottom:3px}.node-connections button>svg{color:#607a64;flex-shrink:0}.connection-dot{width:8px;height:8px;flex-shrink:0;border-radius:3px;background:#47704f}.connection-dot.skill{background:#7b5ca7}.connection-dot.document{background:#356ea1}.connection-dot.finding{background:#a46a1e}
+.detail-markdown{font-size:13px;line-height:1.8;color:#354a3c;overflow-wrap:anywhere}.legal-app .graph-refined .detail-markdown p{margin:10px 0}.detail-markdown ul,.detail-markdown ol{padding-left:20px}.detail-table{overflow:auto;margin-top:15px}.detail-table table{border-collapse:collapse;font-size:12px;min-width:420px}.detail-table td,.detail-table th{border:1px solid #d8e3d7;padding:8px}.detail-table th{background:#edf3e9}
+.legal-app .graph-refined .detail-section .primary{font-size:12px;margin-top:15px}
+/* The section panel stays compact; fullscreen always restores the spacious layout. */
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .graph-toolbar{padding:13px}
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .graph-title b{font-size:14px}
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .graph-toolbar button:not(.fullscreen-button)>span{display:none}
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .graph-filters{padding:0 13px 12px}
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .graph-filters>span{display:none}
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .graph-inspector{position:absolute;right:0;top:0;bottom:0;width:380px;max-width:94%;box-shadow:-8px 0 24px #29463518}
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .react-flow__minimap{display:none}
+.legal-app .section-provenance .graph-refined:not(.graph-fullscreen) .graph-navigation-hint{display:none}
+@media(max-width:980px){.legal-app .graph-refined .graph-inspector{position:absolute;inset:0 0 0 auto;width:380px;max-width:90%;box-shadow:-8px 0 24px #29463518}.legal-app .graph-refined .graph-toolbar button:not(.fullscreen-button)>span{display:none}.legal-app .graph-refined .graph-navigation-hint{display:none}}
+@media(max-width:680px){.legal-app .graph-refined .graph-toolbar,.legal-app .graph-refined.graph-fullscreen .graph-toolbar{padding:12px;gap:12px}.legal-app .graph-refined .graph-title b,.legal-app .graph-refined.graph-fullscreen .graph-title b{font-size:15px}.graph-title-icon{width:33px;height:33px}.legal-app .graph-refined .graph-title div>span{font-size:11px}.legal-app .graph-refined .graph-toolbar button{padding:8px;font-size:11px}.legal-app .graph-refined .graph-filters,.legal-app .graph-refined.graph-fullscreen .graph-filters{padding:0 12px 12px;gap:10px}.legal-app .graph-refined .graph-filters>span{display:none}.graph-filters>div{gap:12px}.legal-app .graph-refined .tool-toggle{font-size:11px}.legal-app .graph-refined .graph-legend{gap:10px;padding:10px 12px}.legal-app .graph-refined .graph-legend span{font-size:10px}.legal-app .graph-refined .graph-inspector{padding:18px;max-width:94%}.legal-app .graph-refined .graph-inspector h3{font-size:18px}.legal-app .graph-refined .react-flow__minimap{display:none}.legal-app .graph-refined .graph-body{min-height:140px}}
+@media(prefers-reduced-motion:reduce){.legal-app .graph-refined *{transition:none!important;animation:none!important}}
