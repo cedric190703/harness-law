@@ -29,3 +29,8 @@ bun run dev --hostname 127.0.0.1
 Ouvrir http://127.0.0.1:3000. `bun run check` lance style, types et tests. Détails : [`saul/app/README.md`](saul/app/README.md).
 
 Ne jamais commiter de clé (`.env.local`), de vrai document client ni de journal de mission.
+
+La vérification automatique **Protection des secrets** contrôle les fichiers privés
+et l'historique Git. Voir [SECURITY.md](SECURITY.md) pour les commandes locales et
+la procédure en cas de fuite. Les documents de benchmarks tiers conservent leurs
+[mentions d'origine](THIRD_PARTY_NOTICES.md).

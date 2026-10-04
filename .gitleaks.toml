@@ -1,0 +1,18 @@
+title = "Saul secret detection"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "saul-provider-credential"
+description = "Assigned Mistral, PISTE, or Saul online credential"
+regex = '''(?i)(?:mistral_api_key|piste_client_secret|saul_mot_de_passe)[\s"']{0,4}(?:=|:)\s*["']([a-z0-9+/_.~=-]{16,})["']'''
+secretGroup = 1
+keywords = ["mistral_api_key", "piste_client_secret", "saul_mot_de_passe"]
+
+[[rules]]
+id = "saul-env-credential"
+description = "Unquoted Mistral, PISTE, or Saul dotenv credential"
+regex = '''(?im)^\s*(?:export\s+)?(?:mistral_api_key|piste_client_secret|saul_mot_de_passe)\s*=\s*([a-z0-9+/_.~=-]{16,})\s*$'''
+secretGroup = 1
+keywords = ["mistral_api_key", "piste_client_secret", "saul_mot_de_passe"]
