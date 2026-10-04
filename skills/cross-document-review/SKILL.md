@@ -5,7 +5,9 @@ description: "Use this skill whenever the task asks you to compare, reconcile, o
 
 # Cross-document review (concordance method)
 
-Partners reject comparison work for one reason: **one missed or misstated item**. A report that catches 95% of deviations is wrong. This method trades speed for completeness and verifiability. Follow the steps in order; do not draft the deliverable before step 6.
+Partners reject comparison work for one reason: **one missed or misstated item**. A report that catches 95% of deviations is wrong. This method trades speed for completeness and verifiability. Follow the steps in order.
+
+**Two rules override everything below:** (1) the requested deliverable must exist in `$OUTPUT_DIR` before you call `finish` — never finish without it; (2) if a command fails twice, stop retrying it and move to the next step (only the scripts named here exist — do not invent others).
 
 Scripts live in `$WORKSPACE_DIR/skills/cross-document-review/scripts/`. All working files go in `$WORKSPACE_DIR` (never in `output/`).
 
@@ -40,7 +42,16 @@ Then create `$WORKSPACE_DIR/ledger.jsonl`, one JSON object per line. Walk the RE
 
 - `status`: `match` | `deviation` | `missing` (in reference, absent from subject; `subj_value` = `"none"`) | `added` (in subject, not in reference; `ref_value` = `"none"`) | `unclear` | `claim` (step 4) | `n/a` (boilerplate you reviewed: notices, signatures).
 - `ref_quote` / `subj_quote`: **copied verbatim** from the document text, short (5–30 words) and distinctive. Never paraphrase inside a quote field.
-- Write rows in batches as you go (append with `bash cat >> ... <<'EOF'` or `write` to an absolute path). Do not hold the table in your head.
+- Write rows in batches of 10–20 as you go, with `bash`. Do not hold the table in your head:
+
+```bash
+cat >> $WORKSPACE_DIR/ledger.jsonl <<'EOF'
+{"id": "R-001", "topic": "...", "ref_doc": "...", "ref_loc": "...", "ref_quote": "...", "subj_doc": "...", "subj_loc": "...", "subj_quote": "...", "status": "match", "ref_value": "...", "subj_value": "..."}
+{"id": "R-002", "topic": "...", "status": "deviation", "...": "..."}
+EOF
+```
+
+- To change a row later, rewrite it with `edit`, or regenerate the file with a short `python` script.
 - Several references (e.g. term sheet + commitment letter, or spec + contract covenant)? Compare the subject against **each** and record which source each requirement comes from.
 
 ## Step 3 — Reverse pass and hidden changes
@@ -73,7 +84,19 @@ It verifies that every quote exists verbatim in the named document, that every n
 
 ## Step 7 — Draft the deliverable from the ledger
 
-Write the report from `ledger.jsonl`, not from memory. Use the exact output filename requested and the docx/xlsx skill for the format. Default structure (adapt to what the instructions ask for):
+Generate a complete first draft from the ledger (every finding with both values, citations, impact, severity, recommendation, most severe first):
+
+```bash
+python $WORKSPACE_DIR/skills/cross-document-review/scripts/ledger_to_report.py --title "<report title>"
+```
+
+Then **edit `$WORKSPACE_DIR/report.md`** — it is a draft, not the deliverable: add the header and bottom line, the client-specific analysis, interactions, and whatever the instructions ask for; replace each `<!-- EDIT -->` comment. Convert it to the exact output filename requested:
+
+```bash
+python $WORKSPACE_DIR/skills/docx/scripts/generate_from_md.py $WORKSPACE_DIR/report.md $OUTPUT_DIR/<deliverable>.docx
+```
+
+(For an .xlsx deliverable, use the xlsx skill with the same content.) Target structure (adapt to what the instructions ask for):
 
 1. **Header** — matter, parties and their roles, documents reviewed, client/side.
 2. **Executive summary** — bottom-line recommendation (e.g. "do not sign / the decree must be revised before entry"), the top issues ranked, count by severity.
