@@ -93,7 +93,18 @@ Le service `saul` écoute sur `10.0.1.1:3077`, accessible au proxy depuis son r�
 Le choix « Mistral (API) » lance Vibe : sans modèle explicitement fixé, le routage par défaut du fournisseur peut sélectionner un modèle tiers, notamment GLM. Pour utiliser Mistral Medium 3.5, créer `/home/saul/.vibe/config.toml` sous le compte du service :
 
 ```toml
-active_model = "mistral-medium-3-5"
+active_model = "saul-mistral-medium35"
+allowed_models = ["mistral-medium-3-5"]
+
+[[models]]
+name = "mistral-medium-3-5"
+provider = "mistral"
+alias = "saul-mistral-medium35"
+input_price = 1.5
+output_price = 7.5
+cached_input_price = 0.15
 ```
 
-Ce fichier ne contient aucun secret et reste accessible au seul compte `saul` (mode 600). La clé API demeure dans `/etc/saul.env`. Ce modèle figure dans la liste `/v1/models` de l’API officielle. La configuration est relue au lancement de chaque mission ; il n’est pas nécessaire de reconstruire ou redémarrer l’application. Vérifier le champ `active_model` de la session Vibe réellement exécutée, pas seulement le libellé de l’interface. Référence : [configuration officielle Vibe](https://docs.mistral.ai/vibe/code/cli/configuration).
+`active_model` désigne l'alias déclaré dans `[[models]]`, pas simplement un identifiant disponible dans l'API : un identifiant non déclaré peut être ignoré au profit du modèle par défaut. `allowed_models` limite les modèles sélectionnables au modèle attendu. Les prix reprennent le preset Medium 3.5 installé, par million de tokens, pour conserver le calcul du plafond `--max-price` ; les vérifier lors d'une mise à jour du fournisseur.
+
+Ce fichier ne contient aucun secret et reste accessible au seul compte `saul` (mode 600). La clé API demeure dans `/etc/saul.env`. La configuration est relue au lancement de chaque mission ; il n'est pas nécessaire de reconstruire ou redémarrer l'application. Avant un essai payant, vérifier la configuration effective avec le même utilisateur, environnement et répertoire de travail que le service : alias `saul-mistral-medium35`, modèle résolu `mistral-medium-3-5`, fournisseur `mistral`, API `https://api.mistral.ai/v1`. Contrôler ensuite ces mêmes champs dans la session Vibe réellement liée à la mission, sans afficher de clé. Le libellé de l'interface seul ne prouve pas le modèle utilisé. Référence : [configuration officielle Vibe](https://docs.mistral.ai/vibe/code/cli/configuration-reference).
