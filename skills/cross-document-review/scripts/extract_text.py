@@ -117,15 +117,15 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     files = sorted(p for p in docs.rglob("*") if p.is_file())
     print(f"{len(files)} documents in {docs}\n")
-    print(f"{'document':60} {'words':>7} {'sections':>8}")
+    print(f"{'text file to read':70} {'words':>7} {'sections':>8}")
     for path in files:
         text = convert(path)
         rel = path.relative_to(docs)
         target = out / (str(rel) + ".txt")
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(text, encoding="utf-8")
-        print(f"{str(rel):60} {len(text.split()):>7} {len(find_sections(text)):>8}")
-    print(f"\nText written to {out}/<document>.txt — read every document in full before building the ledger.")
+        print(f"{str(target):70} {len(text.split()):>7} {len(find_sections(text)):>8}")
+    print("\nRead each .txt above in full, once (not the originals), before building the ledger.")
 
 
 if __name__ == "__main__":

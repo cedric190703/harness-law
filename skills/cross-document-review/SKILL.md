@@ -15,9 +15,9 @@ Scripts live in `$WORKSPACE_DIR/skills/cross-document-review/scripts/`. All work
 python $WORKSPACE_DIR/skills/cross-document-review/scripts/extract_text.py
 ```
 
-This converts every document to plain text under `$WORKSPACE_DIR/text/` (one `.txt` per document, same base name) and prints an inventory. Then:
+This converts every document to plain text — `$WORKSPACE_DIR/text/<full document filename>.txt`, e.g. `text/executed-term-sheet.docx.txt` — and prints the exact paths. Then:
 
-- **Read every document in full, once** (`read` the original, or the `.txt`). Do not skim. Long documents: read in chunks until the end. Afterwards, look things up with `grep -n` on `$WORKSPACE_DIR/text/` instead of re-reading whole documents — your context is finite.
+- **Read every document in full, exactly once: read the `.txt` files, not the originals** (same content, and each re-read fills your context window). Do not skim. Long documents: read in chunks until the end. Afterwards, look things up with `grep -n` on `$WORKSPACE_DIR/text/` instead of re-reading.
 - Assign each document a role: **REFERENCE** (what governs: term sheet, executed agreement, client instructions, spec, statute/regulation, selection criteria, prior version), **SUBJECT** (what is being checked), or **CONTEXT** (cover emails, notes, claims data, templates, checklists).
 - Identify **the client and its side** (e.g. borrower, the wife, the insured, the issuer's counsel). Every impact and recommendation is written from that side.
 - Identify the **parties, transaction, and key dates** exactly as named in the documents.

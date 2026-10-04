@@ -74,7 +74,7 @@ def run_one(task: str, condition: str, args, env: dict) -> dict:
     scores = json.loads(score_file.read_text()) if score_file else {}
     row = {
         "at": datetime.now().isoformat(timespec="seconds"),
-        "model": args.model, "effort": args.effort, "condition": condition, "task": task, "run_id": run_id,
+        "model": args.model, "effort": args.effort, "tool_choice": args.tool_choice, "condition": condition, "task": task, "run_id": run_id,
         "judges": args.judges,
         "agent_ok": agent.returncode == 0, "graded": bool(graded and graded.returncode == 0 and scores),
         "all_pass": scores.get("all_pass"), "score": scores.get("score"),
@@ -122,6 +122,7 @@ def main() -> None:
     parser.add_argument("--repeat", type=int, default=1)
     parser.add_argument("--parallel", type=int, default=2)
     parser.add_argument("--max-turns", type=int, default=200)
+    parser.add_argument("--tool-choice", choices=["auto", "any"], help="Mistral only: 'any' forces tool use")
     parser.add_argument("--summary", action="store_true")
     args = parser.parse_args()
     if args.summary:
@@ -132,6 +133,8 @@ def main() -> None:
     split = json.loads((ROOT / "bench" / "split.json").read_text())
     tasks = args.tasks or (split["dev"][:1] if args.set == "one" else split[args.set])
     env = load_env()
+    if args.tool_choice:
+        env["BENCH_MISTRAL_TOOL_CHOICE"] = args.tool_choice
     key_for = {"claude": "ANTHROPIC_API_KEY", "mistral": "MISTRAL_API_KEY", "codestral": "MISTRAL_API_KEY", "magistral": "MISTRAL_API_KEY", "gpt": "OPENAI_API_KEY", "o": "OPENAI_API_KEY"}
     needed = sorted({key for name in [args.model.split("/")[-1], *args.judges]
                      for prefix, key in key_for.items() if name.startswith(prefix)})

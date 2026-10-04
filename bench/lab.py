@@ -8,8 +8,11 @@
    adapter fails the whole task on the first 429. Applies equally to both conditions.
 2. Mistral model names that do not start with "mistral" (codestral-*, magistral-*) are
    routed to the Mistral adapter and judge.
+3. BENCH_MISTRAL_TOOL_CHOICE=any forces Mistral agents to act through tools (they end the
+   run with the finish tool). Off by default; when used, it applies to both conditions.
 """
 import functools
+import os
 import random
 import sys
 import time
@@ -51,7 +54,15 @@ def patch() -> None:
 
     def make_client():
         client = original_client()
-        client.chat.complete = with_retry(client.chat.complete)
+        complete = with_retry(client.chat.complete)
+        tool_choice = os.environ.get("BENCH_MISTRAL_TOOL_CHOICE")
+
+        def complete_with_choice(*args, **kwargs):
+            if tool_choice and kwargs.get("tools"):
+                kwargs.setdefault("tool_choice", tool_choice)
+            return complete(*args, **kwargs)
+
+        client.chat.complete = complete_with_choice
         return client
 
     mistral_adapter.make_mistral_client = make_client
