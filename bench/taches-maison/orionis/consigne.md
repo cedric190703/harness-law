@@ -1,0 +1,1 @@
+Vous êtes le conseil de l'acquéreur. Revoyez la data room d'Orionis Mobility (pièces jointes) et produisez un rapport de red flags en français, `rapport-red-flags.md`. Pour chaque red flag : la pièce, la page ou clause, un extrait, la gravité, et la recommandation pour le contrat de cession (garantie, condition suspensive, ajustement de prix…).

@@ -1,0 +1,865 @@
+% refs.bib -- Visa related work. Every entry was checked against its primary source
+% (arXiv API, ACL Anthology BibTeX export, Crossref/publisher, PMLR, NeurIPS/ICLR proceedings, or official page)
+% on 4 October 2026. ACL Anthology entries are the Anthology's own exports (abstracts removed).
+% 2026 preprints: venue given in `note` as stated on the arXiv record or authors' repository; proceedings not yet checked.
+
+% ======================================================================
+% 1. Legal hallucination
+% ======================================================================
+
+@article{dahl2024largelegalfictions,
+  title = {Large Legal Fictions: Profiling Legal Hallucinations in Large Language Models},
+  author = {Dahl, Matthew and Magesh, Varun and Suzgun, Mirac and Ho, Daniel E.},
+  journal = {Journal of Legal Analysis},
+  volume = {16},
+  number = {1},
+  pages = {64--93},
+  year = {2024},
+  doi = {10.1093/jla/laae003},
+  eprint = {2401.01301},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2401.01301}
+}
+
+@article{magesh2025hallucinationfree,
+  title = {Hallucination-Free? Assessing the Reliability of Leading AI Legal Research Tools},
+  author = {Magesh, Varun and Surani, Faiz and Dahl, Matthew and Suzgun, Mirac and Manning, Christopher D. and Ho, Daniel E.},
+  journal = {Journal of Empirical Legal Studies},
+  volume = {22},
+  number = {2},
+  pages = {216--242},
+  year = {2025},
+  doi = {10.1111/jels.12413},
+  eprint = {2405.20362},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2405.20362}
+}
+
+@misc{mata2023avianca,
+  title = {{Mata v. Avianca, Inc.}, 678 {F. Supp. 3d} 443 ({S.D.N.Y.} 2023)},
+  author = {{United States District Court for the Southern District of New York}},
+  year = {2023},
+  note = {No. 22-cv-1461 (PKC), opinion and order on sanctions signed 22 June 2023 (Castel, J.)}
+}
+
+@misc{charlotin2026database,
+  title = {{AI} Hallucination Cases Database},
+  author = {Charlotin, Damien},
+  year = {2026},
+  howpublished = {\url{https://www.damiencharlotin.com/hallucinations/}},
+  note = {Accessed 4 October 2026; 2,145 decisions listed, 14 of them in France}
+}
+
+@misc{liu2026whochecks,
+  title = {Who Checks the Citations? Benchmarking Legal Hallucination Detection},
+  author = {Liu, Patty and Stammbach, Dominik and Henderson, Peter},
+  year = {2026},
+  note = {arXiv:2606.21155 (v2). Introduces the LePhantomCite benchmark},
+  eprint = {2606.21155},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2606.21155}
+}
+
+@misc{zhou2026lexagenthallu,
+  title = {LexAgentHallu: A Hierarchical Benchmark for Profiling Hallucinations in Legal Agents},
+  author = {Zhou, Yujin and Zheng, Mingxuan and Cao, Chuxue and {Huang Yidan} and Chen, Jiale and Guo, Yike and Han, Sirui},
+  year = {2026},
+  note = {arXiv:2609.09754. Accepted to EMNLP 2026 (main conference) according to the arXiv record},
+  eprint = {2609.09754},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2609.09754}
+}
+
+@misc{taranukhin2026warrant,
+  title = {Legal LLM Hallucination Should Be Evaluated as Failure of Legal Warrant},
+  author = {Taranukhin, Maksym and Shwartz, Vered},
+  year = {2026},
+  note = {arXiv:2609.17546. Position paper, accepted at the AI for Law Workshop (AI4Law) at ICML 2026},
+  eprint = {2609.17546},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2609.17546}
+}
+
+% ======================================================================
+% 2. Verification, attribution and grounding
+% ======================================================================
+
+@article{rashkin2023ais,
+    title = "Measuring Attribution in Natural Language Generation Models",
+    author = "Rashkin, Hannah  and
+      Nikolaev, Vitaly  and
+      Lamm, Matthew  and
+      Aroyo, Lora  and
+      Collins, Michael  and
+      Das, Dipanjan  and
+      Petrov, Slav  and
+      Tomar, Gaurav Singh  and
+      Turc, Iulia  and
+      Reitter, David",
+    journal = "Computational Linguistics",
+    volume = "49",
+    number = "4",
+    month = dec,
+    year = "2023",
+    address = "Cambridge, MA",
+    publisher = "MIT Press",
+    url = "https://aclanthology.org/2023.cl-4.2/",
+    doi = "10.1162/coli_a_00486",
+    pages = "777--840"
+}
+
+@misc{bohnet2022attributedqa,
+  title = {Attributed Question Answering: Evaluation and Modeling for Attributed Large Language Models},
+  author = {Bohnet, Bernd and Tran, Vinh Q. and Verga, Pat and Aharoni, Roee and Andor, Daniel and Baldini Soares, Livio and Ciaramita, Massimiliano and Eisenstein, Jacob and Ganchev, Kuzman and Herzig, Jonathan and Hui, Kai and Kwiatkowski, Tom and Ma, Ji and Ni, Jianmo and Sestorain Saralegui, Lierni and Schuster, Tal and Cohen, William W. and Collins, Michael and Das, Dipanjan and Metzler, Donald and Petrov, Slav and Webster, Kellie},
+  year = {2022},
+  note = {arXiv:2212.08037},
+  eprint = {2212.08037},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2212.08037}
+}
+
+@inproceedings{gao2023alce,
+    title = "Enabling Large Language Models to Generate Text with Citations",
+    author = "Gao, Tianyu  and
+      Yen, Howard  and
+      Yu, Jiatong  and
+      Chen, Danqi",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.398/",
+    doi = "10.18653/v1/2023.emnlp-main.398",
+    pages = "6465--6488"
+}
+
+@inproceedings{liu2023verifiability,
+    title = "Evaluating Verifiability in Generative Search Engines",
+    author = "Liu, Nelson  and
+      Zhang, Tianyi  and
+      Liang, Percy",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Findings of the Association for Computational Linguistics: EMNLP 2023",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.findings-emnlp.467/",
+    doi = "10.18653/v1/2023.findings-emnlp.467",
+    pages = "7001--7025"
+}
+
+@inproceedings{min2023factscore,
+    title = "{FA}ct{S}core: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation",
+    author = "Min, Sewon  and
+      Krishna, Kalpesh  and
+      Lyu, Xinxi  and
+      Lewis, Mike  and
+      Yih, Wen-tau  and
+      Koh, Pang  and
+      Iyyer, Mohit  and
+      Zettlemoyer, Luke  and
+      Hajishirzi, Hannaneh",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.741/",
+    doi = "10.18653/v1/2023.emnlp-main.741",
+    pages = "12076--12100"
+}
+
+@inproceedings{wei2024safe,
+  title = {Long-form factuality in large language models},
+  author = {Wei, Jerry and Yang, Chengrun and Song, Xinying and Lu, Yifeng and Hu, Nathan and Huang, Jie and Tran, Dustin and Peng, Daiyi and Liu, Ruibo and Huang, Da and Du, Cosmo and Le, Quoc V.},
+  booktitle = {Advances in Neural Information Processing Systems 37 (NeurIPS 2024)},
+  year = {2024},
+  eprint = {2403.18802},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2403.18802}
+}
+
+@inproceedings{gao2023rarr,
+    title = "{RARR}: Researching and Revising What Language Models Say, Using Language Models",
+    author = "Gao, Luyu  and
+      Dai, Zhuyun  and
+      Pasupat, Panupong  and
+      Chen, Anthony  and
+      Chaganty, Arun Tejasvi  and
+      Fan, Yicheng  and
+      Zhao, Vincent  and
+      Lao, Ni  and
+      Lee, Hongrae  and
+      Juan, Da-Cheng  and
+      Guu, Kelvin",
+    editor = "Rogers, Anna  and
+      Boyd-Graber, Jordan  and
+      Okazaki, Naoaki",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-long.910/",
+    doi = "10.18653/v1/2023.acl-long.910",
+    pages = "16477--16508"
+}
+
+@inproceedings{weng2023selfverification,
+    title = "Large Language Models are Better Reasoners with Self-Verification",
+    author = "Weng, Yixuan  and
+      Zhu, Minjun  and
+      Xia, Fei  and
+      Li, Bin  and
+      He, Shizhu  and
+      Liu, Shengping  and
+      Sun, Bin  and
+      Liu, Kang  and
+      Zhao, Jun",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Findings of the Association for Computational Linguistics: EMNLP 2023",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.findings-emnlp.167/",
+    doi = "10.18653/v1/2023.findings-emnlp.167",
+    pages = "2550--2575"
+}
+
+@inproceedings{dhuliawala2024cove,
+    title = "Chain-of-Verification Reduces Hallucination in Large Language Models",
+    author = "Dhuliawala, Shehzaad  and
+      Komeili, Mojtaba  and
+      Xu, Jing  and
+      Raileanu, Roberta  and
+      Li, Xian  and
+      Celikyilmaz, Asli  and
+      Weston, Jason",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL 2024",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.findings-acl.212/",
+    doi = "10.18653/v1/2024.findings-acl.212",
+    pages = "3563--3578"
+}
+
+@misc{menick2022gophercite,
+  title = {Teaching language models to support answers with verified quotes},
+  author = {Menick, Jacob and Trebacz, Maja and Mikulik, Vladimir and Aslanides, John and Song, Francis and Chadwick, Martin and Glaese, Mia and Young, Susannah and Campbell-Gillingham, Lucy and Irving, Geoffrey and McAleese, Nat},
+  year = {2022},
+  note = {arXiv:2203.11147},
+  eprint = {2203.11147},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2203.11147}
+}
+
+@inproceedings{zhang2025citalaw,
+    title = "{C}ita{L}aw: Enhancing {LLM} with Citations in Legal Domain",
+    author = "Zhang, Kepu  and
+      Yu, Weijie  and
+      Dai, Sunhao  and
+      Xu, Jun",
+    editor = "Che, Wanxiang  and
+      Nabende, Joyce  and
+      Shutova, Ekaterina  and
+      Pilehvar, Mohammad Taher",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL 2025",
+    month = jul,
+    year = "2025",
+    address = "Vienna, Austria",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.findings-acl.583/",
+    doi = "10.18653/v1/2025.findings-acl.583",
+    pages = "11183--11196",
+    ISBN = "979-8-89176-256-5"
+}
+
+@misc{verma2026onpoint,
+  title = {Is this Citation on Point?},
+  author = {Verma, Apurv},
+  year = {2026},
+  note = {arXiv:2608.12571. Accepted to the 1st Workshop on AI for Law at ICML 2026},
+  eprint = {2608.12571},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2608.12571}
+}
+
+@misc{tr2026keycite,
+  title = {{KeyCite} Status Flags},
+  author = {{Thomson Reuters}},
+  year = {2026},
+  howpublished = {\url{https://www.thomsonreuters.com/en-us/help/drafting-assistant/flags-and-links/kc-status-flags}},
+  note = {Product documentation, accessed 4 October 2026}
+}
+
+@misc{tr2026quickcheck,
+  title = {Quick Check -- {Westlaw Edge}},
+  author = {{Thomson Reuters}},
+  year = {2026},
+  howpublished = {\url{https://legal.thomsonreuters.com/en/products/westlaw-edge/quick-check}},
+  note = {Product page, accessed 4 October 2026}
+}
+
+@misc{ambrogi2025clearbrief,
+  title = {Clearbrief Launches Cite Check Report to Give Law Firm Partners an Audit Trail Against {AI} Hallucinations},
+  author = {Ambrogi, Bob},
+  year = {2025},
+  howpublished = {\url{https://www.lawnext.com/2025/12/clearbrief-launches-cite-check-report-to-give-law-firm-partners-an-audit-trail-against-ai-hallucinations.html}},
+  note = {LawSites, 16 December 2025}
+}
+
+% ======================================================================
+% 3. LLM-as-a-judge
+% ======================================================================
+
+@inproceedings{zheng2023judging,
+  title = {Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena},
+  author = {Zheng, Lianmin and Chiang, Wei-Lin and Sheng, Ying and Zhuang, Siyuan and Wu, Zhanghao and Zhuang, Yonghao and Lin, Zi and Li, Zhuohan and Li, Dacheng and Xing, Eric P. and Zhang, Hao and Gonzalez, Joseph E. and Stoica, Ion},
+  booktitle = {Advances in Neural Information Processing Systems 36 (NeurIPS 2023), Datasets and Benchmarks Track},
+  year = {2023},
+  eprint = {2306.05685},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2306.05685}
+}
+
+@inproceedings{wang2024fair,
+    title = "Large Language Models are not Fair Evaluators",
+    author = "Wang, Peiyi  and
+      Li, Lei  and
+      Chen, Liang  and
+      Cai, Zefan  and
+      Zhu, Dawei  and
+      Lin, Binghuai  and
+      Cao, Yunbo  and
+      Kong, Lingpeng  and
+      Liu, Qi  and
+      Liu, Tianyu  and
+      Sui, Zhifang",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.511/",
+    doi = "10.18653/v1/2024.acl-long.511",
+    pages = "9440--9450"
+}
+
+@inproceedings{panickssery2024self,
+  title = {LLM Evaluators Recognize and Favor Their Own Generations},
+  author = {Panickssery, Arjun and Bowman, Samuel R. and Feng, Shi},
+  booktitle = {Advances in Neural Information Processing Systems 37 (NeurIPS 2024)},
+  year = {2024},
+  eprint = {2404.13076},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2404.13076}
+}
+
+@inproceedings{thakur2025judging,
+    title = "Judging the Judges: Evaluating Alignment and Vulnerabilities in {LLM}s-as-Judges",
+    author = "Thakur, Aman Singh  and
+      Choudhary, Kartik  and
+      Ramayapally, Venkat Srinik  and
+      Vaidyanathan, Sankaran  and
+      Hupkes, Dieuwke",
+    editor = "Arviv, Ofir  and
+      Clinciu, Miruna  and
+      Dhole, Kaustubh  and
+      Dror, Rotem  and
+      Gehrmann, Sebastian  and
+      Habba, Eliya  and
+      Itzhak, Itay  and
+      Mille, Simon  and
+      Perlitz, Yotam  and
+      Santus, Enrico  and
+      Sedoc, Jo{\~a}o  and
+      Shmueli Scheuer, Michal  and
+      Stanovsky, Gabriel  and
+      Tafjord, Oyvind",
+    booktitle = "Proceedings of the Fourth Workshop on Generation, Evaluation and Metrics (GEM{\texttwosuperior})",
+    month = jul,
+    year = "2025",
+    address = "Vienna, Austria and virtual meeting",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.gem-1.33/",
+    pages = "404--430",
+    ISBN = "979-8-89176-261-9"
+}
+
+@misc{verga2024poll,
+  title = {Replacing Judges with Juries: Evaluating LLM Generations with a Panel of Diverse Models},
+  author = {Verga, Pat and Hofstatter, Sebastian and Althammer, Sophia and Su, Yixuan and Piktus, Aleksandra and Arkhangorodsky, Arkady and Xu, Minjie and White, Naomi and Lewis, Patrick},
+  year = {2024},
+  note = {arXiv:2404.18796},
+  eprint = {2404.18796},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2404.18796}
+}
+
+@misc{irving2018debate,
+  title = {AI safety via debate},
+  author = {Irving, Geoffrey and Christiano, Paul and Amodei, Dario},
+  year = {2018},
+  note = {arXiv:1805.00899},
+  eprint = {1805.00899},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/1805.00899}
+}
+
+@inproceedings{du2024debate,
+  title = {Improving Factuality and Reasoning in Language Models through Multiagent Debate},
+  author = {Du, Yilun and Li, Shuang and Torralba, Antonio and Tenenbaum, Joshua B. and Mordatch, Igor},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning (ICML 2024)},
+  series = {Proceedings of Machine Learning Research},
+  volume = {235},
+  pages = {11733--11763},
+  year = {2024},
+  eprint = {2305.14325},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2305.14325}
+}
+
+@inproceedings{chan2024chateval,
+  title = {ChatEval: Towards Better LLM-based Evaluators through Multi-Agent Debate},
+  author = {Chan, Chi-Min and Chen, Weize and Su, Yusheng and Yu, Jianxuan and Xue, Wei and Zhang, Shanghang and Fu, Jie and Liu, Zhiyuan},
+  booktitle = {The Twelfth International Conference on Learning Representations (ICLR 2024)},
+  year = {2024},
+  eprint = {2308.07201},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2308.07201}
+}
+
+@inproceedings{khan2024debate,
+  title = {Debating with More Persuasive LLMs Leads to More Truthful Answers},
+  author = {Khan, Akbir and Hughes, John and Valentine, Dan and Ruis, Laura and Sachan, Kshitij and Radhakrishnan, Ansh and Grefenstette, Edward and Bowman, Samuel R. and Rocktäschel, Tim and Perez, Ethan},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning (ICML 2024)},
+  series = {Proceedings of Machine Learning Research},
+  volume = {235},
+  pages = {23662--23733},
+  year = {2024},
+  eprint = {2402.06782},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2402.06782}
+}
+
+@inproceedings{enguehard2025lemaj,
+    title = "{L}e{MAJ} (Legal {LLM}-as-a-Judge): Bridging Legal Reasoning and {LLM} Evaluation",
+    author = "Enguehard, Joseph  and
+      Van Ermengem, Morgane  and
+      Atkinson, Kate  and
+      Cha, Sujeong  and
+      Chowdhury, Arijit Ghosh  and
+      Ramaswamy, Prashanth Kallur  and
+      Roghair, Jeremy  and
+      Marlowe, Hannah R  and
+      Negreanu, Carina Suzana  and
+      Boxall, Kitty  and
+      Mincu, Diana",
+    editor = "Aletras, Nikolaos  and
+      Chalkidis, Ilias  and
+      Barrett, Leslie  and
+      Goanț{\u{a}}, C{\u{a}}t{\u{a}}lina  and
+      Preoțiuc-Pietro, Daniel  and
+      Spanakis, Gerasimos",
+    booktitle = "Proceedings of the Natural Legal Language Processing Workshop 2025",
+    month = nov,
+    year = "2025",
+    address = "Suzhou, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.nllp-1.23/",
+    doi = "10.18653/v1/2025.nllp-1.23",
+    pages = "318--337",
+    ISBN = "979-8-89176-338-8"
+}
+
+@misc{bagaria2026rubric,
+  title = {Judging LLM-as-a-Judge: Concerning Rubric Artifacts in LLM-based Automated Text Generation Evaluation},
+  author = {Bagaria, Anshul and Sundaram, Sowmya S and Krishnan, Gokul S and Ravindran, Balaraman},
+  year = {2026},
+  note = {arXiv:2609.02942. Accepted at EMNLP 2026 according to the arXiv record},
+  eprint = {2609.02942},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2609.02942}
+}
+
+@misc{vals2026hlab,
+  title = {Harvey's Legal Agent Benchmark Leaderboard and Methodology},
+  author = {{Vals AI}},
+  year = {2026},
+  howpublished = {\url{https://www.vals.ai/benchmarks/hlab}},
+  note = {Held-out test set; two LLM judges (GPT 5.5 and Claude Sonnet 4.6). Last updated 1 October 2026}
+}
+
+% ======================================================================
+% 4. Legal and agentic benchmarks
+% ======================================================================
+
+@inproceedings{guha2023legalbench,
+  title = {LegalBench: A Collaboratively Built Benchmark for Measuring Legal Reasoning in Large Language Models},
+  author = {Guha, Neel and Nyarko, Julian and Ho, Daniel E. and Ré, Christopher and Chilton, Adam and Narayana, Aditya and Chohlas-Wood, Alex and Peters, Austin and Waldon, Brandon and Rockmore, Daniel N. and Zambrano, Diego and Talisman, Dmitry and Hoque, Enam and Surani, Faiz and Fagan, Frank and Sarfaty, Galit and Dickinson, Gregory M. and Porat, Haggai and Hegland, Jason and Wu, Jessica and Nudell, Joe and Niklaus, Joel and Nay, John and Choi, Jonathan H. and Tobia, Kevin and Hagan, Margaret and Ma, Megan and Livermore, Michael and Rasumov-Rahe, Nikon and Holzenberger, Nils and Kolt, Noam and Henderson, Peter and Rehaag, Sean and Goel, Sharad and Gao, Shang and Williams, Spencer and Gandhi, Sunny and Zur, Tom and Iyer, Varun and Li, Zehua},
+  booktitle = {Advances in Neural Information Processing Systems 36 (NeurIPS 2023), Datasets and Benchmarks Track},
+  year = {2023},
+  eprint = {2308.11462},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2308.11462}
+}
+
+@misc{vals2026legalbench,
+  title = {{LegalBench} Leaderboard and Methodology},
+  author = {{Vals AI}},
+  year = {2026},
+  howpublished = {\url{https://www.vals.ai/benchmarks/legal_bench}},
+  note = {Last updated 1 October 2026}
+}
+
+@inproceedings{chalkidis2022lexglue,
+    title = "{L}ex{GLUE}: A Benchmark Dataset for Legal Language Understanding in {E}nglish",
+    author = "Chalkidis, Ilias  and
+      Jana, Abhik  and
+      Hartung, Dirk  and
+      Bommarito, Michael  and
+      Androutsopoulos, Ion  and
+      Katz, Daniel  and
+      Aletras, Nikolaos",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-long.297/",
+    doi = "10.18653/v1/2022.acl-long.297",
+    pages = "4310--4330"
+}
+
+@inproceedings{hendrycks2021cuad,
+  title = {CUAD: An Expert-Annotated NLP Dataset for Legal Contract Review},
+  author = {Hendrycks, Dan and Burns, Collin and Chen, Anya and Ball, Spencer},
+  booktitle = {Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks (NeurIPS 2021)},
+  year = {2021},
+  eprint = {2103.06268},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2103.06268}
+}
+
+@inproceedings{koreeda2021contractnli,
+    title = "{C}ontract{NLI}: A Dataset for Document-level Natural Language Inference for Contracts",
+    author = "Koreeda, Yuta  and
+      Manning, Christopher",
+    editor = "Moens, Marie-Francine  and
+      Huang, Xuanjing  and
+      Specia, Lucia  and
+      Yih, Scott Wen-tau",
+    booktitle = "Findings of the Association for Computational Linguistics: EMNLP 2021",
+    month = nov,
+    year = "2021",
+    address = "Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.findings-emnlp.164/",
+    doi = "10.18653/v1/2021.findings-emnlp.164",
+    pages = "1907--1919"
+}
+
+@inproceedings{wang2023maud,
+    title = "{MAUD}: An Expert-Annotated Legal {NLP} Dataset for Merger Agreement Understanding",
+    author = "Wang, Steven  and
+      Scardigli, Antoine  and
+      Tang, Leonard  and
+      Chen, Wei  and
+      Levkin, Dmitry  and
+      Chen, Anya  and
+      Ball, Spencer  and
+      Woodside, Thomas  and
+      Zhang, Oliver  and
+      Hendrycks, Dan",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.1019/",
+    doi = "10.18653/v1/2023.emnlp-main.1019",
+    pages = "16369--16382"
+}
+
+@misc{pipitone2024legalbenchrag,
+  title = {LegalBench-RAG: A Benchmark for Retrieval-Augmented Generation in the Legal Domain},
+  author = {Pipitone, Nicholas and Houir Alami, Ghita},
+  year = {2024},
+  note = {arXiv:2408.10343},
+  eprint = {2408.10343},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2408.10343}
+}
+
+@misc{grupen2026labintro,
+  title = {Harvey's Legal Agent Benchmark},
+  author = {Grupen, Niko and Pereyra, Gabe and Pereyra, Julio},
+  year = {2026},
+  howpublished = {\url{https://www.harvey.ai/blog/introducing-harveys-legal-agent-benchmark}},
+  note = {Harvey blog, 6 May 2026}
+}
+
+@misc{grupen2026labresults,
+  title = {Initial Results on Legal Agent Benchmark},
+  author = {Grupen, Niko and Pereyra, Gabe and Pereyra, Julio},
+  year = {2026},
+  howpublished = {\url{https://www.harvey.ai/blog/legal-agent-benchmark-initial-results}},
+  note = {Harvey blog, 26 May 2026}
+}
+
+@misc{harvey2026labrepo,
+  title = {Harvey {LAB}: The Legal Agent Benchmark},
+  author = {{Harvey AI}},
+  year = {2026},
+  version = {v1.0},
+  howpublished = {\url{https://github.com/harveyai/harvey-labs}},
+  note = {MIT license. Citation block as given in the repository README}
+}
+
+% ======================================================================
+% 5. French law, time and rank
+% ======================================================================
+
+@inproceedings{palmirani2006timemodel,
+  title = {Time Model for Managing the Dynamic of Normative System},
+  author = {Palmirani, Monica and Brighi, Raffaella},
+  booktitle = {Electronic Government (EGOV 2006)},
+  series = {Lecture Notes in Computer Science},
+  publisher = {Springer},
+  pages = {207--218},
+  year = {2006},
+  doi = {10.1007/11823100_19}
+}
+
+@misc{demartim2025diachronic,
+  title = {Modeling the Diachronic Evolution of Legal Norms: An LRMoo-Based, Component-Level, Event-Centric Approach to Legal Knowledge Graphs},
+  author = {de Martim, Hudson},
+  year = {2025},
+  note = {arXiv:2506.07853},
+  eprint = {2506.07853},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2506.07853}
+}
+
+@book{kelsen1967pure,
+  title = {Pure Theory of Law},
+  author = {Kelsen, Hans},
+  note = {Translated from the second (revised and enlarged) German edition by Max Knight},
+  publisher = {University of California Press},
+  address = {Berkeley},
+  year = {1967}
+}
+
+@misc{huang2026wronglaw,
+  title = {When Do LLMs Apply the Wrong Law? Diagnosing LLM Failures in Temporal Legal Reasoning},
+  author = {Huang, Yiqian and Zheng, Shuyuan and Liu, Qianying and Peng, Shaowen and Kong, Yuntao and Funakoshi, Kotaro and Xiao, Chuan and Okumura, Manabu and Cao, Yang},
+  year = {2026},
+  note = {arXiv:2608.14610},
+  eprint = {2608.14610},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2608.14610}
+}
+
+@misc{prior2026oldfriend,
+  title = {Asking For An Old Friend: Diagnosing and Mitigating Temporal Failure Modes in LLM-based Statutory Question Answering},
+  author = {Prior, Max and Schultz, Andreas and Grabmair, Matthias},
+  year = {2026},
+  note = {arXiv:2605.23497 (v2). Accepted as a full paper at ICAIL 2026 according to the arXiv record},
+  eprint = {2605.23497},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2605.23497}
+}
+
+@misc{li2026lexkairos,
+  title = {LexKairos: Benchmarking Legal Temporal Capabilities in LLMs},
+  author = {Li, Chenyang and Feng, Zejia and Huang, Yuqin and Ye, Yuxiao and Xie, Huiyuan},
+  year = {2026},
+  note = {arXiv:2608.09106},
+  eprint = {2608.09106},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2608.09106}
+}
+
+@misc{cymbler2026temporal,
+  title = {Temporal Misgrounding in Legal RAG: A Versioned-Corpus Benchmark for French Tax Law},
+  author = {Cymbler, Rose and Guez, Daniel and Fabre, Laurent},
+  year = {2026},
+  note = {arXiv:2608.09393. Accepted at the ICML 2026 Workshop on AI for Law (AI4Law), Seoul},
+  eprint = {2608.09393},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2608.09393}
+}
+
+@inproceedings{louis2022bsard,
+    title = "A Statutory Article Retrieval Dataset in {F}rench",
+    author = "Louis, Antoine  and
+      Spanakis, Gerasimos",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-long.468/",
+    doi = "10.18653/v1/2022.acl-long.468",
+    pages = "6789--6803"
+}
+
+@misc{louis2023lleqa,
+  title = {Interpretable Long-Form Legal Question Answering with Retrieval-Augmented Large Language Models},
+  author = {Louis, Antoine and van Dijck, Gijs and Spanakis, Gerasimos},
+  year = {2023},
+  note = {arXiv:2309.17050},
+  eprint = {2309.17050},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2309.17050}
+}
+
+@inproceedings{douka2021juribert,
+    title = "{J}uri{BERT}: A Masked-Language Model Adaptation for {F}rench Legal Text",
+    author = "Douka, Stella  and
+      Abdine, Hadi  and
+      Vazirgiannis, Michalis  and
+      El Hamdani, Rajaa  and
+      Restrepo Amariles, David",
+    editor = "Aletras, Nikolaos  and
+      Androutsopoulos, Ion  and
+      Barrett, Leslie  and
+      Goanta, Catalina  and
+      Preotiuc-Pietro, Daniel",
+    booktitle = "Proceedings of the Natural Legal Language Processing Workshop 2021",
+    month = nov,
+    year = "2021",
+    address = "Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.nllp-1.9/",
+    doi = "10.18653/v1/2021.nllp-1.9",
+    pages = "95--101"
+}
+
+@inproceedings{charmet2022complex,
+    title = "Complex Labelling and Similarity Prediction in Legal Texts: Automatic Analysis of {F}rance{'}s Court of Cassation Rulings",
+    author = "Charmet, Thibault  and
+      Cherichi, In{\`e}s  and
+      Allain, Matthieu  and
+      Czerwinska, Urszula  and
+      Fouret, Amaury  and
+      Sagot, Beno{\^i}t  and
+      Bawden, Rachel",
+    editor = "Calzolari, Nicoletta  and
+      B{\'e}chet, Fr{\'e}d{\'e}ric  and
+      Blache, Philippe  and
+      Choukri, Khalid  and
+      Cieri, Christopher  and
+      Declerck, Thierry  and
+      Goggi, Sara  and
+      Isahara, Hitoshi  and
+      Maegaard, Bente  and
+      Mariani, Joseph  and
+      Mazo, H{\'e}l{\`e}ne  and
+      Odijk, Jan  and
+      Piperidis, Stelios",
+    booktitle = "Proceedings of the Thirteenth Language Resources and Evaluation Conference",
+    month = jun,
+    year = "2022",
+    address = "Marseille, France",
+    publisher = "European Language Resources Association",
+    url = "https://aclanthology.org/2022.lrec-1.509/",
+    pages = "4754--4766"
+}
+
+@misc{floro2026implicit,
+  title = {Where Experts Disagree, Models Fail: Detecting Implicit Legal Citations in French Court Decisions},
+  author = {Floro, Avrile and Dhorasoo, Tamara and Pellez, Soline and Holzenberger, Nils},
+  year = {2026},
+  note = {arXiv:2603.22973. To be published at the Natural Legal Language Processing Workshop (NLLP 2026), according to the authors' repository},
+  eprint = {2603.22973},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2603.22973}
+}
+
+@misc{dila2026legi,
+  title = {{LEGI}: Codes, lois et r{\`e}glements consolid{\'e}s},
+  author = {{Direction de l'information l{\'e}gale et administrative (DILA)}},
+  year = {2026},
+  howpublished = {\url{https://www.data.gouv.fr/datasets/legi-codes-lois-et-reglements-consolides}},
+  note = {Licence Ouverte. Modified and repealed versions of articles are kept alongside versions in force. Accessed 4 October 2026}
+}
+
+@misc{courdecassation2026judilibre,
+  title = {{API} Judilibre},
+  author = {{Cour de cassation}},
+  year = {2026},
+  howpublished = {\url{https://www.data.gouv.fr/datasets/api-judilibre}},
+  note = {Licence Ouverte 2.0; pseudonymised decisions, served through the PISTE portal. Accessed 4 October 2026}
+}
+
+% ======================================================================
+% 6. AI-assisted due diligence
+% ======================================================================
+
+@inproceedings{roegiest2018duediligence,
+  title = {A Dataset and an Examination of Identifying Passages for Due Diligence},
+  author = {Roegiest, Adam and Hudek, Alexander K. and McNulty, Anne},
+  booktitle = {Proceedings of the 41st International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2018)},
+  pages = {465--474},
+  publisher = {ACM},
+  year = {2018},
+  doi = {10.1145/3209978.3210015}
+}
+
+@article{dwivedi2025icldd,
+  title = {Effectiveness of In-Context Learning for Due Diligence: A Reproducibility Study of Identifying Passages for Due Diligence},
+  author = {Dwivedi, Madhukar and Kamps, Jaap},
+  journal = {Information Retrieval Research},
+  volume = {1},
+  number = {2},
+  pages = {221--245},
+  year = {2025},
+  doi = {10.54195/irrj.22626}
+}
+
+@misc{pereyra2026labdiligence,
+  title = {Extending Legal Agent Bench to {M\&A} Due Diligence},
+  author = {Pereyra, Julio},
+  year = {2026},
+  howpublished = {\url{https://www.harvey.ai/blog/legal-agent-bench-m-and-a-due-diligence}},
+  note = {Harvey blog, 17 July 2026}
+}
+
+@misc{grupen2026rlmdiligence,
+  title = {Post-Training {RLM} Agents for End-to-End {M\&A} Diligence},
+  author = {Grupen, Niko and Pereyra, Julio and Pereyra, Gabe and O'Neill, Charlie and Jayasekara, Mudith and Ellis-Bloor, Aaron and Liu, Jonathon and Blau, Matthew},
+  year = {2026},
+  howpublished = {\url{https://www.harvey.ai/blog/post-training-rlm-agents-for-m-and-a-diligence}},
+  note = {Harvey blog, 8 September 2026}
+}

@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Cache disque et brouillons locaux, jamais versionnés.
+    ".cache/**",
   ]),
 ]);
 

@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revue de tâche</title>
+<style>
+:root {
+  --fond: #f6f6f3; --surface: #fff; --surface-2: #f0f0ec; --trait: #dedcd5; --texte: #1c1b19; --doux: #6a6862;
+  --vert: #1a7f37; --rouge: #c9252d; --orange: #b35c00; --gris: #737a82; --accent: #2f5bd3;
+  --lire: #2f6fdb; --chercher: #8250df; --commande: #6e7781; --ecrire: #1a7f37; --finir: #1c1b19;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #0e1013; --surface: #161a1f; --surface-2: #1c2128; --trait: #2a3038; --texte: #e6e8eb; --doux: #8d96a0;
+    --vert: #3fb950; --rouge: #f8645c; --orange: #d9a03b; --gris: #8d96a0; --accent: #6d9bff;
+    --lire: #6d9bff; --chercher: #b392f0; --commande: #8d96a0; --ecrire: #3fb950; --finir: #e6e8eb; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fond: #0e1013; --surface: #161a1f; --surface-2: #1c2128; --trait: #2a3038; --texte: #e6e8eb; --doux: #8d96a0;
+  --vert: #3fb950; --rouge: #f8645c; --orange: #d9a03b; --gris: #8d96a0; --accent: #6d9bff;
+  --lire: #6d9bff; --chercher: #b392f0; --commande: #8d96a0; --ecrire: #3fb950; --finir: #e6e8eb; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fond); color: var(--texte); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1280px; margin: 0 auto; padding: 24px 24px 60px; }
+h1 { font-size: 20px; margin: 0 0 2px; }
+h2 { font-size: 15px; margin: 30px 0 10px; }
+.doux { color: var(--doux); }
+.barre { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.bouton { background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font-weight: 600; }
+.alerte { border: 1px solid color-mix(in srgb, var(--orange) 45%, transparent); background: color-mix(in srgb, var(--orange) 10%, transparent); border-radius: 8px; padding: 8px 12px; margin: 12px 0; }
+.deux { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.carte { background: var(--surface); border: 1px solid var(--trait); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.carte h3 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--doux); }
+.chiffres { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.chiffre b { display: block; font-size: 18px; font-variant-numeric: tabular-nums; }
+.chiffre span { color: var(--doux); font-size: 12px; }
+.ecart { font-size: 12px; font-weight: 600; margin-left: 4px; }
+.ecart.plus { color: var(--vert); } .ecart.moins { color: var(--rouge); }
+details > summary { cursor: pointer; color: var(--doux); }
+.consigne { white-space: pre-wrap; background: var(--surface); border: 1px solid var(--trait); border-radius: 10px; padding: 12px 14px; margin-top: 8px; max-height: 320px; overflow: auto; }
+.onglets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.onglet { border: 1px solid var(--trait); background: var(--surface); border-radius: 999px; padding: 4px 12px; }
+.onglet[aria-pressed="true"] { border-color: var(--texte); font-weight: 600; }
+.critere { background: var(--surface); border: 1px solid var(--trait); border-radius: 10px; margin-bottom: 6px; }
+.critere > button { display: grid; grid-template-columns: 70px 1fr auto auto; gap: 10px; align-items: center; width: 100%; background: none; border: 0; padding: 9px 12px; text-align: left; }
+.critere .id { color: var(--doux); font-size: 12px; font-variant-numeric: tabular-nums; }
+.pastille { font-size: 11px; font-weight: 600; border-radius: 999px; padding: 1px 8px; white-space: nowrap; color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+.p-pass { --c: var(--vert); } .p-fail { --c: var(--rouge); } .p-vide { --c: var(--gris); }
+.detail { padding: 0 12px 12px; display: none; }
+.critere.ouvert .detail { display: block; }
+.raisons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.raisons div { background: var(--surface-2); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+textarea { width: 100%; min-height: 54px; margin-top: 8px; font: inherit; color: inherit; background: var(--surface); border: 1px solid var(--trait); border-radius: 8px; padding: 6px 8px; }
+.schema { overflow-x: auto; background: var(--surface); border: 1px solid var(--trait); border-radius: 10px; padding: 10px; }
+.schema svg text { font: 11px system-ui, sans-serif; fill: var(--texte); }
+.schema svg text.jamais { fill: var(--rouge); font-weight: 600; }
+.legende { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--doux); margin: 6px 0 12px; }
+.legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.etapes { font-size: 12.5px; max-height: 380px; overflow: auto; background: var(--surface); border: 1px solid var(--trait); border-radius: 10px; margin-top: 8px; }
+.etapes div { display: grid; grid-template-columns: 44px 60px 1fr 70px; gap: 8px; padding: 4px 10px; border-bottom: 1px solid var(--trait); }
+.etapes div.parole { grid-template-columns: 44px 1fr; color: var(--doux); font-style: italic; }
+.etapes code { white-space: pre-wrap; word-break: break-word; }
+.livrable { white-space: pre-wrap; font-size: 12.5px; max-height: 560px; overflow: auto; background: var(--surface-2); border-radius: 8px; padding: 10px 12px; }
+.livrable mark { background: color-mix(in srgb, var(--orange) 35%, transparent); color: inherit; }
+input[type=search] { font: inherit; color: inherit; background: var(--surface); border: 1px solid var(--trait); border-radius: 8px; padding: 6px 10px; width: 280px; max-width: 100%; }
+.vide { color: var(--doux); font-style: italic; }
+@media (max-width: 800px) { .deux, .raisons { grid-template-columns: 1fr; } main { padding: 16px; } .critere > button { grid-template-columns: 1fr auto auto; } .critere .id { display: none; } }
+</style>
+</head>
+<body>
+<main id="page"></main>
+<script id="donnees" type="application/json">__DONNEES__</script>
+<script>
+(function () {
+  var R = JSON.parse(document.getElementById("donnees").textContent);
+  var page = document.getElementById("page");
+  var CLE = "revue:" + R.tache + ":";
+  var COTES = [["base", "Sans skill"], ["skill", "Avec skill"]];
+  var COULEUR = { read: "var(--lire)", grep: "var(--chercher)", glob: "var(--chercher)", bash: "var(--commande)", write: "var(--ecrire)", edit: "var(--ecrire)", finish: "var(--finir)" };
+
+  function el(tag, attrs) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "texte") n.textContent = attrs[k];
+      else if (k === "classe") n.className = attrs[k];
+      else if (k.slice(0, 2) === "on") n.addEventListener(k.slice(2), attrs[k]);
+      else n.setAttribute(k, attrs[k]);
+    }
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c === null || c === undefined || c === false) continue;
+      n.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+    return n;
+  }
+  function svg(tag, attrs) { var n = document.createElementNS("http://www.w3.org/2000/svg", tag); for (var k in attrs) n.setAttribute(k, attrs[k]); return n; }
+  function lire(k) { try { return localStorage.getItem(CLE + k) || ""; } catch (e) { return ""; } }
+  function ecrire(k, v) { try { localStorage.setItem(CLE + k, v); } catch (e) {} }
+  function nombre(x) { return x === null || x === undefined ? "—" : Number(x).toLocaleString("fr-FR"); }
+
+  // En-tête
+  var copier = el("button", { classe: "bouton", type: "button", texte: "Copier le résumé pour Claude" });
+  page.appendChild(el("div", { classe: "barre" },
+    el("div", null, el("h1", { texte: "Revue · " + R.tache }), el("div", { classe: "doux", texte: "Sans skill contre avec skill · générée le " + new Date(R.generee).toLocaleString("fr-FR") })),
+    copier));
+  if (R.test) page.appendChild(el("p", { classe: "alerte", texte: "Tâche de test : la grille n'est pas affichée. La lire fausserait la mesure. Seuls les chiffres globaux, le parcours et les livrables sont montrés." }));
+  var juges = COTES.map(function (c) { return R[c[0]] && R[c[0]].juge; }).filter(Boolean);
+  if (juges.some(function (j) { return !/^claude|^gpt/.test(j); })) page.appendChild(el("p", { classe: "alerte", texte: "Juge non officiel (" + juges.join(", ") + ") : les chiffres ne sont pas comparables au classement de Harvey. Vérifie les livrables à la main." }));
+
+  // Chiffres
+  var cartes = el("div", { classe: "deux" });
+  COTES.forEach(function (c) {
+    var r = R[c[0]], autre = R[c[0] === "base" ? "skill" : "base"];
+    var carte = el("div", { classe: "carte" }, el("h3", { texte: c[1] + (r ? " · " + r.modele : "") }));
+    if (!r) { carte.appendChild(el("p", { classe: "vide", texte: "Aucun lancement." })); cartes.appendChild(carte); return; }
+    var ecart = "";
+    if (c[0] === "skill" && autre && r.note && autre.note) {
+      var d = r.reussis - autre.reussis;
+      ecart = el("span", { classe: "ecart " + (d >= 0 ? "plus" : "moins"), texte: (d >= 0 ? "+" : "") + d });
+    }
+    var lus = (r.lus || []).length;
+    carte.appendChild(el("div", { classe: "chiffres" },
+      el("div", { classe: "chiffre" }, el("b", null, r.note ? r.reussis + " / " + r.total : "non noté", ecart || null), el("span", { texte: "critères réussis" })),
+      el("div", { classe: "chiffre" }, el("b", { texte: r.note ? (r.tache_reussie ? "oui" : "non") : "—" }), el("span", { texte: "tâche réussie" })),
+      el("div", { classe: "chiffre" }, el("b", { texte: lus + " / " + R.documents.length }), el("span", { texte: "pièces lues" })),
+      el("div", { classe: "chiffre" }, el("b", { texte: nombre(r.tours) }), el("span", { texte: "tours" })),
+      el("div", { classe: "chiffre" }, el("b", { texte: nombre(r.jetons_entree) }), el("span", { texte: "jetons lus" })),
+      el("div", { classe: "chiffre" }, el("b", { texte: r.secondes ? Math.round(r.secondes) + " s" : "—" }), el("span", { texte: "durée de l'agent" }))
+    ));
+    (r.copies || []).forEach(function (a) { carte.appendChild(el("p", { classe: "alerte", texte: "Livrable suspect : " + a + ". La note ne reflète aucun vrai travail." })); });
+    carte.appendChild(el("p", { classe: "doux" }, "Fin : " + (r.fin || "inconnue") + (r.resume_fin ? " — « " + r.resume_fin + " »" : "") + " · juge : " + (r.juge || "aucun") + " · " + r.horodatage));
+    cartes.appendChild(carte);
+  });
+  page.appendChild(cartes);
+  if (R.consigne) page.appendChild(el("details", null, el("summary", { texte: "La consigne de la tâche" }), el("div", { classe: "consigne", texte: R.consigne })));
+
+  // Critères
+  page.appendChild(el("h2", { texte: "Ce qui a changé, critère par critère" }));
+  var zoneCrit = el("div");
+  page.appendChild(zoneCrit);
+  if (R.test) zoneCrit.appendChild(el("p", { classe: "vide", texte: "Grille masquée (tâche de test)." }));
+  else if (!R.criteres.length) zoneCrit.appendChild(el("p", { classe: "vide", texte: "Aucun critère noté pour l'instant." }));
+  else {
+    var GROUPES = [["perdu", "Perdus avec le skill"], ["gagne", "Gagnés avec le skill"], ["rate", "Ratés"], ["reussi", "Réussis"]];
+    var choix = R.criteres.some(function (l) { return l.groupe === "perdu"; }) ? "perdu" : "rate";
+    var onglets = el("div", { classe: "onglets" }), liste = el("div");
+    GROUPES.forEach(function (g) {
+      var n = R.criteres.filter(function (l) { return l.groupe === g[0]; }).length;
+      onglets.appendChild(el("button", { classe: "onglet", type: "button", "data-g": g[0], texte: g[1] + " (" + n + ")", onclick: function () { choix = g[0]; dessinerCrit(); } }));
+    });
+    zoneCrit.appendChild(onglets); zoneCrit.appendChild(liste);
+    var pastille = function (v) { return el("span", { classe: "pastille " + (v === "pass" ? "p-pass" : v === "fail" ? "p-fail" : "p-vide"), texte: v === "pass" ? "réussi" : v === "fail" ? "raté" : "—" }); };
+    var dessinerCrit = function () {
+      onglets.querySelectorAll(".onglet").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-g") === choix)); });
+      while (liste.firstChild) liste.removeChild(liste.firstChild);
+      var lignes = R.criteres.filter(function (l) { return l.groupe === choix; });
+      if (!lignes.length) liste.appendChild(el("p", { classe: "vide", texte: "Rien ici." }));
+      lignes.forEach(function (l) {
+        var bloc = el("div", { classe: "critere" });
+        var note = el("textarea", { placeholder: "Pourquoi c'est raté ? Qu'est-ce que le skill devrait faire ?" });
+        note.value = lire(l.id);
+        note.addEventListener("input", function () { ecrire(l.id, note.value); });
+        bloc.appendChild(el("button", { type: "button", onclick: function () { bloc.classList.toggle("ouvert"); } },
+          el("span", { classe: "id", texte: l.id }), el("span", { texte: l.titre }), pastille(l.base), pastille(l.skill)));
+        bloc.appendChild(el("div", { classe: "detail" },
+          el("div", { classe: "raisons" },
+            el("div", null, el("b", { texte: "Juge, sans skill : " }), l.raison_base || "—"),
+            el("div", null, el("b", { texte: "Juge, avec skill : " }), l.raison_skill || "—")),
+          note));
+        liste.appendChild(bloc);
+      });
+    };
+    dessinerCrit();
+  }
+
+  // Parcours de l'agent
+  page.appendChild(el("h2", { texte: "Le parcours de l'agent : ce qu'il a lu, cherché et écrit" }));
+  page.appendChild(el("div", { classe: "legende" },
+    el("span", null, el("i", { style: "background:var(--lire)" }), "lecture"),
+    el("span", null, el("i", { style: "background:var(--chercher)" }), "recherche"),
+    el("span", null, el("i", { style: "background:var(--commande)" }), "commande"),
+    el("span", null, el("i", { style: "background:var(--ecrire)" }), "écriture"),
+    el("span", null, el("i", { style: "background:var(--finir)" }), "fin"),
+    el("span", { texte: "Une pièce en rouge n'a jamais été ouverte. Survole un point pour voir l'action." })));
+  COTES.forEach(function (c) {
+    var r = R[c[0]];
+    var bloc = el("div", { classe: "carte", style: "margin-bottom:12px" }, el("h3", { texte: c[1] + (r ? " · " + r.etapes.length + " actions" : "") }));
+    if (!r) { bloc.appendChild(el("p", { classe: "vide", texte: "Aucun lancement." })); page.appendChild(bloc); return; }
+    var pistes = R.documents.concat(["skill", "livrable", "autre"]);
+    var gauche = 230, pas = 16, haut = 22;
+    var largeur = gauche + Math.max(r.etapes.length, 26) * pas + 30, hauteur = pistes.length * haut + 26;
+    var s = svg("svg", { width: largeur, height: hauteur, viewBox: "0 0 " + largeur + " " + hauteur });
+    var lus = r.lus || [];
+    pistes.forEach(function (p, i) {
+      var y = 16 + i * haut;
+      s.appendChild(svg("line", { x1: gauche - 6, x2: largeur - 10, y1: y, y2: y, stroke: "var(--trait)" }));
+      var jamais = R.documents.indexOf(p) >= 0 && lus.indexOf(p) < 0;
+      var t = svg("text", { x: 0, y: y + 4, "class": jamais ? "jamais" : "" });
+      t.textContent = (p.length > 34 ? p.slice(0, 33) + "…" : p) + (jamais ? "  (jamais lue)" : "");
+      s.appendChild(t);
+    });
+    var tourPrecedent = null;
+    r.etapes.forEach(function (e, k) {
+      var x = gauche + k * pas + 8;
+      if (e.tour !== tourPrecedent) { s.appendChild(svg("line", { x1: x - pas / 2, x2: x - pas / 2, y1: 4, y2: hauteur - 18, stroke: "var(--trait)", "stroke-dasharray": "2 3" })); tourPrecedent = e.tour; }
+      e.pistes.forEach(function (p) {
+        var i = pistes.indexOf(p); if (i < 0) i = pistes.length - 1;
+        var point = svg("circle", { cx: x, cy: 16 + i * haut, r: 5, fill: COULEUR[e.outil] || "var(--commande)" });
+        var titre = svg("title", {}); titre.textContent = "Tour " + e.tour + " · " + e.outil + " · " + e.libelle + (e.taille ? " → " + nombre(e.taille) + " caractères" : "");
+        point.appendChild(titre); s.appendChild(point);
+      });
+    });
+    var axe = svg("text", { x: gauche, y: hauteur - 4 }); axe.textContent = "actions dans l'ordre →  (pointillés = nouveau tour)"; s.appendChild(axe);
+    bloc.appendChild(el("div", { classe: "schema" }, s));
+    var liste = el("div", { classe: "etapes" });
+    var textes = r.textes.slice();
+    var parler = function (jusqua) { while (textes.length && textes[0].tour <= jusqua) { var t = textes.shift(); liste.appendChild(el("div", { classe: "parole" }, el("span", { texte: "T" + t.tour }), el("span", { texte: "« " + t.texte + " »" }))); } };
+    r.etapes.forEach(function (e) {
+      parler(e.tour - 1);
+      liste.appendChild(el("div", { title: e.apercu || "" }, el("span", { texte: "T" + e.tour }), el("b", { texte: e.outil }), el("code", { texte: e.libelle }), el("span", { classe: "doux", texte: e.taille ? nombre(e.taille) + " car." : "" })));
+    });
+    parler(1e9);
+    bloc.appendChild(el("details", null, el("summary", { texte: "Toutes les actions, avec ce que l'agent écrit entre deux" }), liste));
+    page.appendChild(bloc);
+  });
+
+  // Livrables
+  page.appendChild(el("h2", { texte: "Les livrables, côte à côte" }));
+  var recherche = el("input", { type: "search", placeholder: "Chercher dans les deux livrables (ex. SOFR, 0,75)" });
+  var compte = el("span", { classe: "doux", style: "margin-left:10px" });
+  page.appendChild(el("div", null, recherche, compte));
+  var zones = [];
+  var grille = el("div", { classe: "deux", style: "margin-top:10px" });
+  COTES.forEach(function (c) {
+    var r = R[c[0]], carte = el("div", { classe: "carte" }, el("h3", { texte: c[1] }));
+    var textes = (r ? r.livrables : []).map(function (l) { return "### " + l.nom + " (" + nombre(l.taille) + " octets)\n\n" + l.texte; });
+    var zone = el("div", { classe: "livrable" });
+    zones.push({ zone: zone, texte: textes.join("\n\n") || "", nom: c[1] });
+    if (!textes.length) zone.appendChild(el("span", { classe: "vide", texte: "Aucun livrable." }));
+    carte.appendChild(zone); grille.appendChild(carte);
+  });
+  page.appendChild(grille);
+  function surligner() {
+    var q = recherche.value.trim().toLowerCase(), bilan = [];
+    zones.forEach(function (z) {
+      if (!z.texte) return;
+      while (z.zone.firstChild) z.zone.removeChild(z.zone.firstChild);
+      if (!q) { z.zone.textContent = z.texte; return; }
+      var bas = z.texte.toLowerCase(), pos = 0, n = 0, i;
+      while ((i = bas.indexOf(q, pos)) >= 0) { z.zone.appendChild(document.createTextNode(z.texte.slice(pos, i))); z.zone.appendChild(el("mark", { texte: z.texte.slice(i, i + q.length) })); pos = i + q.length; n++; }
+      z.zone.appendChild(document.createTextNode(z.texte.slice(pos)));
+      bilan.push(z.nom + " : " + n);
+      var m = z.zone.querySelector("mark"); if (m) z.zone.scrollTop = Math.max(0, m.offsetTop - 60);
+    });
+    compte.textContent = q ? bilan.join(" · ") : "";
+  }
+  recherche.addEventListener("input", surligner);
+  surligner();
+
+  // Note générale et copie pour Claude
+  page.appendChild(el("h2", { texte: "Ta conclusion" }));
+  var generale = el("textarea", { placeholder: "Ce qui ne va pas, ce qu'on change dans le skill au prochain essai…", style: "min-height:90px" });
+  generale.value = lire("_general");
+  generale.addEventListener("input", function () { ecrire("_general", generale.value); });
+  page.appendChild(generale);
+  var secours = el("textarea", { style: "display:none;min-height:200px", readonly: "readonly" });
+  page.appendChild(secours);
+  copier.addEventListener("click", function () {
+    var notes = R.criteres.map(function (l) { var n = lire(l.id); return n ? "- " + l.id + " " + l.titre + " : " + n : null; }).filter(Boolean);
+    var texte = R.resume + (notes.length || generale.value ? "\n## Notes de la revue\n" + notes.join("\n") + (generale.value ? "\n\n" + generale.value : "") + "\n" : "");
+    var ok = function () { copier.textContent = "Copié ✓"; setTimeout(function () { copier.textContent = "Copier le résumé pour Claude"; }, 1800); };
+    var repli = function () { secours.style.display = "block"; secours.value = texte; secours.select(); copier.textContent = "Sélectionné : ⌘C"; };
+    if (navigator.clipboard) navigator.clipboard.writeText(texte).then(ok, repli); else repli();
+  });
+})();
+</script>
+</body>
+</html>

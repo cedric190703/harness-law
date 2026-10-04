@@ -1,4 +1,5 @@
 import type { Carte } from "./carte";
+import { MENTION, diffMots } from "./correction";
 
 /**
  * La carte des sources en une page HTML autonome (aucune dépendance, ouvrable
@@ -6,7 +7,15 @@ import type { Carte } from "./carte";
  * par vérification. Toutes les données passent par textContent, jamais par innerHTML.
  */
 export function rendreCarte(carte: Carte): string {
-  const donnees = JSON.stringify(carte).replace(/</g, "\\u003c");
+  // Le passage avant / après de chaque réécriture, calculé ici pour que la page n'ait aucune règle à elle.
+  const revisions = Object.fromEntries(
+    carte.resultats.flatMap((r) =>
+      r.reecriture && r.reecriture.propose !== null
+        ? [[r.affirmation.id, diffMots(r.affirmation.passage, r.reecriture.propose)]]
+        : [],
+    ),
+  );
+  const donnees = JSON.stringify({ ...carte, revisions, mentions: MENTION }).replace(/</g, "\\u003c");
   const titre = `Carte des sources — ${carte.titre}`.replace(/[<>&"]/g, "");
   return `<!doctype html>
 <html lang="fr">
@@ -116,6 +125,9 @@ body { background: var(--fond); color: var(--texte); font: 14px/1.45 system-ui, 
 .versions .officiel { max-height: 240px; }
 .puces { display: flex; flex-wrap: wrap; gap: 6px; }
 .puce { border: 1px solid var(--trait); background: var(--surface-2); border-radius: 999px; padding: 2px 10px; cursor: pointer; font: inherit; color: inherit; }
+.revision { font-size: 14px; line-height: 1.55; margin: 8px 0; }
+.revision del { color: var(--rouge); background: color-mix(in srgb, var(--rouge) 12%, transparent); }
+.revision ins { color: var(--vert); background: color-mix(in srgb, var(--vert) 14%, transparent); text-decoration: underline 2px; text-underline-offset: 2px; }
 .pied { color: var(--doux); font-size: 12px; margin-top: 28px; }
 .fermer { float: right; background: none; border: 1px solid var(--trait); color: var(--doux); border-radius: 6px; cursor: pointer; font: inherit; padding: 2px 8px; display: none; }
 @media (max-width: 1100px) {
@@ -215,6 +227,7 @@ const JS = `
       el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: "Affirmation " + a.id }), el("span", { classe: "pastille", texte: LIBELLE_AFF[r.statut] })),
       el("div", { classe: "corps", texte: a.passage }),
       r.statut !== "vert" && r.message ? el("div", { classe: "note", texte: r.message }) : null,
+      r.reecriture ? el("div", { classe: "note", texte: r.reecriture.type === "remplacer" ? "Correction proposée, sourcée" : "Correction : " + (carte.mentions || {})[r.reecriture.type] }) : null,
       a.sources.length === 0 ? el("div", { classe: "note", texte: "Aucune source citée." }) : null
     );
     b.addEventListener("mouseenter", function () { survoler({ aff: a.id }); });
@@ -327,6 +340,7 @@ const JS = `
     panneau.appendChild(el("blockquote", { classe: "citation st-" + r.statut, texte: a.passage }));
     if (a.resume) panneau.appendChild(el("p", { classe: "vide", texte: a.resume }));
     if (r.message && r.statut !== "vert") panneau.appendChild(el("p", { texte: r.message }));
+    if (r.reecriture) panneau.appendChild(blocReecriture(r));
     r.verifications.forEach(function (v) {
       var o = v.officielle, j = v.jugement;
       var bloc = el("div", { classe: "source-bloc st-" + v.statut });
@@ -361,6 +375,19 @@ const JS = `
       panneau.appendChild(bloc);
     });
     if (a.sources.length === 0) panneau.appendChild(el("p", { classe: "vide", texte: "Aucune source n'est citée à l'appui : cette affirmation est à vérifier à la main." }));
+  }
+  function blocReecriture(r) {
+    var p = r.reecriture, s = p.source, d = (carte.revisions || {})[r.affirmation.id];
+    var bloc = el("div", { classe: "source-bloc " + (p.type === "remplacer" ? "st-vert" : "st-orange") });
+    bloc.appendChild(el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: p.type === "remplacer" ? "Correction proposée" : "Correction" }), el("span", { classe: "pastille", texte: (carte.mentions || {})[p.type] || "" })));
+    if (d) bloc.appendChild(el("p", { classe: "revision" }, d.prefixe, d.retire ? el("del", { texte: d.retire }) : null, d.retire && d.ajoute ? " " : null, d.ajoute ? el("ins", { texte: d.ajoute }) : null, d.suffixe));
+    bloc.appendChild(el("p", { texte: p.motif }));
+    if (s) {
+      bloc.appendChild(el("div", null, "Source : ", s.url ? el("a", { classe: "lien", href: s.url, target: "_blank", rel: "noopener", texte: s.citation }) : s.citation, " — " + s.base + (s.version ? ", version " + s.version : "")));
+      bloc.appendChild(el("blockquote", { classe: "citation st-vert", texte: s.extrait }));
+      bloc.appendChild(el("div", { classe: "preuve st-vert", texte: "✓ Extrait retrouvé mot pour mot dans le texte officiel" }));
+    }
+    return bloc;
   }
   function panneauSource(cle) {
     var s = parCle[cle], o = s.officielle;

@@ -1,3 +1,4 @@
+import { boucler, type Boucle } from "./boucle";
 import { empreinte } from "./cache";
 import {
   conclureAffirmation,
@@ -8,8 +9,9 @@ import {
   rechercherSource,
   texteApplicable,
 } from "./controles";
-import { MODELE_EXTRACTION, MODELE_JUGE, mistralJson } from "./mistral";
+import { MODELE_EXTRACTION, MODELE_JUGE, MODELE_REDACTEUR, mistralJson } from "./mistral";
 import { pisteConfigure } from "./piste";
+import { corrigerMemo } from "./redacteur";
 import type { Piece } from "./sources";
 import type {
   Affirmation,
@@ -20,7 +22,6 @@ import type {
   ResultatAffirmation,
   SourceCitee,
   SourceOfficielle,
-  Statut,
   VerificationSource,
   VersionTexte,
 } from "./types";
@@ -49,7 +50,7 @@ Pour chaque affirmation :
 Si le texte mentionne la date des faits (licenciement, signature, sinistre…), renseigne "date_faits" (AAAA-MM-JJ), sinon null.
 Réponds en JSON : {"date_faits": ..., "affirmations": [...]}`;
 
-const PROMPT_JUGE = `Tu es l'AVOCAT DE LA PARTIE ADVERSE. On te soumet une affirmation tirée des écritures de ton adversaire, et le texte OFFICIEL de la source qu'il cite (dans la version applicable à la date des faits).
+export const PROMPT_JUGE = `Tu es l'AVOCAT DE LA PARTIE ADVERSE. On te soumet une affirmation tirée des écritures de ton adversaire, et le texte OFFICIEL de la source qu'il cite (dans la version applicable à la date des faits).
 Ton travail : vérifier, sans complaisance, si la source dit vraiment ce qu'on lui fait dire.
 
 Règles :
@@ -135,14 +136,74 @@ export async function verifierTexte(
     3,
   );
 
-  const synthese: Record<Statut, number> = { vert: 0, orange: 0, rouge: 0, gris: 0 };
-  for (const r of resultats) synthese[r.statut]++;
+  // 5. Relancer l'IA qui a écrit le mémo sur les passages signalés, puis revérifier ses corrections (2 tours au plus).
+  const b = await boucler(
+    { texte, resultats },
+    {
+      corriger: async (t, problemes) => {
+        journal({
+          acteur: "Rédacteur",
+          action: `renvoie ${problemes.length} passage(s) signalé(s) à l'IA, avec leur preuve : ${problemes.map((p) => p.id).join(", ")}`,
+          modele: MODELE_REDACTEUR,
+        });
+        return corrigerMemo(t, problemes, dateFaits);
+      },
+      reverifier: (id, passage) => reverifierPassage(id, passage, dateFaits, pieces, journal),
+    },
+    { apresTour: (etat) => journalTour(etat, journal, emettre) },
+  );
+  journal({ acteur: "Saul", action: b.arret });
+  emettre({ type: "boucle", boucle: b });
+
+  const synthese = b.versions[b.versions.length - 1].synthese;
   journal({
     acteur: "Saul",
     action: "Vérification terminée",
-    detail: `${synthese.vert} vertes, ${synthese.orange} à revoir, ${synthese.rouge} fausses, ${synthese.gris} non vérifiables`,
+    detail: `version ${b.versions.length} : ${synthese.vert} vertes, ${synthese.orange} à revoir, ${synthese.rouge} fausses, ${synthese.gris} non vérifiables`,
   });
   emettre({ type: "fin", synthese });
+}
+
+function journalTour(b: Boucle, journal: (e: Omit<EntreeJournal, "t">) => void, emettre: Emettre) {
+  const tour = b.tours[b.tours.length - 1];
+  for (const t of tour.tentatives) {
+    journal({
+      acteur: "Rédacteur",
+      action: `${t.id} · ${t.retenue ? "correction gardée" : "correction rejetée"} (${t.raison})`,
+      detail: t.propose ? `« ${t.propose.slice(0, 160)}${t.propose.length > 160 ? "…" : ""} »` : undefined,
+    });
+  }
+  const v = b.versions[b.versions.length - 1];
+  journal({
+    acteur: "Saul",
+    action:
+      v.numero === tour.numero + 1
+        ? `Tour ${tour.numero} : version ${v.numero}`
+        : `Tour ${tour.numero} : aucune correction gardée, version ${v.numero} inchangée`,
+    detail: `${v.synthese.rouge} fausses, ${v.synthese.orange} à revoir, ${v.synthese.vert} vertes, ${v.synthese.gris} non vérifiables`,
+  });
+  emettre({ type: "boucle", boucle: b });
+}
+
+/** Revérifie un passage corrigé par l'IA : ses sources sont extraites et contrôlées comme les autres. */
+async function reverifierPassage(
+  id: string,
+  passage: string,
+  dateFaits: string,
+  pieces: Piece[],
+  journal: (e: Omit<EntreeJournal, "t">) => void,
+): Promise<ResultatAffirmation> {
+  const extraction = await mistralJson<{ affirmations: Omit<Affirmation, "id">[] }>(MODELE_EXTRACTION, [
+    { role: "system", content: PROMPT_EXTRACTION },
+    { role: "user", content: passage },
+  ]);
+  const extraites = extraction.affirmations ?? [];
+  const sources: SourceCitee[] = [];
+  for (const s of extraites.flatMap((a) => a.sources ?? [])) {
+    if (!sources.some((x) => x.brut === s.brut)) sources.push(s);
+  }
+  const a: Affirmation = { id, passage, resume: extraites[0]?.resume ?? passage, sources };
+  return verifierAffirmation(a, dateFaits, pieces, journal);
 }
 
 async function verifierAffirmation(

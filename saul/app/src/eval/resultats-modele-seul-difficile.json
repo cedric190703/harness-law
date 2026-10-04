@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-04T13:53:13.868Z",
+  "jeu": "difficile",
+  "modele": "mistral-large-latest",
+  "prompt": "Tu es un juriste français expérimenté. On te soumet une affirmation juridique tirée d'une note écrite par une IA, avec la source qu'elle cite, et la date des faits.\nDis si l'affirmation est juridiquement exacte, si la source citée existe et si elle dit bien cela, dans sa version applicable à la date des faits.\nRéponds en JSON : {\"statut\": \"vert\" | \"orange\" | \"rouge\" | \"gris\", \"raison\": \"une phrase\"}\n- \"vert\" : affirmation exacte, la source existe, elle dit bien cela et elle était en vigueur à la date des faits ;\n- \"orange\" : à revoir (texte modifié depuis les faits, circulaire présentée comme obligatoire, nuance importante omise) ;\n- \"rouge\" : fausse (source inexistante ou inventée, source qui ne dit pas cela, texte pas en vigueur à la date des faits) ;\n- \"gris\" : invérifiable (aucune source précise citée).",
+  "dureeSecondes": 109,
+  "mesures": {
+    "total": 7,
+    "parEtiquette": {
+      "vert": 0,
+      "orange": 3,
+      "rouge": 4,
+      "gris": 0
+    },
+    "detection": {
+      "n": 3,
+      "sur": 7,
+      "taux": 0.42857142857142855
+    },
+    "detectionStricte": {
+      "n": 3,
+      "sur": 7,
+      "taux": 0.42857142857142855
+    },
+    "fauxVertsSurFausses": {
+      "n": 4,
+      "sur": 7,
+      "taux": 0.5714285714285714
+    },
+    "fauxVerts": {
+      "n": 4,
+      "sur": 7,
+      "taux": 0.5714285714285714
+    },
+    "fauxRouges": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "vertsConfirmes": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "exactitude": {
+      "n": 1,
+      "sur": 7,
+      "taux": 0.14285714285714285
+    },
+    "absentes": {
+      "n": 0,
+      "sur": 7,
+      "taux": 0
+    },
+    "matrice": {
+      "vert": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "orange": {
+        "vert": 3,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "rouge": {
+        "vert": 1,
+        "orange": 2,
+        "rouge": 1,
+        "gris": 0,
+        "absent": 0
+      },
+      "gris": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      }
+    },
+    "parType": {
+      "ne_dit_pas_ca": {
+        "n": 4,
+        "exactes": 1,
+        "signalees": 3,
+        "fauxVerts": 1,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "decision_mal_citee": {
+        "n": 2,
+        "exactes": 0,
+        "signalees": 0,
+        "fauxVerts": 2,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "texte_modifie": {
+        "n": 1,
+        "exactes": 0,
+        "signalees": 0,
+        "fauxVerts": 1,
+        "fauxRouges": 0,
+        "absentes": 0
+      }
+    }
+  },
+  "lignes": [
+    {
+      "id": "D1-1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "raisonModele": "L'article 1134 du Code civil a été modifié par l'ordonnance n°2016-131 du 10 février 2016, et son contenu a été repris à l'article 1103 dans sa version en vigueur à la date des faits, avec une formulation légèrement différente."
+    },
+    {
+      "id": "D1-2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "raisonModele": "L'article 1382 du Code civil a été renuméroté en article 1240 depuis la réforme du droit des obligations entrée en vigueur le 1er octobre 2016, et le texte cité correspond bien à sa version applicable en 2022."
+    },
+    {
+      "id": "D2-1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article L. 1237-13 du Code du travail ne prévoit pas de délai de rétractation pour la rupture conventionnelle, mais un délai de réflexion de 15 jours avant homologation."
+    },
+    {
+      "id": "D2-2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 1221-21 du Code du travail (dans sa version en vigueur au 1er février 2023) fixe bien cette durée maximale pour les cadres."
+    },
+    {
+      "id": "D2-3",
+      "type": "decision_mal_citee",
+      "attendu": "orange",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la source citée existe et la jurisprudence était bien en vigueur à la date des faits."
+    },
+    {
+      "id": "D3-1",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article 22 de la loi n° 89-462 du 6 juillet 1989, dans sa version en vigueur au 1er juin 2013, prévoyait bien ce délai de deux mois."
+    },
+    {
+      "id": "D3-2",
+      "type": "decision_mal_citee",
+      "attendu": "orange",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'arrêt cité existe et était bien en vigueur à la date des faits (2013)."
+    }
+  ]
+}

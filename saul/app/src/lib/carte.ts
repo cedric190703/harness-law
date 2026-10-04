@@ -7,6 +7,7 @@ import {
   rechercherSource,
   texteApplicable,
 } from "./controles";
+import { planifier, retenirProposition, type PropositionBrute } from "./correction";
 import { pisteConfigure } from "./piste";
 import type { Piece } from "./sources";
 import type {
@@ -67,6 +68,12 @@ export interface JugementSaisi {
   raisonnement?: string[];
   extrait?: string;
   correction?: string;
+}
+
+/** Ce que l'agent écrit dans reecritures.json, une par affirmation orange ou rouge qu'il sait corriger. */
+export interface ReecritureSaisie extends PropositionBrute {
+  /** L'affirmation, ex. « A4 ». */
+  id: string;
 }
 
 export interface Carte {
@@ -168,8 +175,16 @@ export async function preparer(
   };
 }
 
-/** Applique les jugements de l'agent : un verdict sans extrait retrouvé mot pour mot est écarté. */
-export function conclure(p: Preparation, jugements: JugementSaisi[], generee: string): Carte {
+/**
+ * Applique les jugements de l'agent : un verdict sans extrait retrouvé mot pour mot est écarté.
+ * Puis ses réécritures, avec les mêmes garde-fous que le rédacteur de l'app (correction.ts).
+ */
+export function conclure(
+  p: Preparation,
+  jugements: JugementSaisi[],
+  generee: string,
+  reecritures: ReecritureSaisie[] = [],
+): Carte {
   const parId = new Map(jugements.map((j) => [j.id, j]));
   const verification = (e: ElementPrepare): VerificationSource => {
     if (e.texteAJuger === null) {
@@ -210,6 +225,18 @@ export function conclure(p: Preparation, jugements: JugementSaisi[], generee: st
     const verifications = p.elements.filter((e) => e.affirmation === a.id).map(verification);
     return { affirmation: a, verifications, ...conclureAffirmation(a, verifications) };
   });
+  const saisies = new Map(reecritures.map((r) => [r.id, r]));
+  for (const r of resultats) {
+    const plan = planifier(r, resultats, p.dateFaits);
+    if (!plan) continue;
+    const saisie = saisies.get(r.affirmation.id);
+    r.reecriture =
+      plan.cas === "fixe"
+        ? plan.reecriture
+        : saisie
+          ? retenirProposition(plan, r.affirmation.passage, saisie)
+          : plan.repli;
+  }
   const synthese: Record<Statut, number> = { vert: 0, orange: 0, rouge: 0, gris: 0 };
   for (const r of resultats) synthese[r.statut]++;
   return {

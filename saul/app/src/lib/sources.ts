@@ -28,13 +28,16 @@ const CODES: Record<string, string> = {
 
 export function codeVersLegitext(code: string | null | undefined): string | null {
   if (!code) return null;
-  if (code.toUpperCase().startsWith("LEGITEXT")) return code;
+  // Identifiant Légifrance déjà résolu (code, ou loi non codifiée).
+  if (/^(LEGITEXT|JORFTEXT)/i.test(code)) return code;
   const n = normaliser(code).replace(/^code (de la |du |des |de l |de )?/, "");
   if (n === "cgi") return CODES["general des impots"];
-  for (const [nom, id] of Object.entries(CODES)) {
-    if (n === nom || n.includes(nom)) return id;
-  }
-  return null;
+  if (CODES[n]) return CODES[n];
+  // Le nom le plus long d'abord : « procedure civile » contient aussi « civil ».
+  const nom = Object.keys(CODES)
+    .sort((a, b) => b.length - a.length)
+    .find((c) => n.includes(c));
+  return nom ? CODES[nom] : null;
 }
 
 /** « L. 1235-3 » → « L1235-3 » */
@@ -43,6 +46,12 @@ export function normaliserNumeroArticle(numero: string): string {
     .replace(/^art(icle)?\.?\s*/i, "")
     .replace(/\s+/g, "")
     .replace(/^([LRDA])\.?/i, (m) => m[0].toUpperCase());
+}
+
+/** « article 22 de la loi n° 89-462 » → « 22 » ; null si aucun article n'est cité. */
+export function articleCite(brut: string): string | null {
+  const m = /\bart(?:icle)?\.?\s*((?:[LRDA]\.?\s?)?\d+(?:-\d+)*)/i.exec(brut);
+  return m ? normaliserNumeroArticle(m[1]) : null;
 }
 
 /** Les dates Légifrance arrivent en millisecondes ; 2999 = « sans fin ». */
@@ -186,9 +195,20 @@ async function chercherTexte(c: SourceCitee): Promise<SourceOfficielle | null | 
   });
   const titre = (recherche?.results?.[0]?.titles as Brut[] | undefined)?.[0];
   if (!titre?.id) return null;
+  // L'identifiant du texte (cid) : l'id de la recherche porte un suffixe de version que Légifrance refuse (400).
+  const idTexte = String(titre.cid ?? titre.id);
+
+  // « article 22 de la loi n° 89-462 » : l'article lui-même, avec ses versions, plutôt que la loi entière.
+  const num = articleCite(c.brut);
+  if (num) {
+    const article = await chercherArticle({ ...c, code: idTexte, numero: num });
+    if (article === "non_identifiable" || !article) return article;
+    return { ...article, titre: `Article ${num} — ${String(titre.title ?? c.brut)}` };
+  }
+
   const d = await legifrance<Brut>("/consult/lawDecree", {
-    textId: titre.id,
-    date: c.date ?? new Date().toISOString().slice(0, 10),
+    textId: idTexte,
+    date: new Date().toISOString().slice(0, 10),
   });
   const articles: string[] = [];
   const parcourir = (n: Brut) => {
