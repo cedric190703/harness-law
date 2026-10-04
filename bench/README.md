@@ -52,3 +52,21 @@ python3 bench/run.py --model mistral-medium-3.5 --set one     # 1 tâche, avec e
 python3 bench/run.py --model claude-sonnet-5-5 --set dev --parallel 4
 python3 bench/run.py --summary
 ```
+
+## Itérer vite : la revue d'une tâche
+
+```bash
+python3 bench/revue.py <tâche> --lancer --model claude-sonnet-5-5   # lance sans et avec skill, puis ouvre la revue
+python3 bench/revue.py <tâche>                                       # revoit la dernière paire déjà lancée
+```
+
+La page (`bench/revues/<tâche>/<horodatage>/revue.html`) montre :
+- les critères perdus, gagnés et ratés, avec l'avis du juge dans les deux conditions ;
+- le parcours de chaque agent : quelle pièce il a lue, cherchée ou jamais ouverte, et quand ;
+- les livrables côte à côte, avec une recherche dans les deux ;
+- une alerte quand un livrable n'est qu'une pièce recopiée ;
+- un bouton qui copie un résumé et tes notes, à coller dans Claude pour corriger le skill.
+
+`revue.md`, dans le même dossier, contient ce résumé.
+
+Une tâche de test n'affiche jamais sa grille. On n'itère que sur les tâches de développement.

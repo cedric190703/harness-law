@@ -98,7 +98,7 @@ def summary() -> None:
     rows = [json.loads(line) for line in RESULTS.read_text().splitlines() if line.strip()]
     groups: dict[tuple, list] = {}
     for r in rows:
-        if r.get("graded"):
+        if r.get("graded") and r.get("n_passed") is not None and r.get("n_criteria") is not None:
             groups.setdefault((r["model"], r.get("effort"), r["condition"]), []).append(r)
     print(f"{'model':28} {'cond':5} {'runs':>4} {'all-pass':>9} {'criteria':>9} {'tokens in/out (avg)':>22} {'min/run':>8}")
     for (model, effort, cond), rs in sorted(groups.items(), key=lambda kv: (kv[0][0], str(kv[0][1]), kv[0][2])):
@@ -136,7 +136,8 @@ def main() -> None:
     if args.tool_choice:
         env["BENCH_MISTRAL_TOOL_CHOICE"] = args.tool_choice
     key_for = {"claude": "ANTHROPIC_API_KEY", "mistral": "MISTRAL_API_KEY", "codestral": "MISTRAL_API_KEY", "magistral": "MISTRAL_API_KEY", "gpt": "OPENAI_API_KEY", "o": "OPENAI_API_KEY"}
-    needed = sorted({key for name in [args.model.split("/")[-1], *args.judges]
+    # Un juge claude-code-* passe par l'abonnement Claude Code (bench/lab.py) : pas de clé API.
+    needed = sorted({key for name in [args.model.split("/")[-1], *args.judges] if not name.startswith("claude-code")
                      for prefix, key in key_for.items() if name.startswith(prefix)})
     missing = [k for k in needed if not env.get(k)]
     if missing:

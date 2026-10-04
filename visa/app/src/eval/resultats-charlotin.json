@@ -1,0 +1,329 @@
+{
+  "date": "2026-10-04T13:48:10.916Z",
+  "notes": [
+    {
+      "id": "C1",
+      "dateFaits": "2025-10-01",
+      "secondes": 27,
+      "affirmationsObtenues": 1,
+      "incidents": []
+    },
+    {
+      "id": "C2",
+      "dateFaits": "2025-12-01",
+      "secondes": 101,
+      "affirmationsObtenues": 4,
+      "incidents": []
+    }
+  ],
+  "jeu": "charlotin",
+  "jugeVariante": false,
+  "modeles": {
+    "extraction": "mistral-large-latest",
+    "juge": "mistral-large-latest",
+    "reponduPar": [
+      "mistral-large-latest"
+    ]
+  },
+  "codeMesure": {
+    "moteur": "4cdcd7b38bbe",
+    "controles": "e7b14483d84a",
+    "sources": "3b7682d9accc",
+    "mistral": "904b7c710cd4",
+    "piste": "3e08c43fc22c",
+    "verbatim": "294952d41a8d"
+  },
+  "cacheNeuf": true,
+  "relancePiste": true,
+  "pannesPiste": [
+    "Error: The socket connection was closed unexpectedly. For more information, pass https://sandbox-api.piste.gouv.fr/dila/legifrance/lf-engine-app/search"
+  ],
+  "dureeSecondes": 128,
+  "consommation": {
+    "appels": 4,
+    "jetonsEntree": 6064,
+    "jetonsSortie": 1770,
+    "refus429": 0,
+    "coutDollars": 0.0057,
+    "prixParMillion": {
+      "entree": 0.5,
+      "sortie": 1.5
+    }
+  },
+  "mesures": {
+    "total": 5,
+    "parEtiquette": {
+      "vert": 0,
+      "orange": 0,
+      "rouge": 5,
+      "gris": 0
+    },
+    "detection": {
+      "n": 5,
+      "sur": 5,
+      "taux": 1
+    },
+    "detectionStricte": {
+      "n": 5,
+      "sur": 5,
+      "taux": 1
+    },
+    "fauxVertsSurFausses": {
+      "n": 0,
+      "sur": 5,
+      "taux": 0
+    },
+    "fauxVerts": {
+      "n": 0,
+      "sur": 5,
+      "taux": 0
+    },
+    "fauxRouges": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "vertsConfirmes": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "exactitude": {
+      "n": 4,
+      "sur": 5,
+      "taux": 0.8
+    },
+    "absentes": {
+      "n": 0,
+      "sur": 5,
+      "taux": 0
+    },
+    "matrice": {
+      "vert": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "orange": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "rouge": {
+        "vert": 0,
+        "orange": 1,
+        "rouge": 4,
+        "gris": 0,
+        "absent": 0
+      },
+      "gris": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      }
+    },
+    "parType": {
+      "decision_inventee": {
+        "n": 3,
+        "exactes": 3,
+        "signalees": 3,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "decision_mal_citee": {
+        "n": 2,
+        "exactes": 1,
+        "signalees": 2,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      }
+    }
+  },
+  "lignes": [
+    {
+      "id": "C1-1",
+      "note": "C1",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le Conseil d'État a jugé que l'administration ne peut légalement refuser la demande sans examiner l'ensemble de la situation personnelle du requérant (CE, 7 février 2018, n° 409302).",
+      "raison": "Relevée par la CAA de Bordeaux comme inexistante ; aucun n° 409302 au Conseil d'État sur Légifrance.",
+      "obtenus": [
+        "C1/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "C1/A1",
+          "passage": "Le Conseil d'État a jugé que l'administration ne peut légalement refuser la demande sans examiner l'ensemble de la situation personnelle du requérant",
+          "statut": "rouge",
+          "message": "« CE, 7 février 2018, n° 409302 » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "CE, 7 février 2018, n° 409302",
+              "type": "decision",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « CE, 7 février 2018, n° 409302 » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C2-1",
+      "note": "C2",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le Conseil d'État exige que le préfet procède à un examen particulier de la situation de l'étranger avant toute mesure d'éloignement (CE, 27 juin 2019, n° 420269).",
+      "raison": "Relevée par le TA d'Orléans comme inexistante ; aucun n° 420269 sur Légifrance.",
+      "obtenus": [
+        "C2/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "C2/A1",
+          "passage": "Le Conseil d'État exige que le préfet procède à un examen particulier de la situation de l'étranger avant toute mesure d'éloignement (CE, 27 juin 2019, n° 420269).",
+          "statut": "rouge",
+          "message": "« CE, 27 juin 2019, n° 420269 » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "CE, 27 juin 2019, n° 420269",
+              "type": "decision",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « CE, 27 juin 2019, n° 420269 » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C2-2",
+      "note": "C2",
+      "type": "decision_mal_citee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le juge administratif contrôle la proportionnalité de la mesure d'éloignement au regard du droit au respect de la vie privée et familiale (CE, 12 octobre 2012, GISTI et FAPIL, n° 34728).",
+      "raison": "Relevée par le TA comme inexistante. Le n° 34728 désigne une décision du Conseil d'État du 12 janvier 1983, sans rapport.",
+      "obtenus": [
+        "C2/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "C2/A2",
+          "passage": "Le juge administratif contrôle la proportionnalité de la mesure d'éloignement au regard du droit au respect de la vie privée et familiale (CE, 12 octobre 2012, GISTI et FAPIL, n° 34728).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Le texte officiel fourni traite d'un litige relatif à des licenciements économiques et ne mentionne ni le contrôle de proportionnalité d'une mesure d'éloignement, ni le droit au respect de la vie privée et familiale.",
+          "sources": [
+            {
+              "citee": "CE, 12 octobre 2012, GISTI et FAPIL, n° 34728",
+              "type": "decision",
+              "trouvee": "Conseil d'Etat, 10/ 3 SSR, du 12 janvier 1983, 34728, mentionné aux tables du recueil Lebon",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Date citée (2012-10-12) différente de la date réelle de la décision (1983-01-12).",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu rouge : La source ne dit pas cela : Le texte officiel fourni traite d'un litige relatif à des licenciements économiques et ne mentionne ni le contrôle de proportionnalité d'une mesure d'éloignement, ni le droit au respect de la vie privée et familiale."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "VU LA REQUETE, ENREGISTREE LE 4 JUIN 1981, AU SECRETARIAT DU CONTENTIEUX DU CONSEIL D'ETAT, PRESENTEE POUR LA SOCIETE ANONYME GROUPE LUCHAIRE-HUGONNET, TENDANT A CE QUE LE CONSEIL D'ETAT : 1° ANNULE LE JUGEMENT DU 24 MARS 1981 PAR LEQUEL LE TRIBUNAL ADMINISTRATIF DE DIJON A DECLARE ILLEGALE LA DECISION TACITE PAR LAQUELLE LE DIRECTEUR DEPARTEMENTAL DU TRAVAIL ET DE L'EMPLOI DE LA COTE-D'OR A AUTORISE CETTE SOCIETE A LICENCIER POUR MOTIF ECONOMIQUE M. DANIEL X... ET QUARANTE DEUX AUTRES SALARIES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C2-3",
+      "note": "C2",
+      "type": "decision_mal_citee",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "passage": "Une mesure de reconduite à la frontière doit être motivée en fait et en droit (CE, 9 juin 1978, Lebon, n° 05873).",
+      "raison": "Relevée par le TA comme inexistante. Le n° 05873 désigne une décision du Conseil d'État du 16 juin 1978.",
+      "obtenus": [
+        "C2/A3"
+      ],
+      "cause": "juge : extrait non retrouvé mot pour mot (verdict écarté)",
+      "detail": [
+        {
+          "id": "C2/A3",
+          "passage": "Une mesure de reconduite à la frontière doit être motivée en fait et en droit (CE, 9 juin 1978, Lebon, n° 05873).",
+          "statut": "orange",
+          "message": "Date citée (1978-06-09) différente de la date réelle de la décision (1978-06-16).",
+          "sources": [
+            {
+              "citee": "CE, 9 juin 1978, Lebon, n° 05873",
+              "type": "decision",
+              "trouvee": "Conseil d'Etat, 1 / 4 SSR, du 16 juin 1978, 05873, publié au recueil Lebon",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Date citée (1978-06-09) différente de la date réelle de la décision (1978-06-16).",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu gris : L'avocat adverse n'a pas pu citer le texte mot pour mot : verdict écarté, à vérifier à la main."
+              ],
+              "verdict": "HORS_SUJET",
+              "extraitRetrouve": false,
+              "extrait": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C2-4",
+      "note": "C2",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "La cour administrative d'appel de Lyon a annulé une obligation de quitter le territoire dans une situation identique (CAA Lyon, 18 janvier 2022, n° 20LY01957).",
+      "raison": "Relevée par le TA d'Orléans comme inexistante ; aucun n° 20LY01957 sur Légifrance.",
+      "obtenus": [
+        "C2/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "C2/A4",
+          "passage": "La cour administrative d'appel de Lyon a annulé une obligation de quitter le territoire dans une situation identique (CAA Lyon, 18 janvier 2022, n° 20LY01957).",
+          "statut": "rouge",
+          "message": "« CAA Lyon, 18 janvier 2022, n° 20LY01957 » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "CAA Lyon, 18 janvier 2022, n° 20LY01957",
+              "type": "decision",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « CAA Lyon, 18 janvier 2022, n° 20LY01957 » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "horsJeu": []
+}

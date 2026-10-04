@@ -1,0 +1,18 @@
+{
+  "seed": 20261004,
+  "note": "Tâches M&A qui demandent de croiser des pièces. 'dev' : on lit tout et on ajuste la méthode. 'test' : grilles jamais lues, mesurées une seule fois. Tirage : compare-closing-checklist imposé en dev (le moins cher), puis random.Random(20261004).shuffle sur les 9 autres, 2 en dev et 7 en test. Fixé le 4 octobre 2026 avant tout résultat sur ces tâches.",
+  "dev": [
+    "corporate-ma/compare-closing-checklist-against-ma-agreement",
+    "corporate-ma/review-disclosure-schedules-against-representations-for-completeness",
+    "corporate-ma/compare-closing-docs"
+  ],
+  "test": [
+    "corporate-ma/extract-change-of-control-provisions",
+    "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts",
+    "corporate-ma/identify-disclosure-schedule-issues",
+    "corporate-ma/review-data-room-red-flag-review",
+    "corporate-ma/track-third-party-consents",
+    "corporate-ma/compare-target-representations-vs-diligence",
+    "corporate-ma/analyze-disclosure-schedule-markup-against-merger-agreement"
+  ]
+}

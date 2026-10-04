@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-04T13:45:50.335Z",
+  "temoins": true,
+  "preuves": [
+    {
+      "id": "C1-1",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance (JURI) et Judilibre."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "C2-1",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance (JURI) et Judilibre."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "C2-2",
+      "type": "decision_mal_citee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Conseil d'Etat, 10/ 3 SSR, du 12 janvier 1983, 34728, mentionné aux tables du recueil Lebon.",
+        "Date des faits 2025-12-01 : décision (pas de versions) → contrôle date orange.",
+        "Le numéro existe, mais pour une autre décision : Conseil d'Etat, 10/ 3 SSR, du 12 janvier 1983, 34728, mentionné aux tables du recueil Lebon (1983-01-12), pas celle du 2012-10-12."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/CETATEXT000007688355",
+      "versionDesFaits": null
+    },
+    {
+      "id": "C2-3",
+      "type": "decision_mal_citee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Conseil d'Etat, 1 / 4 SSR, du 16 juin 1978, 05873, publié au recueil Lebon.",
+        "Date des faits 2025-12-01 : décision (pas de versions) → contrôle date orange.",
+        "Le numéro existe, mais pour une autre décision : Conseil d'Etat, 1 / 4 SSR, du 16 juin 1978, 05873, publié au recueil Lebon (1978-06-16), pas celle du 1978-06-09."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/CETATEXT000007661346",
+      "versionDesFaits": null
+    },
+    {
+      "id": "C2-4",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance (JURI) et Judilibre."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    }
+  ]
+}
