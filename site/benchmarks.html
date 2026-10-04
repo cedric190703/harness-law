@@ -261,7 +261,7 @@ tr.total>*{background:var(--saul-surface);border-top:1px solid var(--saul-line-2
 .card p{font-size:14px;color:var(--saul-fg-soft);margin-top:12px}
 .card p strong{color:var(--saul-fg)}
 .agree{height:12px;background:var(--saul-line);margin-top:18px;position:relative}
-.agree i{position:absolute;inset:0 auto 0 0;width:96.5%;background:var(--saul-fg)}
+.agree i{position:absolute;inset:0 auto 0 0;width:97.7%;background:var(--saul-fg)}
 .checks{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px}
 .checks li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;font-size:14px;color:var(--saul-fg-soft)}
 .checks li:before{content:'';width:12px;height:12px;margin-top:5px;border:1px solid var(--saul-fg);background:linear-gradient(var(--saul-fg),var(--saul-fg)) center/6px 6px no-repeat}
@@ -397,7 +397,7 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
 </head><body>
 
 <a class="skip" href="#main"><span class="l-en">Skip to content</span><span class="l-fr">Aller au contenu</span></a>
-<header class="nav-shell"><nav class="nav" aria-label="Navigation"><a href="index.html" class="wordmark" aria-label="Saul, home">SAUL</a><div class="nav-links"><a href="index.html#problem"><span class="l-en">The problem</span><span class="l-fr">Le problème</span></a><a href="index.html#method"><span class="l-en">The method</span><span class="l-fr">La méthode</span></a><a href="index.html#results"><span class="l-en">The evidence</span><span class="l-fr">Les preuves</span></a><a class="keep" href="benchmarks.html" aria-current="page"><span class="l-en">How we test</span><span class="l-fr">Nos tests</span></a></div><div class="actions"><button class="lang" id="language" type="button" aria-label="Afficher en français">FR</button><a class="button" href="index.html#chat"><span class="l-en">Try the chat</span><span class="l-fr">Essayer le chat</span> <span aria-hidden="true">↗</span></a></div></nav></header>
+<header class="nav-shell"><nav class="nav" aria-label="Navigation"><a href="index.html" class="wordmark" aria-label="Saul, home">SAUL</a><div class="nav-links"><a href="index.html#problem"><span class="l-en">The problem</span><span class="l-fr">Le problème</span></a><a href="index.html#method"><span class="l-en">The method</span><span class="l-fr">La méthode</span></a><a href="index.html#results"><span class="l-en">The evidence</span><span class="l-fr">Les preuves</span></a><a class="keep" href="benchmarks.html" aria-current="page"><span class="l-en">How we test</span><span class="l-fr">Nos tests</span></a></div><div class="actions"><button class="lang" id="language" type="button" aria-label="Afficher en français">FR</button><a class="button" href="https://saul.159-69-41-115.sslip.io"><span class="l-en">Try the chat</span><span class="l-fr">Essayer le chat</span> <span aria-hidden="true">↗</span></a></div></nav></header>
 
 <main id="main">
 <!-- ============ HERO ============ -->
@@ -409,7 +409,7 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
   <div><strong>4</strong><p><span class="l-en">test beds</span><span class="l-fr">bancs d’essai</span></p></div>
   <div><strong>3</strong><p><span class="l-en">agents, without and with</span><span class="l-fr">agents, sans et avec</span></p></div>
   <div><strong>2</strong><p><span class="l-en">judges, different families</span><span class="l-fr">juges, familles différentes</span></p></div>
-  <div><strong>96.5%</strong><p><span class="l-en">judge agreement (575 / 596)</span><span class="l-fr">d’accord entre juges (575 / 596)</span></p></div>
+  <div><strong>97.7%</strong><p><span class="l-en">judge agreement (550 / 563)</span><span class="l-fr">d’accord entre juges (550 / 563)</span></p></div>
  </div>
  <div class="legend" role="list" aria-label="Status legend">
   <p role="listitem"><span class="status measured"><span class="l-en">Measured</span><span class="l-fr">Mesuré</span></span><span class="l-en">final number, run as stated</span><span class="l-fr">chiffre définitif, passage décrit</span></p>
@@ -526,9 +526,9 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
  <div class="proto-grid">
   <div class="card reveal">
    <span class="tag"><span class="l-en">Judges from different families</span><span class="l-fr">Juges de familles différentes</span></span>
-   <span class="big">575 / 596</span>
+   <span class="big">550 / 563</span>
    <div class="agree" aria-hidden="true"><i></i></div>
-   <p><span class="l-en"><strong>96.5% agreement</strong> on criterion verdicts, over the 14 development runs graded by both. On task 1: all 152 verdicts agree. 9 of the 21 disagreements sit on one cell (Mistral, task 3), where we report no gain.</span><span class="l-fr"><strong>96,5 % d’accord</strong> sur les verdicts par critère, sur les 14 passages de mise au point notés par les deux. Tâche 1 : les 152 verdicts concordent. 9 des 21 désaccords portent sur une seule case (Mistral, tâche 3), où l’on ne revendique aucun gain.</span></p>
+   <p><span class="l-en"><strong>97.7% agreement</strong> on criterion verdicts, over 13 development runs with complete, error-free grading by both judges. On task 1: all 152 verdicts agree. Incomplete grades are excluded.</span><span class="l-fr"><strong>97,7 % d’accord</strong> sur les verdicts par critère, sur 13 passages de mise au point avec deux notations complètes sans erreur. Tâche 1 : les 152 verdicts concordent. Les notations incomplètes sont exclues.</span></p>
    <p><span class="l-en">No sign that the Claude judge grades Claude more leniently than the GPT judge does.</span><span class="l-fr">Aucun signe que le juge Claude note Claude plus favorablement que le juge GPT.</span></p>
   </div>
   <div class="card">
@@ -611,16 +611,16 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
      <tr><th scope="row">Claude Code<small><span class="l-en">with</span><span class="l-fr">avec</span></small></th><td class="num" data-en="T1 /38" data-fr="T1 /38">37</td><td class="num" data-en="T2 /52" data-fr="T2 /52">48 / 50</td><td class="num" data-en="T3 /33" data-fr="T3 /33">33<span class="pass">PASS</span></td></tr>
      <tr><th scope="row">Claude Code<small><span class="l-en">with the loop</span><span class="l-fr">avec la boucle</span></small></th><td data-en="T1 /38" data-fr="T1 /38"><span class="na">—</span></td><td class="num" data-en="T2 /52" data-fr="T2 /52">52<span class="pass">PASS</span></td><td data-en="T3 /33" data-fr="T3 /33"><span class="na">—</span></td></tr>
      <tr><th scope="row">Mistral Medium 3.5<small><span class="l-en">without</span><span class="l-fr">sans</span></small></th><td class="num from" data-en="T1 /38" data-fr="T1 /38">23 †</td><td class="num from" data-en="T2 /52" data-fr="T2 /52">38 / 36</td><td class="num from" data-en="T3 /33" data-fr="T3 /33">18 / 19</td></tr>
-     <tr><th scope="row">Mistral Medium 3.5<small><span class="l-en">with</span><span class="l-fr">avec</span></small></th><td class="num" data-en="T1 /38" data-fr="T1 /38">25 †</td><td class="num" data-en="T2 /52" data-fr="T2 /52">48</td><td class="num" data-en="T3 /33" data-fr="T3 /33">18 / 25</td></tr>
+     <tr><th scope="row">Mistral Medium 3.5<small><span class="l-en">with</span><span class="l-fr">avec</span></small></th><td class="num" data-en="T1 /38" data-fr="T1 /38">25 †</td><td class="num" data-en="T2 /52" data-fr="T2 /52">48</td><td class="num" data-en="T3 /33" data-fr="T3 /33">25 ‡</td></tr>
     </tbody>
    </table>
   </div>
-  <p class="source"><span class="l-en">† Graded by Claude Sonnet 5.5 only; dual grading pending.</span><span class="l-fr">† Noté par Claude Sonnet 5.5 seul ; double notation en attente.</span></p>
+  <p class="source"><span class="l-en">† Graded by Claude Sonnet 5.5 only. ‡ GPT-5.5 only: the Opus grade contains 8 errors and is excluded.</span><span class="l-fr">† Noté par Claude Sonnet 5.5 seul. ‡ GPT-5.5 seul : la notation Opus contient 8 erreurs et est exclue.</span></p>
   <div class="proto-grid">
    <div class="card"><span class="tag"><span class="l-en">What the method fixes: omissions</span><span class="l-fr">Ce que la méthode corrige : les oublis</span></span><p><span class="l-en"><strong>Legora, task 1.</strong> Without the method it finds every value discrepancy but misses all four closing deliverables the agreement requires (FIRPTA certificate, Northwind Aerospace consent, title insurance commitment, landlord estoppel). Those four omissions cost 11 of its 12 failed criteria. With the method: all four recovered, 38 / 38.</span><span class="l-fr"><strong>Legora, tâche 1.</strong> Sans la méthode, il trouve tous les écarts de valeur mais rate les quatre livrables de closing exigés par le contrat (certificat FIRPTA, consentement Northwind Aerospace, engagement d’assurance titre, attestation du bailleur). Ces quatre oublis coûtent 11 de ses 12 critères ratés. Avec la méthode : les quatre retrouvés, 38 / 38.</span></p></div>
    <div class="card"><span class="tag"><span class="l-en">The loop: judge, then send back</span><span class="l-fr">La boucle : juger, puis renvoyer</span></span><p><span class="l-en"><strong>Claude Code, task 2.</strong> An independent reviewer (Mistral Medium 3.5, no rubric) recomputed every figure by script. Claude Code checked each point, kept the one that held (a total stated as $4.8M whose components sum to $4.9M), set aside three wrong recomputations, and fixed its report in one round: 83 seconds, about $0.42. 48 → 52 / 52 for both judges.</span><span class="l-fr"><strong>Claude Code, tâche 2.</strong> Un relecteur indépendant (Mistral Medium 3.5, sans la grille) a recalculé chaque chiffre par script. Claude Code a vérifié chaque point, gardé celui qui tenait (un total annoncé à 4,8 M$ dont les composantes font 4,9 M$), écarté trois recalculs faux, et corrigé son rapport en un tour : 83 secondes, environ 0,42 $. 48 → 52 / 52 pour les deux juges.</span></p></div>
   </div>
-  <p class="note"><span class="l-en">When the agent already covers the task, the method adds constraints, not coverage: Claude Code loses one criterion on task 1. On Mistral task 3 the judges diverge (18 vs. 25 / 33), so we report no gain there.</span><span class="l-fr">Quand l’agent couvre déjà la tâche, la méthode ajoute des contraintes, pas de la couverture : Claude Code perd un critère sur la tâche 1. Sur la tâche 3 de Mistral, les juges divergent (18 contre 25 / 33) : on n’y revendique aucun gain.</span></p>
+  <p class="note"><span class="l-en">When the agent already covers the task, the method adds constraints, not coverage: Claude Code loses one criterion on task 1. For Mistral task 3 with the method, only GPT produced a complete grade (25 / 33); no two-judge gain is claimed.</span><span class="l-fr">Quand l’agent couvre déjà la tâche, la méthode ajoute des contraintes, pas de la couverture : Claude Code perd un critère sur la tâche 1. Pour Mistral avec la méthode sur la tâche 3, seul GPT fournit une note complète (25 / 33) ; aucun gain confirmé par deux juges n’est revendiqué.</span></p>
  </div>
 
  <!-- Orionis -->
@@ -637,7 +637,7 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
     </tbody>
    </table>
   </div>
-  <p class="note"><span class="l-en"><strong>The method changes nothing on recall</strong>, already near the ceiling on a room this size. What it changes: every quoted excerpt can be checked. Both judges agreed on all 16 anomalies in both runs. Excerpts too short to check were left out (45 without, 107 with), so the two proof rates do not cover the same excerpts.</span><span class="l-fr"><strong>La méthode ne change rien au rappel</strong>, déjà proche du plafond sur une data room de cette taille. Ce qu’elle change : chaque extrait cité est vérifiable. Les deux juges sont d’accord sur les 16 anomalies dans les deux passages. Les extraits trop courts pour être vérifiés sont exclus (45 sans, 107 avec) : les deux taux ne portent pas sur les mêmes extraits.</span></p>
+  <p class="note"><span class="l-en"><strong>The method changes nothing on recall</strong>, already near the ceiling on a room this size. What it changes: all sufficiently long quoted excerpts are found verbatim. Both judges agreed on all 16 anomalies in both runs. Excerpts too short to check were left out (45 without, 107 with), so the two proof rates do not cover the same excerpts.</span><span class="l-fr"><strong>La méthode ne change rien au rappel</strong>, déjà proche du plafond sur une data room de cette taille. Ce qu’elle change : tous les extraits cités assez longs sont retrouvés mot pour mot. Les deux juges sont d’accord sur les 16 anomalies dans les deux passages. Les extraits trop courts pour être vérifiés sont exclus (45 sans, 107 avec) : les deux taux ne portent pas sur les mêmes extraits.</span></p>
  </div>
 
  <!-- Test -->
@@ -649,7 +649,7 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
    <div><strong>3</strong><p><span class="l-en">running with the loop</span><span class="l-fr">en cours avec la boucle</span></p></div>
    <div><strong>1</strong><p><span class="l-en">Legora task complete, without and with its skill</span><span class="l-fr">tâche Legora terminée, sans et avec le skill</span></p></div>
   </div>
-  <p class="note"><span class="l-en">Grading with both judges is in progress. Tasks passed and criteria passed will be reported, without reading criterion-level results. One Claude Code run was flagged by the isolation detector and does not count.</span><span class="l-fr">La notation par les deux juges est en cours. On publiera tâches et critères réussis, sans lire le détail critère par critère. Un passage Claude Code a été signalé par le détecteur d’isolation et ne compte pas.</span></p>
+  <p class="note"><span class="l-en">Grading with both judges is in progress. Tasks passed and criteria passed will be reported, without reading criterion-level results. Two Claude Code runs were flagged by the isolation detector and do not count.</span><span class="l-fr">La notation par les deux juges est en cours. On publiera tâches et critères réussis, sans lire le détail critère par critère. Deux passages Claude Code ont été signalés par le détecteur d’isolation et ne comptent pas.</span></p>
  </div>
 </section>
 
@@ -684,10 +684,10 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
  <h2><span class="l-en">All the code is public.</span><span class="l-fr">Tout le code est public.</span></h2>
  <div class="repo frame">
   <div>
-   <p class="url">github.com/cedric190703/harness-law <span>· youssef/bench-revue</span></p>
+   <p class="url">github.com/cedric190703/harness-law <span>· main</span></p>
    <p><span class="l-en">Split file, runners, both judges, run identifiers and the French claim set. The LAB checkout itself is not committed.</span><span class="l-fr">Fichier de tirage, lanceurs, les deux juges, identifiants des passages et le jeu de phrases françaises. Le dépôt du LAB lui-même n’est pas versionné.</span></p>
   </div>
-  <a class="button" href="https://github.com/cedric190703/harness-law/tree/youssef/bench-revue" target="_blank" rel="noopener"><span class="l-en">Open the repository</span><span class="l-fr">Ouvrir le dépôt</span> <span aria-hidden="true">↗</span></a>
+  <a class="button" href="https://github.com/cedric190703/harness-law/tree/main" target="_blank" rel="noopener"><span class="l-en">Open the repository</span><span class="l-fr">Ouvrir le dépôt</span> <span aria-hidden="true">↗</span></a>
  </div>
 <pre><b># Harvey’s harness (Mistral), without and with the skill, two judges</b>
 python3 bench/run.py --model mistral-medium-3.5 --effort high \
@@ -695,7 +695,7 @@ python3 bench/run.py --model mistral-medium-3.5 --effort high \
 <b># Claude Code, isolated workspace, graded later</b>
 python3 bench/externe.py claude-code &lt;task&gt; --model sonnet [--skill] --pas-noter
 <b># French claim set</b>
-cd visa/app &amp;&amp; bun run check &amp;&amp; bun scripts/eval.ts</pre>
+cd saul/app &amp;&amp; bun run check &amp;&amp; bun scripts/eval.ts</pre>
 </section>
 </main>
 
@@ -704,7 +704,7 @@ cd visa/app &amp;&amp; bun run check &amp;&amp; bun scripts/eval.ts</pre>
  <a class="giant" href="index.html" aria-label="Saul, home">SAUL</a>
  <div class="foot-meta">
   <p><span class="l-en">LLM × LAW HACKATHON PARIS #2<br>STANFORD LAW × MISTRAL AI · 4 OCTOBER 2026</span><span class="l-fr">LLM × LAW HACKATHON PARIS #2<br>STANFORD LAW × MISTRAL AI · 4 OCTOBRE 2026</span></p>
-  <p><span class="l-en">Source of every figure: Saul working paper, version 2.</span><span class="l-fr">Source de chaque chiffre : papier de recherche Saul, version 2.</span></p>
+  <p><span class="l-en">Source of every figure: <a href="https://github.com/cedric190703/harness-law/blob/main/paper/saul-paper.md">Saul working paper, version 2</a>.</span><span class="l-fr">Source de chaque chiffre : <a href="https://github.com/cedric190703/harness-law/blob/main/paper/saul-paper.md">papier de recherche Saul, version 2</a>.</span></p>
  </div>
 </div></footer>
 
