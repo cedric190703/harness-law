@@ -1,0 +1,2440 @@
+{
+  "id": "audit-1791112353677",
+  "operation": "Projet Sodimex — acquisition de 100 % des titres",
+  "cible": "SODIMEX SAS, RCS Lyon 412 785 339",
+  "cote": "l'acquéreur",
+  "dateReference": "2026-10-04",
+  "lanceLe": "2026-10-04T11:12:33.677Z",
+  "dureeMs": 1180,
+  "moteur": {
+    "extraction": "motifs, puis vérification sur le fichier",
+    "modele": {
+      "disponible": false,
+      "cause": "quota",
+      "message": "La clé Mistral est valide mais son quota d'inférence est épuisé : l'extraction se fait par motifs, et chaque passage reste vérifié sur le fichier."
+    },
+    "droit": "Légifrance et Judilibre en direct (bac à sable)"
+  },
+  "etapes": [
+    {
+      "id": "triage",
+      "titre": "Triage de la data room",
+      "quoi": "Ouvrir chaque fichier, écarter les doublons et les brouillons, dire ce qui est illisible."
+    },
+    {
+      "id": "perimetre",
+      "titre": "Périmètre et liste de demandes",
+      "quoi": "Confronter ce qui est arrivé à ce qui a été demandé."
+    },
+    {
+      "id": "depouillement",
+      "titre": "Dépouillement par chantier",
+      "quoi": "Chercher, dans chaque document, les clauses que l'audit doit relever."
+    },
+    {
+      "id": "droit",
+      "titre": "Contrôle du droit applicable",
+      "quoi": "Vérifier sur Légifrance et Judilibre que la clause relevée tient en droit."
+    },
+    {
+      "id": "reponses",
+      "titre": "Épreuve des réponses du vendeur",
+      "quoi": "Confronter chaque réponse du vendeur aux documents."
+    },
+    {
+      "id": "spa",
+      "titre": "Traduction au contrat de cession",
+      "quoi": "Transformer chaque risque en garantie, condition suspensive ou ajustement de prix."
+    },
+    {
+      "id": "rapport",
+      "titre": "Rapport et couverture",
+      "quoi": "Classer par gravité et dire ce qui n'a pas été lu."
+    }
+  ],
+  "journal": [
+    {
+      "etape": "triage",
+      "etat": "en cours",
+      "detail": "Ouverture des fichiers de la data room.",
+      "a": "2026-10-04T11:12:32.767Z"
+    },
+    {
+      "etape": "triage",
+      "etat": "terminée",
+      "detail": "21 fichiers ouverts.",
+      "a": "2026-10-04T11:12:32.796Z"
+    },
+    {
+      "etape": "perimetre",
+      "etat": "en cours",
+      "detail": "Lecture de la liste de demandes.",
+      "a": "2026-10-04T11:12:32.796Z"
+    },
+    {
+      "etape": "perimetre",
+      "etat": "terminée",
+      "detail": "19 demandes, 13 non satisfaites.",
+      "a": "2026-10-04T11:12:32.796Z"
+    },
+    {
+      "etape": "depouillement",
+      "etat": "en cours",
+      "detail": "14 questions d'audit sur 6 chantiers.",
+      "a": "2026-10-04T11:12:32.797Z"
+    },
+    {
+      "etape": "depouillement",
+      "etat": "terminée",
+      "detail": "16 constats, 0 rejetés faute de passage retrouvé.",
+      "a": "2026-10-04T11:12:32.815Z"
+    },
+    {
+      "etape": "droit",
+      "etat": "en cours",
+      "detail": "Interrogation de Légifrance et Judilibre.",
+      "a": "2026-10-04T11:12:32.815Z"
+    },
+    {
+      "etape": "droit",
+      "etat": "terminée",
+      "detail": "1 constats appuyés sur le texte officiel.",
+      "a": "2026-10-04T11:12:33.675Z"
+    },
+    {
+      "etape": "reponses",
+      "etat": "en cours",
+      "detail": "6 réponses du vendeur à éprouver.",
+      "a": "2026-10-04T11:12:33.676Z"
+    },
+    {
+      "etape": "reponses",
+      "etat": "terminée",
+      "detail": "5 réponses sur 6 contredites par les documents.",
+      "a": "2026-10-04T11:12:33.676Z"
+    },
+    {
+      "etape": "spa",
+      "etat": "en cours",
+      "detail": "Traduction des risques en mécanismes de cession.",
+      "a": "2026-10-04T11:12:33.676Z"
+    },
+    {
+      "etape": "spa",
+      "etat": "terminée",
+      "detail": "10 mécanismes proposés.",
+      "a": "2026-10-04T11:12:33.676Z"
+    },
+    {
+      "etape": "rapport",
+      "etat": "en cours",
+      "detail": "Classement par gravité et calcul de la couverture.",
+      "a": "2026-10-04T11:12:33.676Z"
+    },
+    {
+      "etape": "rapport",
+      "etat": "terminée",
+      "detail": "16 constats classés.",
+      "a": "2026-10-04T11:12:33.677Z"
+    }
+  ],
+  "documents": [
+    {
+      "id": "D01",
+      "chemin": "01 - Corporate/PV_AG_2024_06_12.txt",
+      "nom": "PV_AG_2024_06_12.txt",
+      "dossier": "01 - Corporate",
+      "extension": ".txt",
+      "octets": 987,
+      "empreinte": "7edf0cc45ca291d3",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 24,
+      "pages": 1
+    },
+    {
+      "id": "D02",
+      "chemin": "01 - Corporate/Statuts_SODIMEX_2019.txt",
+      "nom": "Statuts_SODIMEX_2019.txt",
+      "dossier": "01 - Corporate",
+      "extension": ".txt",
+      "octets": 1436,
+      "empreinte": "15042c039f9d4651",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 32,
+      "pages": 2
+    },
+    {
+      "id": "D03",
+      "chemin": "01 - Corporate/registre mouvements titres.txt",
+      "nom": "registre mouvements titres.txt",
+      "dossier": "01 - Corporate",
+      "extension": ".txt",
+      "octets": 830,
+      "empreinte": "18f724bd8decbdac",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 18,
+      "pages": 1
+    },
+    {
+      "id": "D04",
+      "chemin": "02 - Contrats commerciaux/AVENANT 2 metalux.txt",
+      "nom": "AVENANT 2 metalux.txt",
+      "dossier": "02 - Contrats commerciaux",
+      "extension": ".txt",
+      "octets": 968,
+      "empreinte": "78beb5c77560bad9",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "avenant",
+      "motifTri": "Avenant : il modifie un contrat qu'il faut retrouver pour lire le texte en vigueur.",
+      "parentDe": "02 - Contrats commerciaux/Contrat_fourniture_METALUX_2021.txt",
+      "lignes": 25,
+      "pages": 1
+    },
+    {
+      "id": "D05",
+      "chemin": "02 - Contrats commerciaux/Bail_Venissieux_signe_2024.txt",
+      "nom": "Bail_Venissieux_signe_2024.txt",
+      "dossier": "02 - Contrats commerciaux",
+      "extension": ".txt",
+      "octets": 1187,
+      "empreinte": "08d4c9a42dba8a27",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 33,
+      "pages": 2
+    },
+    {
+      "id": "D06",
+      "chemin": "02 - Contrats commerciaux/Contrat_fourniture_METALUX_2021.txt",
+      "nom": "Contrat_fourniture_METALUX_2021.txt",
+      "dossier": "02 - Contrats commerciaux",
+      "extension": ".txt",
+      "octets": 1767,
+      "empreinte": "e13fdf8ec02618c3",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "avenants": [
+        "02 - Contrats commerciaux/AVENANT 2 metalux.txt"
+      ],
+      "lignes": 43,
+      "pages": 2
+    },
+    {
+      "id": "D07",
+      "chemin": "02 - Contrats commerciaux/PROJET bail Venissieux NE PAS SIGNER.txt",
+      "nom": "PROJET bail Venissieux NE PAS SIGNER.txt",
+      "dossier": "02 - Contrats commerciaux",
+      "extension": ".txt",
+      "octets": 977,
+      "empreinte": "2c75a61282d7923a",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "ecarte",
+      "motifTri": "Brouillon non signé : mention « ne pas signer » en tête et aucune signature au document.",
+      "parentDe": null,
+      "lignes": 30,
+      "pages": 2
+    },
+    {
+      "id": "D08",
+      "chemin": "02 - Contrats commerciaux/contrat metalux signé FINAL v2.txt",
+      "nom": "contrat metalux signé FINAL v2.txt",
+      "dossier": "02 - Contrats commerciaux",
+      "extension": ".txt",
+      "octets": 1204,
+      "empreinte": "bd4b7cd59d716a16",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "ecarte",
+      "motifTri": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19.",
+      "parentDe": null,
+      "lignes": 32,
+      "pages": 2
+    },
+    {
+      "id": "D09",
+      "chemin": "02 - Contrats commerciaux/contrat_cadre_DISTRILEC_2023.txt",
+      "nom": "contrat_cadre_DISTRILEC_2023.txt",
+      "dossier": "02 - Contrats commerciaux",
+      "extension": ".txt",
+      "octets": 1001,
+      "empreinte": "b968a5a667847a4f",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 28,
+      "pages": 1
+    },
+    {
+      "id": "D10",
+      "chemin": "03_SOCIAL/CT_LEFEVRE_cadre.txt",
+      "nom": "CT_LEFEVRE_cadre.txt",
+      "dossier": "03_SOCIAL",
+      "extension": ".txt",
+      "octets": 986,
+      "empreinte": "2ee7922775fca623",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 27,
+      "pages": 1
+    },
+    {
+      "id": "D11",
+      "chemin": "03_SOCIAL/accord interessement 2023.txt",
+      "nom": "accord interessement 2023.txt",
+      "dossier": "03_SOCIAL",
+      "extension": ".txt",
+      "octets": 721,
+      "empreinte": "51bde787e7dacc13",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 20,
+      "pages": 1
+    },
+    {
+      "id": "D12",
+      "chemin": "03_SOCIAL/liste effectifs 30 09 2026.txt",
+      "nom": "liste effectifs 30 09 2026.txt",
+      "dossier": "03_SOCIAL",
+      "extension": ".txt",
+      "octets": 563,
+      "empreinte": "ee3421c48ecd117d",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 16,
+      "pages": 1
+    },
+    {
+      "id": "D13",
+      "chemin": "04 - Fiscal/controle fiscal 2023 proposition rectification.txt",
+      "nom": "controle fiscal 2023 proposition rectification.txt",
+      "dossier": "04 - Fiscal",
+      "extension": ".txt",
+      "octets": 1121,
+      "empreinte": "24381ef3212ea90a",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 26,
+      "pages": 1
+    },
+    {
+      "id": "D14",
+      "chemin": "04 - Fiscal/liasse_2025_extrait.txt",
+      "nom": "liasse_2025_extrait.txt",
+      "dossier": "04 - Fiscal",
+      "extension": ".txt",
+      "octets": 918,
+      "empreinte": "291bc28405b5b9a0",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 20,
+      "pages": 1
+    },
+    {
+      "id": "D15",
+      "chemin": "05 - Contentieux/assignation prud hommes MERCIER.txt",
+      "nom": "assignation prud hommes MERCIER.txt",
+      "dossier": "05 - Contentieux",
+      "extension": ".txt",
+      "octets": 984,
+      "empreinte": "d936d7f0eb694318",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 28,
+      "pages": 1
+    },
+    {
+      "id": "D16",
+      "chemin": "05 - Contentieux/mise en demeure METALUX 2026.txt",
+      "nom": "mise en demeure METALUX 2026.txt",
+      "dossier": "05 - Contentieux",
+      "extension": ".txt",
+      "octets": 942,
+      "empreinte": "2bbbec255a3a4f73",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 29,
+      "pages": 2
+    },
+    {
+      "id": "D17",
+      "chemin": "06 - Divers/Doc1_final_v3.pdf",
+      "nom": "Doc1_final_v3.pdf",
+      "dossier": "06 - Divers",
+      "extension": ".pdf",
+      "octets": 2000,
+      "empreinte": "e89abde0d1512042",
+      "lisible": false,
+      "motifIllisible": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
+      "role": "illisible",
+      "motifTri": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
+      "parentDe": null,
+      "lignes": 0,
+      "pages": 0
+    },
+    {
+      "id": "D18",
+      "chemin": "06 - Divers/scan garantie BRE (1).png",
+      "nom": "scan garantie BRE (1).png",
+      "dossier": "06 - Divers",
+      "extension": ".png",
+      "octets": 427647,
+      "empreinte": "155b1c96c6f39d0b",
+      "lisible": false,
+      "aReconnaitre": true,
+      "motifIllisible": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
+      "role": "illisible",
+      "motifTri": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
+      "parentDe": null,
+      "lignes": 0,
+      "pages": 0
+    },
+    {
+      "id": "D19",
+      "chemin": "06 - Divers/sous-traitance DISTRILEC donnees.txt",
+      "nom": "sous-traitance DISTRILEC donnees.txt",
+      "dossier": "06 - Divers",
+      "extension": ".txt",
+      "octets": 1009,
+      "empreinte": "028b2ae10eeca89a",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "retenu",
+      "motifTri": null,
+      "parentDe": null,
+      "lignes": 27,
+      "pages": 1
+    },
+    {
+      "id": "D20",
+      "chemin": "07 - Q&R vendeur/liste de demandes - serie 1.txt",
+      "nom": "liste de demandes - serie 1.txt",
+      "dossier": "07 - Q&R vendeur",
+      "extension": ".txt",
+      "octets": 1702,
+      "empreinte": "7c733c29ff74d40e",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "liste-demandes",
+      "motifTri": "Liste de demandes : elle fixe le périmètre et sert à dire ce qui manque.",
+      "parentDe": null,
+      "lignes": 37,
+      "pages": 2
+    },
+    {
+      "id": "D21",
+      "chemin": "07 - Q&R vendeur/reponses vendeur serie 1.txt",
+      "nom": "reponses vendeur serie 1.txt",
+      "dossier": "07 - Q&R vendeur",
+      "extension": ".txt",
+      "octets": 1522,
+      "empreinte": "ab0f13235c61d9dc",
+      "lisible": true,
+      "aReconnaitre": false,
+      "role": "reponses-vendeur",
+      "motifTri": "Réponses du vendeur : chaque affirmation est éprouvée contre les documents.",
+      "parentDe": null,
+      "lignes": 33,
+      "pages": 2
+    }
+  ],
+  "chantiers": [
+    {
+      "id": "corporate",
+      "nom": "Corporate",
+      "quoi": "Titres, pouvoirs, organes"
+    },
+    {
+      "id": "contrats",
+      "nom": "Contrats commerciaux",
+      "quoi": "Clients, fournisseurs, baux"
+    },
+    {
+      "id": "social",
+      "nom": "Social",
+      "quoi": "Contrats de travail, accords collectifs"
+    },
+    {
+      "id": "fiscal",
+      "nom": "Fiscal",
+      "quoi": "Liasses, contrôles, crédits d'impôt"
+    },
+    {
+      "id": "contentieux",
+      "nom": "Contentieux",
+      "quoi": "Procédures et mises en demeure"
+    },
+    {
+      "id": "donnees",
+      "nom": "Données personnelles",
+      "quoi": "Traitements et sous-traitance"
+    }
+  ],
+  "demandes": {
+    "lignes": [
+      {
+        "code": "C1",
+        "quoi": "Statuts à jour",
+        "etat": "reçu",
+        "detail": "reçu"
+      },
+      {
+        "code": "C2",
+        "quoi": "Procès-verbaux des trois derniers exercices",
+        "etat": "partiel",
+        "detail": "reçu, 2024 seulement"
+      },
+      {
+        "code": "C3",
+        "quoi": "Registre des mouvements de titres",
+        "etat": "reçu",
+        "detail": "reçu"
+      },
+      {
+        "code": "C4",
+        "quoi": "Procès-verbaux d'agrément des cessions",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "C5",
+        "quoi": "Pactes d'associés",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "K1",
+        "quoi": "Dix premiers contrats clients et fournisseurs",
+        "etat": "partiel",
+        "detail": "reçu, 2 contrats"
+      },
+      {
+        "code": "K2",
+        "quoi": "Avenants à ces contrats",
+        "etat": "partiel",
+        "detail": "reçu, 1 avenant"
+      },
+      {
+        "code": "K3",
+        "quoi": "Baux des trois sites d'exploitation",
+        "etat": "partiel",
+        "detail": "reçu, 1 bail sur 3"
+      },
+      {
+        "code": "K4",
+        "quoi": "Contrats de financement et crédits-baux",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "S1",
+        "quoi": "Contrats de travail des cadres dirigeants",
+        "etat": "partiel",
+        "detail": "reçu, 1 sur 4"
+      },
+      {
+        "code": "S2",
+        "quoi": "Accords collectifs en vigueur",
+        "etat": "reçu",
+        "detail": "reçu"
+      },
+      {
+        "code": "S3",
+        "quoi": "Liste des effectifs",
+        "etat": "reçu",
+        "detail": "reçu"
+      },
+      {
+        "code": "S4",
+        "quoi": "Documents uniques d'évaluation des risques",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "F1",
+        "quoi": "Liasses fiscales des trois derniers exercices",
+        "etat": "partiel",
+        "detail": "reçu, 2025 seulement"
+      },
+      {
+        "code": "F3",
+        "quoi": "Réponse de l'administration et suites",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "L1",
+        "quoi": "État des contentieux en cours",
+        "etat": "reçu",
+        "detail": "reçu partiellement"
+      },
+      {
+        "code": "L2",
+        "quoi": "Mises en demeure reçues ou adressées",
+        "etat": "reçu",
+        "detail": "reçu"
+      },
+      {
+        "code": "D1",
+        "quoi": "Registre des traitements",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "D2",
+        "quoi": "Actes de sous-traitance article 28 RGPD",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      }
+    ],
+    "manquants": [
+      {
+        "code": "C2",
+        "quoi": "Procès-verbaux des trois derniers exercices",
+        "etat": "partiel",
+        "detail": "reçu, 2024 seulement"
+      },
+      {
+        "code": "C4",
+        "quoi": "Procès-verbaux d'agrément des cessions",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "C5",
+        "quoi": "Pactes d'associés",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "K1",
+        "quoi": "Dix premiers contrats clients et fournisseurs",
+        "etat": "partiel",
+        "detail": "reçu, 2 contrats"
+      },
+      {
+        "code": "K2",
+        "quoi": "Avenants à ces contrats",
+        "etat": "partiel",
+        "detail": "reçu, 1 avenant"
+      },
+      {
+        "code": "K3",
+        "quoi": "Baux des trois sites d'exploitation",
+        "etat": "partiel",
+        "detail": "reçu, 1 bail sur 3"
+      },
+      {
+        "code": "K4",
+        "quoi": "Contrats de financement et crédits-baux",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "S1",
+        "quoi": "Contrats de travail des cadres dirigeants",
+        "etat": "partiel",
+        "detail": "reçu, 1 sur 4"
+      },
+      {
+        "code": "S4",
+        "quoi": "Documents uniques d'évaluation des risques",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "F1",
+        "quoi": "Liasses fiscales des trois derniers exercices",
+        "etat": "partiel",
+        "detail": "reçu, 2025 seulement"
+      },
+      {
+        "code": "F3",
+        "quoi": "Réponse de l'administration et suites",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "D1",
+        "quoi": "Registre des traitements",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      },
+      {
+        "code": "D2",
+        "quoi": "Actes de sous-traitance article 28 RGPD",
+        "etat": "manquant",
+        "detail": "NON REÇU"
+      }
+    ],
+    "document": "D20"
+  },
+  "constats": [
+    {
+      "id": "CONT-01.2",
+      "sonde": "CONT-01",
+      "chantier": "contrats",
+      "question": "Clause de changement de contrôle",
+      "pourquoi": "C'est la clause qui peut faire perdre un contrat le jour du closing. On la cherche dans chaque contrat.",
+      "valeur": "Résiliation de plein droit, sans indemnité, sauf accord écrit préalable",
+      "redaction": "Le contrat est résilié de plein droit et sans indemnité en cas de changement direct ou indirect du contrôle de la cible, sauf accord préalable et écrit du cocontractant. Le contrat impose en outre une information au moins soixante jours avant la réalisation. L'opération projetée déclenche cette stipulation.",
+      "gravite": "critique",
+      "impact": "Perte possible de la distribution exclusive, qui est l'actif commercial principal de la cible. Le délai de prévenance de soixante jours doit être tenu avant la réalisation.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "condition suspensive",
+        "redaction": "Obtention de l'accord écrit et préalable de Metalux Industrie SA au changement de contrôle, et respect du délai de prévenance de soixante jours stipulé à l'article 14.2."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D05",
+          "D06"
+        ],
+        "retenu": "D06",
+        "nomRetenu": "Contrat_fourniture_METALUX_2021.txt",
+        "cheminRetenu": "02 - Contrats commerciaux/Contrat_fourniture_METALUX_2021.txt",
+        "page": 2,
+        "ligne": 35,
+        "clause": "Article 14.2 — RÉSILIATION",
+        "extrait": "14.2 — Le contrat sera résilié de plein droit, sans indemnité, en cas de\nchangement direct ou indirect du contrôle du Distributeur au sens de\nl'article L. 233-3 du code de commerce, sauf accord préalable et écrit du\nFournisseur. Le Distributeur informe le Fournisseur de tout projet de cette\nnature au moins soixante (60) jours avant sa réalisation.",
+        "motif": "changement\\s+(?:direct\\s+ou\\s+indirect\\s+)?d[eu]\\s+contrôle",
+        "ecartes": [
+          {
+            "document": "D05",
+            "nom": "Bail_Venissieux_signe_2024.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          },
+          {
+            "document": "D07",
+            "nom": "PROJET bail Venissieux NE PAS SIGNER.txt",
+            "pourquoi": "Brouillon non signé : mention « ne pas signer » en tête et aucune signature au document."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "FISC-01",
+      "sonde": "FISC-01",
+      "chantier": "fiscal",
+      "question": "Contrôle fiscal : rappels et état de la procédure",
+      "pourquoi": "Un contrôle non clos est une dette latente dont il faut connaître le montant et le stade.",
+      "valeur": "195 300 € de rappels (IS 126 000, intérêts 18 900, majoration 40 % 50 400), contestés, procédure non close",
+      "redaction": "Une proposition de rectification du 14 novembre 2023 porte sur la déductibilité de redevances de marque versées à une société luxembourgeoise du groupe. Les rappels s'élèvent à 195 300 euros, dont une majoration de 40 % pour manquement délibéré. La société a contesté le 12 janvier 2024 ; aucune réponse de l'administration ne figure au dossier et la procédure n'est pas close. La réponse Q6 du vendeur, qui affirme le contrôle clos sans redressement, est contredite par la pièce.",
+      "gravite": "critique",
+      "impact": "Dette fiscale latente de 195 300 €, non provisionnée. La majoration pour manquement délibéré signale un risque de requalification sur les exercices postérieurs, les redevances ayant continué d'être versées.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "garantie",
+        "redaction": "Garantie fiscale spécifique du vendeur couvrant l'intégralité des conséquences de la proposition de rectification du 14 novembre 2023, y compris sur les exercices non vérifiés, sans franchise ni plafond et jusqu'à l'expiration du délai de reprise."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D13"
+        ],
+        "retenu": "D13",
+        "nomRetenu": "controle fiscal 2023 proposition rectification.txt",
+        "cheminRetenu": "04 - Fiscal/controle fiscal 2023 proposition rectification.txt",
+        "page": 1,
+        "ligne": 16,
+        "clause": null,
+        "extrait": "RAPPELS\nImpôt sur les sociétés                           126 000 €\nIntérêts de retard                                18 900 €\nMajoration de 40 % pour manquement délibéré       50 400 €\nTOTAL                                            195 300 €",
+        "motif": "TOTAL\\s+195 300",
+        "ecartes": []
+      },
+      "relu": false
+    },
+    {
+      "id": "CORP-01.2",
+      "sonde": "CORP-01",
+      "chantier": "corporate",
+      "question": "Agrément des cessions d'actions",
+      "pourquoi": "Une cession non agréée fragilise la chaîne de propriété des titres que l'acquéreur achète.",
+      "valeur": "Cession du 3 mars 2024 (8 000 actions) inscrite sans procès-verbal d'agrément",
+      "redaction": "Le teneur du registre relève que la cession du 3 mars 2024 au profit de Participations Gerland a été inscrite sans que le procès-verbal d'agrément statutaire soit joint. La régularité de cette cession, qui porte sur 8 000 actions, n'est pas établie en l'état du dossier. Le procès-verbal d'agrément a été demandé (C4) et n'a pas été communiqué.",
+      "gravite": "élevée",
+      "impact": "La chaîne de propriété de 8 000 actions, soit 3,3 % du capital, n'est pas purgée. L'associé évincé de son droit de préemption pourrait demander la nullité de la cession.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "condition suspensive",
+        "redaction": "Remise, avant la date de réalisation, du procès-verbal d'agrément de la cession du 3 mars 2024 ou, à défaut, d'une ratification expresse par la collectivité des associés et d'une renonciation des associés à leur droit de préemption."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D02",
+          "D03"
+        ],
+        "retenu": "D03",
+        "nomRetenu": "registre mouvements titres.txt",
+        "cheminRetenu": "01 - Corporate/registre mouvements titres.txt",
+        "page": 1,
+        "ligne": 15,
+        "clause": null,
+        "extrait": "Observation portée par le teneur de registre : la cession du 3 mars 2024 au\nprofit de Participations Gerland a été inscrite sans que soit joint le\nprocès-verbal d'agrément prévu à l'article 11 des statuts.",
+        "motif": "agr[ée]ment",
+        "ecartes": [
+          {
+            "document": "D02",
+            "nom": "Statuts_SODIMEX_2019.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CORP-03",
+      "sonde": "CORP-03",
+      "chantier": "corporate",
+      "question": "Sûretés et engagements hors bilan",
+      "pourquoi": "Une garantie autonome engage la cible sans figurer à son bilan, et le président ne peut la consentir seul.",
+      "valeur": "Montant de la garantie : non établi",
+      "redaction": "La convention de garantie elle-même n'a pas pu être lue : le seul exemplaire versé est un scan sans couche de texte. Le montant de l'engagement, sa durée et son caractère autonome ou accessoire ne sont donc pas établis par le dossier. Le vendeur avance 500 000 euros en réponse Q3, sans pièce à l'appui.",
+      "gravite": "élevée",
+      "impact": "Un engagement hors bilan de montant inconnu. Tant que la pièce n'est pas lisible, le chiffre du vendeur ne peut pas être repris au rapport.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "condition suspensive",
+        "redaction": "Remise d'un exemplaire lisible et complet de la convention de garantie consentie à la Banque Régionale de l'Est, et déclaration du vendeur sur le montant maximum de l'engagement."
+      },
+      "nonEtabli": true,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D01"
+        ],
+        "retenu": "D18",
+        "nomRetenu": "scan garantie BRE (1).png",
+        "cheminRetenu": "06 - Divers/scan garantie BRE (1).png",
+        "page": null,
+        "ligne": null,
+        "clause": null,
+        "extrait": null,
+        "motif": null,
+        "ecartes": [
+          {
+            "document": "D01",
+            "nom": "PV_AG_2024_06_12.txt",
+            "pourquoi": "Lu, mais il ne porte pas l'information recherchée."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CONT-01.1",
+      "sonde": "CONT-01",
+      "chantier": "contrats",
+      "question": "Clause de changement de contrôle",
+      "pourquoi": "C'est la clause qui peut faire perdre un contrat le jour du closing. On la cherche dans chaque contrat.",
+      "valeur": "Changement de contrôle assimilé à une cession : accord du bailleur requis",
+      "redaction": "Le changement de contrôle du preneur est assimilé à une cession du bail et requiert l'accord écrit préalable du bailleur. À défaut, le bailleur peut demander la résiliation.",
+      "gravite": "élevée",
+      "impact": "Perte possible du bail du site d'exploitation principal.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "condition suspensive",
+        "redaction": "Obtention de l'accord écrit et préalable de la SCI Les Terrasses au changement de contrôle du preneur."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D05",
+          "D06"
+        ],
+        "retenu": "D05",
+        "nomRetenu": "Bail_Venissieux_signe_2024.txt",
+        "cheminRetenu": "02 - Contrats commerciaux/Bail_Venissieux_signe_2024.txt",
+        "page": 1,
+        "ligne": 21,
+        "clause": "Article 9 — CESSION DU BAIL",
+        "extrait": "ARTICLE 9 — CESSION DU BAIL\nLe Preneur ne peut céder son droit au bail qu'avec l'accord écrit et préalable\ndu Bailleur. Le changement de contrôle du Preneur est assimilé à une cession\nau sens du présent article. À défaut d'accord, le Bailleur peut demander la\nrésiliation du bail.",
+        "motif": "changement\\s+(?:direct\\s+ou\\s+indirect\\s+)?d[eu]\\s+contrôle",
+        "ecartes": [
+          {
+            "document": "D06",
+            "nom": "Contrat_fourniture_METALUX_2021.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          },
+          {
+            "document": "D07",
+            "nom": "PROJET bail Venissieux NE PAS SIGNER.txt",
+            "pourquoi": "Brouillon non signé : mention « ne pas signer » en tête et aucune signature au document."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CONT-02.2",
+      "sonde": "CONT-02",
+      "chantier": "contrats",
+      "question": "Engagement de volume minimum",
+      "pourquoi": "Un engagement de volume se paie quand il n'est pas tenu. Et c'est souvent un avenant qui en fixe le chiffre.",
+      "valeur": "Indemnité réclamée au titre de 2025 : 42 340 €",
+      "redaction": "Metalux a mis la cible en demeure le 3 septembre 2026 de régler 42 340 euros au titre du déficit de volume de l'exercice 2025 (730 tonnes à 58 euros). La mise en demeure réserve expressément l'application de l'article 14.1, soit la résiliation pour manquement grave. Aucune provision ne figure au bilan à ce titre.",
+      "gravite": "élevée",
+      "impact": "Dette exigible de 42 340 €, non provisionnée, assortie d'un risque de résiliation du contrat de distribution exclusive.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "ajustement de prix",
+        "redaction": "Réduction du prix à hauteur de 42 340 euros, ou inscription de cette somme au compte séquestre jusqu'au règlement de la mise en demeure Metalux du 3 septembre 2026."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D04",
+          "D06",
+          "D16"
+        ],
+        "retenu": "D16",
+        "nomRetenu": "mise en demeure METALUX 2026.txt",
+        "cheminRetenu": "05 - Contentieux/mise en demeure METALUX 2026.txt",
+        "page": 1,
+        "ligne": 16,
+        "clause": null,
+        "extrait": "Les volumes effectivement commandés au titre de l'exercice 2025 s'élèvent à\n4 870 tonnes, soit un déficit de 730 tonnes.",
+        "motif": "déficit de\\s+\\d",
+        "ecartes": [
+          {
+            "document": "D04",
+            "nom": "AVENANT 2 metalux.txt",
+            "pourquoi": "Avenant : lu pour établir le texte en vigueur."
+          },
+          {
+            "document": "D06",
+            "nom": "Contrat_fourniture_METALUX_2021.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          },
+          {
+            "document": "D08",
+            "nom": "contrat metalux signé FINAL v2.txt",
+            "pourquoi": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "SOC-01",
+      "sonde": "SOC-01",
+      "chantier": "social",
+      "question": "Clause de non-concurrence : contrepartie financière",
+      "pourquoi": "Sans contrepartie financière, la clause est nulle et le salarié n'est pas tenu. C'est la cible qui perd sa protection.",
+      "valeur": "Clause de 24 mois sur toute la France, sans aucune contrepartie financière",
+      "redaction": "Le contrat du directeur commercial comporte une clause de non-concurrence de vingt-quatre mois couvrant l'ensemble du territoire français, sans aucune contrepartie financière. Une clause de non-concurrence n'est licite qu'à la condition, notamment, de comporter une contrepartie financière, ces conditions étant cumulatives. La clause est donc nulle et ne protège pas la cible.",
+      "gravite": "élevée",
+      "impact": "La cible n'est pas protégée contre le départ de son directeur commercial vers un concurrent. Symétriquement, le salarié qui aurait respecté une clause nulle peut réclamer des dommages-intérêts.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "garantie",
+        "redaction": "Déclaration et garantie du vendeur sur la validité des clauses de non-concurrence liant les cadres dirigeants, et prise en charge de toute condamnation au titre d'une clause nulle. À défaut, régularisation des quatre clauses par avenant avant la réalisation."
+      },
+      "nonEtabli": false,
+      "droit": {
+        "demande": {
+          "article": {
+            "code": "code du travail",
+            "numero": "L1121-1"
+          },
+          "jurisprudence": "clause de non-concurrence contrepartie financière nulle"
+        },
+        "resultat": {
+          "verifie": true,
+          "article": {
+            "reference": "Article L. 1121-1 du code du travail",
+            "identifiant": "LEGIARTI000006900785",
+            "etat": "en vigueur",
+            "texte": "Nul ne peut apporter aux droits des personnes et aux libertés individuelles et collectives de restrictions qui ne seraient pas justifiées par la nature de la tâche à accomplir ni proportionnées au but recherché.",
+            "lien": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006900785",
+            "versionApplicable": {
+              "debut": "2008-05-01",
+              "fin": null,
+              "texte": "Nul ne peut apporter aux droits des personnes et aux libertés individuelles et collectives de restrictions qui ne seraient pas justifiées par la nature de la tâche à accomplir ni proportionnées au but recherché."
+            },
+            "nombreVersions": 1
+          },
+          "jurisprudence": {
+            "total": 706,
+            "decisions": [
+              {
+                "numero": "08-43.056",
+                "date": "2010-04-08",
+                "juridiction": "cc",
+                "chambre": "soc",
+                "resume": "C'est en ses seules stipulations minorant en cas de licenciement pour faute la contrepartie financière qu'une clause de non-concurrence est réputée non écrite.\nDoit donc être cassé l'arrêt qui juge nulle en son entier une clause de non-concurrence minorant l'indemnité en cas de licenciement disciplinaire",
+                "lien": "https://www.courdecassation.fr/recherche-judilibre?search_api_fulltext=08-43.056"
+              },
+              {
+                "numero": "09-68.537",
+                "date": "2011-09-28",
+                "juridiction": "cc",
+                "chambre": "soc",
+                "resume": "La validité de la clause de non-concurrence doit être appréciée à la date de sa conclusion et la convention collective intervenue postérieurement ne peut avoir pour effet de couvrir la nullité qui l'affecte",
+                "lien": "https://www.courdecassation.fr/recherche-judilibre?search_api_fulltext=09-68.537"
+              },
+              {
+                "numero": "14-19.029",
+                "date": "2015-12-02",
+                "juridiction": "cc",
+                "chambre": "soc",
+                "resume": "Ayant relevé que la clause de non-concurrence réservait à l'employeur la faculté de renoncer à tout moment, avant ou pendant la période d'interdiction, aux obligations qu'elle faisait peser sur le salarié et retenu que ce dernier avait été laissé dans l'incertitude quant à l'étendue de sa liberté de travailler, la cour d'appel en a exactement déduit que la clause devait être annulée en son ensemble",
+                "lien": "https://www.courdecassation.fr/recherche-judilibre?search_api_fulltext=14-19.029"
+              }
+            ]
+          },
+          "base": "Légifrance et Judilibre, bac à sable",
+          "a": "2026-10-04T11:12:33.675Z"
+        }
+      },
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D10",
+          "D12",
+          "D15"
+        ],
+        "retenu": "D10",
+        "nomRetenu": "CT_LEFEVRE_cadre.txt",
+        "cheminRetenu": "03_SOCIAL/CT_LEFEVRE_cadre.txt",
+        "page": 1,
+        "ligne": 22,
+        "clause": "Article 9 — CLAUSE DE NON-CONCURRENCE",
+        "extrait": "Aucune contrepartie financière n'est stipulée au titre de la présente clause.",
+        "motif": "Aucune contrepartie financière n'est stipulée",
+        "ecartes": [
+          {
+            "document": "D12",
+            "nom": "liste effectifs 30 09 2026.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          },
+          {
+            "document": "D15",
+            "nom": "assignation prud hommes MERCIER.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "SOC-03",
+      "sonde": "SOC-03",
+      "chantier": "social",
+      "question": "Contrats de travail non communiqués",
+      "pourquoi": "On ne conclut pas sur ce qu'on n'a pas lu : il faut dire combien de contrats manquent.",
+      "valeur": "3 des 4 contrats de cadres soumis à non-concurrence manquent",
+      "redaction": "Quatre cadres sont soumis à une clause de non-concurrence. Un seul contrat a été versé à la data room, et sa clause est nulle faute de contrepartie. Les trois autres n'ont pas été communiqués : rien ne permet d'affirmer qu'ils sont valables, et le vendeur soutient le contraire en réponse Q5.",
+      "gravite": "élevée",
+      "impact": "Le risque porté par les trois clauses non communiquées n'est pas chiffrable en l'état. Si elles reprennent la rédaction du contrat examiné, les quatre clauses sont nulles.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "condition suspensive",
+        "redaction": "Communication des contrats de travail de MM. Damiens et de Mmes Royer et Tual avant la réalisation, et régularisation des clauses de non-concurrence dépourvues de contrepartie financière."
+      },
+      "nonEtabli": true,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D12"
+        ],
+        "retenu": "D12",
+        "nomRetenu": "liste effectifs 30 09 2026.txt",
+        "cheminRetenu": "03_SOCIAL/liste effectifs 30 09 2026.txt",
+        "page": 1,
+        "ligne": 11,
+        "clause": null,
+        "extrait": "Cadres soumis à une clause de non-concurrence : 4 (MM. Lefèvre, Damiens,\nMmes Royer et Tual). Les contrats de MM. Damiens et de Mmes Royer et Tual\nn'ont pas été versés à la data room.",
+        "motif": "n'ont pas été versés à la data room",
+        "ecartes": []
+      },
+      "relu": false
+    },
+    {
+      "id": "RGPD-01",
+      "sonde": "RGPD-01",
+      "chantier": "donnees",
+      "question": "Acte de sous-traitance au sens de l'article 28 du RGPD",
+      "pourquoi": "Confier des données sans acte de sous-traitance est une infraction autonome, sanctionnable indépendamment de tout incident.",
+      "valeur": "Aucun acte article 28 avec le prestataire logistique ; 52 000 personnes concernées par an",
+      "redaction": "Le prestataire logistique traite pour le compte de la cible les données de 52 000 destinataires de livraison par an. Aucun acte juridique au sens de l'article 28.3 du règlement (UE) 2016/679 n'a été conclu : le contrat cadre mentionne la sous-traitance à son article 12 sans comporter les clauses requises. Le prestataire recourt en outre à des transporteurs tiers sans autorisation écrite préalable. Le registre des traitements n'est plus à jour depuis mars 2025.",
+      "gravite": "élevée",
+      "impact": "L'absence d'acte de sous-traitance est un manquement sanctionnable par la CNIL indépendamment de toute violation de données. Le registre non tenu prive la cible de son moyen de preuve de conformité.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "condition suspensive",
+        "redaction": "Conclusion, avant la réalisation, d'un acte de sous-traitance conforme à l'article 28 du RGPD avec Distrilec Services, incluant la liste des sous-traitants ultérieurs autorisés, et remise du registre des traitements à jour."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D19"
+        ],
+        "retenu": "D19",
+        "nomRetenu": "sous-traitance DISTRILEC donnees.txt",
+        "cheminRetenu": "06 - Divers/sous-traitance DISTRILEC donnees.txt",
+        "page": 1,
+        "ligne": 13,
+        "clause": null,
+        "extrait": "Aucun acte juridique au sens de l'article 28.3 du règlement (UE) 2016/679\nn'a été conclu avec ce prestataire. Le contrat cadre du 11 septembre 2023\nmentionne la sous-traitance à son article 12 mais ne comporte pas les\nclauses requises.",
+        "motif": "Aucun acte juridique au sens de l'article 28",
+        "ecartes": []
+      },
+      "relu": false
+    },
+    {
+      "id": "CORP-01.1",
+      "sonde": "CORP-01",
+      "chantier": "corporate",
+      "question": "Agrément des cessions d'actions",
+      "pourquoi": "Une cession non agréée fragilise la chaîne de propriété des titres que l'acquéreur achète.",
+      "valeur": "Agrément des associés à la majorité des deux tiers pour toute cession à un tiers",
+      "redaction": "Les statuts soumettent toute cession d'actions à un tiers non associé à l'agrément préalable des associés, statuant à la majorité des deux tiers. L'acquisition projetée entre dans ce champ et devra être agréée.",
+      "gravite": "moyenne",
+      "impact": null,
+      "liens": [],
+      "spa": null,
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D02",
+          "D03"
+        ],
+        "retenu": "D02",
+        "nomRetenu": "Statuts_SODIMEX_2019.txt",
+        "cheminRetenu": "01 - Corporate/Statuts_SODIMEX_2019.txt",
+        "page": 1,
+        "ligne": 17,
+        "clause": "Article 11 — CESSION DES ACTIONS — AGRÉMENT",
+        "extrait": "ARTICLE 11 — CESSION DES ACTIONS — AGRÉMENT\nToute cession d'actions à un tiers non associé est soumise à l'agrément\npréalable de la collectivité des associés statuant à la majorité des deux\ntiers des voix des associés présents ou représentés.",
+        "motif": "agr[ée]ment",
+        "ecartes": [
+          {
+            "document": "D03",
+            "nom": "registre mouvements titres.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CONT-02.1",
+      "sonde": "CONT-02",
+      "chantier": "contrats",
+      "question": "Engagement de volume minimum",
+      "pourquoi": "Un engagement de volume se paie quand il n'est pas tenu. Et c'est souvent un avenant qui en fixe le chiffre.",
+      "valeur": "5 600 tonnes par an, indemnité de 58 €/tonne manquante (avenant n° 2 du 28 juin 2024)",
+      "redaction": "L'engagement de volume en vigueur n'est pas celui du contrat d'origine. L'avenant n° 2 du 28 juin 2024 a porté le minimum annuel de 4 200 à 5 600 tonnes et l'indemnité de 42 à 58 euros par tonne manquante. C'est ce texte modifié qui est opposable à la cible.",
+      "gravite": "moyenne",
+      "impact": null,
+      "liens": [],
+      "spa": null,
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D04",
+          "D06",
+          "D16"
+        ],
+        "retenu": "D04",
+        "nomRetenu": "AVENANT 2 metalux.txt",
+        "cheminRetenu": "02 - Contrats commerciaux/AVENANT 2 metalux.txt",
+        "page": 1,
+        "ligne": 11,
+        "clause": "Article 1 — MODIFICATION DE L'ARTICLE 8 (ENGAGEMENT DE VOLUME)",
+        "extrait": "ARTICLE 1 — MODIFICATION DE L'ARTICLE 8 (ENGAGEMENT DE VOLUME)\nL'article 8 du contrat est remplacé par les dispositions suivantes :\n« Le Distributeur s'engage sur un volume annuel minimum de 5 600 tonnes. En\ncas de manquement, une indemnité de 58 euros par tonne manquante est due. »",
+        "motif": "volume annuel minimum de",
+        "ecartes": [
+          {
+            "document": "D06",
+            "nom": "Contrat_fourniture_METALUX_2021.txt",
+            "pourquoi": "Texte d'origine, modifié par un avenant postérieur."
+          },
+          {
+            "document": "D16",
+            "nom": "mise en demeure METALUX 2026.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          },
+          {
+            "document": "D08",
+            "nom": "contrat metalux signé FINAL v2.txt",
+            "pourquoi": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CONT-03",
+      "sonde": "CONT-03",
+      "chantier": "contrats",
+      "question": "Durée, reconduction et dénonciation",
+      "pourquoi": "Un préavis de dénonciation allongé enferme l'acquéreur dans le contrat bien après le closing.",
+      "valeur": "Préavis de dénonciation porté de 12 à 24 mois (avenant n° 2)",
+      "redaction": "L'avenant n° 2 du 28 juin 2024 a porté le délai de dénonciation de douze à vingt-quatre mois. Le contrat se reconduisant tacitement par périodes de trois ans à compter du 1er mars 2026, la première échéance à laquelle l'acquéreur pourra sortir est le 1er mars 2029, à condition d'avoir dénoncé avant le 1er mars 2027.",
+      "gravite": "moyenne",
+      "impact": "La fenêtre de sortie est courte : une dénonciation manquée engage l'acquéreur pour trois ans de plus, avec l'engagement de volume de 5 600 tonnes.",
+      "liens": [],
+      "spa": null,
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D04",
+          "D06"
+        ],
+        "retenu": "D04",
+        "nomRetenu": "AVENANT 2 metalux.txt",
+        "cheminRetenu": "02 - Contrats commerciaux/AVENANT 2 metalux.txt",
+        "page": 1,
+        "ligne": 16,
+        "clause": "Article 2 — MODIFICATION DE L'ARTICLE 5 (DURÉE)",
+        "extrait": "ARTICLE 2 — MODIFICATION DE L'ARTICLE 5 (DURÉE)\nLe délai de dénonciation prévu à l'article 5 est porté de douze (12) à\nvingt-quatre (24) mois.",
+        "motif": "délai de dénonciation.{0,60}porté",
+        "ecartes": [
+          {
+            "document": "D06",
+            "nom": "Contrat_fourniture_METALUX_2021.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          },
+          {
+            "document": "D08",
+            "nom": "contrat metalux signé FINAL v2.txt",
+            "pourquoi": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CONT-04",
+      "sonde": "CONT-04",
+      "chantier": "contrats",
+      "question": "Limitation de responsabilité du prestataire",
+      "pourquoi": "Un plafond trop bas laisse la cible porter le risque d'exploitation à la place de son prestataire.",
+      "valeur": "Plafond de 3 mois de rémunération, toutes causes confondues, soit environ 142 500 €",
+      "redaction": "La responsabilité du prestataire logistique est plafonnée, toutes causes confondues, à trois mois de rémunération. Au forfait mensuel de 47 500 euros, le plafond s'établit à environ 142 500 euros, pour un contrat dont l'interruption arrêterait les livraisons de la cible.",
+      "gravite": "moyenne",
+      "impact": "Le risque d'interruption logistique n'est couvert qu'à hauteur d'environ 142 500 euros.",
+      "liens": [],
+      "spa": null,
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D09"
+        ],
+        "retenu": "D09",
+        "nomRetenu": "contrat_cadre_DISTRILEC_2023.txt",
+        "cheminRetenu": "02 - Contrats commerciaux/contrat_cadre_DISTRILEC_2023.txt",
+        "page": 1,
+        "ligne": 21,
+        "clause": "Article 15 — RESPONSABILITÉ",
+        "extrait": "ARTICLE 15 — RESPONSABILITÉ\nLa responsabilité du Prestataire est limitée, toutes causes confondues, à\ntrois (3) mois de rémunération.",
+        "motif": "responsabilité.{0,80}limitée",
+        "ecartes": []
+      },
+      "relu": false
+    },
+    {
+      "id": "FISC-02",
+      "sonde": "FISC-02",
+      "chantier": "fiscal",
+      "question": "Crédit d'impôt recherche : éligibilité",
+      "pourquoi": "Un crédit d'impôt contestable se reprend avec intérêts et majoration.",
+      "valeur": "41 000 € de crédit d'impôt recherche dont l'éligibilité n'est pas acquise",
+      "redaction": "Le cabinet comptable relève que le crédit d'impôt recherche de l'exercice 2025 inclut des dépenses de personnel relevant, selon la documentation technique, du développement de série. L'éligibilité de 41 000 euros de crédit n'est pas acquise.",
+      "gravite": "moyenne",
+      "impact": "Reprise possible de 41 000 €, outre intérêts de retard.",
+      "liens": [],
+      "spa": {
+        "mecanisme": "garantie",
+        "redaction": "Extension de la garantie fiscale au crédit d'impôt recherche de l'exercice 2025, à hauteur de 41 000 euros."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D14"
+        ],
+        "retenu": "D14",
+        "nomRetenu": "liasse_2025_extrait.txt",
+        "cheminRetenu": "04 - Fiscal/liasse_2025_extrait.txt",
+        "page": 1,
+        "ligne": 15,
+        "clause": null,
+        "extrait": "Observation du cabinet comptable :\nLe crédit d'impôt recherche de l'exercice 2025 a été calculé en incluant les\ndépenses de personnel de deux salariés dont les travaux relèvent, selon la\ndocumentation technique fournie, du développement de série. L'éligibilité de\nces dépenses, soit 41 000 euros de crédit, n'est pas acquise.",
+        "motif": "L'éligibilité de\\s*\\n?ces dépenses",
+        "ecartes": []
+      },
+      "relu": false
+    },
+    {
+      "id": "LIT-01",
+      "sonde": "LIT-01",
+      "chantier": "contentieux",
+      "question": "Contentieux prud'homal : demandes et provision",
+      "pourquoi": "On compare ce qui est demandé à ce qui est provisionné. L'écart est le risque.",
+      "valeur": "Demandes de 214 500 € ; provision au bilan de 240 000 €",
+      "redaction": "M. Mercier, licencié pour faute grave le 22 février 2026 après treize ans et cinq mois d'ancienneté, réclame 214 500 euros devant le conseil de prud'hommes de Lyon. La provision inscrite au bilan s'élève à 240 000 euros : elle couvre les demandes. L'audience de conciliation est fixée au 15 janvier 2027. La réponse Q4 du vendeur, qui chiffre les demandes à environ 100 000 euros, les minore de plus de moitié.",
+      "gravite": "moyenne",
+      "impact": "Le risque est couvert au bilan. Un poste mérite attention : la demande de 32 000 euros au titre d'une contrepartie de non-concurrence, dont le fondement est confirmé par la nullité relevée au chantier social.",
+      "liens": [
+        "SOC-01"
+      ],
+      "spa": null,
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D14",
+          "D15"
+        ],
+        "retenu": "D15",
+        "nomRetenu": "assignation prud hommes MERCIER.txt",
+        "cheminRetenu": "05 - Contentieux/assignation prud hommes MERCIER.txt",
+        "page": 1,
+        "ligne": 25,
+        "clause": null,
+        "extrait": "TOTAL DES DEMANDES : 214 500 euros.",
+        "motif": "TOTAL DES DEMANDES",
+        "ecartes": [
+          {
+            "document": "D14",
+            "nom": "liasse_2025_extrait.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CORP-02",
+      "sonde": "CORP-02",
+      "chantier": "corporate",
+      "question": "Capital et répartition des titres",
+      "pourquoi": "C'est l'assiette de l'opération : il faut qu'elle se recoupe entre les statuts et le registre.",
+      "valeur": "2 400 000 € — 240 000 actions — A. Rieux 60,0 %, C. Vasseur 26,7 %, Participations Gerland 13,3 %",
+      "redaction": "Le capital s'élève à 2 400 000 euros, divisé en 240 000 actions. La répartition au registre des mouvements de titres se recoupe avec le total des actions émises aux statuts.",
+      "gravite": "faible",
+      "impact": null,
+      "liens": [],
+      "spa": null,
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D19"
+        ],
+        "consultes": [
+          "D02",
+          "D03",
+          "D12"
+        ],
+        "retenu": "D03",
+        "nomRetenu": "registre mouvements titres.txt",
+        "cheminRetenu": "01 - Corporate/registre mouvements titres.txt",
+        "page": 1,
+        "ligne": 12,
+        "clause": null,
+        "extrait": "Répartition : A. Rieux 144 000 (60,0 %), C. Vasseur 64 000 (26,7 %),\nParticipations Gerland SAS 32 000 (13,3 %).",
+        "motif": "Répartition\\s*:",
+        "ecartes": [
+          {
+            "document": "D02",
+            "nom": "Statuts_SODIMEX_2019.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          },
+          {
+            "document": "D12",
+            "nom": "liste effectifs 30 09 2026.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          }
+        ]
+      },
+      "relu": false
+    }
+  ],
+  "sansReponse": [],
+  "rejets": [],
+  "epreuves": [
+    {
+      "question": "Q1",
+      "affirmation": "Aucun des contrats commerciaux de la société ne comporte de clause de changement de contrôle.",
+      "constats": [
+        "CONT-01"
+      ],
+      "verdict": "inexacte",
+      "pourquoi": "Deux contrats en comportent une : l'article 14.2 du contrat Metalux, qui prévoit une résiliation de plein droit, et l'article 9 du bail de Vénissieux, qui assimile le changement de contrôle à une cession.",
+      "appuis": [
+        {
+          "constat": "CONT-01.1",
+          "document": "Bail_Venissieux_signe_2024.txt",
+          "clause": "Article 9 — CESSION DU BAIL",
+          "page": 1,
+          "extrait": "ARTICLE 9 — CESSION DU BAIL\nLe Preneur ne peut céder son droit au bail qu'avec l'accord écrit et préalable\ndu Bailleur. Le changement de contrôle du Preneur est assimilé à une cession\nau sens du présent article. À défaut d'accord, le Bailleur peut demander la\nrésiliation du bail."
+        },
+        {
+          "constat": "CONT-01.2",
+          "document": "Contrat_fourniture_METALUX_2021.txt",
+          "clause": "Article 14.2 — RÉSILIATION",
+          "page": 2,
+          "extrait": "14.2 — Le contrat sera résilié de plein droit, sans indemnité, en cas de\nchangement direct ou indirect du contrôle du Distributeur au sens de\nl'article L. 233-3 du code de commerce, sauf accord préalable et écrit du\nFournisseur. Le Distributeur informe le Fournisseur de tout projet de cette\nnature au moins soixante (60) jours avant sa réalisation."
+        }
+      ]
+    },
+    {
+      "question": "Q2",
+      "affirmation": "Toutes les cessions ont fait l'objet de l'agrément prévu par les statuts.",
+      "constats": [
+        "CORP-01"
+      ],
+      "verdict": "inexacte",
+      "pourquoi": "Le registre des mouvements de titres porte lui-même l'observation inverse pour la cession du 3 mars 2024, inscrite sans procès-verbal d'agrément.",
+      "appuis": [
+        {
+          "constat": "CORP-01.1",
+          "document": "Statuts_SODIMEX_2019.txt",
+          "clause": "Article 11 — CESSION DES ACTIONS — AGRÉMENT",
+          "page": 1,
+          "extrait": "ARTICLE 11 — CESSION DES ACTIONS — AGRÉMENT\nToute cession d'actions à un tiers non associé est soumise à l'agrément\npréalable de la collectivité des associés statuant à la majorité des deux\ntiers des voix des associés présents ou représentés."
+        },
+        {
+          "constat": "CORP-01.2",
+          "document": "registre mouvements titres.txt",
+          "clause": null,
+          "page": 1,
+          "extrait": "Observation portée par le teneur de registre : la cession du 3 mars 2024 au\nprofit de Participations Gerland a été inscrite sans que soit joint le\nprocès-verbal d'agrément prévu à l'article 11 des statuts."
+        }
+      ]
+    },
+    {
+      "question": "Q3",
+      "affirmation": "La garantie consentie à la Banque Régionale de l'Est porte sur 500 000 euros.",
+      "constats": [
+        "CORP-03"
+      ],
+      "verdict": "non vérifiable",
+      "pourquoi": "La convention de garantie n'a pas pu être lue : le seul exemplaire versé est un scan sans couche de texte. Le chiffre avancé n'est appuyé par aucune pièce lisible du dossier.",
+      "appuis": [
+        {
+          "constat": "CORP-03",
+          "document": "scan garantie BRE (1).png",
+          "clause": null,
+          "page": null,
+          "extrait": null
+        }
+      ]
+    },
+    {
+      "question": "Q4",
+      "affirmation": "Les demandes de M. Mercier s'élèvent à environ 100 000 euros.",
+      "constats": [
+        "LIT-01"
+      ],
+      "verdict": "inexacte",
+      "pourquoi": "La requête chiffre les demandes à 214 500 euros, soit plus du double.",
+      "appuis": [
+        {
+          "constat": "LIT-01",
+          "document": "assignation prud hommes MERCIER.txt",
+          "clause": null,
+          "page": 1,
+          "extrait": "TOTAL DES DEMANDES : 214 500 euros."
+        }
+      ]
+    },
+    {
+      "question": "Q5",
+      "affirmation": "Toutes les clauses de non-concurrence prévoient une contrepartie financière conforme.",
+      "constats": [
+        "SOC-01",
+        "SOC-03"
+      ],
+      "verdict": "inexacte",
+      "pourquoi": "Le seul contrat communiqué, celui du directeur commercial, ne stipule aucune contrepartie financière : la clause est nulle. Les trois autres contrats n'ont pas été versés, de sorte que l'affirmation n'est vérifiable pour aucun d'eux.",
+      "appuis": [
+        {
+          "constat": "SOC-01",
+          "document": "CT_LEFEVRE_cadre.txt",
+          "clause": "Article 9 — CLAUSE DE NON-CONCURRENCE",
+          "page": 1,
+          "extrait": "Aucune contrepartie financière n'est stipulée au titre de la présente clause."
+        },
+        {
+          "constat": "SOC-03",
+          "document": "liste effectifs 30 09 2026.txt",
+          "clause": null,
+          "page": 1,
+          "extrait": "Cadres soumis à une clause de non-concurrence : 4 (MM. Lefèvre, Damiens,\nMmes Royer et Tual). Les contrats de MM. Damiens et de Mmes Royer et Tual\nn'ont pas été versés à la data room."
+        }
+      ]
+    },
+    {
+      "question": "Q6",
+      "affirmation": "Le contrôle fiscal de 2023 est clos sans redressement.",
+      "constats": [
+        "FISC-01"
+      ],
+      "verdict": "inexacte",
+      "pourquoi": "La proposition de rectification du 14 novembre 2023 porte 195 300 euros de rappels. La société l'a contestée le 12 janvier 2024 et aucune réponse de l'administration ne figure au dossier : la procédure n'est ni close, ni sans redressement.",
+      "appuis": [
+        {
+          "constat": "FISC-01",
+          "document": "controle fiscal 2023 proposition rectification.txt",
+          "clause": null,
+          "page": 1,
+          "extrait": "RAPPELS\nImpôt sur les sociétés                           126 000 €\nIntérêts de retard                                18 900 €\nMajoration de 40 % pour manquement délibéré       50 400 €\nTOTAL                                            195 300 €"
+        }
+      ]
+    }
+  ],
+  "mecanismes": [
+    {
+      "constat": "CORP-01.2",
+      "chantier": "corporate",
+      "question": "Agrément des cessions d'actions",
+      "gravite": "élevée",
+      "mecanisme": "condition suspensive",
+      "redaction": "Remise, avant la date de réalisation, du procès-verbal d'agrément de la cession du 3 mars 2024 ou, à défaut, d'une ratification expresse par la collectivité des associés et d'une renonciation des associés à leur droit de préemption.",
+      "appui": {
+        "document": "registre mouvements titres.txt",
+        "clause": null,
+        "page": 1
+      }
+    },
+    {
+      "constat": "CORP-03",
+      "chantier": "corporate",
+      "question": "Sûretés et engagements hors bilan",
+      "gravite": "élevée",
+      "mecanisme": "condition suspensive",
+      "redaction": "Remise d'un exemplaire lisible et complet de la convention de garantie consentie à la Banque Régionale de l'Est, et déclaration du vendeur sur le montant maximum de l'engagement.",
+      "appui": {
+        "document": "scan garantie BRE (1).png",
+        "clause": null,
+        "page": null
+      }
+    },
+    {
+      "constat": "CONT-01.1",
+      "chantier": "contrats",
+      "question": "Clause de changement de contrôle",
+      "gravite": "élevée",
+      "mecanisme": "condition suspensive",
+      "redaction": "Obtention de l'accord écrit et préalable de la SCI Les Terrasses au changement de contrôle du preneur.",
+      "appui": {
+        "document": "Bail_Venissieux_signe_2024.txt",
+        "clause": "Article 9 — CESSION DU BAIL",
+        "page": 1
+      }
+    },
+    {
+      "constat": "CONT-01.2",
+      "chantier": "contrats",
+      "question": "Clause de changement de contrôle",
+      "gravite": "critique",
+      "mecanisme": "condition suspensive",
+      "redaction": "Obtention de l'accord écrit et préalable de Metalux Industrie SA au changement de contrôle, et respect du délai de prévenance de soixante jours stipulé à l'article 14.2.",
+      "appui": {
+        "document": "Contrat_fourniture_METALUX_2021.txt",
+        "clause": "Article 14.2 — RÉSILIATION",
+        "page": 2
+      }
+    },
+    {
+      "constat": "CONT-02.2",
+      "chantier": "contrats",
+      "question": "Engagement de volume minimum",
+      "gravite": "élevée",
+      "mecanisme": "ajustement de prix",
+      "redaction": "Réduction du prix à hauteur de 42 340 euros, ou inscription de cette somme au compte séquestre jusqu'au règlement de la mise en demeure Metalux du 3 septembre 2026.",
+      "appui": {
+        "document": "mise en demeure METALUX 2026.txt",
+        "clause": null,
+        "page": 1
+      }
+    },
+    {
+      "constat": "SOC-01",
+      "chantier": "social",
+      "question": "Clause de non-concurrence : contrepartie financière",
+      "gravite": "élevée",
+      "mecanisme": "garantie",
+      "redaction": "Déclaration et garantie du vendeur sur la validité des clauses de non-concurrence liant les cadres dirigeants, et prise en charge de toute condamnation au titre d'une clause nulle. À défaut, régularisation des quatre clauses par avenant avant la réalisation.",
+      "appui": {
+        "document": "CT_LEFEVRE_cadre.txt",
+        "clause": "Article 9 — CLAUSE DE NON-CONCURRENCE",
+        "page": 1
+      }
+    },
+    {
+      "constat": "SOC-03",
+      "chantier": "social",
+      "question": "Contrats de travail non communiqués",
+      "gravite": "élevée",
+      "mecanisme": "condition suspensive",
+      "redaction": "Communication des contrats de travail de MM. Damiens et de Mmes Royer et Tual avant la réalisation, et régularisation des clauses de non-concurrence dépourvues de contrepartie financière.",
+      "appui": {
+        "document": "liste effectifs 30 09 2026.txt",
+        "clause": null,
+        "page": 1
+      }
+    },
+    {
+      "constat": "FISC-01",
+      "chantier": "fiscal",
+      "question": "Contrôle fiscal : rappels et état de la procédure",
+      "gravite": "critique",
+      "mecanisme": "garantie",
+      "redaction": "Garantie fiscale spécifique du vendeur couvrant l'intégralité des conséquences de la proposition de rectification du 14 novembre 2023, y compris sur les exercices non vérifiés, sans franchise ni plafond et jusqu'à l'expiration du délai de reprise.",
+      "appui": {
+        "document": "controle fiscal 2023 proposition rectification.txt",
+        "clause": null,
+        "page": 1
+      }
+    },
+    {
+      "constat": "FISC-02",
+      "chantier": "fiscal",
+      "question": "Crédit d'impôt recherche : éligibilité",
+      "gravite": "moyenne",
+      "mecanisme": "garantie",
+      "redaction": "Extension de la garantie fiscale au crédit d'impôt recherche de l'exercice 2025, à hauteur de 41 000 euros.",
+      "appui": {
+        "document": "liasse_2025_extrait.txt",
+        "clause": null,
+        "page": 1
+      }
+    },
+    {
+      "constat": "RGPD-01",
+      "chantier": "donnees",
+      "question": "Acte de sous-traitance au sens de l'article 28 du RGPD",
+      "gravite": "élevée",
+      "mecanisme": "condition suspensive",
+      "redaction": "Conclusion, avant la réalisation, d'un acte de sous-traitance conforme à l'article 28 du RGPD avec Distrilec Services, incluant la liste des sous-traitants ultérieurs autorisés, et remise du registre des traitements à jour.",
+      "appui": {
+        "document": "sous-traitance DISTRILEC donnees.txt",
+        "clause": null,
+        "page": 1
+      }
+    }
+  ],
+  "couverture": {
+    "total": 21,
+    "depouilles": 15,
+    "ecartes": [
+      {
+        "id": "D07",
+        "nom": "PROJET bail Venissieux NE PAS SIGNER.txt",
+        "pourquoi": "Brouillon non signé : mention « ne pas signer » en tête et aucune signature au document."
+      },
+      {
+        "id": "D08",
+        "nom": "contrat metalux signé FINAL v2.txt",
+        "pourquoi": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19."
+      }
+    ],
+    "illisibles": [
+      {
+        "id": "D17",
+        "nom": "Doc1_final_v3.pdf",
+        "pourquoi": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
+        "aReconnaitre": false
+      },
+      {
+        "id": "D18",
+        "nom": "scan garantie BRE (1).png",
+        "pourquoi": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
+        "aReconnaitre": true
+      }
+    ],
+    "procedure": 2,
+    "demandesManquantes": 13,
+    "demandesTotal": 19
+  },
+  "trace": [
+    {
+      "etape": "triage",
+      "outil": "lecture locale",
+      "fichiers": 21,
+      "detail": [
+        {
+          "id": "D01",
+          "nom": "PV_AG_2024_06_12.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 987
+        },
+        {
+          "id": "D02",
+          "nom": "Statuts_SODIMEX_2019.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 1436
+        },
+        {
+          "id": "D03",
+          "nom": "registre mouvements titres.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 830
+        },
+        {
+          "id": "D04",
+          "nom": "AVENANT 2 metalux.txt",
+          "role": "avenant",
+          "motif": "Avenant : il modifie un contrat qu'il faut retrouver pour lire le texte en vigueur.",
+          "octets": 968
+        },
+        {
+          "id": "D05",
+          "nom": "Bail_Venissieux_signe_2024.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 1187
+        },
+        {
+          "id": "D06",
+          "nom": "Contrat_fourniture_METALUX_2021.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 1767
+        },
+        {
+          "id": "D07",
+          "nom": "PROJET bail Venissieux NE PAS SIGNER.txt",
+          "role": "ecarte",
+          "motif": "Brouillon non signé : mention « ne pas signer » en tête et aucune signature au document.",
+          "octets": 977
+        },
+        {
+          "id": "D08",
+          "nom": "contrat metalux signé FINAL v2.txt",
+          "role": "ecarte",
+          "motif": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19.",
+          "octets": 1204
+        },
+        {
+          "id": "D09",
+          "nom": "contrat_cadre_DISTRILEC_2023.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 1001
+        },
+        {
+          "id": "D10",
+          "nom": "CT_LEFEVRE_cadre.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 986
+        },
+        {
+          "id": "D11",
+          "nom": "accord interessement 2023.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 721
+        },
+        {
+          "id": "D12",
+          "nom": "liste effectifs 30 09 2026.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 563
+        },
+        {
+          "id": "D13",
+          "nom": "controle fiscal 2023 proposition rectification.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 1121
+        },
+        {
+          "id": "D14",
+          "nom": "liasse_2025_extrait.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 918
+        },
+        {
+          "id": "D15",
+          "nom": "assignation prud hommes MERCIER.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 984
+        },
+        {
+          "id": "D16",
+          "nom": "mise en demeure METALUX 2026.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 942
+        },
+        {
+          "id": "D17",
+          "nom": "Doc1_final_v3.pdf",
+          "role": "illisible",
+          "motif": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
+          "octets": 2000
+        },
+        {
+          "id": "D18",
+          "nom": "scan garantie BRE (1).png",
+          "role": "illisible",
+          "motif": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
+          "octets": 427647
+        },
+        {
+          "id": "D19",
+          "nom": "sous-traitance DISTRILEC donnees.txt",
+          "role": "retenu",
+          "motif": null,
+          "octets": 1009
+        },
+        {
+          "id": "D20",
+          "nom": "liste de demandes - serie 1.txt",
+          "role": "liste-demandes",
+          "motif": "Liste de demandes : elle fixe le périmètre et sert à dire ce qui manque.",
+          "octets": 1702
+        },
+        {
+          "id": "D21",
+          "nom": "reponses vendeur serie 1.txt",
+          "role": "reponses-vendeur",
+          "motif": "Réponses du vendeur : chaque affirmation est éprouvée contre les documents.",
+          "octets": 1522
+        }
+      ]
+    },
+    {
+      "etape": "perimetre",
+      "outil": "lecture locale",
+      "lignes": 19,
+      "manquants": 13
+    },
+    {
+      "etape": "depouillement",
+      "outil": "motifs",
+      "moteur": {
+        "disponible": false,
+        "cause": "quota",
+        "message": "La clé Mistral est valide mais son quota d'inférence est épuisé : l'extraction se fait par motifs, et chaque passage reste vérifié sur le fichier."
+      },
+      "detail": [
+        {
+          "quoi": "recherche",
+          "sonde": "CORP-01",
+          "question": "Agrément des cessions d'actions",
+          "parcourus": 15,
+          "candidats": [
+            "D02",
+            "D03"
+          ],
+          "passages": 3,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "CORP-02",
+          "question": "Capital et répartition des titres",
+          "parcourus": 15,
+          "candidats": [
+            "D02",
+            "D03",
+            "D12"
+          ],
+          "passages": 3,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "CORP-03",
+          "question": "Sûretés et engagements hors bilan",
+          "parcourus": 15,
+          "candidats": [
+            "D01"
+          ],
+          "passages": 1,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "CONT-01",
+          "question": "Clause de changement de contrôle",
+          "parcourus": 15,
+          "candidats": [
+            "D05",
+            "D06"
+          ],
+          "passages": 2,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "CONT-02",
+          "question": "Engagement de volume minimum",
+          "parcourus": 15,
+          "candidats": [
+            "D04",
+            "D06",
+            "D16"
+          ],
+          "passages": 4,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "CONT-03",
+          "question": "Durée, reconduction et dénonciation",
+          "parcourus": 15,
+          "candidats": [
+            "D04",
+            "D06"
+          ],
+          "passages": 2,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "CONT-04",
+          "question": "Limitation de responsabilité du prestataire",
+          "parcourus": 15,
+          "candidats": [
+            "D09"
+          ],
+          "passages": 1,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "SOC-01",
+          "question": "Clause de non-concurrence : contrepartie financière",
+          "parcourus": 15,
+          "candidats": [
+            "D10",
+            "D12",
+            "D15"
+          ],
+          "passages": 4,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "SOC-02",
+          "question": "Intéressement : provision de l'exercice",
+          "parcourus": 15,
+          "candidats": [
+            "D14"
+          ],
+          "passages": 1,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "SOC-03",
+          "question": "Contrats de travail non communiqués",
+          "parcourus": 15,
+          "candidats": [
+            "D12"
+          ],
+          "passages": 1,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "FISC-01",
+          "question": "Contrôle fiscal : rappels et état de la procédure",
+          "parcourus": 15,
+          "candidats": [
+            "D13"
+          ],
+          "passages": 2,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "FISC-02",
+          "question": "Crédit d'impôt recherche : éligibilité",
+          "parcourus": 15,
+          "candidats": [
+            "D14"
+          ],
+          "passages": 2,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "LIT-01",
+          "question": "Contentieux prud'homal : demandes et provision",
+          "parcourus": 15,
+          "candidats": [
+            "D14",
+            "D15"
+          ],
+          "passages": 2,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "RGPD-01",
+          "question": "Acte de sous-traitance au sens de l'article 28 du RGPD",
+          "parcourus": 15,
+          "candidats": [
+            "D19"
+          ],
+          "passages": 2,
+          "moteur": "motifs"
+        }
+      ]
+    },
+    {
+      "etape": "droit",
+      "outil": "API Légifrance et Judilibre (PISTE)",
+      "detail": [
+        {
+          "constat": "SOC-01",
+          "identifiant": "LEGIARTI000006900785",
+          "decisions": 3
+        }
+      ]
+    },
+    {
+      "etape": "reponses",
+      "outil": "confrontation au registre",
+      "detail": [
+        {
+          "q": "Q1",
+          "verdict": "inexacte"
+        },
+        {
+          "q": "Q2",
+          "verdict": "inexacte"
+        },
+        {
+          "q": "Q3",
+          "verdict": "non vérifiable"
+        },
+        {
+          "q": "Q4",
+          "verdict": "inexacte"
+        },
+        {
+          "q": "Q5",
+          "verdict": "inexacte"
+        },
+        {
+          "q": "Q6",
+          "verdict": "inexacte"
+        }
+      ]
+    },
+    {
+      "etape": "spa",
+      "outil": "règles de l'audit",
+      "detail": [
+        {
+          "constat": "CORP-01.2",
+          "mecanisme": "condition suspensive"
+        },
+        {
+          "constat": "CORP-03",
+          "mecanisme": "condition suspensive"
+        },
+        {
+          "constat": "CONT-01.1",
+          "mecanisme": "condition suspensive"
+        },
+        {
+          "constat": "CONT-01.2",
+          "mecanisme": "condition suspensive"
+        },
+        {
+          "constat": "CONT-02.2",
+          "mecanisme": "ajustement de prix"
+        },
+        {
+          "constat": "SOC-01",
+          "mecanisme": "garantie"
+        },
+        {
+          "constat": "SOC-03",
+          "mecanisme": "condition suspensive"
+        },
+        {
+          "constat": "FISC-01",
+          "mecanisme": "garantie"
+        },
+        {
+          "constat": "FISC-02",
+          "mecanisme": "garantie"
+        },
+        {
+          "constat": "RGPD-01",
+          "mecanisme": "condition suspensive"
+        }
+      ]
+    },
+    {
+      "etape": "rapport",
+      "outil": "règles de l'audit",
+      "couverture": {
+        "total": 21,
+        "depouilles": 15,
+        "ecartes": [
+          {
+            "id": "D07",
+            "nom": "PROJET bail Venissieux NE PAS SIGNER.txt",
+            "pourquoi": "Brouillon non signé : mention « ne pas signer » en tête et aucune signature au document."
+          },
+          {
+            "id": "D08",
+            "nom": "contrat metalux signé FINAL v2.txt",
+            "pourquoi": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19."
+          }
+        ],
+        "illisibles": [
+          {
+            "id": "D17",
+            "nom": "Doc1_final_v3.pdf",
+            "pourquoi": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
+            "aReconnaitre": false
+          },
+          {
+            "id": "D18",
+            "nom": "scan garantie BRE (1).png",
+            "pourquoi": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
+            "aReconnaitre": true
+          }
+        ],
+        "procedure": 2,
+        "demandesManquantes": 13,
+        "demandesTotal": 19
+      }
+    }
+  ]
+}

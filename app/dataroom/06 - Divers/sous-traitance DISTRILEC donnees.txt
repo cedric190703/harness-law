@@ -1,0 +1,26 @@
+NOTE INTERNE — PROTECTION DES DONNÉES
+
+SODIMEX SAS — Note de la direction des systèmes d'information
+Datée du 7 février 2026
+
+Objet : état des lieux des traitements confiés à des tiers
+
+1. Prestataire logistique DISTRILEC SERVICES
+Le prestataire traite pour notre compte les données des destinataires de
+livraison : nom, adresse postale, numéro de téléphone. Volume estimé à
+52 000 personnes concernées par an.
+
+Aucun acte juridique au sens de l'article 28.3 du règlement (UE) 2016/679
+n'a été conclu avec ce prestataire. Le contrat cadre du 11 septembre 2023
+mentionne la sous-traitance à son article 12 mais ne comporte pas les
+clauses requises.
+
+Le prestataire a recours à des transporteurs tiers sans que notre
+autorisation écrite préalable ait été sollicitée.
+
+2. Outil de gestion commerciale hébergé
+Hébergement dans l'Union européenne. Clauses de sous-traitance présentes au
+contrat.
+
+3. Registre des traitements
+Tenu à jour jusqu'en mars 2025. Non actualisé depuis.

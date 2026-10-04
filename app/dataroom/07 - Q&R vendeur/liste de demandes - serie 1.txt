@@ -1,0 +1,36 @@
+PROJET SODIMEX — LISTE DE DEMANDES DE L'ACQUÉREUR
+Première série, adressée le 12 septembre 2026
+
+CORPORATE
+C1  Statuts à jour                                        [reçu]
+C2  Procès-verbaux des trois derniers exercices           [reçu, 2024 seulement]
+C3  Registre des mouvements de titres                     [reçu]
+C4  Procès-verbaux d'agrément des cessions                [NON REÇU]
+C5  Pactes d'associés                                     [NON REÇU]
+
+CONTRATS
+K1  Dix premiers contrats clients et fournisseurs         [reçu, 2 contrats]
+K2  Avenants à ces contrats                               [reçu, 1 avenant]
+K3  Baux des trois sites d'exploitation                   [reçu, 1 bail sur 3]
+K4  Contrats de financement et crédits-baux               [NON REÇU]
+
+SOCIAL
+S1  Contrats de travail des cadres dirigeants             [reçu, 1 sur 4]
+S2  Accords collectifs en vigueur                         [reçu]
+S3  Liste des effectifs                                   [reçu]
+S4  Documents uniques d'évaluation des risques            [NON REÇU]
+
+FISCAL
+F1  Liasses fiscales des trois derniers exercices         [reçu, 2025 seulement]
+F2  Avis de vérification et propositions de rectification [reçu]
+F3  Réponse de l'administration et suites                 [NON REÇU]
+
+CONTENTIEUX
+L1  État des contentieux en cours                         [reçu partiellement]
+L2  Mises en demeure reçues ou adressées                  [reçu]
+
+DONNÉES PERSONNELLES
+D1  Registre des traitements                              [NON REÇU]
+D2  Actes de sous-traitance article 28 RGPD               [NON REÇU]
+
+Sites d'exploitation : Vénissieux (69), Saint-Priest (69), Mâcon (71).
