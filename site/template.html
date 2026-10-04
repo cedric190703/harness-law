@@ -34,7 +34,10 @@ main,.nav,.foot{width:var(--wrap);margin:0 auto}
 .nav{height:72px;display:flex;align-items:center;gap:32px}
 .wordmark{font:700 22px var(--saul-font-logo);letter-spacing:.16em}
 .nav-links{display:flex;gap:30px;margin-left:auto;font:12px var(--saul-font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--saul-fg-soft)}
+.nav-links a{display:inline-flex;align-items:center;min-height:44px}
 .nav-links a:hover{color:var(--saul-fg)}
+.nav-links a.keep{color:var(--saul-fg);box-shadow:inset 0 -1px 0 var(--saul-line-2)}
+.nav-links a.keep:hover{box-shadow:inset 0 -1px 0 var(--saul-fg)}
 .actions{display:flex;align-items:center;gap:10px}
 .lang{background:transparent;border:1px solid var(--saul-line-2);padding:0 12px;height:44px;min-width:44px;font:12px var(--saul-font-mono);letter-spacing:.08em}
 .lang:hover{border-color:var(--saul-fg)}
@@ -105,8 +108,9 @@ main,.nav,.foot{width:var(--wrap);margin:0 auto}
 /* Problème : le 17 */
 .problem-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:72px;align-items:start}
 .problem-grid h2{font-size:clamp(38px,4.4vw,64px)}
-.seventeen{display:flex;align-items:flex-end;gap:28px;margin-top:56px}
-.big-number{font-size:clamp(180px,22vw,320px);font-weight:900;font-stretch:112%;line-height:.78;letter-spacing:-.07em;color:var(--saul-fg)}
+.seventeen{display:flex;flex-wrap:wrap;align-items:flex-end;gap:20px 28px;margin-top:56px}
+.seventeen>div:last-child{flex:1 1 220px;min-width:0}
+.big-number{white-space:nowrap;font-size:clamp(150px,16vw,240px);font-weight:900;font-stretch:112%;line-height:.78;letter-spacing:-.07em;color:var(--saul-fg)}
 .seventeen h3{font-size:clamp(24px,2.4vw,34px);max-width:12ch}
 .seventeen p{margin-top:12px;font:12px/1.6 var(--saul-font-mono);color:var(--saul-fg-soft)}
 .docket{list-style:none;margin:6px 0 0;padding:20px;border:1px solid var(--saul-line-2);background:var(--saul-surface)}
@@ -117,6 +121,8 @@ main,.nav,.foot{width:var(--wrap);margin:0 auto}
 .docket .stamp{font:700 9px/1 var(--saul-font-mono);letter-spacing:.12em;color:var(--saul-objection);border:1px solid currentColor;padding:4px 6px;transform:rotate(-2deg)}
 .docket li:nth-child(3n+1) .bar{--w:82%}.docket li:nth-child(3n+2) .bar{--w:58%}.docket li:nth-child(4n) .bar{--w:91%}.docket li:nth-child(5n) .bar{--w:47%}.docket li:nth-child(7n) .bar{--w:73%}
 .docket li:nth-child(odd) .stamp{transform:rotate(1.5deg)}
+.docket li.distorted .bar{background:transparent;border:1px dashed #4a4f57;height:8px}
+.big-number .plus{font-size:.3em;letter-spacing:-.04em;color:var(--saul-fg-soft);margin-left:.06em;vertical-align:top}
 
 .versus{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:120px;padding-top:56px;border-top:1px solid var(--saul-line)}
 .versus h3{font-size:clamp(26px,2.6vw,36px)}
@@ -188,8 +194,8 @@ main,.nav,.foot{width:var(--wrap);margin:0 auto}
 .duel .big{font-size:clamp(56px,7vw,104px);font-weight:800;font-stretch:108%;letter-spacing:-.06em;line-height:.9;font-variant-numeric:tabular-nums}
 .duel .before .big{color:#5d626b}
 .duel .arrow{font-size:40px;color:var(--saul-fg-faint);padding-top:24px}
-.cells{position:relative;height:14px;background:var(--saul-line-2);-webkit-mask:repeating-linear-gradient(90deg,#000 0 calc(100%/38 - 3px),transparent calc(100%/38 - 3px) calc(100%/38));mask:repeating-linear-gradient(90deg,#000 0 calc(100%/38 - 3px),transparent calc(100%/38 - 3px) calc(100%/38))}
-.cells i{position:absolute;inset:0 auto 0 0;width:calc(var(--n)/38*100%);background:var(--saul-fg);transform-origin:left}
+.cells{--t:38;position:relative;height:14px;background:var(--saul-line-2);-webkit-mask:repeating-linear-gradient(90deg,#000 0 calc(100%/var(--t) - 2px),transparent calc(100%/var(--t) - 2px) calc(100%/var(--t)));mask:repeating-linear-gradient(90deg,#000 0 calc(100%/var(--t) - 2px),transparent calc(100%/var(--t) - 2px) calc(100%/var(--t)))}
+.cells i{position:absolute;inset:0 auto 0 0;width:calc(var(--n)/var(--t)*100%);background:var(--saul-fg);transform-origin:left}
 .cells.dim i{background:#6d727b}
 .cell-rows{display:grid;gap:10px;margin-top:36px}
 .cell-row{display:grid;grid-template-columns:120px minmax(0,1fr);align-items:center;gap:16px}
@@ -205,6 +211,8 @@ main,.nav,.foot{width:var(--wrap);margin:0 auto}
 .sub h3{font-size:22px}
 .sub .muted{font-size:14px;margin-top:8px}
 .sub-duel{display:flex;align-items:baseline;gap:18px;margin-top:28px;font-size:clamp(44px,4.4vw,64px);font-weight:800;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.sub-duel{flex-wrap:wrap;row-gap:4px}
+.sub-duel>span{white-space:nowrap}
 .sub-duel .from{color:#5d626b}
 .sub-duel i{font-style:normal;font-weight:300;color:var(--saul-fg-faint);font-size:.6em}
 .pct{display:grid;gap:8px;margin-top:24px}
@@ -213,6 +221,16 @@ main,.nav,.foot{width:var(--wrap);margin:0 auto}
 .pct div:first-child i{background:#6d727b}
 .sub .note{margin-top:22px;font-size:14px;color:var(--saul-fg-soft)}
 .sub .note strong{color:var(--saul-fg)}
+.sub-scores.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sub-scores.three .sub-duel{font-size:clamp(34px,3.3vw,50px);gap:12px}
+.sub .note .saul-verdict{margin-right:6px;vertical-align:1px}
+.source a{color:var(--saul-fg-soft);text-decoration:underline;text-underline-offset:3px}
+.howtest{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 28px;margin-top:40px;padding:22px 28px;border:1px solid var(--saul-fg);transition:background-color .2s,color .2s}
+.howtest .ht-title{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.howtest .ht-go{font-size:28px;line-height:1;transition:transform .2s}
+.howtest:hover{background:var(--saul-fg);color:var(--saul-bg)}
+.howtest:hover .tag{color:var(--saul-bg)}
+.howtest:hover .ht-go{transform:translateX(6px)}
 .case-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
 .case-meta>span{font:11px var(--saul-font-mono);color:var(--saul-fg-soft);border:1px solid var(--saul-line);padding:6px 10px}
 
@@ -260,7 +278,7 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
 
 @media(max-width:1000px){
  :root{--wrap:calc(100% - 48px)}
- .nav-links{display:none}.actions{margin-left:auto}
+ .nav-links a:not(.keep){display:none}
  .hero-grid{grid-template-columns:1fr 1fr;gap:24px}
  .problem-grid,.saul-grid{grid-template-columns:1fr;gap:48px}
  .versus{grid-template-columns:1fr;gap:72px}
@@ -270,7 +288,7 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
  .score{grid-template-columns:1fr}
  .score-saul{border-left:0;border-top:1px solid var(--saul-line);min-height:260px}
  .score-saul .fig{width:180px}
- .sub-scores{grid-template-columns:1fr}
+ .sub-scores,.sub-scores.three{grid-template-columns:1fr}
 }
 @media(max-width:640px){
  :root{--wrap:calc(100% - 40px)}
@@ -278,7 +296,9 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
  .nav{height:64px;gap:10px}
  .wordmark{font-size:18px}
  .actions{gap:8px}
- .nav .button{font-size:12px;padding:0 12px;gap:8px}
+ .nav-links{font-size:11px;letter-spacing:.04em;white-space:nowrap}
+ .nav .button [aria-hidden]{display:none}
+ .nav .button{font-size:12px;padding:0 10px;gap:8px;white-space:nowrap}
  .hero{padding:40px 0 64px}
  .hero-grid{grid-template-columns:1fr}
  .hero h1{font-size:clamp(46px,14vw,60px)}
@@ -328,6 +348,9 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
  .duel>.pills{grid-column:1/-1}
  .cell-row{grid-template-columns:1fr;gap:6px}
  .sub{padding:22px 20px}
+ .howtest{grid-template-columns:minmax(0,1fr) auto;padding:18px 20px;margin-top:28px}
+ .howtest .tag{grid-column:1/-1}
+ .howtest .ht-title{font-size:16px}
  .doors{grid-template-columns:1fr;margin-top:40px}
  .door{padding:26px 20px}
  .door+.door{border-left:0;border-top:1px solid var(--saul-line-2)}
@@ -343,11 +366,11 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
-<script>document.documentElement.classList.add('js')</script>
+<script>document.documentElement.classList.add('js');try{var l=localStorage.getItem('saul-lang');if(l==='fr'||l==='en')document.documentElement.dataset.lang=l}catch(e){}</script>
 </head><body>
 
 <a class="skip" href="#main"><span class="l-en">Skip to content</span><span class="l-fr">Aller au contenu</span></a>
-<header class="nav-shell"><nav class="nav" aria-label="Navigation"><a href="#main" class="wordmark">SAUL</a><div class="nav-links"><a href="#problem"><span class="l-en">The problem</span><span class="l-fr">Le problème</span></a><a href="#method"><span class="l-en">The method</span><span class="l-fr">La méthode</span></a><a href="#results"><span class="l-en">The evidence</span><span class="l-fr">Les preuves</span></a></div><div class="actions"><button class="lang" id="language" type="button" aria-label="Afficher en français">FR</button><a class="button" href="#chat"><span class="l-en">Try the chat</span><span class="l-fr">Essayer le chat</span> <span aria-hidden="true">↗</span></a></div></nav></header>
+<header class="nav-shell"><nav class="nav" aria-label="Navigation"><a href="#main" class="wordmark">SAUL</a><div class="nav-links"><a href="#problem"><span class="l-en">The problem</span><span class="l-fr">Le problème</span></a><a href="#method"><span class="l-en">The method</span><span class="l-fr">La méthode</span></a><a href="#results"><span class="l-en">The evidence</span><span class="l-fr">Les preuves</span></a><a class="keep" href="benchmarks.html"><span class="l-en">How we test</span><span class="l-fr">Nos tests</span></a></div><div class="actions"><button class="lang" id="language" type="button" aria-label="Afficher en français">FR</button><a class="button" href="#chat"><span class="l-en">Try the chat</span><span class="l-fr">Essayer le chat</span> <span aria-hidden="true">↗</span></a></div></nav></header>
 
 <main id="main">
 <!-- ============ HERO ============ -->
@@ -404,15 +427,15 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
   <div>
    <p class="eyebrow"><span class="l-en">01 / The problem</span><span class="l-fr">01 / Le problème</span></p>
    <h2><span class="l-en">The lawyer signed.<br>The judge checked.<br><span class="dim">He didn’t.</span></span><span class="l-fr">L’avocat a signé.<br>Le juge a vérifié.<br><span class="dim">Lui, non.</span></span></h2>
-   <div class="seventeen"><div class="big-number">17</div><div>
-    <h3><span class="l-en">Citations. All invented by an AI.</span><span class="l-fr">Références. Toutes inventées par une IA.</span></h3>
+   <div class="seventeen"><div class="big-number">15<span class="plus">+1</span></div><div>
+    <h3><span class="l-en">Invented decisions in one filing. Plus one distorted.</span><span class="l-fr">Décisions inventées dans une seule requête. Plus une déformée.</span></h3>
     <p><span class="l-en">Orléans Administrative Court · 29 December 2025</span><span class="l-fr">Tribunal administratif d’Orléans · 29 décembre 2025</span></p>
    </div></div>
-   <p class="source"><span class="l-en">Source: TA Orléans, 29/12/2025, reported by Lexbase.</span><span class="l-fr">Source : TA Orléans, 29/12/2025, relevé par Lexbase.</span></p>
+   <p class="source"><span class="l-en">Source: TA Orléans, 29/12/2025, no. 2506461, as recorded in Charlotin’s database.</span><span class="l-fr">Source : TA Orléans, 29/12/2025, n° 2506461, tel que recensé dans la base Charlotin.</span></p>
   </div>
   <div class="docket-wrap reveal" aria-hidden="true">
    <ol class="docket frame">
-    <li class="docket-head" style="display:flex;height:auto"><span class="tag"><span class="l-en">Filing · cited references</span><span class="l-fr">Requête · références citées</span></span><span class="tag">TA ORLÉANS</span></li>
+    <li class="docket-head" style="display:flex;height:auto"><span class="tag"><span class="l-en">Filing · cited references</span><span class="l-fr">Requête · références citées</span></span><span class="tag">TA ORLÉANS · 15 + 1</span></li>
     <li style="--i:0"><span class="n">01</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
     <li style="--i:1"><span class="n">02</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
     <li style="--i:2"><span class="n">03</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
@@ -428,8 +451,7 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
     <li style="--i:12"><span class="n">13</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
     <li style="--i:13"><span class="n">14</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
     <li style="--i:14"><span class="n">15</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
-    <li style="--i:15"><span class="n">16</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
-    <li style="--i:16"><span class="n">17</span><span class="bar"></span><span class="stamp">OBJECTION</span></li>
+    <li class="distorted" style="--i:15"><span class="n">16</span><span class="bar"></span><span class="stamp"><span class="l-en">DISTORTED</span><span class="l-fr">DÉFORMÉE</span></span></li>
    </ol>
   </div>
  </div>
@@ -522,6 +544,7 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
 <section class="section" id="results">
  <p class="eyebrow"><span class="l-en">05 / Evidence, not promises</span><span class="l-fr">05 / Des preuves, pas des promesses</span></p>
  <h2><span class="l-en">Same AI.<br><span class="dim">A different standard of proof.</span></span><span class="l-fr">Même IA.<br><span class="dim">Une autre exigence de preuve.</span></span></h2>
+ <a class="howtest frame" href="benchmarks.html"><span class="tag"><span class="l-en">How we test</span><span class="l-fr">Comment on teste</span></span><span class="ht-title"><span class="l-en">4 test beds, the protocol, every number with its status, and what we don’t claim.</span><span class="l-fr">4 bancs d’essai, le protocole, chaque chiffre avec son statut, et ce qu’on ne prétend pas.</span></span><span class="ht-go" aria-hidden="true">→</span></a>
 
  <div class="score frame reveal">
   <div class="score-main">
@@ -544,27 +567,56 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
 
  <div class="sub-scores reveal">
   <div class="sub">
-   <span class="tag"><span class="l-en">Harvey’s Legal Agent Bench</span><span class="l-fr">Legal Agent Bench de Harvey</span></span>
-   <h3 style="margin-top:10px">Mistral Medium 3.5</h3>
-   <p class="tag" style="margin-top:10px"><span class="l-en">WITHOUT METHOD</span><span class="l-fr">SANS MÉTHODE</span> → <span class="l-en">WITH METHOD</span><span class="l-fr">AVEC MÉTHODE</span></p>
-   <div class="sub-duel"><span class="from">23/38</span><i aria-hidden="true">→</i><span>25/38</span></div>
+   <span class="tag"><span class="l-en">Harvey’s Legal Agent Bench · the Saul loop</span><span class="l-fr">Legal Agent Bench de Harvey · la boucle Saul</span></span>
+   <h3 style="margin-top:10px">Claude Code · Sonnet 5.5</h3>
+   <p class="muted"><span class="l-en">Disclosure schedules vs. reps. 52 criteria. An independent reviewer sends the problems back; Claude Code checks and fixes.</span><span class="l-fr">Annexes comparées aux déclarations. 52 critères. Un relecteur indépendant renvoie les problèmes ; Claude Code vérifie et corrige.</span></p>
+   <div class="sub-duel"><span class="from">48/52</span><i aria-hidden="true">→</i><span>52/52</span></div>
    <div class="cell-rows" aria-hidden="true" style="margin-top:24px">
-    <div class="cells dim" style="--n:23"><i class="grow" style="--i:1"></i></div>
-    <div class="cells" style="--n:25"><i class="grow" style="--i:3"></i></div>
+    <div class="cells dim" style="--n:48;--t:52"><i class="grow" style="--i:1"></i></div>
+    <div class="cells" style="--n:52;--t:52"><i class="grow" style="--i:3"></i></div>
    </div>
+   <p class="note"><span class="saul-verdict" data-verdict="ok"><span class="l-en">Passed</span><span class="l-fr">Réussie</span></span> <span class="l-en">It caught an arithmetic error in the documents. Development task.</span><span class="l-fr">Elle a attrapé une erreur de calcul dans les pièces. Tâche de mise au point.</span></p>
+  </div>
+  <div class="sub">
+   <span class="tag"><span class="l-en">Harvey’s Legal Agent Bench · the method</span><span class="l-fr">Legal Agent Bench de Harvey · la méthode</span></span>
+   <h3 style="margin-top:10px">Mistral Medium 3.5</h3>
+   <p class="muted"><span class="l-en">Same task, 52 criteria, in Harvey’s official harness. Two judges.</span><span class="l-fr">Même tâche, 52 critères, dans le harnais officiel de Harvey. Deux juges.</span></p>
+   <div class="sub-duel"><span class="from">36–38/52</span><i aria-hidden="true">→</i><span>48/52</span></div>
+   <div class="cell-rows" aria-hidden="true" style="margin-top:24px">
+    <div class="cells dim" style="--n:36;--t:52"><i class="grow" style="--i:1"></i></div>
+    <div class="cells" style="--n:48;--t:52"><i class="grow" style="--i:3"></i></div>
+   </div>
+   <p class="note"><span class="l-en">+10 to +12 criteria depending on the judge, without a full pass. Development task.</span><span class="l-fr">+10 à +12 critères selon le juge, sans réussite complète. Tâche de mise au point.</span></p>
+  </div>
+ </div>
+
+ <div class="sub-scores three reveal">
+  <div class="sub">
+   <span class="tag"><span class="l-en">French claims · proven on Légifrance</span><span class="l-fr">Phrases françaises · prouvées sur Légifrance</span></span>
+   <h3 style="margin-top:10px"><span class="l-en">False claims marked correct.</span><span class="l-fr">Affirmations fausses validées.</span></h3>
+   <p class="muted"><span class="l-en">Mistral alone, then the same Mistral inside Saul. Includes real cases from Charlotin’s database.</span><span class="l-fr">Mistral seul, puis le même Mistral dans Saul. Avec de vrais cas de la base Charlotin.</span></p>
+   <div class="sub-duel"><span class="from">17/42</span><i aria-hidden="true">→</i><span>1/42</span></div>
+   <div class="pct" aria-hidden="true"><div><i class="grow" style="--p:40.5%;--i:1"></i></div><div><i class="grow" style="--p:2.4%;--i:3"></i></div></div>
+  </div>
+  <div class="sub">
+   <span class="tag">ContractNLI</span>
+   <h3 style="margin-top:10px"><span class="l-en">False greens.</span><span class="l-fr">Faux verts.</span></h3>
+   <p class="muted"><span class="l-en">100 hypotheses the contract does not entail. Mistral alone, then inside Saul.</span><span class="l-fr">100 hypothèses que le contrat n’implique pas. Mistral seul, puis dans Saul.</span></p>
+   <div class="sub-duel"><span class="from">28%</span><i aria-hidden="true">→</i><span>3%</span></div>
+   <div class="pct" aria-hidden="true"><div><i class="grow" style="--p:28%;--i:1"></i></div><div><i class="grow" style="--p:3%;--i:3"></i></div></div>
+   <p class="note"><span class="l-en">The price: far fewer true entailments confirmed.</span><span class="l-fr">Le prix : beaucoup moins de vraies implications confirmées.</span></p>
   </div>
   <div class="sub">
    <span class="tag">ORIONIS MOBILITY</span>
    <h3 style="margin-top:10px"><span class="l-en">Quotes found word for word.</span><span class="l-fr">Citations retrouvées mot pour mot.</span></h3>
-   <p class="muted"><span class="l-en">Claude Sonnet · without, then with the Saul method.</span><span class="l-fr">Claude Sonnet · sans, puis avec la méthode Saul.</span></p>
-   <div class="sub-duel"><span class="from">92%</span><i aria-hidden="true">→</i><span>97%</span></div>
-   <div class="pct" aria-hidden="true"><div><i class="grow" style="--p:92%;--i:1"></i></div><div><i class="grow" style="--p:97%;--i:3"></i></div></div>
-   <p class="note"><span class="l-en">Anomalies found out of 16: <strong>measurement in progress.</strong></span><span class="l-fr">Anomalies trouvées sur 16 : <strong>mesure en cours.</strong></span></p>
-   <div class="case-meta"><span><span class="l-en">159 documents / 19 categories</span><span class="l-fr">159 pièces / 19 rubriques</span></span><span><span class="l-en">Buyer-side red-flag report</span><span class="l-fr">Rapport de red flags acquéreur</span></span></div>
+   <p class="muted"><span class="l-en">Claude Code · Sonnet 5.5 · without, then with the Saul method.</span><span class="l-fr">Claude Code · Sonnet 5.5 · sans, puis avec la méthode Saul.</span></p>
+   <div class="sub-duel"><span class="from">95%</span><i aria-hidden="true">→</i><span>100%</span></div>
+   <div class="pct" aria-hidden="true"><div><i class="grow" style="--p:95%;--i:1"></i></div><div><i class="grow" style="--p:100%;--i:3"></i></div></div>
+   <p class="note"><span class="l-en">174/183 → 180/180. Anomalies found: <strong>15 (+1 partial) / 16 both times.</strong> The method doesn’t change recall; it makes every excerpt checkable.</span><span class="l-fr">174/183 → 180/180. Anomalies trouvées : <strong>15 (+1 partielle) / 16 dans les deux cas.</strong> La méthode ne change rien au rappel ; elle rend chaque extrait vérifiable.</span></p>
+   <div class="case-meta"><span><span class="l-en">159 documents / 18 rubrics</span><span class="l-fr">159 pièces / 18 rubriques</span></span><span><span class="l-en">Sealed answer key</span><span class="l-fr">Corrigé scellé</span></span></div>
   </div>
  </div>
- <p class="source"><span class="l-en">Source: team measurements, 04/10/2026; Orionis Mobility case and Harvey Legal Agent Bench development task.</span><span class="l-fr">Source : mesures de l’équipe, 04/10/2026 ; cas Orionis Mobility et tâche de mise au point du Legal Agent Bench de Harvey.</span></p>
-</section>
+ <p class="source"><span class="l-en">Source: Saul working paper v2, 04/10/2026. One run per condition. Held-out LAB tasks in progress. Full protocol: <a href="benchmarks.html">How we test</a>.</span><span class="l-fr">Source : papier de recherche Saul v2, 04/10/2026. Un passage par condition. Tâches de test du LAB en cours. Protocole complet : <a href="benchmarks.html">Nos tests</a>.</span></p></section>
 
 <!-- ============ 06 PRODUIT ============ -->
 <section class="section" id="product">
@@ -614,11 +666,11 @@ footer{border-top:1px solid var(--saul-line);padding:96px 0 32px;overflow:hidden
 (() => {
  const root=document.documentElement;
  const language=document.getElementById('language');
- language.addEventListener('click',()=>{
-  const french=root.dataset.lang==='en';root.dataset.lang=french?'fr':'en';
+ const apply=lang=>{const french=lang==='fr';root.dataset.lang=lang;root.lang=lang;
   language.textContent=french?'EN':'FR';language.setAttribute('aria-label',french?'Switch to English':'Afficher en français');
-  document.title=french?'Saul — Avant de signer, appelez Saul.':'Saul — Before you file, call Saul.';
- });
+  document.title=french?'Saul — Avant de signer, appelez Saul.':'Saul — Before you file, call Saul.';};
+ apply(root.dataset.lang==='fr'?'fr':'en');
+ language.addEventListener('click',()=>{const next=root.dataset.lang==='en'?'fr':'en';apply(next);try{localStorage.setItem('saul-lang',next)}catch(e){}});
 
  // Scan du héros : chaque affirmation passe en lecture, puis reçoit son verdict ; Saul réagit.
  const rows=[...document.querySelectorAll('.claim')],mascot=document.querySelector('.hero-mascot'),hud=document.getElementById('hud'),bar=document.getElementById('progress');
