@@ -87,3 +87,13 @@ Le mode `SAUL_EN_LIGNE=1` accepte les connexions distantes et exige `SAUL_MOT_DE
 Le déploiement utilise un compte système dédié `saul`, un service persistant et un répertoire de données séparé (`LEGAL_DATA_DIR`). Les secrets sont dans `/etc/saul.env`, accessible à root uniquement, et transmis par systemd. Le service et ses agents ne tournent pas comme root. La version hébergée indique que les missions s’exécutent sur le serveur et sélectionne Mistral par défaut. La présence d’un CLI ne signifie pas que son compte fournisseur est connecté.
 
 Le service `saul` écoute sur `10.0.1.1:3077`, accessible au proxy depuis son réseau interne. Le proxy force HTTPS sur `saul.159-69-41-115.sslip.io`. Les pièces et journaux persistent dans `/home/saul/data` ; un redémarrage interrompt les missions actives. Attendre leur fin avant une mise à jour.
+
+### Fixer le modèle Mistral
+
+Le choix « Mistral (API) » lance Vibe : sans modèle explicitement fixé, le routage par défaut du fournisseur peut sélectionner un modèle tiers, notamment GLM. Pour utiliser Mistral Medium 3.5, créer `/home/saul/.vibe/config.toml` sous le compte du service :
+
+```toml
+active_model = "mistral-medium-3-5"
+```
+
+Ce fichier ne contient aucun secret et reste accessible au seul compte `saul` (mode 600). La clé API demeure dans `/etc/saul.env`. Ce modèle figure dans la liste `/v1/models` de l’API officielle. La configuration est relue au lancement de chaque mission ; il n’est pas nécessaire de reconstruire ou redémarrer l’application. Vérifier le champ `active_model` de la session Vibe réellement exécutée, pas seulement le libellé de l’interface. Référence : [configuration officielle Vibe](https://docs.mistral.ai/vibe/code/cli/configuration).
