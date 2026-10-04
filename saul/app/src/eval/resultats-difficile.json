@@ -1,0 +1,424 @@
+{
+  "date": "2026-10-04T13:51:24.607Z",
+  "notes": [
+    {
+      "id": "D1",
+      "dateFaits": "2022-09-01",
+      "secondes": 49,
+      "affirmationsObtenues": 2,
+      "incidents": []
+    },
+    {
+      "id": "D2",
+      "dateFaits": "2023-02-01",
+      "secondes": 69,
+      "affirmationsObtenues": 3,
+      "incidents": []
+    },
+    {
+      "id": "D3",
+      "dateFaits": "2013-06-01",
+      "secondes": 62,
+      "affirmationsObtenues": 2,
+      "incidents": []
+    }
+  ],
+  "jeu": "difficile",
+  "jugeVariante": false,
+  "modeles": {
+    "extraction": "mistral-large-latest",
+    "juge": "mistral-large-latest",
+    "reponduPar": [
+      "mistral-large-latest"
+    ]
+  },
+  "codeMesure": {
+    "moteur": "4cdcd7b38bbe",
+    "controles": "e7b14483d84a",
+    "sources": "3b7682d9accc",
+    "mistral": "904b7c710cd4",
+    "piste": "3e08c43fc22c",
+    "verbatim": "294952d41a8d"
+  },
+  "cacheNeuf": true,
+  "relancePiste": true,
+  "pannesPiste": [],
+  "dureeSecondes": 180,
+  "consommation": {
+    "appels": 10,
+    "jetonsEntree": 9587,
+    "jetonsSortie": 3140,
+    "refus429": 8,
+    "coutDollars": 0.0095,
+    "prixParMillion": {
+      "entree": 0.5,
+      "sortie": 1.5
+    }
+  },
+  "mesures": {
+    "total": 7,
+    "parEtiquette": {
+      "vert": 0,
+      "orange": 3,
+      "rouge": 4,
+      "gris": 0
+    },
+    "detection": {
+      "n": 6,
+      "sur": 7,
+      "taux": 0.8571428571428571
+    },
+    "detectionStricte": {
+      "n": 6,
+      "sur": 7,
+      "taux": 0.8571428571428571
+    },
+    "fauxVertsSurFausses": {
+      "n": 1,
+      "sur": 7,
+      "taux": 0.14285714285714285
+    },
+    "fauxVerts": {
+      "n": 1,
+      "sur": 7,
+      "taux": 0.14285714285714285
+    },
+    "fauxRouges": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "vertsConfirmes": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "exactitude": {
+      "n": 6,
+      "sur": 7,
+      "taux": 0.8571428571428571
+    },
+    "absentes": {
+      "n": 0,
+      "sur": 7,
+      "taux": 0
+    },
+    "matrice": {
+      "vert": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "orange": {
+        "vert": 1,
+        "orange": 2,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "rouge": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 4,
+        "gris": 0,
+        "absent": 0
+      },
+      "gris": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      }
+    },
+    "parType": {
+      "ne_dit_pas_ca": {
+        "n": 4,
+        "exactes": 4,
+        "signalees": 4,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "decision_mal_citee": {
+        "n": 2,
+        "exactes": 1,
+        "signalees": 1,
+        "fauxVerts": 1,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "texte_modifie": {
+        "n": 1,
+        "exactes": 1,
+        "signalees": 1,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      }
+    }
+  },
+  "lignes": [
+    {
+      "id": "D1-1",
+      "note": "D1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Les conventions légalement formées tiennent lieu de loi à ceux qui les ont faites (article 1134 du Code civil).",
+      "raison": "Ancienne numérotation : depuis le 1er octobre 2016, l'article 1134 traite de l'erreur sur les qualités du cocontractant (la règle est à l'article 1103).",
+      "obtenus": [
+        "D1/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "D1/A1",
+          "passage": "Les conventions légalement formées tiennent lieu de loi à ceux qui les ont faites",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Le texte officiel fourni ne traite pas de la force obligatoire des contrats, mais des conditions de nullité pour erreur sur les qualités essentielles du cocontractant.",
+          "sources": [
+            {
+              "citee": "article 1134 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1134 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2022-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : Le texte officiel fourni ne traite pas de la force obligatoire des contrats, mais des conditions de nullité pour erreur sur les qualités essentielles du cocontractant."
+              ],
+              "verdict": "HORS_SUJET",
+              "extraitRetrouve": true,
+              "extrait": "L'erreur sur les qualités essentielles du cocontractant n'est une cause de nullité que dans les contrats conclus en considération de la personne."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D1-2",
+      "note": "D1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Tout fait quelconque de l'homme qui cause à autrui un dommage oblige celui par la faute duquel il est arrivé à le réparer (article 1382 du Code civil).",
+      "raison": "Ancienne numérotation : la règle est à l'article 1240 depuis 2016 ; l'article 1382 porte aujourd'hui sur les présomptions judiciaires.",
+      "obtenus": [
+        "D1/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "D1/A2",
+          "passage": "Tout fait quelconque de l'homme qui cause à autrui un dommage oblige celui par la faute duquel il est arrivé à le réparer",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Le texte officiel fourni ne concerne pas la responsabilité civile pour faute, mais les conditions d'admission des présomptions par le juge.",
+          "sources": [
+            {
+              "citee": "article 1382 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1382 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2022-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : Le texte officiel fourni ne concerne pas la responsabilité civile pour faute, mais les conditions d'admission des présomptions par le juge."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "Les présomptions qui ne sont pas établies par la loi, sont laissées à l'appréciation du juge, qui ne doit les admettre que si elles sont graves, précises et concordantes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D2-1",
+      "note": "D2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Après la signature de la convention de rupture conventionnelle, chaque partie dispose d'un délai de rétractation de quatorze jours calendaires (article L. 1237-13 du Code du travail).",
+      "raison": "Chiffre faux d'une unité : quinze jours calendaires.",
+      "obtenus": [
+        "D2/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "D2/A1",
+          "passage": "Après la signature de la convention de rupture conventionnelle, chaque partie dispose d'un délai de rétractation de quatorze jours calendaires (article L. 1237-13 du Code du travail).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Chaque partie dispose d'un délai de rétractation de quinze jours calendaires après la signature de la convention de rupture conventionnelle.",
+          "sources": [
+            {
+              "citee": "article L. 1237-13 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1237-13 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-02-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : Chaque partie dispose d'un délai de rétractation de quinze jours calendaires après la signature de la convention de rupture conventionnelle."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "A compter de la date de sa signature par les deux parties, chacune d'entre elles dispose d'un délai de quinze jours calendaires pour exercer son droit de rétractation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D2-2",
+      "note": "D2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Pour un cadre, la durée de la période d'essai, renouvellement compris, ne peut pas dépasser sept mois (article L. 1221-21 du Code du travail).",
+      "raison": "Chiffre faux d'une unité : huit mois pour les cadres.",
+      "obtenus": [
+        "D2/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "D2/A2",
+          "passage": "Pour un cadre, la durée de la période d'essai, renouvellement compris, ne peut pas dépasser sept mois (article L. 1221-21 du Code du travail).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : La durée maximale de la période d'essai pour un cadre, renouvellement compris, est de huit mois, et non sept mois.",
+          "sources": [
+            {
+              "citee": "article L. 1221-21 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1221-21 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-02-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : La durée maximale de la période d'essai pour un cadre, renouvellement compris, est de huit mois, et non sept mois."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "3° Huit mois pour les cadres."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D2-3",
+      "note": "D2",
+      "type": "decision_mal_citee",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "La Cour de cassation exige, pour la validité d'une clause de non-concurrence, une contrepartie financière versée au salarié (Cass. soc., 10 juillet 2003, n° 00-45.135).",
+      "raison": "Bonne décision, mauvaise date : l'arrêt n° 00-45.135 est du 10 juillet 2002.",
+      "obtenus": [
+        "D2/A3"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "D2/A3",
+          "passage": "La Cour de cassation exige, pour la validité d'une clause de non-concurrence, une contrepartie financière versée au salarié (Cass. soc., 10 juillet 2003, n° 00-45.135).",
+          "statut": "orange",
+          "message": "Date citée (2003-07-10) différente de la date réelle de la décision (2002-07-10).",
+          "sources": [
+            {
+              "citee": "Cass. soc., 10 juillet 2003, n° 00-45.135",
+              "type": "decision",
+              "trouvee": "Cour de Cassation, Chambre sociale, du 10 juillet 2002, 00-45.135, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Date citée (2003-07-10) différente de la date réelle de la décision (2002-07-10).",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "une clause de non-concurrence n'est licite que si elle est indispensable à la protection des intérêts légitimes de l'entreprise, limitée dans le temps et dans l'espace, qu'elle tient compte des spécificités de l'emploi du salarié et comporte l'obligation pour l'employeur de verser au salarié une contrepartie financière, ces conditions étant cumulatives"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D3-1",
+      "note": "D3",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "Le dépôt de garantie est restitué dans un délai maximal de deux mois à compter de la restitution des clés par le locataire (article 22 de la loi n° 89-462 du 6 juillet 1989).",
+      "raison": "Juste en 2013 (version 2009-2014). Depuis la loi ALUR (27 mars 2014), le délai est d'un mois si l'état des lieux de sortie est conforme.",
+      "obtenus": [
+        "D3/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "D3/A1",
+          "passage": "Le dépôt de garantie est restitué dans un délai maximal de deux mois à compter de la restitution des clés par le locataire (article 22 de la loi n° 89-462 du 6 juillet 1989).",
+          "statut": "orange",
+          "message": "Le texte a changé depuis les faits : la version applicable au 2013-06-01 (en vigueur du 2009-03-28 au 2014-03-27) n'est pas la version actuelle. Partiellement : Le dépôt de garantie est restitué dans un délai maximal de deux mois à compter de la restitution des clés par le locataire, sous réserve des déductions justifiées pour les sommes restant dues au bailleur ou les sommes dont il pourrait être tenu à la place du locataire.",
+          "sources": [
+            {
+              "citee": "article 22 de la loi n° 89-462 du 6 juillet 1989",
+              "type": "loi",
+              "trouvee": "Article 22 — Loi n° 89-462 du 6 juillet 1989 tendant à améliorer les rapports locatifs et portant modification de la loi n° 86-1290 du 23 décembre 1986",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Le texte a changé depuis les faits : la version applicable au 2013-06-01 (en vigueur du 2009-03-28 au 2014-03-27) n'est pas la version actuelle.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Le dépôt de garantie est restitué dans un délai maximal de deux mois à compter de la restitution des clés par le locataire, sous réserve des déductions justifiées pour les sommes restant dues au bailleur ou les sommes dont il pourrait être tenu à la place du locataire."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Il est restitué dans un délai maximal de deux mois à compter de la restitution des clés par le locataire, déduction faite, le cas échéant, des sommes restant dues au bailleur et des sommes dont celui-ci pourrait être tenu, aux lieu et place du locataire, sous réserve qu'elles soient dûment justifiées."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D3-2",
+      "note": "D3",
+      "type": "decision_mal_citee",
+      "attendu": "orange",
+      "obtenu": "vert",
+      "passage": "Le tiers à un contrat de bail peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage (Cass. 3e civ., 6 octobre 2006, n° 05-13.255).",
+      "raison": "Bonne décision, bonne date, mauvaise formation : l'arrêt n° 05-13.255 est de l'Assemblée plénière, pas de la 3e chambre civile.",
+      "obtenus": [
+        "D3/A2"
+      ],
+      "cause": "juge : verdict SOUTIENT",
+      "detail": [
+        {
+          "id": "D3/A2",
+          "passage": "Le tiers à un contrat de bail peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage (Cass. 3e civ., 6 octobre 2006, n° 05-13.255).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "Cass. 3e civ., 6 octobre 2006, n° 05-13.255",
+              "type": "decision",
+              "trouvee": "Cour de cassation, Assemblée plénière, 6 octobre 2006, 05-13.255, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "le tiers à un contrat peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "horsJeu": []
+}

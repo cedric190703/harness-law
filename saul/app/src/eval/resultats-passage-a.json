@@ -1,0 +1,2334 @@
+{
+  "date": "2026-10-04T13:03:09.153Z",
+  "notes": [
+    {
+      "id": "N1",
+      "dateFaits": "2023-06-15",
+      "secondes": 74,
+      "affirmationsObtenues": 10,
+      "incidents": []
+    },
+    {
+      "id": "N2",
+      "dateFaits": "2016-03-15",
+      "secondes": 51,
+      "affirmationsObtenues": 8,
+      "incidents": []
+    },
+    {
+      "id": "N3",
+      "dateFaits": "2023-02-01",
+      "secondes": 39,
+      "affirmationsObtenues": 8,
+      "incidents": []
+    },
+    {
+      "id": "N4",
+      "dateFaits": "2022-09-01",
+      "secondes": 85,
+      "affirmationsObtenues": 8,
+      "incidents": []
+    },
+    {
+      "id": "N5",
+      "dateFaits": "2015-03-10",
+      "secondes": 25,
+      "affirmationsObtenues": 5,
+      "incidents": []
+    },
+    {
+      "id": "N6",
+      "dateFaits": "2023-04-12",
+      "secondes": 42,
+      "affirmationsObtenues": 6,
+      "incidents": []
+    },
+    {
+      "id": "N7",
+      "dateFaits": "2023-06-15",
+      "secondes": 56,
+      "affirmationsObtenues": 5,
+      "incidents": []
+    },
+    {
+      "id": "N8",
+      "dateFaits": "2011-09-01",
+      "secondes": 59,
+      "affirmationsObtenues": 4,
+      "incidents": []
+    },
+    {
+      "id": "N9",
+      "dateFaits": "2023-01-10",
+      "secondes": 52,
+      "affirmationsObtenues": 7,
+      "incidents": []
+    }
+  ],
+  "modeles": {
+    "extraction": "mistral-large-latest",
+    "juge": "mistral-large-latest",
+    "reponduPar": [
+      "mistral-large-latest"
+    ]
+  },
+  "codeMesure": {
+    "moteur": "6c5d9d0756db",
+    "controles": "e7b14483d84a",
+    "sources": "3b7682d9accc",
+    "mistral": "904b7c710cd4",
+    "piste": "3e08c43fc22c",
+    "verbatim": "294952d41a8d"
+  },
+  "cacheNeuf": true,
+  "relancePiste": true,
+  "pannesPiste": [
+    "429 https://sandbox-api.piste.gouv.fr/dila/legifrance/lf-engine-app/search"
+  ],
+  "dureeSecondes": 482,
+  "consommation": {
+    "appels": 53,
+    "jetonsEntree": 51272,
+    "jetonsSortie": 22683,
+    "refus429": 27,
+    "coutDollars": 0.0597,
+    "prixParMillion": {
+      "entree": 0.5,
+      "sortie": 1.5
+    }
+  },
+  "mesures": {
+    "total": 58,
+    "parEtiquette": {
+      "vert": 25,
+      "orange": 8,
+      "rouge": 22,
+      "gris": 3
+    },
+    "detection": {
+      "n": 30,
+      "sur": 30,
+      "taux": 1
+    },
+    "detectionStricte": {
+      "n": 30,
+      "sur": 30,
+      "taux": 1
+    },
+    "fauxVertsSurFausses": {
+      "n": 0,
+      "sur": 30,
+      "taux": 0
+    },
+    "fauxVerts": {
+      "n": 0,
+      "sur": 33,
+      "taux": 0
+    },
+    "fauxRouges": {
+      "n": 0,
+      "sur": 25,
+      "taux": 0
+    },
+    "vertsConfirmes": {
+      "n": 12,
+      "sur": 25,
+      "taux": 0.48
+    },
+    "exactitude": {
+      "n": 43,
+      "sur": 58,
+      "taux": 0.7413793103448276
+    },
+    "absentes": {
+      "n": 0,
+      "sur": 58,
+      "taux": 0
+    },
+    "matrice": {
+      "vert": {
+        "vert": 12,
+        "orange": 12,
+        "rouge": 0,
+        "gris": 1,
+        "absent": 0
+      },
+      "orange": {
+        "vert": 0,
+        "orange": 8,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "rouge": {
+        "vert": 0,
+        "orange": 2,
+        "rouge": 20,
+        "gris": 0,
+        "absent": 0
+      },
+      "gris": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 3,
+        "absent": 0
+      }
+    },
+    "parType": {
+      "juste": {
+        "n": 25,
+        "exactes": 12,
+        "signalees": 13,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "ne_dit_pas_ca": {
+        "n": 10,
+        "exactes": 8,
+        "signalees": 10,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "decision_inventee": {
+        "n": 4,
+        "exactes": 4,
+        "signalees": 4,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "reference_floue": {
+        "n": 3,
+        "exactes": 3,
+        "signalees": 3,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "texte_modifie": {
+        "n": 5,
+        "exactes": 5,
+        "signalees": 5,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "pas_en_vigueur": {
+        "n": 4,
+        "exactes": 4,
+        "signalees": 4,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "circulaire": {
+        "n": 3,
+        "exactes": 3,
+        "signalees": 3,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "article_inexistant": {
+        "n": 4,
+        "exactes": 4,
+        "signalees": 4,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      }
+    }
+  },
+  "lignes": [
+    {
+      "id": "N1-1",
+      "note": "N1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Le licenciement pour motif personnel doit être justifié par une cause réelle et sérieuse (article L. 1232-1 du Code du travail).",
+      "raison": "L1232-1, en vigueur depuis 2008 : « Il est justifié par une cause réelle et sérieuse. »",
+      "obtenus": [
+        "N1/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N1/A2",
+          "passage": "Le licenciement pour motif personnel doit être justifié par une cause réelle et sérieuse (article L. 1232-1 du Code du travail).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article L. 1232-1 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1232-1 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Il est justifié par une cause réelle et sérieuse."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-2",
+      "note": "N1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "L'entretien préalable pouvait se tenir deux jours ouvrables après la présentation de la lettre de convocation (article L. 1232-2 du Code du travail).",
+      "raison": "L1232-2 impose cinq jours ouvrables, pas deux.",
+      "obtenus": [
+        "N1/A3"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N1/A3",
+          "passage": "L'entretien préalable pouvait se tenir deux jours ouvrables après la présentation de la lettre de convocation (article L. 1232-2 du Code du travail).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : L'entretien préalable ne peut avoir lieu moins de cinq jours ouvrables après la présentation de la lettre de convocation.",
+          "sources": [
+            {
+              "citee": "article L. 1232-2 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1232-2 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : L'entretien préalable ne peut avoir lieu moins de cinq jours ouvrables après la présentation de la lettre de convocation."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "L'entretien préalable ne peut avoir lieu moins de cinq jours ouvrables après la présentation de la lettre recommandée ou la remise en main propre de la lettre de convocation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-3",
+      "note": "N1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "Ayant plus de deux ans d'ancienneté, Mme Durand a droit à un préavis de deux mois (article L. 1234-1 du Code du travail).",
+      "raison": "L1234-1, 3° : préavis de deux mois à partir de deux ans d'ancienneté ; texte inchangé depuis 2008.",
+      "obtenus": [
+        "N1/A4"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N1/A4",
+          "passage": "Ayant plus de deux ans d'ancienneté, Mme Durand a droit à un préavis de deux mois (article L. 1234-1 du Code du travail).",
+          "statut": "orange",
+          "message": "Partiellement : Un salarié ayant plus de deux ans d'ancienneté bénéficie d'un préavis de deux mois en cas de licenciement, sauf si une disposition plus favorable (loi, convention collective, accord, contrat ou usages) s'applique.",
+          "sources": [
+            {
+              "citee": "article L. 1234-1 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1234-1 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Un salarié ayant plus de deux ans d'ancienneté bénéficie d'un préavis de deux mois en cas de licenciement, sauf si une disposition plus favorable (loi, convention collective, accord, contrat ou usages) s'applique."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Toutefois, les dispositions des 2° et 3° ne sont applicables que si la loi, la convention ou l'accord collectif de travail, le contrat de travail ou les usages ne prévoient pas un préavis ou une condition d'ancienneté de services plus favorable pour le salarié."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-4",
+      "note": "N1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "L'indemnité légale de licenciement ne peut être inférieure à un quart de mois de salaire par année d'ancienneté pour les années jusqu'à dix ans (article R. 1234-2 du Code du travail).",
+      "raison": "R1234-2 dans sa version du 27 septembre 2017, applicable en 2023.",
+      "obtenus": [
+        "N1/A5"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N1/A5",
+          "passage": "L'indemnité légale de licenciement ne peut être inférieure à un quart de mois de salaire par année d'ancienneté pour les années jusqu'à dix ans (article R. 1234-2 du Code du travail).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article R. 1234-2 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article R1234-2 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Décret.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Un quart de mois de salaire par année d'ancienneté pour les années jusqu'à dix ans"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-5",
+      "note": "N1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "gris",
+      "passage": "Si le licenciement est jugé sans cause réelle et sérieuse, l'indemnité due à une salariée ayant quatre ans d'ancienneté dans une entreprise d'au moins onze salariés est comprise entre trois et cinq mois de salaire brut (article L. 1235-3 du Code du travail).",
+      "raison": "Barème L1235-3 (version du 1er avril 2018) : ligne « 4 ans » = 3 mois minimum, 5 mois maximum. Le juge doit lire un tableau.",
+      "obtenus": [
+        "N1/A6"
+      ],
+      "cause": "juge : extrait non retrouvé mot pour mot (verdict écarté)",
+      "detail": [
+        {
+          "id": "N1/A6",
+          "passage": "Si le licenciement est jugé sans cause réelle et sérieuse, l'indemnité due à une salariée ayant quatre ans d'ancienneté dans une entreprise d'au moins onze salariés est comprise entre trois et cinq mois de salaire brut (article L. 1235-3 du Code du travail).",
+          "statut": "gris",
+          "message": "L'avocat adverse n'a pas pu citer le texte mot pour mot : verdict écarté, à vérifier à la main.",
+          "sources": [
+            {
+              "citee": "article L. 1235-3 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1235-3 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu gris : L'avocat adverse n'a pas pu citer le texte mot pour mot : verdict écarté, à vérifier à la main."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": false,
+              "extrait": "4 | 4 | 3 | 5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-6",
+      "note": "N1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Mme Durand dispose d'un délai de deux ans à compter de la notification du licenciement pour le contester (article L. 1471-1 du Code du travail).",
+      "raison": "Depuis l'ordonnance du 22 septembre 2017, l'action sur la rupture se prescrit par douze mois.",
+      "obtenus": [
+        "N1/A7"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N1/A7",
+          "passage": "Mme Durand dispose d'un délai de deux ans à compter de la notification du licenciement pour le contester (article L. 1471-1 du Code du travail).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Le délai pour contester un licenciement est de douze mois à compter de la notification de la rupture, conformément à l'article L. 1471-1 du Code du travail.",
+          "sources": [
+            {
+              "citee": "article L. 1471-1 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1471-1 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : Le délai pour contester un licenciement est de douze mois à compter de la notification de la rupture, conformément à l'article L. 1471-1 du Code du travail."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "Toute action portant sur la rupture du contrat de travail se prescrit par douze mois à compter de la notification de la rupture."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-7",
+      "note": "N1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "La Cour de cassation a jugé que le barème de l'article L. 1235-3 du Code du travail est compatible avec l'article 10 de la Convention n° 158 de l'OIT (Cass. soc., 11 mai 2022, n° 21-14.490).",
+      "raison": "Arrêt réel, publié au bulletin. Piège pour Visa : le motif décisif (§ 22) est après le 15 000e caractère, que le juge ne lit pas.",
+      "obtenus": [
+        "N1/A8"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N1/A8",
+          "passage": "La Cour de cassation a jugé que le barème de l'article L. 1235-3 du Code du travail est compatible avec l'article 10 de la Convention n° 158 de l'OIT (Cass. soc., 11 mai 2022, n° 21-14.490).",
+          "statut": "orange",
+          "message": "Partiellement : La Cour de cassation a jugé que le barème de l'article L. 1235-3 du Code du travail est compatible avec l'article 10 de la Convention n° 158 de l'OIT sous réserve qu'il ne s'agisse pas d'un licenciement nul, auquel cas le barème ne s'applique pas et une indemnité minimale de six mois de salaire est due.",
+          "sources": [
+            {
+              "citee": "Cass. soc., 11 mai 2022, n° 21-14.490",
+              "type": "decision",
+              "trouvee": "Cour de cassation, civile, Chambre sociale, 11 mai 2022, 21-14.490, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu orange : Partiellement : La Cour de cassation a jugé que le barème de l'article L. 1235-3 du Code du travail est compatible avec l'article 10 de la Convention n° 158 de l'OIT sous réserve qu'il ne s'agisse pas d'un licenciement nul, auquel cas le barème ne s'applique pas et une indemnité minimale de six mois de salaire est due."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "les dispositions des articles L. 1235-3 et L. 1235-3-1 du code du travail, qui octroient au salarié, en cas de licenciement injustifié, une indemnité à la charge de l'employeur, dont le montant est compris entre des montants minimaux et maximaux variant en fonction du montant du salaire mensuel et de l'ancienneté du salarié et qui prévoient que, dans les cas de licenciements nuls dans les situations ci-dessus énumérées, le barème ainsi institué n'est pas applicable, permettent raisonnablem"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-8",
+      "note": "N1",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "L'employeur devait lui proposer une formation d'adaptation avant d'invoquer son insuffisance professionnelle, faute de quoi le licenciement est nul (Cass. soc., 3 mars 2021, n° 19-48.207).",
+      "raison": "Aucune décision n° 19-48.207, ni sur Légifrance ni sur Judilibre.",
+      "obtenus": [
+        "N1/A9"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N1/A9",
+          "passage": "L'employeur devait lui proposer une formation d'adaptation avant d'invoquer son insuffisance professionnelle, faute de quoi le licenciement est nul (Cass. soc., 3 mars 2021, n° 19-48.207).",
+          "statut": "rouge",
+          "message": "« Cass. soc., 3 mars 2021, n° 19-48.207 » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "Cass. soc., 3 mars 2021, n° 19-48.207",
+              "type": "decision",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « Cass. soc., 3 mars 2021, n° 19-48.207 » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-9",
+      "note": "N1",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "obtenu": "gris",
+      "passage": "Selon une jurisprudence constante, l'insuffisance professionnelle doit reposer sur des éléments objectifs et matériellement vérifiables.",
+      "raison": "« Jurisprudence constante » sans aucune décision identifiable : invérifiable.",
+      "obtenus": [
+        "N1/A10"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N1/A10",
+          "passage": "Selon une jurisprudence constante, l'insuffisance professionnelle doit reposer sur des éléments objectifs et matériellement vérifiables.",
+          "statut": "gris",
+          "message": "Aucune source citée : à vérifier à la main.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "N2-1",
+      "note": "N2",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "Si le licenciement est jugé sans cause réelle et sérieuse, l'indemnité ne peut être inférieure aux salaires des six derniers mois (article L. 1235-3 du Code du travail).",
+      "raison": "Juste en 2016 (version 2008-2017), mais l'article a changé depuis : barème des ordonnances de 2017. À signaler.",
+      "obtenus": [
+        "N2/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N2/A1",
+          "passage": "Si le licenciement est jugé sans cause réelle et sérieuse, l'indemnité ne peut être inférieure aux salaires des six derniers mois (article L. 1235-3 du Code du travail).",
+          "statut": "orange",
+          "message": "Le texte a changé depuis les faits : la version applicable au 2016-03-15 (en vigueur du 2008-05-01 au 2017-09-24) n'est pas la version actuelle. Partiellement : L'indemnité minimale équivalente aux salaires des six derniers mois n'est due que si la réintégration proposée par le juge est refusée par l'une ou l'autre des parties.",
+          "sources": [
+            {
+              "citee": "article L. 1235-3 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1235-3 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Le texte a changé depuis les faits : la version applicable au 2016-03-15 (en vigueur du 2008-05-01 au 2017-09-24) n'est pas la version actuelle.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : L'indemnité minimale équivalente aux salaires des six derniers mois n'est due que si la réintégration proposée par le juge est refusée par l'une ou l'autre des parties."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Si l'une ou l'autre des parties refuse, le juge octroie une indemnité au salarié. Cette indemnité, à la charge de l'employeur, ne peut être inférieure aux salaires des six derniers mois."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-2",
+      "note": "N2",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "L'indemnité légale de licenciement ne peut être inférieure à un cinquième de mois de salaire par année d'ancienneté (article R. 1234-2 du Code du travail).",
+      "raison": "Juste en 2016 (version 2008-2017) ; depuis septembre 2017, c'est un quart de mois.",
+      "obtenus": [
+        "N2/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N2/A2",
+          "passage": "L'indemnité légale de licenciement ne peut être inférieure à un cinquième de mois de salaire par année d'ancienneté (article R. 1234-2 du Code du travail).",
+          "statut": "orange",
+          "message": "Le texte a changé depuis les faits : la version applicable au 2016-03-15 (en vigueur du 2008-07-20 au 2017-09-27) n'est pas la version actuelle. Partiellement : L'indemnité légale de licenciement ne peut être inférieure à un cinquième de mois de salaire par année d'ancienneté pour les dix premières années, et à un cinquième plus deux quinzièmes de mois par année au-delà de dix ans d'ancienneté.",
+          "sources": [
+            {
+              "citee": "article R. 1234-2 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article R1234-2 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Le texte a changé depuis les faits : la version applicable au 2016-03-15 (en vigueur du 2008-07-20 au 2017-09-27) n'est pas la version actuelle.",
+                "rang vert : Rang : Décret.",
+                "contenu orange : Partiellement : L'indemnité légale de licenciement ne peut être inférieure à un cinquième de mois de salaire par année d'ancienneté pour les dix premières années, et à un cinquième plus deux quinzièmes de mois par année au-delà de dix ans d'ancienneté."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "L'indemnité de licenciement ne peut être inférieure à un cinquième de mois de salaire par année d'ancienneté, auquel s'ajoutent deux quinzièmes de mois par année au-delà de dix ans d'ancienneté."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-3",
+      "note": "N2",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "M. Martin dispose d'un délai de deux ans pour contester son licenciement (article L. 1471-1 du Code du travail).",
+      "raison": "Juste en 2016 (version 2013-2017) ; depuis 2017, douze mois pour la rupture.",
+      "obtenus": [
+        "N2/A3"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N2/A3",
+          "passage": "M. Martin dispose d'un délai de deux ans pour contester son licenciement (article L. 1471-1 du Code du travail).",
+          "statut": "orange",
+          "message": "Le texte a changé depuis les faits : la version applicable au 2016-03-15 (en vigueur du 2013-06-17 au 2017-09-24) n'est pas la version actuelle. Partiellement : Le délai pour contester un licenciement est de deux ans à compter du jour où le salarié a connu ou aurait dû connaître les faits lui permettant d'exercer son droit, sous réserve des exceptions prévues par le texte.",
+          "sources": [
+            {
+              "citee": "article L. 1471-1 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1471-1 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Le texte a changé depuis les faits : la version applicable au 2016-03-15 (en vigueur du 2013-06-17 au 2017-09-24) n'est pas la version actuelle.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Le délai pour contester un licenciement est de deux ans à compter du jour où le salarié a connu ou aurait dû connaître les faits lui permettant d'exercer son droit, sous réserve des exceptions prévues par le texte."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Toute action portant sur l'exécution ou la rupture du contrat de travail se prescrit par deux ans à compter du jour où celui qui l'exerce a connu ou aurait dû connaître les faits lui permettant d'exercer son droit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-4",
+      "note": "N2",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le plafonnement de l'indemnité ne s'applique pas lorsque le licenciement est entaché de nullité (article L. 1235-3-1 du Code du travail).",
+      "raison": "L1235-3-1 n'existe que depuis le 24 septembre 2017 : pas en vigueur en mars 2016.",
+      "obtenus": [
+        "N2/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N2/A4",
+          "passage": "Le plafonnement de l'indemnité ne s'applique pas lorsque le licenciement est entaché de nullité (article L. 1235-3-1 du Code du travail).",
+          "statut": "rouge",
+          "message": "Pas encore en vigueur à la date des faits (2016-03-15) : en vigueur depuis le 2016-08-10.",
+          "sources": [
+            {
+              "citee": "article L. 1235-3-1 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1235-3-1 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date rouge : Pas encore en vigueur à la date des faits (2016-03-15) : en vigueur depuis le 2016-08-10.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "L'article L. 1235-3 n'est pas applicable lorsque le juge constate que le licenciement est entaché d'une des nullités prévues au deuxième alinéa du présent article."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-5",
+      "note": "N2",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Une clause de non-concurrence n'est licite que si elle comporte l'obligation pour l'employeur de verser au salarié une contrepartie financière (Cass. soc., 10 juillet 2002, n° 00-45.135).",
+      "raison": "Arrêt réel, publié au bulletin ; c'est exactement l'attendu de principe.",
+      "obtenus": [
+        "N2/A8",
+        "N2/A5"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N2/A8",
+          "passage": "Son contrat comporte une clause de non-concurrence de deux ans, sans contrepartie financière.",
+          "statut": "gris",
+          "message": "Aucune source citée : à vérifier à la main.",
+          "sources": []
+        },
+        {
+          "id": "N2/A5",
+          "passage": "Une clause de non-concurrence n'est licite que si elle comporte l'obligation pour l'employeur de verser au salarié une contrepartie financière (Cass. soc., 10 juillet 2002, n° 00-45.135).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "Cass. soc., 10 juillet 2002, n° 00-45.135",
+              "type": "decision",
+              "trouvee": "Cour de Cassation, Chambre sociale, du 10 juillet 2002, 00-45.135, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "une clause de non-concurrence n'est licite que si elle est indispensable à la protection des intérêts légitimes de l'entreprise, limitée dans le temps et dans l'espace, qu'elle tient compte des spécificités de l'emploi du salarié et comporte l'obligation pour l'employeur de verser au salarié une contrepartie financière, ces conditions étant cumulatives"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-6",
+      "note": "N2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le Code du travail limite la durée de toute clause de non-concurrence à un an maximum (article L. 1121-1 du Code du travail).",
+      "raison": "L1121-1 pose un principe de proportionnalité des restrictions ; aucune durée maximale.",
+      "obtenus": [
+        "N2/A6"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N2/A6",
+          "passage": "Le Code du travail limite la durée de toute clause de non-concurrence à un an maximum (article L. 1121-1 du Code du travail).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : L'article L. 1121-1 du Code du travail ne traite pas de la durée des clauses de non-concurrence, mais des restrictions aux droits et libertés justifiées et proportionnées.",
+          "sources": [
+            {
+              "citee": "article L. 1121-1 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1121-1 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2016-03-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : L'article L. 1121-1 du Code du travail ne traite pas de la durée des clauses de non-concurrence, mais des restrictions aux droits et libertés justifiées et proportionnées."
+              ],
+              "verdict": "HORS_SUJET",
+              "extraitRetrouve": true,
+              "extrait": "Nul ne peut apporter aux droits des personnes et aux libertés individuelles et collectives de restrictions qui ne seraient pas justifiées par la nature de la tâche à accomplir ni proportionnées au but recherché."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-1",
+      "note": "N3",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "La période d'essai d'un cadre en contrat à durée indéterminée peut atteindre six mois, hors renouvellement (article L. 1221-19 du Code du travail).",
+      "raison": "L1221-19 : quatre mois maximum pour les cadres.",
+      "obtenus": [
+        "N3/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N3/A1",
+          "passage": "La période d'essai d'un cadre en contrat à durée indéterminée peut atteindre six mois, hors renouvellement (article L. 1221-19 du Code du travail).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : La période d'essai d'un cadre en CDI ne peut excéder quatre mois, hors renouvellement.",
+          "sources": [
+            {
+              "citee": "article L. 1221-19 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1221-19 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-02-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : La période d'essai d'un cadre en CDI ne peut excéder quatre mois, hors renouvellement."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "Pour les cadres, de quatre mois."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-2",
+      "note": "N3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "La période d'essai ne peut être renouvelée qu'une fois, et seulement si un accord de branche étendu le prévoit (article L. 1221-21 du Code du travail).",
+      "raison": "L1221-21, inchangé depuis 2008.",
+      "obtenus": [
+        "N3/A2"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N3/A2",
+          "passage": "La période d'essai ne peut être renouvelée qu'une fois, et seulement si un accord de branche étendu le prévoit (article L. 1221-21 du Code du travail).",
+          "statut": "orange",
+          "message": "Partiellement : La période d'essai peut être renouvelée une fois uniquement si un accord de branche étendu le prévoit et fixe les conditions et les durées de renouvellement.",
+          "sources": [
+            {
+              "citee": "article L. 1221-21 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1221-21 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-02-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : La période d'essai peut être renouvelée une fois uniquement si un accord de branche étendu le prévoit et fixe les conditions et les durées de renouvellement."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "La période d'essai peut être renouvelée une fois si un accord de branche étendu le prévoit. Cet accord fixe les conditions et les durées de renouvellement."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-3",
+      "note": "N3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "À l'issue d'un contrat à durée déterminée qui n'est pas suivi d'un contrat à durée indéterminée, le salarié perçoit une indemnité de fin de contrat égale à 10 % de la rémunération totale brute (article L. 1243-8 du Code du travail).",
+      "raison": "L1243-8, inchangé depuis 2008.",
+      "obtenus": [
+        "N3/A3"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N3/A3",
+          "passage": "À l'issue d'un contrat à durée déterminée qui n'est pas suivi d'un contrat à durée indéterminée, le salarié perçoit une indemnité de fin de contrat égale à 10 % de la rémunération totale brute (article L. 1243-8 du Code du travail).",
+          "statut": "orange",
+          "message": "Partiellement : À l'issue d'un CDD non suivi d'un CDI, le salarié perçoit une indemnité de fin de contrat égale à 10 % de la rémunération totale brute, destinée à compenser la précarité de sa situation, versée avec le dernier salaire et mentionnée sur le bulletin de salaire.",
+          "sources": [
+            {
+              "citee": "article L. 1243-8 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1243-8 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-02-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : À l'issue d'un CDD non suivi d'un CDI, le salarié perçoit une indemnité de fin de contrat égale à 10 % de la rémunération totale brute, destinée à compenser la précarité de sa situation, versée avec le dernier salaire et mentionnée sur le bulletin de salaire."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Cette indemnité est égale à 10 % de la rémunération totale brute versée au salarié."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-4",
+      "note": "N3",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Après la signature de la convention de rupture conventionnelle, chaque partie dispose d'un délai de rétractation de huit jours (article L. 1237-13 du Code du travail).",
+      "raison": "L1237-13 : quinze jours calendaires.",
+      "obtenus": [
+        "N3/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N3/A4",
+          "passage": "Après la signature de la convention de rupture conventionnelle, chaque partie dispose d'un délai de rétractation de huit jours (article L. 1237-13 du Code du travail).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Chaque partie dispose d'un délai de rétractation de quinze jours calendaires après la signature de la convention de rupture conventionnelle.",
+          "sources": [
+            {
+              "citee": "article L. 1237-13 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1237-13 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-02-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : Chaque partie dispose d'un délai de rétractation de quinze jours calendaires après la signature de la convention de rupture conventionnelle."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "A compter de la date de sa signature par les deux parties, chacune d'entre elles dispose d'un délai de quinze jours calendaires pour exercer son droit de rétractation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-5",
+      "note": "N3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "L'administration dispose d'un délai de quinze jours ouvrables pour homologuer la convention ; à défaut de réponse dans ce délai, l'homologation est réputée acquise (article L. 1237-14 du Code du travail).",
+      "raison": "L1237-14, inchangé depuis 2008.",
+      "obtenus": [
+        "N3/A5"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N3/A5",
+          "passage": "L'administration dispose d'un délai de quinze jours ouvrables pour homologuer la convention ; à défaut de réponse dans ce délai, l'homologation est réputée acquise (article L. 1237-14 du Code du travail).",
+          "statut": "orange",
+          "message": "Partiellement : L'administration dispose d'un délai d'instruction de quinze jours ouvrables à compter de la réception de la demande pour vérifier le respect des conditions et la liberté de consentement ; à défaut de notification dans ce délai, l'homologation est réputée acquise.",
+          "sources": [
+            {
+              "citee": "article L. 1237-14 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1237-14 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-02-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : L'administration dispose d'un délai d'instruction de quinze jours ouvrables à compter de la réception de la demande pour vérifier le respect des conditions et la liberté de consentement ; à défaut de notification dans ce délai, l'homologation est réputée acquise."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "L'autorité administrative dispose d'un délai d'instruction de quinze jours ouvrables, à compter de la réception de la demande, pour s'assurer du respect des conditions prévues à la présente section et de la liberté de consentement des parties. A défaut de notification dans ce délai, l'homologation est réputée acquise et l'autorité administrative est dessaisie."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-6",
+      "note": "N3",
+      "type": "circulaire",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "La circulaire DGT n° 2008/11 du 22 juillet 2008 impose de refuser l'homologation lorsque l'indemnité convenue est inférieure à l'indemnité légale, et cette règle s'impose au juge.",
+      "raison": "Circulaire réelle, mais une circulaire ne lie pas le juge : elle est présentée ici comme obligatoire.",
+      "obtenus": [
+        "N3/A6"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N3/A6",
+          "passage": "La circulaire DGT n° 2008/11 du 22 juillet 2008 impose de refuser l'homologation lorsque l'indemnité convenue est inférieure à l'indemnité légale, et cette règle s'impose au juge.",
+          "statut": "orange",
+          "message": "Une circulaire est sous la loi et le décret : elle ne lie pas le juge. À appuyer sur un texte de rang supérieur.",
+          "sources": [
+            {
+              "citee": "circulaire DGT n° 2008/11 du 22 juillet 2008",
+              "type": "circulaire",
+              "trouvee": null,
+              "controles": [
+                "existe gris : Circulaire : recherche automatique non disponible.",
+                "rang orange : Une circulaire est sous la loi et le décret : elle ne lie pas le juge. À appuyer sur un texte de rang supérieur."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-7",
+      "note": "N3",
+      "type": "circulaire",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "L'instruction DGT n° 02 du 23 mars 2010 interdit de recourir à la rupture conventionnelle pour contourner les règles du licenciement économique collectif, et le juge est tenu de l'appliquer.",
+      "raison": "Instruction réelle, présentée comme liant le juge ; une instruction ministérielle ne le lie pas.",
+      "obtenus": [
+        "N3/A7"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N3/A7",
+          "passage": "L'instruction DGT n° 02 du 23 mars 2010 interdit de recourir à la rupture conventionnelle pour contourner les règles du licenciement économique collectif, et le juge est tenu de l'appliquer.",
+          "statut": "orange",
+          "message": "Une circulaire est sous la loi et le décret : elle ne lie pas le juge. À appuyer sur un texte de rang supérieur.",
+          "sources": [
+            {
+              "citee": "instruction DGT n° 02 du 23 mars 2010",
+              "type": "circulaire",
+              "trouvee": null,
+              "controles": [
+                "existe gris : Circulaire : recherche automatique non disponible.",
+                "rang orange : Une circulaire est sous la loi et le décret : elle ne lie pas le juge. À appuyer sur un texte de rang supérieur."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-8",
+      "note": "N3",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "L'action en requalification d'un contrat à durée déterminée se prescrit par six mois (article L. 1471-2 du Code du travail).",
+      "raison": "Il n'existe pas d'article L. 1471-2 dans le Code du travail.",
+      "obtenus": [
+        "N3/A8"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N3/A8",
+          "passage": "L'action en requalification d'un contrat à durée déterminée se prescrit par six mois (article L. 1471-2 du Code du travail).",
+          "statut": "rouge",
+          "message": "« article L. 1471-2 du Code du travail » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "article L. 1471-2 du Code du travail",
+              "type": "article_code",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « article L. 1471-2 du Code du travail » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-1",
+      "note": "N4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Les contrats légalement formés tiennent lieu de loi à ceux qui les ont faits (article 1103 du Code civil).",
+      "raison": "Article 1103 issu de l'ordonnance de 2016, en vigueur depuis le 1er octobre 2016.",
+      "obtenus": [
+        "N4/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N4/A1",
+          "passage": "Les contrats légalement formés tiennent lieu de loi à ceux qui les ont faits (article 1103 du Code civil).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 1103 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1103 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2022-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Les contrats légalement formés tiennent lieu de loi à ceux qui les ont faits."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-2",
+      "note": "N4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Les contrats doivent être négociés, formés et exécutés de bonne foi, et cette disposition est d'ordre public (article 1104 du Code civil).",
+      "raison": "Article 1104 en vigueur depuis le 1er octobre 2016.",
+      "obtenus": [
+        "N4/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N4/A2",
+          "passage": "Les contrats doivent être négociés, formés et exécutés de bonne foi, et cette disposition est d'ordre public (article 1104 du Code civil).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 1104 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1104 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2022-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Les contrats doivent être négociés, formés et exécutés de bonne foi. Cette disposition est d'ordre public."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-3",
+      "note": "N4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Le devoir précontractuel d'information ne porte pas sur l'estimation de la valeur de la prestation (article 1112-1 du Code civil).",
+      "raison": "Article 1112-1, alinéa 2, en vigueur depuis le 1er octobre 2016.",
+      "obtenus": [
+        "N4/A3"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N4/A3",
+          "passage": "Le devoir précontractuel d'information ne porte pas sur l'estimation de la valeur de la prestation (article 1112-1 du Code civil).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 1112-1 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1112-1 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2022-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Néanmoins, ce devoir d'information ne porte pas sur l'estimation de la valeur de la prestation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-4",
+      "note": "N4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Le juge peut, même d'office, modérer ou augmenter la pénalité convenue si elle est manifestement excessive ou dérisoire (article 1231-5 du Code civil).",
+      "raison": "Article 1231-5, alinéa 2.",
+      "obtenus": [
+        "N4/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N4/A4",
+          "passage": "Le juge peut, même d'office, modérer ou augmenter la pénalité convenue si elle est manifestement excessive ou dérisoire (article 1231-5 du Code civil).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 1231-5 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1231-5 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2022-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Néanmoins, le juge peut, même d'office, modérer ou augmenter la pénalité ainsi convenue si elle est manifestement excessive ou dérisoire."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-5",
+      "note": "N4",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "L'action en paiement de la société Gamma se prescrit par dix ans (article 2224 du Code civil).",
+      "raison": "Article 2224 : cinq ans, pas dix.",
+      "obtenus": [
+        "N4/A5"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N4/A5",
+          "passage": "L'action en paiement de la société Gamma se prescrit par dix ans (article 2224 du Code civil).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : L'article 2224 du Code civil prévoit que les actions personnelles ou mobilières, y compris les actions en paiement, se prescrivent par cinq ans.",
+          "sources": [
+            {
+              "citee": "article 2224 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 2224 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2022-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : L'article 2224 du Code civil prévoit que les actions personnelles ou mobilières, y compris les actions en paiement, se prescrivent par cinq ans."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "Les actions personnelles ou mobilières se prescrivent par cinq ans à compter du jour où le titulaire d'un droit a connu ou aurait dû connaître les faits lui permettant de l'exercer."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-6",
+      "note": "N4",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "La partie qui rompt brutalement les négociations engage sa responsabilité contractuelle (article 1104-2 du Code civil).",
+      "raison": "Il n'existe pas d'article 1104-2 dans le Code civil.",
+      "obtenus": [
+        "N4/A6"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N4/A6",
+          "passage": "La partie qui rompt brutalement les négociations engage sa responsabilité contractuelle (article 1104-2 du Code civil).",
+          "statut": "rouge",
+          "message": "« article 1104-2 du Code civil » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "article 1104-2 du Code civil",
+              "type": "article_code",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « article 1104-2 du Code civil » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-7",
+      "note": "N4",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "passage": "Une clause limitative de responsabilité ne peut être écartée qu'en cas de faute lourde du débiteur (Cass. com., 22 octobre 1996, n° 93-18.632).",
+      "raison": "Arrêt Chronopost : la clause qui contredit l'obligation essentielle est réputée non écrite, sans exiger de faute lourde (la cour d'appel exigeait une faute lourde et a été cassée).",
+      "obtenus": [
+        "N4/A7"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N4/A7",
+          "passage": "Une clause limitative de responsabilité ne peut être écartée qu'en cas de faute lourde du débiteur (Cass. com., 22 octobre 1996, n° 93-18.632).",
+          "statut": "orange",
+          "message": "Partiellement : Une clause limitative de responsabilité peut être écartée si elle contredit la portée d'une obligation essentielle du contrat, et pas uniquement en cas de faute lourde du débiteur.",
+          "sources": [
+            {
+              "citee": "Cass. com., 22 octobre 1996, n° 93-18.632",
+              "type": "decision",
+              "trouvee": "Cour de Cassation, Chambre commerciale, du 22 octobre 1996, 93-18.632, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu orange : Partiellement : Une clause limitative de responsabilité peut être écartée si elle contredit la portée d'une obligation essentielle du contrat, et pas uniquement en cas de faute lourde du débiteur."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "en raison du manquement à cette obligation essentielle la clause limitative de responsabilité du contrat, qui contredisait la portée de l'engagement pris, devait être réputée non écrite"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-8",
+      "note": "N4",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le distributeur victime de retards répétés peut résilier le contrat sans mise en demeure préalable (Cass. com., 9 juin 2020, n° 18-46.913).",
+      "raison": "Aucune décision n° 18-46.913, ni sur Légifrance ni sur Judilibre.",
+      "obtenus": [
+        "N4/A8"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N4/A8",
+          "passage": "Le distributeur victime de retards répétés peut résilier le contrat sans mise en demeure préalable (Cass. com., 9 juin 2020, n° 18-46.913).",
+          "statut": "rouge",
+          "message": "« Cass. com., 9 juin 2020, n° 18-46.913 » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "Cass. com., 9 juin 2020, n° 18-46.913",
+              "type": "decision",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « Cass. com., 9 juin 2020, n° 18-46.913 » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N5-1",
+      "note": "N5",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le prestataire était tenu d'informer son client de toute information dont l'importance est déterminante pour son consentement (article 1112-1 du Code civil).",
+      "raison": "L'article 1112-1 n'existe que depuis le 1er octobre 2016 ; un contrat conclu en 2015 reste régi par l'ancien droit.",
+      "obtenus": [
+        "N5/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N5/A1",
+          "passage": "Le prestataire était tenu d'informer son client de toute information dont l'importance est déterminante pour son consentement (article 1112-1 du Code civil).",
+          "statut": "rouge",
+          "message": "Pas encore en vigueur à la date des faits (2015-03-10) : en vigueur depuis le 2016-10-01.",
+          "sources": [
+            {
+              "citee": "article 1112-1 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1112-1 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date rouge : Pas encore en vigueur à la date des faits (2015-03-10) : en vigueur depuis le 2016-10-01.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Le prestataire n'est tenu d'informer son client d'une information déterminante pour son consentement que si ce dernier ignore légitimement cette information ou fait confiance à son cocontractant, à l'exclusion de l'estimation de la valeur de la prestation."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Celle des parties qui connaît une information dont l'importance est déterminante pour le consentement de l'autre doit l'en informer dès lors que, légitimement, cette dernière ignore cette information ou fait confiance à son cocontractant."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N5-2",
+      "note": "N5",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "En cas de changement de circonstances imprévisible rendant l'exécution excessivement onéreuse, la société Epsilon peut demander une renégociation du contrat (article 1195 du Code civil).",
+      "raison": "L'imprévision (article 1195) date de l'ordonnance de 2016 ; en 2015, l'article 1195 portait sur les obligations alternatives.",
+      "obtenus": [
+        "N5/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N5/A2",
+          "passage": "En cas de changement de circonstances imprévisible rendant l'exécution excessivement onéreuse, la société Epsilon peut demander une renégociation du contrat (article 1195 du Code civil).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : L'article 1195 du Code civil, dans sa version applicable en 2015, ne traite pas de la renégociation du contrat en cas de changement de circonstances imprévisible rendant l'exécution excessivement onéreuse, mais uniquement de l'extinction de l'obligation en cas de perte de la chose due sans faute du débiteur.",
+          "sources": [
+            {
+              "citee": "article 1195 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1195 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Le texte a changé depuis les faits : la version applicable au 2015-03-10 (en vigueur du 1804-03-21 au 2016-10-01) n'est pas la version actuelle.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : L'article 1195 du Code civil, dans sa version applicable en 2015, ne traite pas de la renégociation du contrat en cas de changement de circonstances imprévisible rendant l'exécution excessivement onéreuse, mais uniquement de l'extinction de l'obligation en cas de perte de la chose due sans faute du débiteur."
+              ],
+              "verdict": "HORS_SUJET",
+              "extraitRetrouve": true,
+              "extrait": "Si les deux choses sont péries sans la faute du débiteur, et avant qu'il soit en demeure, l'obligation est éteinte, conformément à l'article 1302."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N5-3",
+      "note": "N5",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Le tiers à un contrat peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage (Cass. ass. plén., 6 octobre 2006, n° 05-13.255).",
+      "raison": "Arrêt Myr'Ho / Boot shop, attendu de principe repris mot pour mot.",
+      "obtenus": [
+        "N5/A3"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N5/A3",
+          "passage": "Le tiers à un contrat peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage (Cass. ass. plén., 6 octobre 2006, n° 05-13.255).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "Cass. ass. plén., 6 octobre 2006, n° 05-13.255",
+              "type": "decision",
+              "trouvee": "Cour de cassation, Assemblée plénière, 6 octobre 2006, 05-13.255, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "le tiers à un contrat peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N5-4",
+      "note": "N5",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Les actions personnelles ou mobilières se prescrivent par cinq ans à compter du jour où le titulaire d'un droit a connu ou aurait dû connaître les faits lui permettant de l'exercer (article 2224 du Code civil).",
+      "raison": "Article 2224, version en vigueur depuis le 19 juin 2008.",
+      "obtenus": [
+        "N5/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N5/A4",
+          "passage": "Les actions personnelles ou mobilières se prescrivent par cinq ans à compter du jour où le titulaire d'un droit a connu ou aurait dû connaître les faits lui permettant de l'exercer (article 2224 du Code civil).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 2224 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 2224 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2015-03-10).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Les actions personnelles ou mobilières se prescrivent par cinq ans à compter du jour où le titulaire d'un droit a connu ou aurait dû connaître les faits lui permettant de l'exercer."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N5-5",
+      "note": "N5",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "obtenu": "gris",
+      "passage": "La doctrine majoritaire considère qu'une clause de révision du prix doit s'interpréter en faveur du débiteur.",
+      "raison": "Aucune source identifiable (« la doctrine majoritaire »).",
+      "obtenus": [
+        "N5/A5"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N5/A5",
+          "passage": "La doctrine majoritaire considère qu'une clause de révision du prix doit s'interpréter en faveur du débiteur.",
+          "statut": "gris",
+          "message": "Aucune source citée : à vérifier à la main.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "N6-1",
+      "note": "N6",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "M. Petit disposait d'un délai de sept jours pour exercer son droit de rétractation (article L. 221-18 du Code de la consommation).",
+      "raison": "L221-18 : quatorze jours.",
+      "obtenus": [
+        "N6/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N6/A1",
+          "passage": "M. Petit disposait d'un délai de sept jours pour exercer son droit de rétractation (article L. 221-18 du Code de la consommation).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Le consommateur dispose d'un délai de quatorze jours pour exercer son droit de rétractation, conformément à l'article L. 221-18 du Code de la consommation.",
+          "sources": [
+            {
+              "citee": "article L. 221-18 du Code de la consommation",
+              "type": "article_code",
+              "trouvee": "Article L221-18 — Code de la consommation",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-04-12).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu rouge : La source ne dit pas cela : Le consommateur dispose d'un délai de quatorze jours pour exercer son droit de rétractation, conformément à l'article L. 221-18 du Code de la consommation."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "Le consommateur dispose d'un délai de quatorze jours pour exercer son droit de rétractation d'un contrat conclu à distance, à la suite d'un démarchage téléphonique ou hors établissement, sans avoir à motiver sa décision ni à supporter d'autres coûts que ceux prévus aux articles L. 221-23 à L. 221-25."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N6-2",
+      "note": "N6",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "Le vendeur répond des défauts de conformité existant lors de la délivrance qui apparaissent dans un délai de deux ans à compter de celle-ci (article L. 217-3 du Code de la consommation).",
+      "raison": "L217-3 dans sa version du 1er octobre 2021 (ordonnance n° 2021-1247).",
+      "obtenus": [
+        "N6/A2"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N6/A2",
+          "passage": "Le vendeur répond des défauts de conformité existant lors de la délivrance qui apparaissent dans un délai de deux ans à compter de celle-ci (article L. 217-3 du Code de la consommation).",
+          "statut": "orange",
+          "message": "Partiellement : Le vendeur répond des défauts de conformité *existants au moment de la délivrance* et qui apparaissent dans un délai de deux ans à compter de celle-ci, sous réserve des conditions spécifiques pour les biens numériques et les cas liés à l'emballage, l'installation ou les instructions.",
+          "sources": [
+            {
+              "citee": "article L. 217-3 du Code de la consommation",
+              "type": "article_code",
+              "trouvee": "Article L217-3 — Code de la consommation",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-04-12).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Le vendeur répond des défauts de conformité *existants au moment de la délivrance* et qui apparaissent dans un délai de deux ans à compter de celle-ci, sous réserve des conditions spécifiques pour les biens numériques et les cas liés à l'emballage, l'installation ou les instructions."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Il répond des défauts de conformité existant au moment de la délivrance du bien au sens de l'article L. 216-1, qui apparaissent dans un délai de deux ans à compter de celle-ci."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N6-3",
+      "note": "N6",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "Dans les contrats entre professionnels et consommateurs, sont abusives les clauses qui créent, au détriment du consommateur, un déséquilibre significatif entre les droits et obligations des parties (article L. 212-1 du Code de la consommation).",
+      "raison": "L212-1, alinéa 1er, version du 1er octobre 2016.",
+      "obtenus": [
+        "N6/A3"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N6/A3",
+          "passage": "Dans les contrats entre professionnels et consommateurs, sont abusives les clauses qui créent, au détriment du consommateur, un déséquilibre significatif entre les droits et obligations des parties (article L. 212-1 du Code de la consommation).",
+          "statut": "orange",
+          "message": "Partiellement : Dans les contrats entre professionnels et consommateurs, sont abusives les clauses qui ont pour objet ou pour effet de créer, au détriment du consommateur, un déséquilibre significatif entre les droits et obligations des parties, sous réserve des exceptions prévues pour l'objet principal du contrat et l'adéquation du prix, à condition que les clauses soient rédigées de façon claire et compréhensible.",
+          "sources": [
+            {
+              "citee": "article L. 212-1 du Code de la consommation",
+              "type": "article_code",
+              "trouvee": "Article L212-1 — Code de la consommation",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-04-12).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Dans les contrats entre professionnels et consommateurs, sont abusives les clauses qui ont pour objet ou pour effet de créer, au détriment du consommateur, un déséquilibre significatif entre les droits et obligations des parties, sous réserve des exceptions prévues pour l'objet principal du contrat et l'adéquation du prix, à condition que les clauses soient rédigées de façon claire et compréhensible."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Dans les contrats conclus entre professionnels et consommateurs, sont abusives les clauses qui ont pour objet ou pour effet de créer, au détriment du consommateur, un déséquilibre significatif entre les droits et obligations des parties au contrat."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N6-4",
+      "note": "N6",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "L'action du professionnel en paiement des biens qu'il fournit au consommateur se prescrit par deux ans (article L. 218-2 du Code de la consommation).",
+      "raison": "L218-2, inchangé depuis le 1er juillet 2016.",
+      "obtenus": [
+        "N6/A4"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N6/A4",
+          "passage": "L'action du professionnel en paiement des biens qu'il fournit au consommateur se prescrit par deux ans (article L. 218-2 du Code de la consommation).",
+          "statut": "orange",
+          "message": "Partiellement : L'action des professionnels en paiement des biens ou des services qu'ils fournissent aux consommateurs se prescrit par deux ans.",
+          "sources": [
+            {
+              "citee": "article L. 218-2 du Code de la consommation",
+              "type": "article_code",
+              "trouvee": "Article L218-2 — Code de la consommation",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-04-12).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : L'action des professionnels en paiement des biens ou des services qu'ils fournissent aux consommateurs se prescrit par deux ans."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "L'action des professionnels, pour les biens ou les services qu'ils fournissent aux consommateurs, se prescrit par deux ans."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N6-5",
+      "note": "N6",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le vendeur doit rembourser le consommateur dans les sept jours suivant la rétractation (article L. 221-35-1 du Code de la consommation).",
+      "raison": "Il n'existe pas d'article L. 221-35-1 dans le Code de la consommation.",
+      "obtenus": [
+        "N6/A5"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N6/A5",
+          "passage": "Le vendeur doit rembourser le consommateur dans les sept jours suivant la rétractation (article L. 221-35-1 du Code de la consommation).",
+          "statut": "rouge",
+          "message": "« article L. 221-35-1 du Code de la consommation » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "article L. 221-35-1 du Code de la consommation",
+              "type": "article_code",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « article L. 221-35-1 du Code de la consommation » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N6-6",
+      "note": "N6",
+      "type": "circulaire",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "La circulaire du 26 septembre 2014 de présentation de la loi relative à la consommation fixe les conditions de l'action de groupe, et ces conditions s'imposent au juge.",
+      "raison": "Circulaire réelle, présentée comme liant le juge ; une circulaire ne le lie pas.",
+      "obtenus": [
+        "N6/A6"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N6/A6",
+          "passage": "La circulaire du 26 septembre 2014 de présentation de la loi relative à la consommation fixe les conditions de l'action de groupe, et ces conditions s'imposent au juge.",
+          "statut": "orange",
+          "message": "Une circulaire est sous la loi et le décret : elle ne lie pas le juge. À appuyer sur un texte de rang supérieur.",
+          "sources": [
+            {
+              "citee": "circulaire du 26 septembre 2014 de présentation de la loi relative à la consommation",
+              "type": "circulaire",
+              "trouvee": null,
+              "controles": [
+                "existe gris : Circulaire : recherche automatique non disponible.",
+                "rang orange : Une circulaire est sous la loi et le décret : elle ne lie pas le juge. À appuyer sur un texte de rang supérieur."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N7-1",
+      "note": "N7",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Le dépôt de garantie ne peut être supérieur à un mois de loyer en principal (article 22 de la loi n° 89-462 du 6 juillet 1989).",
+      "raison": "Article 22 de la loi de 1989, version en vigueur depuis le 27 mars 2014.",
+      "obtenus": [
+        "N7/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N7/A1",
+          "passage": "Le dépôt de garantie ne peut être supérieur à un mois de loyer en principal (article 22 de la loi n° 89-462 du 6 juillet 1989).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 22 de la loi n° 89-462 du 6 juillet 1989",
+              "type": "loi",
+              "trouvee": "Article 22 — Loi n° 89-462 du 6 juillet 1989 tendant à améliorer les rapports locatifs et portant modification de la loi n° 86-1290 du 23 décembre 1986",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Lorsqu'un dépôt de garantie est prévu par le contrat de location pour garantir l'exécution de ses obligations locatives par le locataire, il ne peut être supérieur à un mois de loyer en principal."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N7-2",
+      "note": "N7",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "passage": "Les actions dérivant du contrat de bail se prescrivent par cinq ans (article 7-1 de la loi n° 89-462 du 6 juillet 1989).",
+      "raison": "Article 7-1 : trois ans.",
+      "obtenus": [
+        "N7/A2"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N7/A2",
+          "passage": "Les actions dérivant du contrat de bail se prescrivent par cinq ans (article 7-1 de la loi n° 89-462 du 6 juillet 1989).",
+          "statut": "orange",
+          "message": "Partiellement : Les actions dérivant du contrat de bail se prescrivent par trois ans, et non cinq ans, selon l'article 7-1 de la loi n° 89-462 du 6 juillet 1989.",
+          "sources": [
+            {
+              "citee": "article 7-1 de la loi n° 89-462 du 6 juillet 1989",
+              "type": "loi",
+              "trouvee": "Article 7-1 — Loi n° 89-462 du 6 juillet 1989 tendant à améliorer les rapports locatifs et portant modification de la loi n° 86-1290 du 23 décembre 1986",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Les actions dérivant du contrat de bail se prescrivent par trois ans, et non cinq ans, selon l'article 7-1 de la loi n° 89-462 du 6 juillet 1989."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Toutes actions dérivant d'un contrat de bail sont prescrites par trois ans à compter du jour où le titulaire d'un droit a connu ou aurait dû connaître les faits lui permettant d'exercer ce droit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N7-3",
+      "note": "N7",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "Le bail consenti par un bailleur personne physique est conclu pour une durée au moins égale à trois ans (article 10 de la loi n° 89-462 du 6 juillet 1989).",
+      "raison": "Article 10 de la loi de 1989, version en vigueur depuis le 27 mars 2014.",
+      "obtenus": [
+        "N7/A3"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N7/A3",
+          "passage": "Le bail consenti par un bailleur personne physique est conclu pour une durée au moins égale à trois ans (article 10 de la loi n° 89-462 du 6 juillet 1989).",
+          "statut": "orange",
+          "message": "Partiellement : Le bail consenti par un bailleur personne physique ou par un bailleur défini à l'article 13 est conclu pour une durée au moins égale à trois ans.",
+          "sources": [
+            {
+              "citee": "article 10 de la loi n° 89-462 du 6 juillet 1989",
+              "type": "loi",
+              "trouvee": "Article 10 — Loi n° 89-462 du 6 juillet 1989 tendant à améliorer les rapports locatifs et portant modification de la loi n° 86-1290 du 23 décembre 1986",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Le bail consenti par un bailleur personne physique ou par un bailleur défini à l'article 13 est conclu pour une durée au moins égale à trois ans."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Le contrat de location est conclu pour une durée au moins égale à trois ans pour les bailleurs personnes physiques ainsi que pour les bailleurs définis à l'article 13"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N7-4",
+      "note": "N7",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Le bailleur est obligé de délivrer au preneur, s'il s'agit de son habitation principale, un logement décent (article 1719 du Code civil).",
+      "raison": "Article 1719, 1°, version en vigueur depuis le 28 mars 2009.",
+      "obtenus": [
+        "N7/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N7/A4",
+          "passage": "Le bailleur est obligé de délivrer au preneur, s'il s'agit de son habitation principale, un logement décent (article 1719 du Code civil).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 1719 du Code civil",
+              "type": "article_code",
+              "trouvee": "Article 1719 — Code civil",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-06-15).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "De délivrer au preneur la chose louée et, s'il s'agit de son habitation principale, un logement décent."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N7-5",
+      "note": "N7",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Le bailleur qui restitue le dépôt de garantie en retard doit une pénalité forfaitaire d'un mois de loyer, sans autre formalité (Cass. 3e civ., 7 juillet 2022, n° 21-44.180).",
+      "raison": "Aucune décision n° 21-44.180, ni sur Légifrance ni sur Judilibre.",
+      "obtenus": [
+        "N7/A5"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N7/A5",
+          "passage": "Le bailleur qui restitue le dépôt de garantie en retard doit une pénalité forfaitaire d'un mois de loyer, sans autre formalité (Cass. 3e civ., 7 juillet 2022, n° 21-44.180).",
+          "statut": "rouge",
+          "message": "« Cass. 3e civ., 7 juillet 2022, n° 21-44.180 » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "Cass. 3e civ., 7 juillet 2022, n° 21-44.180",
+              "type": "decision",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « Cass. 3e civ., 7 juillet 2022, n° 21-44.180 » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N8-1",
+      "note": "N8",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "Le harcèlement moral est puni d'un an d'emprisonnement et de 15 000 euros d'amende (article 222-33-2 du Code pénal).",
+      "raison": "Peine applicable aux faits de 2011 (version 2002-2012) ; elle a été portée à deux ans et 30 000 € en août 2012.",
+      "obtenus": [
+        "N8/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N8/A1",
+          "passage": "Le harcèlement moral est puni d'un an d'emprisonnement et de 15 000 euros d'amende (article 222-33-2 du Code pénal).",
+          "statut": "orange",
+          "message": "Le texte a changé depuis les faits : la version applicable au 2011-09-01 (en vigueur du 2002-01-18 au 2012-08-08) n'est pas la version actuelle.",
+          "sources": [
+            {
+              "citee": "article 222-33-2 du Code pénal",
+              "type": "article_code",
+              "trouvee": "Article 222-33-2 — Code pénal",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Le texte a changé depuis les faits : la version applicable au 2011-09-01 (en vigueur du 2002-01-18 au 2012-08-08) n'est pas la version actuelle.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "est puni d'un an d'emprisonnement et de 15000 euros d'amende"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N8-2",
+      "note": "N8",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "Aucun salarié ne doit subir des agissements répétés de harcèlement moral ayant pour objet ou pour effet une dégradation de ses conditions de travail (article L. 1152-1 du Code du travail).",
+      "raison": "L1152-1, inchangé depuis 2008.",
+      "obtenus": [
+        "N8/A2"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N8/A2",
+          "passage": "Aucun salarié ne doit subir des agissements répétés de harcèlement moral ayant pour objet ou pour effet une dégradation de ses conditions de travail (article L. 1152-1 du Code du travail).",
+          "statut": "orange",
+          "message": "Partiellement : Le Code du travail interdit les agissements répétés de harcèlement moral ayant pour objet ou pour effet une dégradation des conditions de travail susceptible de porter atteinte aux droits et à la dignité du salarié, d'altérer sa santé physique ou mentale, ou de compromettre son avenir professionnel.",
+          "sources": [
+            {
+              "citee": "article L. 1152-1 du Code du travail",
+              "type": "article_code",
+              "trouvee": "Article L1152-1 — Code du travail",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2011-09-01).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Le Code du travail interdit les agissements répétés de harcèlement moral ayant pour objet ou pour effet une dégradation des conditions de travail susceptible de porter atteinte aux droits et à la dignité du salarié, d'altérer sa santé physique ou mentale, ou de compromettre son avenir professionnel."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Aucun salarié ne doit subir les agissements répétés de harcèlement moral qui ont pour objet ou pour effet une dégradation de ses conditions de travail susceptible de porter atteinte à ses droits et à sa dignité, d'altérer sa santé physique ou mentale ou de compromettre son avenir professionnel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N8-3",
+      "note": "N8",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Tout manquement de l'employeur cause nécessairement au salarié un préjudice qu'il n'a pas à prouver (Cass. soc., 13 avril 2016, n° 14-28.293).",
+      "raison": "Arrêt réel qui juge l'inverse : le préjudice relève de l'appréciation souveraine des juges du fond. Piège : la formule « cause nécessairement un préjudice » figure dans le moyen rejeté.",
+      "obtenus": [
+        "N8/A3"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N8/A3",
+          "passage": "Tout manquement de l'employeur cause nécessairement au salarié un préjudice qu'il n'a pas à prouver (Cass. soc., 13 avril 2016, n° 14-28.293).",
+          "statut": "rouge",
+          "message": "La source ne dit pas cela : Le manquement de l'employeur ne cause pas nécessairement un préjudice au salarié sans preuve : l'existence et l'évaluation du préjudice relèvent de l'appréciation souveraine des juges du fond, et le salarié doit justifier du préjudice allégué.",
+          "sources": [
+            {
+              "citee": "Cass. soc., 13 avril 2016, n° 14-28.293",
+              "type": "decision",
+              "trouvee": "Cour de cassation, civile, Chambre sociale, 13 avril 2016, 14-28.293, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu rouge : La source ne dit pas cela : Le manquement de l'employeur ne cause pas nécessairement un préjudice au salarié sans preuve : l'existence et l'évaluation du préjudice relèvent de l'appréciation souveraine des juges du fond, et le salarié doit justifier du préjudice allégué."
+              ],
+              "verdict": "NE_SOUTIENT_PAS",
+              "extraitRetrouve": true,
+              "extrait": "l'existence d'un préjudice et l'évaluation de celui-ci relèvent du pouvoir souverain d'appréciation des juges du fond ; que le conseil de prud'hommes, qui a constaté que le salarié n'apportait aucun élément pour justifier le préjudice allégué, a, par ces seuls motifs, légalement justifié sa décision"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N8-4",
+      "note": "N8",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "obtenu": "gris",
+      "passage": "Les juges du fond admettent généralement qu'un acte isolé ne suffit pas à caractériser un harcèlement moral.",
+      "raison": "Aucune source identifiable (« les juges du fond admettent généralement »).",
+      "obtenus": [
+        "N8/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N8/A4",
+          "passage": "Les juges du fond admettent généralement qu'un acte isolé ne suffit pas à caractériser un harcèlement moral.",
+          "statut": "gris",
+          "message": "Aucune source citée : à vérifier à la main.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "N9-1",
+      "note": "N9",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "passage": "Il incombe à chaque partie de prouver conformément à la loi les faits nécessaires au succès de sa prétention (article 9 du Code de procédure civile).",
+      "raison": "Article 9 du CPC, inchangé depuis 1976.",
+      "obtenus": [
+        "N9/A1"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N9/A1",
+          "passage": "Il incombe à chaque partie de prouver conformément à la loi les faits nécessaires au succès de sa prétention (article 9 du Code de procédure civile).",
+          "statut": "vert",
+          "message": "Sources retrouvées et conformes.",
+          "sources": [
+            {
+              "citee": "article 9 du Code de procédure civile",
+              "type": "article_code",
+              "trouvee": "Article 9 — Code de procédure civile",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-01-10).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu vert : La source dit bien cela."
+              ],
+              "verdict": "SOUTIENT",
+              "extraitRetrouve": true,
+              "extrait": "Il incombe à chaque partie de prouver conformément à la loi les faits nécessaires au succès de sa prétention."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N9-2",
+      "note": "N9",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "La demande n'excédant pas 5 000 euros, l'assignation doit être précédée, à peine d'irrecevabilité, d'une tentative de conciliation, de médiation ou de procédure participative (article 750-1 du Code de procédure civile).",
+      "raison": "L'article 750-1 a été annulé par le Conseil d'État le 22 septembre 2022 et n'a été rétabli qu'en mai 2023 : aucune version en vigueur au 10 janvier 2023.",
+      "obtenus": [
+        "N9/A2"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N9/A2",
+          "passage": "La demande n'excédant pas 5 000 euros, l'assignation doit être précédée, à peine d'irrecevabilité, d'une tentative de conciliation, de médiation ou de procédure participative (article 750-1 du Code de procédure civile).",
+          "statut": "rouge",
+          "message": "Plus en vigueur à la date des faits (2023-01-10).",
+          "sources": [
+            {
+              "citee": "article 750-1 du Code de procédure civile",
+              "type": "article_code",
+              "trouvee": "Article 750-1 — Code de procédure civile",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date rouge : Plus en vigueur à la date des faits (2023-01-10).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : La tentative de conciliation, médiation ou procédure participative est obligatoire avant assignation pour une demande n'excédant pas 5 000 euros, sous peine d'irrecevabilité, sauf dans les cas de dispense prévus par l'article 750-1 du Code de procédure civile."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Les parties sont dispensées de l'obligation mentionnée au premier alinéa dans les cas suivants : 1° Si l'une des parties au moins sollicite l'homologation d'un accord ; 2° Lorsque l'exercice d'un recours préalable est imposé auprès de l'auteur de la décision ; [...]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N9-3",
+      "note": "N9",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "Le délai d'appel est d'un mois en matière contentieuse (article 538 du Code de procédure civile).",
+      "raison": "Article 538 du CPC : délai de recours par une voie ordinaire d'un mois en matière contentieuse.",
+      "obtenus": [
+        "N9/A3"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N9/A3",
+          "passage": "Le délai d'appel est d'un mois en matière contentieuse (article 538 du Code de procédure civile).",
+          "statut": "orange",
+          "message": "Partiellement : Le délai de recours par une voie ordinaire est d'un mois en matière contentieuse, et non spécifiquement le délai d'appel, qui n'est qu'une des voies ordinaires possibles.",
+          "sources": [
+            {
+              "citee": "article 538 du Code de procédure civile",
+              "type": "article_code",
+              "trouvee": "Article 538 — Code de procédure civile",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date vert : En vigueur à la date des faits (2023-01-10).",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : Le délai de recours par une voie ordinaire est d'un mois en matière contentieuse, et non spécifiquement le délai d'appel, qui n'est qu'une des voies ordinaires possibles."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Le délai de recours par une voie ordinaire est d'un mois en matière contentieuse"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N9-4",
+      "note": "N9",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "passage": "L'intimé dispose d'un délai de trois mois à compter de la notification des conclusions de l'appelant pour remettre ses conclusions au greffe (article 909 du Code de procédure civile).",
+      "raison": "Juste au 10 janvier 2023 (version 2017-2024), mais le texte a été réécrit le 1er septembre 2024 (changement de forme, délai identique).",
+      "obtenus": [
+        "N9/A4"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N9/A4",
+          "passage": "L'intimé dispose d'un délai de trois mois à compter de la notification des conclusions de l'appelant pour remettre ses conclusions au greffe (article 909 du Code de procédure civile).",
+          "statut": "orange",
+          "message": "Le texte a changé depuis les faits : la version applicable au 2023-01-10 (en vigueur du 2017-09-01 au 2024-09-01) n'est pas la version actuelle. Partiellement : L'intimé dispose d'un délai de trois mois à compter de la notification des conclusions de l'appelant prévues à l'article 908, à peine d'irrecevabilité relevée d'office, pour remettre ses conclusions au greffe et, le cas échéant, former appel incident ou appel provoqué.",
+          "sources": [
+            {
+              "citee": "article 909 du Code de procédure civile",
+              "type": "article_code",
+              "trouvee": "Article 909 — Code de procédure civile",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "date orange : Le texte a changé depuis les faits : la version applicable au 2023-01-10 (en vigueur du 2017-09-01 au 2024-09-01) n'est pas la version actuelle.",
+                "rang vert : Rang : Loi / ordonnance.",
+                "contenu orange : Partiellement : L'intimé dispose d'un délai de trois mois à compter de la notification des conclusions de l'appelant prévues à l'article 908, à peine d'irrecevabilité relevée d'office, pour remettre ses conclusions au greffe et, le cas échéant, former appel incident ou appel provoqué."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "L'intimé dispose, à peine d'irrecevabilité relevée d'office, d'un délai de trois mois à compter de la notification des conclusions de l'appelant prévues à l'article 908 pour remettre ses conclusions au greffe et former, le cas échéant, appel incident ou appel provoqué."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N9-5",
+      "note": "N9",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "orange",
+      "passage": "Lorsque l'appelant ne demande dans le dispositif de ses conclusions ni l'infirmation ni l'annulation du jugement, la cour d'appel ne peut que confirmer le jugement (Cass. 2e civ., 17 septembre 2020, n° 18-23.626).",
+      "raison": "Arrêt réel, publié au bulletin, § 4.",
+      "obtenus": [
+        "N9/A5"
+      ],
+      "cause": "juge : verdict PARTIEL",
+      "detail": [
+        {
+          "id": "N9/A5",
+          "passage": "Lorsque l'appelant ne demande dans le dispositif de ses conclusions ni l'infirmation ni l'annulation du jugement, la cour d'appel ne peut que confirmer le jugement (Cass. 2e civ., 17 septembre 2020, n° 18-23.626).",
+          "statut": "orange",
+          "message": "Partiellement : La règle selon laquelle la cour d'appel ne peut que confirmer le jugement si l'appelant ne demande ni infirmation ni annulation dans le dispositif de ses conclusions ne s'applique qu'aux instances introduites après le 17 septembre 2020, en raison de l'application immédiate de la jurisprudence et du droit à un procès équitable.",
+          "sources": [
+            {
+              "citee": "Cass. 2e civ., 17 septembre 2020, n° 18-23.626",
+              "type": "decision",
+              "trouvee": "Cour de cassation, civile, Chambre civile 2, 17 septembre 2020, 18-23.626, Publié au bulletin",
+              "controles": [
+                "existe vert : Retrouvée sur Légifrance.",
+                "rang vert : Rang : Jurisprudence (interprétation).",
+                "contenu orange : Partiellement : La règle selon laquelle la cour d'appel ne peut que confirmer le jugement si l'appelant ne demande ni infirmation ni annulation dans le dispositif de ses conclusions ne s'applique qu'aux instances introduites après le 17 septembre 2020, en raison de l'application immédiate de la jurisprudence et du droit à un procès équitable."
+              ],
+              "verdict": "PARTIEL",
+              "extraitRetrouve": true,
+              "extrait": "Il résulte des articles 542 et 954 du code de procédure civile que lorsque l'appelant ne demande dans le dispositif de ses conclusions ni l'infirmation ni l'annulation du jugement, la cour d'appel ne peut que confirmer le jugement."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N9-6",
+      "note": "N9",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "Les frais de recouvrement amiable engagés avant le procès sont toujours mis à la charge du débiteur (article 700-1 du Code de procédure civile).",
+      "raison": "Il n'existe pas d'article 700-1 dans le Code de procédure civile.",
+      "obtenus": [
+        "N9/A6"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N9/A6",
+          "passage": "Les frais de recouvrement amiable engagés avant le procès sont toujours mis à la charge du débiteur (article 700-1 du Code de procédure civile).",
+          "statut": "rouge",
+          "message": "« article 700-1 du Code de procédure civile » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "article 700-1 du Code de procédure civile",
+              "type": "article_code",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « article 700-1 du Code de procédure civile » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N9-7",
+      "note": "N9",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "passage": "La cour d'appel doit relever d'office la caducité de la déclaration d'appel, même lorsque l'intimé a déjà conclu (Cass. 2e civ., 15 janvier 2020, n° 18-47.552).",
+      "raison": "Aucune décision n° 18-47.552, ni sur Légifrance ni sur Judilibre.",
+      "obtenus": [
+        "N9/A7"
+      ],
+      "cause": null,
+      "detail": [
+        {
+          "id": "N9/A7",
+          "passage": "La cour d'appel doit relever d'office la caducité de la déclaration d'appel, même lorsque l'intimé a déjà conclu (Cass. 2e civ., 15 janvier 2020, n° 18-47.552).",
+          "statut": "rouge",
+          "message": "« Cass. 2e civ., 15 janvier 2020, n° 18-47.552 » est introuvable dans les bases officielles.",
+          "sources": [
+            {
+              "citee": "Cass. 2e civ., 15 janvier 2020, n° 18-47.552",
+              "type": "decision",
+              "trouvee": null,
+              "controles": [
+                "existe rouge : « Cass. 2e civ., 15 janvier 2020, n° 18-47.552 » est introuvable dans les bases officielles."
+              ],
+              "verdict": null,
+              "extraitRetrouve": null,
+              "extrait": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "horsJeu": [
+    {
+      "id": "N1/A1",
+      "passage": "Mme Durand, responsable logistique depuis le 3 septembre 2018 dans une société de 120 salariés, a été licenciée pour insuffisance professionnelle par lettre du 15 juin 2023.",
+      "statut": "gris",
+      "message": "Aucune source citée : à vérifier à la main."
+    },
+    {
+      "id": "N2/A7",
+      "passage": "M. Martin, attaché commercial depuis le 2 janvier 2012 dans une société de 40 salariés, a été licencié par lettre du 15 mars 2016.",
+      "statut": "gris",
+      "message": "Aucune source citée : à vérifier à la main."
+    }
+  ]
+}

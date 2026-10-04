@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-04T13:49:30.580Z",
+  "jeu": "charlotin",
+  "modele": "mistral-large-latest",
+  "prompt": "Tu es un juriste français expérimenté. On te soumet une affirmation juridique tirée d'une note écrite par une IA, avec la source qu'elle cite, et la date des faits.\nDis si l'affirmation est juridiquement exacte, si la source citée existe et si elle dit bien cela, dans sa version applicable à la date des faits.\nRéponds en JSON : {\"statut\": \"vert\" | \"orange\" | \"rouge\" | \"gris\", \"raison\": \"une phrase\"}\n- \"vert\" : affirmation exacte, la source existe, elle dit bien cela et elle était en vigueur à la date des faits ;\n- \"orange\" : à revoir (texte modifié depuis les faits, circulaire présentée comme obligatoire, nuance importante omise) ;\n- \"rouge\" : fausse (source inexistante ou inventée, source qui ne dit pas cela, texte pas en vigueur à la date des faits) ;\n- \"gris\" : invérifiable (aucune source précise citée).",
+  "dureeSecondes": 80,
+  "mesures": {
+    "total": 5,
+    "parEtiquette": {
+      "vert": 0,
+      "orange": 0,
+      "rouge": 5,
+      "gris": 0
+    },
+    "detection": {
+      "n": 4,
+      "sur": 5,
+      "taux": 0.8
+    },
+    "detectionStricte": {
+      "n": 4,
+      "sur": 5,
+      "taux": 0.8
+    },
+    "fauxVertsSurFausses": {
+      "n": 1,
+      "sur": 5,
+      "taux": 0.2
+    },
+    "fauxVerts": {
+      "n": 1,
+      "sur": 5,
+      "taux": 0.2
+    },
+    "fauxRouges": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "vertsConfirmes": {
+      "n": 0,
+      "sur": 0,
+      "taux": null
+    },
+    "exactitude": {
+      "n": 1,
+      "sur": 5,
+      "taux": 0.2
+    },
+    "absentes": {
+      "n": 0,
+      "sur": 5,
+      "taux": 0
+    },
+    "matrice": {
+      "vert": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "orange": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      },
+      "rouge": {
+        "vert": 1,
+        "orange": 3,
+        "rouge": 1,
+        "gris": 0,
+        "absent": 0
+      },
+      "gris": {
+        "vert": 0,
+        "orange": 0,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      }
+    },
+    "parType": {
+      "decision_inventee": {
+        "n": 3,
+        "exactes": 0,
+        "signalees": 2,
+        "fauxVerts": 1,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "decision_mal_citee": {
+        "n": 2,
+        "exactes": 1,
+        "signalees": 2,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      }
+    }
+  },
+  "lignes": [
+    {
+      "id": "C1-1",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la décision CE, 7 février 2018, n° 409302 existe et était en vigueur à la date des faits (2025), et elle consacre bien ce principe."
+    },
+    {
+      "id": "C2-1",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "raisonModele": "L'arrêt CE, 27 juin 2019, n° 420269 existe et consacre bien un examen particulier, mais il concerne spécifiquement les étrangers malades (art. L. 511-4 CESEDA), ce qui n'est pas précisé dans l'affirmation."
+    },
+    {
+      "id": "C2-2",
+      "type": "decision_mal_citee",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "raisonModele": "L'arrêt CE, 12 octobre 2012, GISTI et FAPIL (n° 34728) existe et consacre bien un contrôle de proportionnalité, mais il concerne spécifiquement les mesures d'éloignement au regard de l'article 8 de la CEDH (vie privée et familiale) pour les étrangers en situation irrégulière, avec des nuances jurisprudentielles postérieures à vérifier pour la date des faits (2025)."
+    },
+    {
+      "id": "C2-3",
+      "type": "decision_mal_citee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "La source citée (CE, 9 juin 1978, Lebon, n° 05873) existe mais ne concerne pas la motivation en fait et en droit des mesures de reconduite à la frontière, qui relève plutôt de l'article L. 512-1 du CESEDA (dans sa rédaction postérieure à 1978)."
+    },
+    {
+      "id": "C2-4",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "raisonModele": "L'arrêt cité existe (CAA Lyon, 18 janvier 2022, n° 20LY01957), mais son applicabilité en 2025 dépend d'éventuelles évolutions jurisprudentielles ou législatives postérieures à la date des faits."
+    }
+  ]
+}

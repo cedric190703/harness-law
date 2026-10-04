@@ -1,0 +1,26 @@
+{
+  "seed": 20261004,
+  "dev": [
+    "banking-finance/compare-credit-agreement-against-term-sheet",
+    "trusts-estates-private-client/compare-final-decree-of-divorce-against-mediated-settlement-agreement",
+    "insurance/compare-policy",
+    "structured-finance-securitization/compare-representations-and-warranties-against-precedent-indenture",
+    "antitrust-competition/compare-expert-market-share-estimates-against-agency-data"
+  ],
+  "test": [
+    "insurance/compare-commercial-property-policy-form-against-state-regulatory-requirements",
+    "trusts-estates-private-client/compare-trust-documents-against-client-instructions",
+    "banking-finance/compare-compliance-certificate-against-financial-covenants",
+    "international-trade-sanctions/compare-transaction-records-against-sanctioned-parties-list",
+    "intellectual-property/compare-ip-tech-transactions",
+    "arbitration-international-dispute-resolution/compare-arbitrator-candidates-against-selection-criteria",
+    "bankruptcy-restructuring/compare-competing-bid-terms-against-stalking-horse-asset-purchase-agreement",
+    "healthcare-life-sciences/compare-payor-contract-terms-against-benchmarks",
+    "immigration/compare-immigration",
+    "structured-finance-securitization/compare-term-sheet-against-engagement-letter"
+  ],
+  "controle": [
+    "white-collar-defense-investigations/identify-issues-in-deferred-prosecution-agreement",
+    "intellectual-property/identify-prior-art-deficiencies-in-patent-infringement-defense"
+  ]
+}
