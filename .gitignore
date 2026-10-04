@@ -5,3 +5,4 @@ __pycache__/
 bench/logs/
 bench/*.out
 bench/results-smoke.jsonl
+bench/revues/
