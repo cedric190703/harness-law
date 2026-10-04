@@ -17,7 +17,7 @@ export async function avecCache<T>(
   cle: unknown,
   calcul: () => Promise<T>,
 ): Promise<{ valeur: T; depuisCache: boolean }> {
-  if (process.env.VISA_CACHE === "0") return { valeur: await calcul(), depuisCache: false };
+  if (process.env.SAUL_CACHE === "0") return { valeur: await calcul(), depuisCache: false };
   const fichier = path.join(RACINE, espace, `${empreinte(cle)}.json`);
   try {
     return { valeur: JSON.parse(await readFile(fichier, "utf8")) as T, depuisCache: true };

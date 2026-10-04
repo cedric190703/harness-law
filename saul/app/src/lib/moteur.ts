@@ -29,7 +29,7 @@ export { versionALaDate } from "./controles";
 
 type Emettre = (e: Evenement) => void;
 
-const PROMPT_EXTRACTION = `Tu es l'extracteur de Visa, un outil qui vérifie les textes juridiques français produits par une IA.
+const PROMPT_EXTRACTION = `Tu es l'extracteur de Saul, un outil qui vérifie les textes juridiques français produits par une IA.
 Découpe le texte en AFFIRMATIONS JURIDIQUES vérifiables (une règle, une solution jurisprudentielle, un délai, un montant, un fait tiré d'une pièce).
 Ignore les phrases de politesse, de transition ou purement rhétoriques.
 
@@ -91,13 +91,13 @@ export async function verifierTexte(
   const journal = (e: Omit<EntreeJournal, "t">) => emettre({ type: "journal", entree: { t: maintenant(), ...e } });
 
   journal({
-    acteur: "Visa",
+    acteur: "Saul",
     action: "Texte reçu",
     detail: `${texte.length} caractères, ${pieces.length} pièce(s) du dossier`,
     empreinte: empreinte(texte).slice(0, 16),
   });
   if (!pisteConfigure()) {
-    journal({ acteur: "Visa", action: "Bases officielles non configurées : les sources seront marquées « non vérifiées »." });
+    journal({ acteur: "Saul", action: "Bases officielles non configurées : les sources seront marquées « non vérifiées »." });
   }
 
   journal({ acteur: "Extracteur", action: "Découpage du texte en affirmations…", modele: MODELE_EXTRACTION });
@@ -138,7 +138,7 @@ export async function verifierTexte(
   const synthese: Record<Statut, number> = { vert: 0, orange: 0, rouge: 0, gris: 0 };
   for (const r of resultats) synthese[r.statut]++;
   journal({
-    acteur: "Visa",
+    acteur: "Saul",
     action: "Vérification terminée",
     detail: `${synthese.vert} vertes, ${synthese.orange} à revoir, ${synthese.rouge} fausses, ${synthese.gris} non vérifiables`,
   });

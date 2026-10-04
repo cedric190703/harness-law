@@ -6,7 +6,7 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const serif = Source_Serif_4({ variable: "--font-serif", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Visa — Legal workspace",
+  title: "Saul — Legal workspace",
   description: "Pilotez vos agents juridiques, suivez le workflow et remontez aux preuves de chaque section.",
 };
 
