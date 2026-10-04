@@ -1,7 +1,26 @@
 .context/
 harvey-labs/
 results/
-.env
+# Configuration privée, à n'importe quel niveau du dépôt.
+.env*
+!.env.example
+!.env.*.example
+.harness-data/
+.cache/
+node_modules/
+.next/
+.ssh/
+.aws/
+.config/saul/
+credentials*.json
+*service-account*.json
+online-access.json
+id_rsa
+id_ed25519
+*.pem
+*.key
+*.p12
+*.pfx
 __pycache__/
 bench/logs/
 bench/*.out
