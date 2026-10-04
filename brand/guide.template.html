@@ -1,0 +1,287 @@
+<title>Saul — guide de marque</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;700&family=Syncopate:wght@700&display=swap">
+<style>
+/* Mise en page : une colonne de 1120px, chaque section ouverte par une étiquette en mono, comme une fiche de mission. */
+{{SAUL_CSS}}
+
+* { box-sizing: border-box; }
+html, body { background: var(--saul-bg); color: var(--saul-fg); }
+body { margin: 0; font: 400 var(--saul-text-md)/1.55 var(--saul-font); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 24px; padding-block: 0 96px; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--saul-lecture); outline-offset: 3px; }
+
+.label { font: 700 var(--saul-text-xs)/1.4 var(--saul-font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--saul-fg-faint); }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h2 { font: 800 var(--saul-text-xl)/1.08 var(--saul-font); letter-spacing: -.02em; }
+h3 { font: 800 var(--saul-text-lg)/1.2 var(--saul-font); }
+p { margin: 0; max-width: 65ch; }
+.soft { color: var(--saul-fg-soft); }
+
+/* barre du haut */
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 20px; border-bottom: 1px solid var(--saul-line); }
+.wordmark { font: 700 1.125rem/1 var(--saul-font-logo); letter-spacing: .32em; }
+.theme { display: flex; gap: 4px; }
+.theme button { font: 700 var(--saul-text-xs)/1 var(--saul-font-mono); letter-spacing: .1em; text-transform: uppercase; background: transparent; color: var(--saul-fg-soft); border: 1px solid var(--saul-line); border-radius: var(--saul-radius-sm); padding: 8px 10px; cursor: pointer; }
+.theme button[aria-pressed="true"] { color: var(--saul-fg); border-color: var(--saul-fg); }
+
+/* ouverture */
+.hero { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; padding-block: 72px 56px; }
+.hero h1 { font: 700 clamp(4rem, 13vw, 10rem)/.95 var(--saul-font-logo); letter-spacing: .14em; }
+.hero .tag { font: 800 clamp(1.75rem, 4vw, 3rem)/1.05 var(--saul-font); letter-spacing: -.02em; margin-top: 20px; }
+.hero .lead { margin-top: 20px; font-size: 1.125rem; color: var(--saul-fg-soft); }
+.hero .mascot { width: clamp(180px, 26vw, 300px); }
+.hero .mascot svg { width: 100%; height: auto; display: block; }
+.rule { display: inline-flex; margin-top: 28px; font: 700 .875rem/1 var(--saul-font-logo); letter-spacing: .2em; text-transform: uppercase; color: #0B0C0E; background: var(--saul-ok); padding: 14px 18px; border-radius: var(--saul-radius-sm); }
+
+section { padding-block: 64px; border-top: 1px solid var(--saul-line); display: grid; gap: 32px; }
+.head { display: grid; gap: 12px; }
+
+/* personnage */
+.cast { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--saul-line); border: 1px solid var(--saul-line); }
+.role { background: var(--saul-bg); padding: 24px; display: grid; gap: 12px; align-content: start; }
+.role svg { width: 140px; height: auto; display: block; }
+.role .saul-verdict { justify-self: start; }
+.role .says { font: 400 var(--saul-text-sm)/1.5 var(--saul-font-mono); color: var(--saul-fg); }
+.role .when { font-size: var(--saul-text-sm); color: var(--saul-fg-soft); }
+
+/* couleurs */
+.swatches { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.sw { display: grid; gap: 10px; }
+.sw .chip { aspect-ratio: 4 / 3; border-radius: var(--saul-radius); border: 1px solid var(--saul-line); max-width: 100%; }
+.sw .name { font-weight: 700; }
+.sw code { font: 400 var(--saul-text-xs)/1.5 var(--saul-font-mono); color: var(--saul-fg-soft); }
+.neutrals .chip { aspect-ratio: 6 / 2; }
+
+/* typo */
+.types { display: grid; gap: 1px; background: var(--saul-line); border: 1px solid var(--saul-line); }
+.type { background: var(--saul-bg); padding: 28px 24px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; align-items: baseline; }
+.type .sample-logo { font: 700 3rem/1 var(--saul-font-logo); letter-spacing: .14em; }
+.type .sample-title { font: 800 2.25rem/1.1 var(--saul-font); letter-spacing: -.02em; }
+.type .sample-mono { font: 400 1rem/1.6 var(--saul-font-mono); }
+
+/* composants */
+.demo { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.panel { background: var(--saul-surface); border: 1px solid var(--saul-line); border-radius: var(--saul-radius-lg); padding: 20px; display: grid; gap: 16px; min-width: 0; }
+.msg { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+.avatar { width: 40px; height: 40px; border-radius: 12px; background: var(--saul-surface-2); overflow: hidden; display: grid; place-items: center; }
+.avatar svg { width: 44px; height: 44px; }
+.msg .who { font: 700 var(--saul-text-xs)/1 var(--saul-font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--saul-fg-faint); margin-bottom: 6px; }
+.msg .body { line-height: 1.7; }
+.user { justify-self: end; max-width: 85%; background: var(--saul-surface-2); border-radius: var(--saul-radius) var(--saul-radius) 4px var(--saul-radius); padding: 12px 14px; }
+.tally { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 8px; border-top: 1px solid var(--saul-line); }
+.composer { display: flex; gap: 8px; }
+.composer input { flex: 1; min-width: 0; font: inherit; color: var(--saul-fg); background: var(--saul-surface-2); border: 1px solid var(--saul-line); border-radius: var(--saul-radius); padding: 12px 14px; }
+.composer button { font: 700 var(--saul-text-sm)/1 var(--saul-font); color: var(--saul-bg); background: var(--saul-fg); border: 0; border-radius: var(--saul-radius); padding: 0 18px; cursor: pointer; }
+
+.source { display: grid; gap: 12px; }
+.source .ref { font: 700 var(--saul-text-sm)/1.4 var(--saul-font-mono); }
+.source blockquote { margin: 0; padding: 14px 16px; border-left: 3px solid var(--v); background: var(--saul-surface-2); border-radius: 0 var(--saul-radius-sm) var(--saul-radius-sm) 0; font: 400 var(--saul-text-sm)/1.65 var(--saul-font-mono); color: var(--saul-fg-soft); }
+.source blockquote mark { background: var(--v-wash); color: var(--saul-fg); padding: 0 2px; }
+.checks { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: var(--saul-text-sm); }
+.checks li { display: flex; justify-content: space-between; gap: 12px; padding-block: 8px; border-bottom: 1px solid var(--saul-line); }
+.checks li:last-child { border-bottom: 0; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* voix */
+.voice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.voice ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.voice li { padding: 14px 16px; border: 1px solid var(--saul-line); border-radius: var(--saul-radius); }
+.voice .do li { border-left: 3px solid var(--saul-fg); }
+.voice .dont li { color: var(--saul-fg-soft); text-decoration: line-through; text-decoration-color: var(--saul-fg-faint); }
+
+pre { margin: 0; overflow-x: auto; background: var(--saul-surface); border: 1px solid var(--saul-line); border-radius: var(--saul-radius); padding: 16px; font: 400 var(--saul-text-sm)/1.6 var(--saul-font-mono); color: var(--saul-fg-soft); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero .mascot { order: -1; }
+  .cast { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .type { grid-template-columns: 1fr; gap: 8px; }
+  .demo, .voice { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) { .cast { grid-template-columns: 1fr; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="wordmark">SAUL</span>
+    <div class="theme" role="group" aria-label="Thème">
+      <button type="button" id="t-dark" data-t="dark">Sombre</button>
+      <button type="button" id="t-light" data-t="light">Clair</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <p class="label">Guide de marque · v1 · 4 octobre 2026</p>
+      <h1>SAUL</h1>
+      <p class="tag">Avant de signer, appelez Saul.</p>
+      <p class="lead">La couche de vérification de l'IA juridique. Saul relit chaque phrase d'une réponse d'IA, va chercher le texte officiel ou la pièce du dossier, et garde la preuve.</p>
+      <span class="rule">Sans preuve, rien n'est vert</span>
+    </div>
+    <div class="mascot">{{saul-repos}}</div>
+  </div>
+
+  <section id="personnage">
+    <div class="head">
+      <p class="label">01 · Le personnage</p>
+      <h2>Un avocat-astronaute qui porte le verdict sur sa cravate.</h2>
+      <p class="soft">Casque blanc, visière noire, costume blanc, mèche rabattue. Clin d'œil à un avocat de série bien connu, mais personnage original : on ne reprend ni le visage, ni le logo, ni la police de la série. Sa cravate est la seule chose qui change de couleur, et elle suit le verdict.</p>
+    </div>
+    <div class="cast">
+      <div class="role">{{saul-repos}}<span class="saul-verdict" data-verdict="nonverifie" style="--v: var(--saul-fg-soft)">Repos</span><p class="says">« Collez une réponse d'IA. Je m'occupe des sources. »</p><p class="when">Accueil, champ vide, attente.</p></div>
+      <div class="role">{{saul-lecture}}<span class="saul-verdict" data-verdict="lecture">En lecture</span><p class="says">« Je lis l'article L. 1235-3, version du 24 septembre 2017… »</p><p class="when">Pendant la recherche de la source. Ligne de balayage dans la visière.</p></div>
+      <div class="role">{{saul-verifie}}<span class="saul-verdict" data-verdict="ok">Vérifié</span><p class="says">« S'all good. Passage retrouvé mot pour mot. »</p><p class="when">Source officielle trouvée, citation exacte, en vigueur à la date des faits.</p></div>
+      <div class="role">{{saul-objection}}<span class="saul-verdict" data-verdict="objection">Objection</span><p class="says">« Objection. Le pourvoi n° 21-14.490 n'existe pas. »</p><p class="when">Source introuvable, ou elle ne dit pas ce qu'on lui fait dire.</p></div>
+      <div class="role">{{saul-date}}<span class="saul-verdict" data-verdict="revoir">À revoir</span><p class="says">« En vigueur depuis septembre 2017. Vos faits datent de 2016. »</p><p class="when">Mauvaise version dans le temps, ou texte de rang inférieur (circulaire).</p></div>
+      <div class="role">{{saul-nonverifie}}<span class="saul-verdict" data-verdict="nonverifie">Non vérifié</span><p class="says">« Pas de preuve, pas de vert. »</p><p class="when">Citation floue, source en panne. Jamais vert par défaut.</p></div>
+    </div>
+  </section>
+
+  <section id="couleur">
+    <div class="head">
+      <p class="label">02 · Couleur</p>
+      <h2>Noir et blanc. La couleur, c'est la preuve.</h2>
+      <p class="soft">L'interface est monochrome, comme un poste de contrôle. Les cinq couleurs ci-dessous sont réservées aux verdicts. Un bouton n'est jamais vert : le vert se gagne.</p>
+    </div>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background: var(--saul-ok)"></div><span class="name">Vérifié</span><code>--saul-ok</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-objection)"></div><span class="name">Objection</span><code>--saul-objection</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-revoir)"></div><span class="name">À revoir</span><code>--saul-revoir</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-nonverifie)"></div><span class="name">Non vérifié</span><code>--saul-nonverifie</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-lecture)"></div><span class="name">En lecture</span><code>--saul-lecture</code></div>
+    </div>
+    <div class="swatches neutrals">
+      <div class="sw"><div class="chip" style="background: var(--saul-bg)"></div><span class="name">Fond</span><code>--saul-bg</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-surface)"></div><span class="name">Panneau</span><code>--saul-surface</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-line)"></div><span class="name">Filet</span><code>--saul-line</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-fg-soft)"></div><span class="name">Texte secondaire</span><code>--saul-fg-soft</code></div>
+      <div class="sw"><div class="chip" style="background: var(--saul-fg)"></div><span class="name">Texte</span><code>--saul-fg</code></div>
+    </div>
+  </section>
+
+  <section id="typo">
+    <div class="head">
+      <p class="label">03 · Typographie</p>
+      <h2>Trois voix : la marque, le propos, la pièce.</h2>
+    </div>
+    <div class="types">
+      <div class="type"><p class="label">Syncopate · marque</p><p class="sample-logo">SAUL</p></div>
+      <div class="type"><p class="label">Archivo · titres et texte</p><p class="sample-title">Saul ne remplace pas votre IA. Il la contre-interroge.</p></div>
+      <div class="type"><p class="label">JetBrains Mono · sources</p><p class="sample-mono">Cass. soc., 10 juillet 2002, n° 00-45.135 · C. trav., art. L. 1235-3, version en vigueur du 24/09/2017</p></div>
+    </div>
+    <p class="soft">Syncopate seulement pour le mot SAUL et des titres de deux ou trois mots. Le mono pour tout ce qui se vérifie : références, numéros de pourvoi, dates de version, citations.</p>
+  </section>
+
+  <section id="composants">
+    <div class="head">
+      <p class="label">04 · Composants du chat</p>
+      <h2>Chaque phrase arrive avec son verdict.</h2>
+      <p class="soft">Exemple fictif. Les passages soulignés sont cliquables et ouvrent la source à droite.</p>
+    </div>
+    <div class="demo">
+      <div class="panel" aria-label="Exemple de conversation">
+        <div class="user">Mon client a été licencié en mars 2016 sans cause réelle et sérieuse. Quelle indemnité ?</div>
+        <div class="msg">
+          <div class="avatar">{{avatar-objection}}</div>
+          <div>
+            <p class="who">Saul · 4 sources lues</p>
+            <p class="body"><mark class="saul-claim" data-verdict="revoir">Le barème de l'article L. 1235-3 plafonne l'indemnité à 3 mois de salaire pour 2 ans d'ancienneté.</mark> <mark class="saul-claim" data-verdict="ok">Le juge apprécie souverainement le préjudice subi.</mark> <mark class="saul-claim" data-verdict="objection">La Cour de cassation l'a confirmé le 14 mars 2019 (n° 21-14.490).</mark> <mark class="saul-claim" data-verdict="nonverifie">C'est la jurisprudence constante.</mark></p>
+          </div>
+        </div>
+        <div class="tally">
+          <span class="saul-verdict" data-verdict="ok">1 vérifié</span>
+          <span class="saul-verdict" data-verdict="revoir">1 à revoir</span>
+          <span class="saul-verdict" data-verdict="objection">1 objection</span>
+          <span class="saul-verdict" data-verdict="nonverifie">1 non vérifié</span>
+        </div>
+        <form class="composer" id="composer">
+          <input id="composer-input" aria-label="Votre question" placeholder="Collez une réponse d'IA ou posez une question">
+          <button type="submit">Vérifier</button>
+        </form>
+      </div>
+      <div class="panel source" data-verdict="revoir" aria-label="Exemple de panneau source">
+        <span class="saul-verdict" data-verdict="revoir">À revoir · date</span>
+        <p class="ref">C. trav., art. L. 1235-3</p>
+        <blockquote>Version citée : en vigueur depuis le 24/09/2017 (ordonnance n° 2017-1387). <mark>Si l'une ou l'autre des parties refuse la réintégration, le juge octroie au salarié une indemnité…</mark></blockquote>
+        <ul class="checks">
+          <li><span>Existe</span><span class="saul-verdict" data-verdict="ok">Oui</span></li>
+          <li><span>En vigueur au 03/2016</span><span class="saul-verdict" data-verdict="revoir">Non</span></li>
+          <li><span>Rang</span><span class="saul-verdict" data-verdict="ok">Loi</span></li>
+          <li><span>Dit bien ça</span><span class="saul-verdict" data-verdict="ok">Oui</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="chips" aria-label="Les pastilles de verdict">
+      <span class="saul-verdict" data-verdict="ok">Vérifié</span>
+      <span class="saul-verdict" data-verdict="objection">Objection</span>
+      <span class="saul-verdict" data-verdict="revoir">À revoir</span>
+      <span class="saul-verdict" data-verdict="nonverifie">Non vérifié</span>
+      <span class="saul-verdict" data-verdict="lecture">En lecture</span>
+    </div>
+  </section>
+
+  <section id="voix">
+    <div class="head">
+      <p class="label">05 · Ton</p>
+      <h2>Saul parle comme un confrère adverse : poli, précis, sans pitié.</h2>
+    </div>
+    <div class="voice">
+      <ul class="do" aria-label="À dire">
+        <li>« Objection. Cet arrêt n'existe pas sur Judilibre. »</li>
+        <li>« Texte en vigueur depuis 2017. Vos faits datent de 2016. »</li>
+        <li>« Pas de preuve, pas de vert. Je n'ai pas pu lire la source. »</li>
+        <li>Une phrase, un fait, une référence. Toujours la référence.</li>
+      </ul>
+      <ul class="dont" aria-label="À ne pas dire">
+        <li>« Réponse 100 % fiable »</li>
+        <li>« Il semblerait que cette source pourrait éventuellement… »</li>
+        <li>« Super question ! »</li>
+        <li>Un verdict vert sans passage cité.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="equipe">
+    <div class="head">
+      <p class="label">06 · Pour l'équipe qui code le chat</p>
+      <h2>Un fichier à importer, deux classes à connaître.</h2>
+      <p class="soft">Tout est dans <code>brand/saul.css</code> et les dessins dans <code>brand/saul/</code> (corps entier et avatar, un fichier par verdict).</p>
+    </div>
+<pre>&lt;link rel="stylesheet" href="brand/saul.css"&gt;
+
+&lt;!-- une pastille --&gt;
+&lt;span class="saul-verdict" data-verdict="ok"&gt;Vérifié&lt;/span&gt;
+
+&lt;!-- une phrase de la réponse, soulignée selon son verdict --&gt;
+&lt;mark class="saul-claim" data-verdict="objection"&gt;…&lt;/mark&gt;
+
+&lt;!-- l'avatar suit le verdict le plus grave de la réponse --&gt;
+&lt;img src="brand/saul/avatar-objection.svg" alt="Saul"&gt;
+
+verdicts : ok · objection · revoir · nonverifie · lecture</pre>
+  </section>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var buttons = document.querySelectorAll('.theme button');
+  function current() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  function paint() {
+    var t = current();
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.t === t)); });
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { root.setAttribute('data-theme', b.dataset.t); paint(); });
+  });
+  paint();
+  document.getElementById('composer').addEventListener('submit', function (e) { e.preventDefault(); });
+})();
+</script>

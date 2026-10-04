@@ -1,0 +1,127 @@
+/* Saul — jetons de design. À importer tel quel dans le chat et le site.
+ *
+ * Principe : l'interface est en noir et blanc. La couleur veut dire « verdict »,
+ * rien d'autre. Ne jamais utiliser --saul-ok pour un bouton ou une déco :
+ * sans preuve, rien n'est vert.
+ *
+ * Sombre par défaut. Le clair s'active avec data-theme="light" sur <html>,
+ * ou tout seul si le système est en clair et qu'aucun thème n'est forcé.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;700&family=Syncopate:wght@700&display=swap");
+
+:root {
+  /* Fonds et texte */
+  --saul-bg: #0B0C0E;          /* le vide */
+  --saul-surface: #15171B;     /* panneaux, bulles */
+  --saul-surface-2: #1D2025;   /* survol, champ de saisie */
+  --saul-line: #2A2D33;        /* filets */
+  --saul-fg: #F4F3EF;          /* texte principal */
+  --saul-fg-soft: #A7ACB5;     /* texte secondaire */
+  --saul-fg-faint: #5C616A;    /* légendes, références */
+
+  /* Verdicts : les seules couleurs de l'interface */
+  --saul-ok: #2FD08A;          /* vérifié : source officielle, passage retrouvé */
+  --saul-objection: #FF4D3D;   /* introuvable, ou la source ne dit pas ça */
+  --saul-revoir: #FFB020;      /* pas en vigueur à la date des faits, ou rang inférieur */
+  --saul-nonverifie: #7A808A;  /* pas de preuve : jamais vert par défaut */
+  --saul-lecture: #8FB8FF;     /* Saul est en train de chercher */
+
+  /* Fonds teintés des verdicts (surlignage d'un passage, pastille) */
+  --saul-ok-wash: rgba(47, 208, 138, 0.14);
+  --saul-objection-wash: rgba(255, 77, 61, 0.14);
+  --saul-revoir-wash: rgba(255, 176, 32, 0.16);
+  --saul-nonverifie-wash: rgba(122, 128, 138, 0.16);
+  --saul-lecture-wash: rgba(143, 184, 255, 0.14);
+
+  /* Typo */
+  --saul-font-logo: "Syncopate", "Archivo", Arial, sans-serif;   /* le mot SAUL et les très courts titres */
+  --saul-font: "Archivo", "Helvetica Neue", Arial, sans-serif;     /* titres et texte */
+  --saul-font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace; /* citations, références, horodatage */
+
+  --saul-text-xs: 0.75rem;   /* 12 : légendes en capitales */
+  --saul-text-sm: 0.875rem;  /* 14 : interface */
+  --saul-text-md: 1rem;      /* 16 : texte du chat */
+  --saul-text-lg: 1.375rem;  /* 22 : titres de panneau */
+  --saul-text-xl: 2.25rem;   /* 36 : titres de page */
+  --saul-text-hero: 4.5rem;  /* 72 : accroches */
+
+  /* Formes */
+  --saul-radius-sm: 6px;
+  --saul-radius: 10px;
+  --saul-radius-lg: 16px;
+  --saul-space: 8px;          /* tout espacement est un multiple de 8 */
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --saul-bg: #F4F3EF;
+    --saul-surface: #FFFFFF;
+    --saul-surface-2: #E9E8E2;
+    --saul-line: #D6D5CF;
+    --saul-fg: #0B0C0E;
+    --saul-fg-soft: #3E434B;
+    --saul-fg-faint: #7A7F87;
+    --saul-ok: #137A4D;
+    --saul-objection: #C8321F;
+    --saul-revoir: #A86A00;
+    --saul-nonverifie: #5C616A;
+    --saul-lecture: #2F5FB8;
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --saul-bg: #F4F3EF;
+  --saul-surface: #FFFFFF;
+  --saul-surface-2: #E9E8E2;
+  --saul-line: #D6D5CF;
+  --saul-fg: #0B0C0E;
+  --saul-fg-soft: #3E434B;
+  --saul-fg-faint: #7A7F87;
+  --saul-ok: #137A4D;
+  --saul-objection: #C8321F;
+  --saul-revoir: #A86A00;
+  --saul-nonverifie: #5C616A;
+  --saul-lecture: #2F5FB8;
+  color-scheme: light;
+}
+
+/* Pastille de verdict : <span class="saul-verdict" data-verdict="ok">Vérifié</span> */
+.saul-verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px 2px 8px;
+  border-radius: 999px;
+  font: 700 var(--saul-text-xs) / 1.6 var(--saul-font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--v);
+  background: var(--v-wash);
+}
+.saul-verdict::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--v);
+}
+
+/* Passage d'une affirmation, souligné selon son verdict :
+ * <mark class="saul-claim" data-verdict="objection">…</mark> */
+.saul-claim {
+  color: inherit;
+  background: var(--v-wash);
+  border-bottom: 2px solid var(--v);
+  border-radius: 2px;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+[data-verdict="ok"] { --v: var(--saul-ok); --v-wash: var(--saul-ok-wash); }
+[data-verdict="objection"] { --v: var(--saul-objection); --v-wash: var(--saul-objection-wash); }
+[data-verdict="revoir"] { --v: var(--saul-revoir); --v-wash: var(--saul-revoir-wash); }
+[data-verdict="nonverifie"] { --v: var(--saul-nonverifie); --v-wash: var(--saul-nonverifie-wash); }
+[data-verdict="lecture"] { --v: var(--saul-lecture); --v-wash: var(--saul-lecture-wash); }

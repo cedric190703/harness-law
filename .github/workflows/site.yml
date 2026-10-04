@@ -1,0 +1,18 @@
+name: Vérification site Saul
+on:
+  pull_request:
+    paths: ['site/**', 'brand/**', '.github/workflows/site.yml']
+  push:
+    branches: [main]
+    paths: ['site/**', 'brand/**', '.github/workflows/site.yml']
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python3 site/build.py
+      - run: git diff --exit-code -- site/index.html site/benchmarks.html
+      - run: python3 site/check.py
