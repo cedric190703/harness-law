@@ -183,6 +183,10 @@ function appliquer(sonde, documents, contexte, trace) {
         clause: appui?.clause ?? null,
         extrait: appui?.extrait ?? null,
         motif: appui?.motif ?? null,
+        // D'où vient le texte dans lequel le passage a été retrouvé : le fichier
+        // lui-même, ou une reconnaissance de caractères sur une image. La
+        // seconde demande confirmation sur l'original.
+        origineTexte: docAppui?.origineTexte ?? null,
         ecartes,
       },
       relu: false,

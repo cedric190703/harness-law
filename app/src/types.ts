@@ -1,150 +1,202 @@
-// Le vocabulaire de Visa. Un seul principe : rien n'est vert sans preuve.
-// Tous les libellés visibles sont en français, écrits pour un juriste.
+// Le vocabulaire de l'audit, tel que le serveur le renvoie.
+//
+// Un seul mot d'ordre : chaque constat porte sa provenance. Sans elle, le
+// juriste doit rouvrir les documents — et on n'a rien résolu.
 
-/** Le feu tricolore, plus le gris « on ne sait pas ». */
-export type Verdict = "vert" | "orange" | "rouge" | "gris";
+export type Gravite = "critique" | "élevée" | "moyenne" | "faible";
 
-/** Les quatre questions posées à chaque affirmation, toujours dans cet ordre. */
-export type ControleId = "existence" | "vigueur" | "rang" | "portee";
+export type RoleDocument =
+  | "retenu"
+  | "avenant"
+  | "ecarte"
+  | "illisible"
+  | "liste-demandes"
+  | "reponses-vendeur";
 
-/** Où une source se situe dans la hiérarchie des normes. */
-export type Rang =
-  | "constitution"
-  | "international"
-  | "loi"
-  | "reglement"
-  | "circulaire"
-  | "jurisprudence";
-
-/** L'état d'un texte chez Légifrance, traduit en français courant. */
-export type EtatTexte = "en vigueur" | "abrogé" | "pas encore en vigueur" | "inconnu";
-
-/** Une version datée d'un article, pour la frise. */
-export type Version = {
-  /** Début d'application, au format ISO (AAAA-MM-JJ). */
-  debut: string;
-  /** Fin d'application, ou null si le texte est toujours applicable. */
-  fin: string | null;
-  /** Ce qui change dans cette version, en une phrase. */
-  resume: string;
-  /** Le passage caractéristique de cette version. */
-  extrait: string;
-};
-
-/** Une source officielle retrouvée dans une base publique. */
-export type Source = {
-  /** La référence telle qu'un juriste l'écrit. */
-  reference: string;
-  intitule: string;
-  /** La base où Visa l'a trouvée. */
-  base: "Légifrance" | "Judilibre" | "introuvable";
-  /** L'identifiant dans la base (LEGIARTI…, JURITEXT…), notre preuve. */
-  identifiant: string | null;
-  rang: Rang;
-  etat: EtatTexte;
-  /** Le texte officiel, copié tel quel. Jamais reformulé. */
-  texte: string;
-  /** Le passage que Visa a surligné, mot pour mot présent dans `texte`. */
-  passage: string | null;
-  /** Les versions connues, de la plus ancienne à la plus récente. */
-  versions: Version[];
-  lien: string | null;
-};
-
-/** Le résultat d'un des quatre contrôles. */
-export type Controle = {
-  id: ControleId;
-  verdict: Verdict;
-  /** La réponse en une phrase, sans jargon. */
-  reponse: string;
-  /** Ce qui permet de l'affirmer : un identifiant, une date, un extrait. */
-  preuve: string | null;
-};
-
-/** La passe de contradiction : un second agent joue l'avocat adverse. */
-export type Contradiction = {
-  /** Ce que l'adversaire opposerait, en une phrase. */
-  argument: string;
-  /** Le passage exact qu'il cite à l'appui. */
-  passage: string;
-  /** Visa a-t-il retrouvé ce passage, mot pour mot, dans le texte officiel ? */
-  passageRetrouve: boolean;
-};
-
-/** Une affirmation extraite du texte à vérifier. */
-export type Affirmation = {
+export type Document = {
   id: string;
-  /** La phrase du mémo, telle quelle. */
-  phrase: string;
-  /** La référence citée par l'auteur, ou null s'il n'en cite aucune. */
-  citation: string | null;
-  /** Le verdict d'ensemble : le plus sévère de ses contrôles. */
-  verdict: Verdict;
-  /** Le verdict résumé en une phrase pour la liste. */
-  resume: string;
-  controles: Controle[];
-  source: Source | null;
-  contradiction: Contradiction | null;
-  /** Le juriste a-t-il relu et validé cette ligne ? Entre dans le journal. */
-  valideParLeJuriste: boolean;
-};
-
-/** Les six étapes du contrôle, dans l'ordre où Visa les exécute. */
-export type EtapeId =
-  | "texte"
-  | "decoupage"
-  | "recherche"
-  | "controles"
-  | "contradiction"
-  | "journal";
-
-export type EtatEtape = "en attente" | "en cours" | "terminée" | "impossible";
-
-/** Une étape du déroulé, telle qu'elle apparaît sur le schéma. */
-export type Etape = {
-  id: EtapeId;
-  /** Le titre lu par le juriste. */
-  titre: string;
-  /** Ce que l'étape fait, en une phrase courte. */
-  explication: string;
-  /** La base ou le modèle employé, pour la transparence. */
-  outil: string;
-  etat: EtatEtape;
-  /** Le compte affiché sur la carte (« 12 affirmations »). */
-  compte: string | null;
-  /** Les tâches de l'étape, séparées, telles qu'elles se déroulent. */
-  taches: Tache[];
-};
-
-/** Une tâche élémentaire : le grain que le juriste peut suivre et auditer. */
-export type Tache = {
-  id: string;
-  /** Ce qui est fait, à la troisième personne. */
-  libelle: string;
-  etat: EtatEtape;
-  /** Le détail consultable : identifiant retrouvé, date comparée, extrait. */
-  detail: string | null;
-  /** L'affirmation concernée, quand la tâche en vise une. */
-  affirmationId: string | null;
-};
-
-/** Un dossier : un texte soumis, sa date des faits, son résultat. */
-export type Dossier = {
-  id: string;
-  /** Le nom donné par le juriste. */
   nom: string;
-  /** Le client ou la matière, pour s'y retrouver. */
-  matiere: string;
-  /** L'outil qui a rédigé le texte soumis, déclaré par le juriste. */
-  redigePar: string;
-  /** La date des faits : c'est elle qui décide quelle version s'applique. */
-  dateDesFaits: string;
-  /** Quand la vérification a été lancée. */
-  verifieLe: string;
-  texte: string;
-  affirmations: Affirmation[];
-  etapes: Etape[];
+  chemin: string;
+  dossier: string;
+  extension: string;
+  octets: number;
+  empreinte: string;
+  role: RoleDocument;
+  /** Pourquoi ce document a été écarté, ou ce qui le rend illisible. */
+  motifTri: string | null;
+  /** Le contrat qu'un avenant modifie. */
+  parentDe: string | null;
+  /** Les avenants rattachés à ce contrat. */
+  avenants?: string[];
+  lisible: boolean;
+  aReconnaitre?: boolean;
+  /** D'où vient le texte : le fichier, ou une reconnaissance de caractères. */
+  origineTexte: OrigineTexte | null;
+  lignes: number;
+  pages: number;
 };
 
-/** Le compte des verdicts, pour les bandeaux et le tableau de bord. */
-export type Compte = Record<Verdict, number>;
+/**
+ * Un passage lu par machine sur une image n'a pas la force d'un passage lu dans
+ * un fichier texte. `aConfirmer` porte cette différence jusqu'à l'écran.
+ */
+export type OrigineTexte = {
+  par: "fichier" | "reconnaissance";
+  modele: string | null;
+  aConfirmer: boolean;
+};
+
+/** Ce qui a été écarté pour un constat donné, et pourquoi. */
+export type Ecarte = { document: string; nom: string; pourquoi: string };
+
+/**
+ * Le chemin qui mène à une information du rapport. C'est le cœur du produit :
+ * le juriste suit un raisonnement déjà tracé au lieu de refaire la recherche.
+ */
+export type Provenance = {
+  /** Tous les documents parcourus pour cette question. */
+  parcourus: string[];
+  /** Ceux qui contenaient un passage pertinent. */
+  consultes: string[];
+  /** Celui sur lequel le constat repose. */
+  retenu: string | null;
+  nomRetenu: string | null;
+  cheminRetenu: string | null;
+  page: number | null;
+  ligne: number | null;
+  clause: string | null;
+  /** Le passage, copié du document. Jamais reformulé. */
+  extrait: string | null;
+  motif: string | null;
+  origineTexte: OrigineTexte | null;
+  ecartes: Ecarte[];
+};
+
+/** Le droit applicable, vérifié sur Légifrance et Judilibre. */
+export type Droit = {
+  demande: { article?: { code: string; numero: string }; jurisprudence?: string };
+  resultat:
+    | null
+    | {
+        verifie: true;
+        article: {
+          reference: string;
+          identifiant: string;
+          etat: string;
+          texte: string;
+          lien: string;
+          versionApplicable: { debut: string; fin: string | null; texte: string } | null;
+          nombreVersions: number;
+        } | null;
+        jurisprudence: {
+          total: number;
+          decisions: { numero: string; date: string; juridiction: string; chambre: string; resume: string; lien: string | null }[];
+        } | null;
+        base: string;
+        a: string;
+      }
+    | { verifie: false; motif: string; a: string };
+};
+
+/** Ce qui en découle au contrat de cession. */
+export type Mecanisme = {
+  mecanisme: "garantie" | "condition suspensive" | "ajustement de prix";
+  redaction: string;
+};
+
+export type Constat = {
+  id: string;
+  sonde: string;
+  chantier: string;
+  question: string;
+  pourquoi: string;
+  /** La valeur relevée, en une ligne : c'est la cellule du tableau. */
+  valeur: string;
+  /** Le texte rédigé qui paraîtra au rapport. */
+  redaction: string;
+  gravite: Gravite;
+  impact: string | null;
+  liens: string[];
+  spa: Mecanisme | null;
+  /** Vrai quand le dossier ne permet pas d'établir le fait. */
+  nonEtabli: boolean;
+  droit: Droit | null;
+  provenance: Provenance;
+  relu: boolean;
+};
+
+export type Chantier = { id: string; nom: string; quoi: string };
+
+export type LigneDemande = {
+  code: string;
+  quoi: string;
+  etat: "reçu" | "partiel" | "manquant";
+  detail: string;
+};
+
+export type Epreuve = {
+  question: string;
+  affirmation: string;
+  verdict: "inexacte" | "exacte" | "non vérifiable" | "non éprouvée";
+  pourquoi: string;
+  appuis: { constat: string; document: string | null; clause: string | null; page: number | null; extrait: string | null }[];
+};
+
+export type Couverture = {
+  total: number;
+  depouilles: number;
+  ecartes: { id: string; nom: string; pourquoi: string }[];
+  illisibles: { id: string; nom: string; pourquoi: string; aReconnaitre: boolean }[];
+  procedure: number;
+  demandesManquantes: number;
+  demandesTotal: number;
+};
+
+export type Etape = { id: string; titre: string; quoi: string };
+
+export type Audit = {
+  id: string;
+  operation: string;
+  cible: string;
+  cote: string;
+  dateReference: string;
+  lanceLe: string;
+  dureeMs: number;
+  moteur: {
+    extraction: string;
+    /** La reconnaissance de caractères a-t-elle servi, et sur quels documents ? */
+    reconnaissance:
+      | { employee: true; modele: string; documents: string[] }
+      | { employee: false; motif: string };
+    modele: { disponible: boolean; cause: string | null; message: string };
+    droit: string;
+  };
+  etapes: Etape[];
+  journal: { etape: string; etat: string; detail: string; a: string }[];
+  documents: Document[];
+  chantiers: Chantier[];
+  demandes: { lignes: LigneDemande[]; manquants: LigneDemande[]; document?: string };
+  constats: Constat[];
+  sansReponse: { sonde: string; chantier: string; question: string; pourquoi: string; motif: string }[];
+  rejets: { sonde: string; rang: number; motif: string }[];
+  epreuves: Epreuve[];
+  mecanismes: (Mecanisme & {
+    constat: string;
+    chantier: string;
+    question: string;
+    gravite: Gravite;
+    appui: { document: string | null; clause: string | null; page: number | null };
+  })[];
+  couverture: Couverture;
+};
+
+/** Le texte d'un document, pour le lire à côté de la rédaction. */
+export type TexteDocument = {
+  id: string;
+  nom: string;
+  chemin: string;
+  role: RoleDocument;
+  lisible: boolean;
+  texte: string;
+  pages: { numero: number; lignes: string; premiereLigne: number }[];
+};

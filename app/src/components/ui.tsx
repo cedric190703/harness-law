@@ -1,176 +1,146 @@
-// Les petites pièces partagées : le feu tricolore, la barre de synthèse,
-// la pyramide des normes et la frise des versions.
-//
-// Chaque verdict porte toujours le même mot. Un juriste doit pouvoir apprendre
-// ces quatre mots une fois et les retrouver partout.
+// Les pièces partagées. Les quatre gravités portent toujours le même mot et la
+// même couleur, d'un écran à l'autre : un juriste les apprend une fois.
 
-import type { Affirmation, Compte, Rang, Source, Verdict } from "../types";
-import { formaterDate } from "../engine/etapes";
+import type { Constat, Gravite, OrigineTexte } from "../types";
+import type { Audit } from "../types";
+import { GRAVITES } from "../store";
 
-/** Le mot attaché à chaque couleur. Il ne change jamais d'un écran à l'autre. */
-export const MOT: Record<Verdict, string> = {
-  vert: "Vérifié",
-  orange: "À revoir",
-  rouge: "Bloquant",
-  gris: "Non vérifié",
+export const SENS: Record<Gravite, string> = {
+  critique: "À traiter avant signature : exposition juridique ou économique majeure.",
+  "élevée": "Changement défavorable important pour l'acquéreur.",
+  moyenne: "Point réel mais négociable.",
+  faible: "Point d'information, ou conforme à ce qui était attendu.",
 };
 
-/** Ce que la couleur veut dire, en une phrase, pour la légende. */
-export const SENS: Record<Verdict, string> = {
-  vert: "La source existe, s'appliquait aux faits, a le rang annoncé et dit bien cela.",
-  orange: "La source est réelle, mais la date, le rang ou la portée demandent une correction.",
-  rouge: "La source est introuvable, abrogée, ou elle dit autre chose. À ne pas déposer.",
-  gris: "Visa n'a pas pu vérifier : sans preuve, rien ne passe au vert.",
-};
-
-export const ORDRE: Verdict[] = ["rouge", "orange", "gris", "vert"];
-
-export function Jeton({ verdict, texte }: { verdict: Verdict; texte?: string }) {
+export function Gravite({ gravite, texte }: { gravite: Gravite; texte?: string }) {
   return (
-    <span className={`jeton v-${verdict}`}>
+    <span className={`jeton g-${classe(gravite)}`}>
       <span className="puce" />
-      {texte ?? MOT[verdict]}
+      {texte ?? gravite}
     </span>
   );
 }
 
-/** La barre à l'échelle, puis la légende chiffrée. */
-export function BarreSynthese({ compte, total }: { compte: Compte; total: number }) {
-  const part = (n: number) => (total ? (n / total) * 100 : 0);
+/** Les accents français ne passent pas dans un nom de classe. */
+export function classe(g: Gravite): string {
+  return { critique: "critique", "élevée": "elevee", moyenne: "moyenne", faible: "faible" }[g];
+}
+
+/** Le marqueur d'un fait que le dossier ne permet pas d'établir. */
+export function NonEtabli() {
   return (
-    <div className="synthese">
-      <div className="barre" role="img" aria-label={ORDRE.map((v) => `${compte[v]} ${MOT[v]}`).join(", ")}>
-        {ORDRE.map((v) => (
-          <span key={v} className={`s-${v}`} style={{ width: `${part(compte[v])}%` }} />
-        ))}
-      </div>
-      <div className="legende">
-        {ORDRE.map((v) => (
-          <span key={v} className="rangee" style={{ gap: 7 }}>
-            <Jeton verdict={v} />
-            <b>{compte[v]}</b>
-          </span>
-        ))}
-      </div>
-    </div>
+    <span className="jeton g-inconnu" title="Le dossier ne permet pas d'établir ce fait">
+      <span className="puce" />
+      non établi
+    </span>
   );
 }
 
-const ETAGES: { rang: Rang; nom: string; largeur: number; lie: string }[] = [
-  { rang: "constitution", nom: "Constitution", largeur: 46, lie: "lie tout le monde" },
-  { rang: "international", nom: "Traités et droit de l'Union", largeur: 58, lie: "lie le juge" },
-  { rang: "loi", nom: "Lois, ordonnances, codes", largeur: 70, lie: "lie le juge" },
-  { rang: "reglement", nom: "Décrets et arrêtés", largeur: 82, lie: "lie le juge" },
-  { rang: "jurisprudence", nom: "Jurisprudence", largeur: 92, lie: "fait autorité, ne lie pas" },
-  { rang: "circulaire", nom: "Circulaires et réponses ministérielles", largeur: 100, lie: "ne lie pas le juge" },
-];
-
-/** La pyramide, avec l'étage de la source citée mis en évidence. */
-export function Pyramide({ rang, alerte }: { rang: Rang; alerte: boolean }) {
+/** La barre des gravités, à l'échelle, puis la légende chiffrée. */
+export function BarreGravites({ constats }: { constats: Constat[] }) {
+  const total = constats.length || 1;
+  const compte = GRAVITES.map((g) => [g, constats.filter((c) => c.gravite === g).length] as const);
   return (
-    <div className="pyramide">
-      {ETAGES.map((e) => {
-        const ici = e.rang === rang;
-        return (
-          <div
-            key={e.rang}
-            className={`etage ${ici ? "ici" : ""} ${ici && alerte ? "alerte" : ""}`}
-            style={{ width: `${e.largeur}%` }}
-          >
-            {e.nom}
-            {ici && <span className="lie">— {e.lie}</span>}
-          </div>
-        );
-      })}
+    <div className="synthese">
+      <div className="barre" role="img" aria-label={compte.map(([g, n]) => `${n} ${g}`).join(", ")}>
+        {compte.map(([g, n]) => (
+          <span key={g} className={`s-${classe(g)}`} style={{ width: `${(n / total) * 100}%` }} />
+        ))}
+      </div>
+      <div className="legende">
+        {compte.filter(([, n]) => n).map(([g, n]) => (
+          <Gravite key={g} gravite={g} texte={`${n} ${g}`} />
+        ))}
+      </div>
     </div>
   );
 }
 
 /**
- * La frise des versions. Deux repères seulement : celle qui s'appliquait au
- * jour des faits, et celle que l'auteur a citée.
+ * Le bandeau qui dit avec quoi l'audit a été fait. Il ne doit jamais laisser
+ * croire qu'un modèle a travaillé quand il n'a pas répondu.
  */
-export function FriseVersions({ source, dateDesFaits }: { source: Source; dateDesFaits: string }) {
-  if (source.versions.length < 2) return null;
-  const jour = dateDesFaits.slice(0, 10);
-  const applicable = source.versions.find((v) => v.debut <= jour && (!v.fin || jour < v.fin));
-  const derniere = source.versions[source.versions.length - 1];
+export function BandeauMoteur({ moteur }: { moteur: Audit["moteur"] }) {
+  const r = moteur.reconnaissance;
   return (
-    <div className="frise">
-      {source.versions.map((v) => {
-        const estApplicable = v === applicable;
-        const citeeATort = v === derniere && applicable !== derniere;
-        return (
-          <div
-            key={v.debut}
-            className={`version ${estApplicable ? "applicable" : ""} ${citeeATort ? "citee-a-tort" : ""}`}
-          >
-            <div className="rangee">
-              <span className="quand">
-                Du {formaterDate(v.debut)} {v.fin ? `au ${formaterDate(v.fin)}` : "à aujourd'hui"}
-              </span>
-              <span className="sort" style={{ marginLeft: "auto" }}>
-                {estApplicable ? "↙ applicable aux faits" : citeeATort ? "↖ version citée" : ""}
-              </span>
-            </div>
-            <p className="res">{v.resume}</p>
-            <div className="ext">« {v.extrait} »</div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-/** Le texte officiel, avec le passage retenu surligné mot pour mot. */
-export function TexteOfficiel({ source }: { source: Source }) {
-  if (!source.texte) {
-    return (
-      <div className="citation">
-        Aucun texte : Visa n'a trouvé cette référence dans aucune base officielle. Il n'y a donc rien à surligner.
-      </div>
-    );
-  }
-  if (!source.passage) return <div className="citation">{source.texte}</div>;
-  const index = source.texte.indexOf(source.passage);
-  if (index === -1) return <div className="citation">{source.texte}</div>;
-  return (
-    <div className="citation">
-      {source.texte.slice(0, index)}
-      <mark>{source.passage}</mark>
-      {source.texte.slice(index + source.passage.length)}
-    </div>
-  );
-}
-
-/** Le bandeau qui dit d'où viennent les données. Il ne doit jamais mentir. */
-export function BandeauSource({ reel, environnement }: { reel: boolean; environnement: string }) {
-  return (
-    <div className="bandeau">
-      <span className="pastille">{reel ? "🔗" : "📁"}</span>
+    <div className={`bandeau ${moteur.modele.disponible ? "" : "attention"}`}>
+      <span className="pastille">{moteur.modele.disponible ? "●" : "▲"}</span>
       <span>
-        {reel ? (
+        <b>Extraction :</b> {moteur.extraction}. <b>Droit applicable :</b> {moteur.droit}.{" "}
+        <b>Documents scannés :</b>{" "}
+        {r.employee ? (
           <>
-            Visa interroge Légifrance et Judilibre en direct, en <b>{environnement}</b>. Chaque verdict porte
-            l'identifiant de la source retrouvée.
+            {r.documents.length} lu{r.documents.length > 1 ? "s" : ""} par {r.modele}. Les passages qui en
+            viennent portent la mention « lu par reconnaissance » et doivent être confirmés sur l'original.
           </>
         ) : (
-          <>
-            Aucun identifiant PISTE n'est renseigné : Visa lit les <b>sources mises en cache</b> pour cette
-            démonstration. Les identifiants Légifrance et Judilibre sont affichés tels quels, mais rien n'est
-            interrogé en direct.
-          </>
+          <>non lus — {r.motif}</>
         )}
       </span>
     </div>
   );
 }
 
-/** « 3 bloquantes, 2 à revoir » — la phrase courte d'un lot d'affirmations. */
-export function resumeCourt(affirmations: Affirmation[]): string {
-  const c = affirmations.reduce<Compte>(
-    (acc, a) => ({ ...acc, [a.verdict]: acc[a.verdict] + 1 }),
-    { vert: 0, orange: 0, rouge: 0, gris: 0 },
+/** Un chiffre mis en avant, avec ce qu'il compte. */
+export function Chiffre({ valeur, quoi, ton }: { valeur: string; quoi: string; ton?: "alerte" | "calme" }) {
+  return (
+    <div className={`chiffre ${ton ?? ""}`}>
+      <b>{valeur}</b>
+      <span>{quoi}</span>
+    </div>
   );
-  return ORDRE.filter((v) => c[v]).map((v) => `${c[v]} ${MOT[v].toLowerCase()}`).join(" · ");
+}
+
+/** Un extrait du document, cité tel quel. Le surlignage marque ce qui est retenu. */
+export function Extrait({ texte, surligner }: { texte: string; surligner?: string | null }) {
+  if (!surligner) return <div className="citation">{texte}</div>;
+  const i = texte.indexOf(surligner);
+  if (i === -1) return <div className="citation">{texte}</div>;
+  return (
+    <div className="citation">
+      {texte.slice(0, i)}
+      <mark>{surligner}</mark>
+      {texte.slice(i + surligner.length)}
+    </div>
+  );
+}
+
+/**
+ * Le marqueur d'un texte lu par machine. Il ne disparaît jamais : c'est la
+ * différence entre « c'est écrit dans le fichier » et « une machine a lu une
+ * image », et seul le juriste peut la lever en ouvrant l'original.
+ */
+export function Origine({ origine }: { origine: OrigineTexte | null }) {
+  if (!origine || origine.par !== "reconnaissance") return null;
+  return (
+    <span className="jeton g-inconnu" title={`Lu par ${origine.modele} — à confirmer sur l'original`}>
+      <span className="puce" />
+      lu par reconnaissance
+    </span>
+  );
+}
+
+/** Le renvoi exact : document, clause, page. Ce qu'un juriste recopie. */
+export function Renvoi({
+  nom,
+  clause,
+  page,
+  compact,
+  origine,
+}: {
+  nom: string | null;
+  clause: string | null;
+  page: number | null;
+  compact?: boolean;
+  origine?: OrigineTexte | null;
+}) {
+  if (!nom) return <span className="sous">source non établie</span>;
+  return (
+    <span className={`renvoi ${compact ? "compact" : ""}`}>
+      <span className="doc">{nom}</span>
+      {clause && <span className="cl">{clause}</span>}
+      {page && <span className="pg">p. {page}</span>}
+      {origine?.par === "reconnaissance" && <span className="pg ocr">lu par reconnaissance</span>}
+    </span>
+  );
 }

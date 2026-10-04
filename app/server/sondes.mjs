@@ -95,42 +95,101 @@ export const SONDES = [
     id: "CORP-03",
     chantier: "corporate",
     question: "Sûretés et engagements hors bilan",
-    pourquoi: "Une garantie autonome engage la cible sans figurer à son bilan, et le président ne peut la consentir seul.",
-    motifs: [/ne peut consentir aucune sûreté/i, /garantie au profit de/i, /GARANTIE AUTONOME/i],
-    constater(trouvailles, ctx) {
+    pourquoi:
+      "Une garantie autonome engage la cible sans figurer à son bilan, et le président ne peut la consentir seul.",
+    // Les accents manquent dans le texte lu par reconnaissance de caractères :
+    // les motifs doivent accepter les deux écritures.
+    motifs: [
+      /ne peut consentir aucune sûreté/i,
+      /garantie au profit de/i,
+      /montant maximum de la garantie/i,
+      /GERLAND LOGISTIQUE/i,
+      /gar[ae]ntie est autonome|caract[èe]re autonome/i,
+    ],
+    constater(trouvailles) {
       const constats = [];
       const pouvoir = trouvailles.find((t) => /ne peut consentir aucune sûreté/i.test(t.extrait));
       const autorisation = trouvailles.find((t) => /garantie au profit de/i.test(t.extrait));
-      if (pouvoir && autorisation) {
+      const montant = trouvailles.find((t) => /montant maximum de la garantie/i.test(t.extrait));
+      const debiteur = trouvailles.find((t) => /GERLAND LOGISTIQUE/i.test(t.extrait));
+
+      if (montant) {
         constats.push({
-          valeur: "Garantie à la Banque Régionale de l'Est, autorisée par l'assemblée du 12 juin 2024",
+          valeur: "Garantie autonome de 850 000 € à première demande, jusqu'au 30 juin 2031",
           redaction:
-            "Les statuts interdisent au président de consentir une sûreté sans autorisation préalable des associés. L'assemblée du 12 juin 2024 a donné cette autorisation pour la garantie consentie à la Banque Régionale de l'Est au titre du crédit-bail de la ligne d'assemblage de Vénissieux. Le pouvoir est donc régulier.",
-          gravite: "faible",
-          appui: autorisation,
-        });
-      }
-      // Le montant de la garantie n'est que dans un document illisible : on le
-      // dit, plutôt que de retenir le chiffre avancé par le vendeur.
-      const scan = ctx.illisibles.find((d) => /garantie/i.test(d.nom));
-      if (scan) {
-        constats.push({
-          valeur: "Montant de la garantie : non établi",
-          redaction:
-            "La convention de garantie elle-même n'a pas pu être lue : le seul exemplaire versé est un scan sans couche de texte. Le montant de l'engagement, sa durée et son caractère autonome ou accessoire ne sont donc pas établis par le dossier. Le vendeur avance 500 000 euros en réponse Q3, sans pièce à l'appui.",
+            "La convention du 27 juin 2024 est une garantie autonome à première demande, plafonnée à 850 000 euros en principal, outre intérêts et frais, consentie jusqu'au 30 juin 2031. Le garant renonce expressément à opposer toute exception tirée du contrat de base. L'engagement ne figure pas au bilan. Ce passage a été lu par reconnaissance de caractères sur un scan : il doit être confirmé sur l'original avant d'être opposé.",
           gravite: "élevée",
           impact:
-            "Un engagement hors bilan de montant inconnu. Tant que la pièce n'est pas lisible, le chiffre du vendeur ne peut pas être repris au rapport.",
-          nonEtabli: true,
-          document: scan.chemin,
+            "Engagement hors bilan de 850 000 euros, appelable sans débat sur le fond. Le vendeur l'a chiffré à 500 000 euros en réponse Q3, soit 350 000 euros de moins que la pièce.",
+          spa: {
+            mecanisme: "garantie",
+            redaction:
+              "Déclaration et garantie du vendeur sur l'exhaustivité des engagements hors bilan, et garantie spécifique couvrant tout appel de la garantie autonome du 27 juin 2024 au-delà du montant déclaré, jusqu'à son échéance du 30 juin 2031.",
+          },
+          appui: montant,
+        });
+      }
+
+      // Le point le plus grave : la garantie couvre la dette d'un tiers.
+      if (debiteur) {
+        constats.push({
+          valeur: "La garantie couvre la dette d'un tiers : Gerland Logistique SAS, et non la cible",
+          redaction:
+            "La garantie ne couvre pas une dette de la cible : elle garantit les sommes dues par la société Gerland Logistique SAS au titre du crédit-bail n° CB-2024-0871. La cible s'engage donc pour un tiers, dont le nom renvoie à son associé Participations Gerland. L'autorisation donnée par l'assemblée du 12 juin 2024 vise « une garantie au profit de la Banque Régionale de l'Est, en couverture du contrat de crédit-bail portant sur la ligne d'assemblage » sans nommer le débiteur garanti : elle ne permet pas d'établir que les associés ont autorisé un engagement pour le compte d'un tiers.",
+          gravite: "critique",
+          impact:
+            "La cible porte 850 000 euros de risque pour une société qui n'entre pas dans le périmètre de l'acquisition. L'engagement est dépourvu de contrepartie apparente pour elle, ce qui l'expose à une remise en cause, et l'autorisation statutaire exigée à l'article 17 des statuts n'est pas établie pour ce débiteur.",
+          liens: ["CORP-01"],
           spa: {
             mecanisme: "condition suspensive",
             redaction:
-              "Remise d'un exemplaire lisible et complet de la convention de garantie consentie à la Banque Régionale de l'Est, et déclaration du vendeur sur le montant maximum de l'engagement.",
+              "Mainlevée de la garantie autonome du 27 juin 2024, ou substitution du vendeur à la cible comme garant, avant la date de réalisation. À défaut, remise d'une ratification expresse par la collectivité des associés nommant le débiteur garanti, et contre-garantie du vendeur à première demande pour la durée résiduelle.",
           },
+          appui: debiteur,
+        });
+      }
+
+      if (pouvoir && autorisation) {
+        constats.push({
+          valeur: "Autorisation de l'assemblée du 12 juin 2024, antérieure à la signature du 27 juin",
+          redaction:
+            "Les statuts interdisent au président de consentir une sûreté sans autorisation préalable des associés. L'assemblée du 12 juin 2024 a donné une autorisation, quinze jours avant la signature de la convention : la condition de préalable est satisfaite. Sa portée reste toutefois discutable faute de désignation du débiteur garanti.",
+          gravite: "moyenne",
+          appui: autorisation,
         });
       }
       return constats;
+    },
+  },
+
+  {
+    id: "CORP-04",
+    chantier: "corporate",
+    question: "Dette garantie : le contrat de crédit-bail sous-jacent",
+    pourquoi:
+      "Une garantie ne s'apprécie que contre la dette qu'elle couvre : il faut l'encours, l'échéancier et les cas de déchéance.",
+    motifs: [/CB-2024-0871/i, /crédit-bail/i],
+    constater(trouvailles, ctx) {
+      // Le contrat lui-même est au dossier mais illisible. On ne conclut rien,
+      // et on dit précisément ce que cela empêche de conclure.
+      const corrompu = ctx.illisibles.find((d) => /credit-bail|crédit-bail/i.test(d.nom));
+      if (!corrompu) return [];
+      return [{
+        valeur: "Encours garanti : non établi",
+        redaction:
+          "Le contrat de crédit-bail n° CB-2024-0871, que la garantie du 27 juin 2024 couvre, figure à la data room mais n'a pas pu être ouvert : le fichier porte l'extension .pdf sans en être un. L'encours restant dû, l'échéancier et les cas de déchéance du terme ne sont donc pas établis. La ligne K4 de la liste de demandes, qui réclamait les contrats de financement et crédits-baux, reste sans réponse exploitable.",
+        gravite: "élevée",
+        nonEtabli: true,
+        document: corrompu.chemin,
+        impact:
+          "On ne peut pas dire à quelle hauteur la garantie de 850 000 euros est susceptible d'être appelée aujourd'hui. Le plafond est connu, l'exposition réelle ne l'est pas.",
+        liens: ["CORP-03"],
+        spa: {
+          mecanisme: "condition suspensive",
+          redaction:
+            "Remise d'un exemplaire lisible du contrat de crédit-bail n° CB-2024-0871 et d'une attestation de l'encours restant dû à la date de réalisation, émise par la Banque Régionale de l'Est.",
+        },
+      }];
     },
   },
 
@@ -323,7 +382,9 @@ export const SONDES = [
         redaction:
           "Quatre cadres sont soumis à une clause de non-concurrence. Un seul contrat a été versé à la data room, et sa clause est nulle faute de contrepartie. Les trois autres n'ont pas été communiqués : rien ne permet d'affirmer qu'ils sont valables, et le vendeur soutient le contraire en réponse Q5.",
         gravite: "élevée",
-        nonEtabli: true,
+        // Le fait est établi : la liste d'effectifs le dit elle-même. C'est la
+        // portée du risque qui reste inconnue, ce que dit l'impact. Marquer ce
+        // constat « non établi » brouillerait les deux.
         impact:
           "Le risque porté par les trois clauses non communiquées n'est pas chiffrable en l'état. Si elles reprennent la rédaction du contrat examiné, les quatre clauses sont nulles.",
         spa: {
@@ -462,9 +523,9 @@ export const EPREUVES_VENDEUR = [
     question: "Q3",
     affirmation: "La garantie consentie à la Banque Régionale de l'Est porte sur 500 000 euros.",
     constats: ["CORP-03"],
-    verdict: "non vérifiable",
+    verdict: "inexacte",
     pourquoi:
-      "La convention de garantie n'a pas pu être lue : le seul exemplaire versé est un scan sans couche de texte. Le chiffre avancé n'est appuyé par aucune pièce lisible du dossier.",
+      "La convention du 27 juin 2024, lue par reconnaissance de caractères sur le scan versé, plafonne la garantie à 850 000 euros : le vendeur la minore de 350 000 euros. La réponse omet en outre que la garantie est autonome, à première demande, et qu'elle couvre la dette d'un tiers, Gerland Logistique SAS, et non celle de la cible.",
   },
   {
     question: "Q4",

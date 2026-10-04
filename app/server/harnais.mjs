@@ -11,10 +11,11 @@ import { chargerDataRoom } from "./documents.mjs";
 import { couverture, depouiller, lireListeDeDemandes, passagePresent } from "./extraction.mjs";
 import { CHANTIERS, EPREUVES_VENDEUR, GRAVITES, SONDES } from "./sondes.mjs";
 import * as piste from "./piste.mjs";
-import { etatDuModele } from "./mistral.mjs";
+import { MODELES, etatDuModele, reconnaitre } from "./mistral.mjs";
 
 export const ETAPES = [
   { id: "triage", titre: "Triage de la data room", quoi: "Ouvrir chaque fichier, écarter les doublons et les brouillons, dire ce qui est illisible." },
+  { id: "reconnaissance", titre: "Lecture des documents scannés", quoi: "Lire par reconnaissance de caractères ce qui n'a pas de couche de texte." },
   { id: "perimetre", titre: "Périmètre et liste de demandes", quoi: "Confronter ce qui est arrivé à ce qui a été demandé." },
   { id: "depouillement", titre: "Dépouillement par chantier", quoi: "Chercher, dans chaque document, les clauses que l'audit doit relever." },
   { id: "droit", titre: "Contrôle du droit applicable", quoi: "Vérifier sur Légifrance et Judilibre que la clause relevée tient en droit." },
@@ -29,7 +30,14 @@ const maintenant = () => new Date().toISOString();
  * Lance l'audit. `avancer` est appelé à chaque étape, ce qui permet à
  * l'interface de montrer le travail en train de se faire.
  */
-export async function auditer({ racine = "./dataroom", dateReference = "2026-10-04", avancer = () => {} } = {}) {
+export async function auditer({
+  racine = "./dataroom",
+  dateReference = "2026-10-04",
+  avancer = () => {},
+  // Le jeu de test a besoin du corpus exact qui a servi — texte reconnu
+  // compris — pour éprouver les passages contre lui et non contre autre chose.
+  surCorpus = () => {},
+} = {}) {
   const trace = [];
   const debut = Date.now();
   const journal = [];
@@ -43,14 +51,39 @@ export async function auditer({ racine = "./dataroom", dateReference = "2026-10-
 
   // ---------------------------------------------------------------- 1. triage
   dire("triage", "en cours", "Ouverture des fichiers de la data room.");
-  const documents = await chargerDataRoom(racine);
+  // Ce que la reconnaissance a lu, pour le consigner.
+  const reconnus = [];
+  const documents = await chargerDataRoom(racine, {
+    reconnaitre: async (doc) => {
+      if (!modele.disponible) {
+        reconnus.push({ document: doc.id, nom: doc.nom, echec: modele.message });
+        return null;
+      }
+      dire("reconnaissance", "en cours", `Lecture de « ${doc.nom} » par reconnaissance de caractères.`);
+      const texte = await reconnaitre(doc.cheminAbsolu);
+      reconnus.push({ document: doc.id, nom: doc.nom, modele: MODELES.reconnaissance, caracteres: texte.length });
+      return { texte, modele: MODELES.reconnaissance };
+    },
+  });
   trace.push({
     etape: "triage",
     outil: "lecture locale",
     fichiers: documents.length,
     detail: documents.map((d) => ({ id: d.id, nom: d.nom, role: d.role, motif: d.motifTri, octets: d.octets })),
   });
+  surCorpus(documents);
   dire("triage", "terminée", `${documents.length} fichiers ouverts.`);
+  trace.push({ etape: "reconnaissance", outil: MODELES.reconnaissance, detail: reconnus });
+  const lus = reconnus.filter((r) => !r.echec);
+  dire(
+    "reconnaissance",
+    "terminée",
+    lus.length
+      ? `${lus.length} document${lus.length > 1 ? "s" : ""} scanné${lus.length > 1 ? "s" : ""} lu${lus.length > 1 ? "s" : ""} par reconnaissance de caractères.`
+      : reconnus.length
+        ? `${reconnus.length} document${reconnus.length > 1 ? "s" : ""} scanné${reconnus.length > 1 ? "s" : ""} non lu${reconnus.length > 1 ? "s" : ""}.`
+        : "Aucun document scanné.",
+  );
 
   // ------------------------------------------------------------ 2. périmètre
   dire("perimetre", "en cours", "Lecture de la liste de demandes.");
@@ -162,13 +195,18 @@ export async function auditer({ racine = "./dataroom", dateReference = "2026-10-
     lanceLe: maintenant(),
     dureeMs: Date.now() - debut,
     moteur: {
-      extraction: modele.disponible ? "Mistral (magistral-medium) puis vérification sur le fichier" : "motifs, puis vérification sur le fichier",
+      // Dire exactement ce qui a tourné. Annoncer un modèle qui n'a pas servi
+      // serait la première entorse à la promesse du produit.
+      extraction: "recherche par motifs, puis vérification mot pour mot sur le fichier",
+      reconnaissance: lus.length
+        ? { employee: true, modele: MODELES.reconnaissance, documents: lus.map((r) => r.document) }
+        : { employee: false, motif: reconnus.length ? (reconnus[0].echec ?? "non employée") : "aucun document scanné" },
       modele,
       droit: pisteOk ? `Légifrance et Judilibre en direct (${await piste.environnement()})` : "non interrogé",
     },
     etapes: ETAPES,
     journal,
-    documents: documents.map(({ texte, pages, ...reste }) => ({
+    documents: documents.map(({ texte, pages, cheminAbsolu, ...reste }) => ({
       ...reste,
       lignes: texte ? texte.split("\n").length : 0,
       pages: pages.length,

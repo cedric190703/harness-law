@@ -19,14 +19,20 @@
   --laiton: #9a7b3f;
   --laiton-pale: #f6f0e2;
 
+  /* Les quatre gravités de l'audit, plus le gris du « non établi ». */
+  --critique: #8c1f14;
+  --critique-pale: #fae6e3;
+  --elevee: #b4502a;
+  --elevee-pale: #fbeadf;
+  --moyenne: #9a7320;
+  --moyenne-pale: #faf1dc;
+  --faible: #4a6f5c;
+  --faible-pale: #e9f1ec;
+  --inconnu: #76736b;
+  --inconnu-pale: #eeece7;
+  /* Conservés : le vert sert au « retenu », le gris aux traits estompés. */
   --vert: #2d7a58;
-  --vert-pale: #e7f2ec;
-  --orange: #b96c12;
-  --orange-pale: #fbf0e0;
-  --rouge: #a93226;
-  --rouge-pale: #fbeae7;
   --gris: #817d73;
-  --gris-pale: #efede8;
 
   --rayon: 12px;
   --rayon-sm: 8px;
@@ -157,33 +163,40 @@ a { color: var(--marine-clair); }
 .champ:focus { outline: 2px solid var(--marine-pale); border-color: var(--marine-clair); }
 textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-height: 1.7; }
 
-/* ---------------- verdicts ---------------- */
+/* ---------------- gravités ---------------- */
 
 .jeton {
   display: inline-flex; align-items: center; gap: 7px; flex: none;
   padding: 3px 10px 3px 8px; border-radius: 999px;
-  font-size: 12px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;
+  font-size: 12px; font-weight: 600; white-space: nowrap;
 }
 .jeton .puce { width: 8px; height: 8px; border-radius: 50%; flex: none; }
-.v-vert { background: var(--vert-pale); color: #1e5a3f; }
-.v-vert .puce { background: var(--vert); }
-.v-orange { background: var(--orange-pale); color: #8a4f0a; }
-.v-orange .puce { background: var(--orange); }
-.v-rouge { background: var(--rouge-pale); color: #8a271d; }
-.v-rouge .puce { background: var(--rouge); }
-.v-gris { background: var(--gris-pale); color: #5e5b54; }
-.v-gris .puce { background: var(--gris); }
+.g-critique { background: var(--critique-pale); color: #74190f; }
+.g-critique .puce { background: var(--critique); }
+.g-elevee { background: var(--elevee-pale); color: #8d3c1e; }
+.g-elevee .puce { background: var(--elevee); }
+.g-moyenne { background: var(--moyenne-pale); color: #74560f; }
+.g-moyenne .puce { background: var(--moyenne); }
+.g-faible { background: var(--faible-pale); color: #35523f; }
+.g-faible .puce { background: var(--faible); }
+.g-inconnu { background: var(--inconnu-pale); color: #54514a; }
+.g-inconnu .puce { background: var(--inconnu); }
 
-/* La barre de synthèse : les quatre verdicts, à l'échelle. */
+/* La barre de synthèse : les gravités à l'échelle. */
 .synthese { display: flex; flex-direction: column; gap: 12px; }
 .barre { display: flex; height: 13px; border-radius: 999px; overflow: hidden; background: var(--papier-2); }
 .barre > span { display: block; transition: width 0.5s cubic-bezier(0.22, 0.9, 0.3, 1); }
-.barre .s-vert { background: var(--vert); }
-.barre .s-orange { background: var(--orange); }
-.barre .s-rouge { background: var(--rouge); }
-.barre .s-gris { background: var(--gris); }
-.legende { display: flex; flex-wrap: wrap; gap: 8px 18px; }
-.legende b { font-variant-numeric: tabular-nums; }
+.barre .s-critique { background: var(--critique); }
+.barre .s-elevee { background: var(--elevee); }
+.barre .s-moyenne { background: var(--moyenne); }
+.barre .s-faible { background: var(--faible); }
+.legende { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+
+/* Les bordures de gravité, portées par les lignes et les cartes. */
+.g-bord-critique { border-left: 4px solid var(--critique); }
+.g-bord-elevee { border-left: 4px solid var(--elevee); }
+.g-bord-moyenne { border-left: 4px solid var(--moyenne); }
+.g-bord-faible { border-left: 4px solid var(--faible); }
 
 /* ---------------- le schéma du contrôle ---------------- */
 
@@ -300,47 +313,6 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
   padding-left: 10px; border-left: 2px solid var(--trait);
 }
 
-/* ---------------- la pyramide des normes ---------------- */
-
-.pyramide { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0; }
-.etage {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  height: 32px; border-radius: 4px; background: var(--papier-2);
-  border: 1px solid var(--trait); color: var(--encre-3);
-  font-size: 12px; font-weight: 550; transition: all 0.2s;
-}
-.etage.ici { background: var(--marine); border-color: var(--marine); color: #fff; font-weight: 650; box-shadow: var(--ombre); }
-.etage.ici.alerte { background: var(--orange); border-color: var(--orange); }
-.etage .lie { font-size: 10.5px; font-weight: 500; opacity: 0.75; }
-
-/* ---------------- la frise des versions ---------------- */
-
-.frise { display: flex; flex-direction: column; gap: 10px; }
-.version {
-  border: 1px solid var(--trait); border-radius: var(--rayon-sm);
-  padding: 12px 14px; background: var(--carte); position: relative;
-}
-.version.applicable { border-color: var(--vert); background: var(--vert-pale); }
-.version.citee-a-tort { border-color: var(--orange); background: var(--orange-pale); }
-.version .quand { font-size: 12px; font-weight: 700; color: var(--encre-2); font-variant-numeric: tabular-nums; }
-.version .sort { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
-.version.applicable .sort { color: #1e5a3f; }
-.version.citee-a-tort .sort { color: #8a4f0a; }
-.version .res { font-size: 13.5px; line-height: 1.5; margin: 5px 0 0; color: var(--encre); }
-.version .ext { font-size: 12.5px; color: var(--encre-2); margin-top: 7px; font-style: italic; line-height: 1.5; }
-
-/* ---------------- le journal d'audit ---------------- */
-
-.journal-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-.journal-table th {
-  text-align: left; padding: 9px 12px; border-bottom: 1.5px solid var(--trait-fort);
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--encre-3); font-weight: 650;
-  white-space: nowrap;
-}
-.journal-table td { padding: 11px 12px; border-bottom: 1px solid var(--trait); vertical-align: top; line-height: 1.45; }
-.journal-table tr:last-child td { border-bottom: 0; }
-.journal-table code { font-size: 11.5px; color: var(--encre-3); font-family: ui-monospace, Menlo, monospace; }
-
 /* ---------------- divers ---------------- */
 
 .vide { text-align: center; padding: 64px 20px; color: var(--encre-3); }
@@ -371,32 +343,6 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
    qu'un verdict est le bout d'une chaîne, et non une opinion rendue d'un bloc. */
 
 .fil { min-height: 560px; }
-
-/* Le choix de l'affirmation, en haut de l'écran. */
-.choix-affirmation {
-  display: flex; align-items: center; gap: 14px;
-  padding: 13px 24px; border-bottom: 1px solid var(--trait);
-  background: var(--papier-2); flex: none;
-}
-.choix-titre {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--encre-3); font-weight: 650; flex: none;
-}
-.choix-liste { display: flex; gap: 6px; flex-wrap: wrap; }
-.puce-affirmation {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 11px 5px 9px; border-radius: 999px; cursor: pointer;
-  border: 1px solid var(--trait-fort); background: var(--carte);
-  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
-  color: var(--encre-2); transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
-}
-.puce-affirmation:hover { transform: translateY(-1px); box-shadow: var(--ombre); }
-.puce-affirmation .rond { width: 8px; height: 8px; border-radius: 50%; flex: none; }
-.puce-affirmation.c-vert .rond { background: var(--vert); }
-.puce-affirmation.c-orange .rond { background: var(--orange); }
-.puce-affirmation.c-rouge .rond { background: var(--rouge); }
-.puce-affirmation.c-gris .rond { background: var(--gris); }
-.puce-affirmation.actif { background: var(--marine); border-color: var(--marine); color: #fff; }
 
 /* La phrase vérifiée, rappelée au-dessus du fil. */
 .fil-entete {
@@ -502,6 +448,242 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
   .en-cours-point { animation: none; }
 }
 
+/* ---------------- la data room ---------------- */
+
+.sur-titre {
+  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--encre-3); font-weight: 650; margin-bottom: 5px;
+}
+.demarrage { height: 100%; display: grid; place-items: center; padding: 24px; }
+.bandeau.attention { background: #fbf1e3; border-color: #e9d4b2; color: #6e4d16; }
+.carte.alerte-bord { border-left: 4px solid var(--critique); }
+.chiffre.alerte b { color: var(--critique); }
+.chiffre.calme b { color: var(--faible); }
+
+.table-docs { display: flex; flex-direction: column; gap: 6px; }
+.doc-ligne {
+  display: flex; align-items: flex-start; gap: 12px; width: 100%; text-align: left;
+  background: var(--carte); border: 1px solid var(--trait); border-left-width: 3px;
+  border-radius: var(--rayon-sm); padding: 12px 15px; cursor: pointer;
+}
+.doc-ligne:hover { box-shadow: var(--ombre); }
+.doc-ligne.r-retenu { border-left-color: var(--faible); }
+.doc-ligne.r-avenant { border-left-color: var(--moyenne); }
+.doc-ligne.r-ecarte { border-left-color: var(--trait-fort); background: var(--papier-2); }
+.doc-ligne.r-illisible { border-left-color: var(--critique); }
+.doc-ligne.r-liste-demandes, .doc-ligne.r-reponses-vendeur { border-left-color: var(--marine-clair); }
+.doc-ligne .marque { width: 14px; flex: none; color: var(--encre-3); text-align: center; padding-top: 1px; }
+.doc-ligne .quoi { min-width: 0; flex: 1; }
+.doc-ligne .nom { font-weight: 550; word-break: break-word; }
+.doc-ligne .meta { color: var(--encre-3); font-size: 12px; margin-top: 2px; }
+.doc-ligne .motif { font-size: 12.5px; color: var(--encre-2); margin-top: 5px; line-height: 1.45; }
+.doc-ligne .motif.grave { color: #8d3c1e; }
+.doc-ligne .droite { margin-left: auto; flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.compte-constats { font-size: 11.5px; font-weight: 650; color: var(--marine); }
+
+.code {
+  font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; font-weight: 700;
+  color: var(--encre-3); flex: none; padding-top: 2px;
+}
+.code.gros { font-size: 15px; color: var(--marine); font-family: var(--serif); font-weight: 500; width: 30px; }
+.code.manquant { color: var(--critique); }
+.code.partiel { color: var(--moyenne); }
+
+.ligne-plate {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-top: 1px solid var(--trait);
+}
+.ligne-plate:first-of-type { border-top: 0; }
+.ligne-plate .droite { margin-left: auto; flex: none; }
+.demande { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; }
+
+/* ---------------- les chantiers ---------------- */
+
+.carte.chantier { display: flex; flex-direction: column; }
+.liste-constats { display: flex; flex-direction: column; gap: 5px; margin-top: 14px; }
+.mini-constat {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  background: var(--papier-2); border: 0; border-left: 3px solid var(--trait-fort);
+  border-radius: 0 6px 6px 0; padding: 8px 11px;
+}
+.mini-constat:hover { background: #ece8df; }
+.mini-constat .q { display: block; font-size: 13px; font-weight: 550; }
+.mini-constat .v { display: block; font-size: 12px; color: var(--encre-3); margin-top: 2px; line-height: 1.4; }
+.borne {
+  margin-top: auto; padding-top: 13px; border-top: 1px dashed var(--trait-fort);
+  font-size: 12.5px; color: var(--encre-2); line-height: 1.5; display: flex; flex-direction: column; gap: 6px;
+}
+.croisement { padding: 9px 0; border-top: 1px solid var(--trait); font-size: 13.5px; }
+.croisement:first-of-type { border-top: 0; }
+.lien-constat {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--marine-clair); font-weight: 600; font-size: inherit; text-align: left;
+}
+.lien-constat:hover { text-decoration: underline; }
+
+/* ---------------- le tableau ---------------- */
+
+.grille { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.grille th {
+  text-align: left; padding: 11px 14px; background: var(--papier-2);
+  border-bottom: 1px solid var(--trait-fort);
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--encre-3); font-weight: 650; white-space: nowrap;
+}
+.grille td { padding: 12px 14px; border-bottom: 1px solid var(--trait); vertical-align: top; line-height: 1.45; }
+.grille tr:last-child td { border-bottom: 0; }
+.grille tr.cliquable { cursor: pointer; }
+.grille tr.cliquable:hover td { background: var(--papier-2); }
+
+/* Le renvoi : document, clause, page. Ce qu'un juriste recopie. */
+.renvoi { display: flex; flex-direction: column; gap: 1px; font-size: 12.5px; min-width: 0; }
+.renvoi.compact { font-size: 12px; }
+.renvoi .doc { font-weight: 600; color: var(--encre); word-break: break-word; }
+.renvoi .cl { color: var(--marine-clair); }
+.renvoi .pg { color: var(--encre-3); }
+
+/* ---------------- la fiche d'un constat ---------------- */
+
+.fiche-tete { padding: 20px 36px 18px; border-bottom: 1px solid var(--trait); flex: none; }
+.fiche-titre { display: flex; align-items: center; gap: 10px; margin: 9px 0 7px; flex-wrap: wrap; }
+.fiche-titre .ref { font-size: 12px; font-weight: 700; color: var(--encre-3); font-family: ui-monospace, Menlo, monospace; }
+
+/* Le cœur : l'extrait et la rédaction côte à côte, même largeur. */
+.cote-a-cote {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--trait); border-bottom: 1px solid var(--trait); flex: none;
+}
+.volet { background: var(--carte); padding: 18px 24px 22px; min-width: 0; }
+.volet-tete { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+.volet-tete .etiquette { margin-bottom: 0; flex: none; }
+.volet-tete > :last-child { margin-left: auto; text-align: right; }
+.vide-volet { color: var(--encre-3); font-size: 14px; line-height: 1.6; font-style: italic; }
+
+blockquote.verbatim {
+  margin: 0; padding: 14px 17px; background: var(--papier-2);
+  border-left: 3px solid var(--laiton); border-radius: 0 var(--rayon-sm) var(--rayon-sm) 0;
+  font-size: 14.5px; line-height: 1.65; white-space: pre-wrap;
+}
+blockquote.verbatim.petit { font-size: 13px; padding: 10px 13px; margin-top: 7px; }
+.redaction { font-size: 14.5px; line-height: 1.65; margin: 0; }
+.redaction.impact { color: var(--encre-2); }
+.redaction.clause-proposee {
+  padding: 13px 16px; background: var(--marine-pale); border-radius: var(--rayon-sm);
+  border-left: 3px solid var(--marine-clair);
+}
+
+.ecartes-bande {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 12px 36px; background: var(--papier-2); border-bottom: 1px solid var(--trait); flex: none;
+}
+.ecarte-puce {
+  font-size: 12px; color: var(--encre-2); background: var(--carte);
+  border: 1px solid var(--trait); border-radius: 999px; padding: 4px 12px;
+  max-width: 54ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ecarte-puce b { color: var(--encre); }
+
+/* ---------------- le droit applicable ---------------- */
+
+.droit-bande { padding: 18px 36px 22px; border-bottom: 1px solid var(--trait); background: var(--carte); flex: none; }
+.droit-bande.non-verifie { background: var(--inconnu-pale); color: #54514a; font-size: 14px; }
+.droit-colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.droit-ref {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-family: var(--serif); font-size: 15.5px; margin-bottom: 4px;
+}
+.droit-ref .sous { font-family: var(--sans); }
+.decision { padding: 9px 0; border-top: 1px solid var(--trait); }
+.decision .resume { line-height: 1.45; margin-top: 2px; }
+
+/* ---------------- les réponses du vendeur ---------------- */
+
+.carte.epreuve { border-left: 4px solid var(--trait-fort); }
+.carte.epreuve.t-critique { border-left-color: var(--critique); }
+.carte.epreuve.t-inconnu { border-left-color: var(--inconnu); }
+.carte.epreuve.t-faible { border-left-color: var(--faible); }
+blockquote.affirmation {
+  margin: 0; font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--encre);
+}
+.appuis { margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--trait); }
+.appui { margin-bottom: 13px; }
+.appui:last-child { margin-bottom: 0; }
+
+/* ---------------- au contrat de cession ---------------- */
+
+.carte.meca { padding: 16px 20px; }
+.meca-nom { font-family: var(--serif); font-size: 18px; text-transform: capitalize; }
+.ligne .meca { color: var(--marine-clair); font-weight: 600; font-size: 12px; margin-left: 12px; }
+
+/* ---------------- le lecteur de document ---------------- */
+
+.voile {
+  position: fixed; inset: 0; background: rgba(27, 26, 23, 0.42);
+  display: grid; place-items: center; padding: 32px; z-index: 40;
+  animation: voile-entre 0.16s ease-out;
+}
+@keyframes voile-entre { from { opacity: 0; } to { opacity: 1; } }
+.lecteur {
+  background: var(--carte); border-radius: var(--rayon); box-shadow: var(--ombre-forte);
+  width: min(840px, 100%); max-height: 100%; display: flex; flex-direction: column; overflow: hidden;
+}
+.lecteur header { display: flex; align-items: flex-start; gap: 14px; padding: 18px 22px 15px; border-bottom: 1px solid var(--trait); }
+.lecteur header > :last-child { margin-left: auto; }
+.corps-lecteur { overflow: auto; padding: 0 22px 24px; }
+.page { padding-top: 18px; }
+.numero-page {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--encre-3); font-weight: 650; padding-bottom: 7px; border-bottom: 1px solid var(--trait);
+}
+.corps-lecteur pre {
+  margin: 12px 0 0; white-space: pre-wrap; word-break: break-word;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; line-height: 1.65;
+}
+.corps-lecteur mark { background: #fdf0bd; padding: 1px 2px; border-radius: 2px; }
+
+/* ---------------- l'avancement d'un relancement ---------------- */
+
+.progression {
+  display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 36px;
+  background: var(--marine-pale); border-bottom: 1px solid #d2dcea; flex: none;
+}
+.pas-progression {
+  font-size: 12px; color: var(--encre-3); background: var(--carte);
+  border: 1px solid var(--trait); border-radius: 999px; padding: 5px 12px;
+}
+.pas-progression.fait { color: var(--marine); border-color: #c3d1e4; font-weight: 600; }
+.pas-progression small { display: block; font-weight: 400; color: var(--encre-3); font-size: 11px; }
+
+/* ---------------- les tons du fil de provenance ---------------- */
+
+.pas-noeud.t-retenu { border-color: var(--vert); }
+.pas-noeud.t-retenu .filet { background: var(--vert); }
+.pas-noeud.t-ecarte { background: var(--papier-2); opacity: 0.82; }
+.pas-noeud.t-ecarte .filet { background: var(--trait-fort); }
+.pas-noeud.t-inconnu .filet { background: var(--inconnu); }
+.pas-noeud.t-gravite.g-critique { background: var(--critique-pale); border-color: var(--critique); }
+.pas-noeud.t-gravite.g-critique .filet { background: var(--critique); }
+.pas-noeud.t-gravite.g-elevee { background: var(--elevee-pale); border-color: var(--elevee); }
+.pas-noeud.t-gravite.g-elevee .filet { background: var(--elevee); }
+.pas-noeud.t-gravite.g-moyenne { background: var(--moyenne-pale); border-color: var(--moyenne); }
+.pas-noeud.t-gravite.g-moyenne .filet { background: var(--moyenne); }
+.pas-noeud.t-gravite.g-faible { background: var(--faible-pale); border-color: var(--faible); }
+.pas-noeud.t-gravite.g-faible .filet { background: var(--faible); }
+.pas-rang {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  color: #fff; background: var(--marine); border-radius: 999px; padding: 2px 7px; flex: none;
+}
+.pas-noeud.t-ecarte .pas-rang { background: var(--encre-3); }
+.pas-noeud.t-retenu .pas-rang { background: var(--vert); }
+.pas-corps {
+  font-size: 12.5px; line-height: 1.45; color: var(--encre-2);
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pas-petit .pas-corps { -webkit-line-clamp: 2; }
+.pas-corps.verbatim { font-style: italic; color: var(--encre); }
+.pas-bas { margin-top: auto; padding-top: 6px; font-size: 10.5px; color: var(--encre-3); line-height: 1.35; }
+.pas-petit .pas-titre { font-family: var(--sans); font-size: 13px; font-weight: 650; }
+
 /* ---------------- responsive ---------------- */
 
 @media (max-width: 1080px) {
@@ -513,7 +695,9 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
   .entete, .vue { padding-left: 20px; padding-right: 20px; }
   .vue > div > div[style*="330px"] { grid-template-columns: 1fr !important; }
   .tiroir, .fil-tiroir { position: static; width: auto; height: auto; max-height: 420px; margin: 14px; }
-  .choix-affirmation { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .cote-a-cote, .droit-colonnes { grid-template-columns: 1fr; }
+  .fiche-tete, .ecartes-bande, .droit-bande, .spa-bande, .progression { padding-left: 20px; padding-right: 20px; }
+  .grille { font-size: 12.5px; }
 }
 
 /* ---------------- l'export PDF du journal ----------------
@@ -534,9 +718,27 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
   }
   .carte:first-child { border-top: 0; }
   .jeton { border: 1px solid currentColor; background: none !important; }
-  .journal-table { break-inside: auto; }
-  .journal-table tr { break-inside: avoid; }
+  .grille { break-inside: auto; }
+  .grille tr { break-inside: avoid; }
   .puces-chiffres { grid-template-columns: repeat(4, 1fr); }
   .chiffre { border: 0; border-left: 2px solid #000; border-radius: 0; padding: 4px 0 4px 12px; }
   .bandeau { border: 1px solid #999; background: none; color: #000; }
 }
+
+/* La bande du mécanisme de cession, sur la fiche d'un constat. */
+.spa-bande {
+  display: grid; grid-template-columns: 210px 1fr; gap: 22px; align-items: start;
+  padding: 18px 36px 22px; border-bottom: 1px solid var(--trait); background: var(--carte); flex: none;
+}
+@media (max-width: 1080px) { .spa-bande { grid-template-columns: 1fr; gap: 12px; } }
+
+/* L'avertissement d'un texte lu par machine. Il doit se voir sans alarmer :
+   le document est exploitable, il demande seulement confirmation. */
+.avis-ocr {
+  display: flex; align-items: flex-start; gap: 11px;
+  background: var(--inconnu-pale); border: 1px solid #ddd9d1;
+  border-radius: var(--rayon-sm); padding: 11px 14px; margin-bottom: 12px;
+  font-size: 13px; line-height: 1.5; color: #54514a;
+}
+.avis-ocr .jeton { flex: none; }
+.renvoi .pg.ocr { color: var(--inconnu); font-style: italic; }

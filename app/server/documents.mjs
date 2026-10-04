@@ -360,14 +360,49 @@ function contratModifie(avenant, documents) {
   return null;
 }
 
+/**
+ * Injecte dans un document le texte lu par reconnaissance de caractères.
+ *
+ * Le document devient exploitable, mais il garde la marque de son origine :
+ * un passage lu par machine sur une image n'a pas la force d'un passage lu dans
+ * un fichier texte. L'interface doit le dire, et le juriste doit pouvoir
+ * confirmer sur l'original.
+ */
+export function appliquerReconnaissance(doc, texte, modele) {
+  if (!texte || texte.trim().length < 40) return false;
+  doc.texte = texte;
+  doc.pages = paginer(texte);
+  doc.lisible = true;
+  doc.aReconnaitre = false;
+  doc.origineTexte = { par: "reconnaissance", modele, aConfirmer: true };
+  doc.motifIllisible = null;
+  return true;
+}
+
 /** Charge et trie la data room en une fois. */
-export async function chargerDataRoom(racine) {
+export async function chargerDataRoom(racine, { reconnaitre } = {}) {
   const fichiers = (await listerFichiers(racine)).filter((f) => !META.some((m) => m.test(basename(f))));
   const docs = [];
   for (const f of fichiers) {
     const d = await lireDocument(racine, f);
     d.id = `D${String(docs.length + 1).padStart(2, "0")}`;
+    d.cheminAbsolu = f;
+    d.origineTexte = d.lisible ? { par: "fichier", modele: null, aConfirmer: false } : null;
     docs.push(d);
   }
+
+  // La reconnaissance de caractères se fait avant le triage : un scan devenu
+  // lisible doit être dépouillé comme n'importe quel document.
+  if (reconnaitre) {
+    for (const d of docs.filter((x) => x.aReconnaitre)) {
+      try {
+        const lu = await reconnaitre(d);
+        if (lu) appliquerReconnaissance(d, lu.texte, lu.modele);
+      } catch (e) {
+        d.motifIllisible = `${d.motifIllisible} La reconnaissance a échoué : ${e.message}`;
+      }
+    }
+  }
+
   return trier(docs);
 }

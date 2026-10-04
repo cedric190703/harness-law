@@ -1,172 +1,202 @@
-# Visa
+# Visa — due diligence tracée
 
-**Visa vérifie chaque phrase d'une réponse d'IA juridique sur le texte officiel, et garde la preuve.**
+**Pour chaque information du rapport, Visa montre le chemin qui y mène :
+les documents parcourus, celui qui a été retenu, la page et la clause, et
+l'extrait affiché à côté du texte rédigé.**
 
-On ne construit pas une IA juridique de plus. On construit le contrôle technique
-de toutes les autres : Visa marche sur un texte rédigé avec ChatGPT, Legora,
-Hector ou Doctrine, parce qu'il ne regarde que le résultat et les sources.
+Il dit aussi ce qu'il a écarté et pourquoi, et ce qu'il n'a pas pu lire.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5180
-npm test         # typecheck + jeu de test
+cp .env.example .env     # puis renseignez vos clés
+npm run dev              # http://localhost:5180
+npm test                 # typecheck + jeu de test
 ```
 
-Visa fonctionne sans aucune clé : il lit alors les sources mises en cache dans
-`src/data/sources.ts`, et le bandeau de l'écran le dit. Pour interroger les
-vraies bases, copiez `.env.example` en `.env` et renseignez un compte PISTE.
+## Le problème
 
-## La règle de la maison
+En due diligence, les juristes passent l'essentiel de leur temps sur ce qui
+n'est pas du droit : naviguer une data room dont la structure leur est imposée,
+trier des fichiers mal nommés, écarter les doublons et les brouillons, rattacher
+les avenants aux contrats qu'ils modifient, puis lire chaque document en entier
+pour en extraire quelques clauses.
 
-> **Sans preuve, rien n'est vert.**
+Les outils d'IA accélèrent l'extraction mais **déplacent le problème** : sans
+renvoi au passage exact et sans indication de ce qui n'a pas été lu, le juriste
+doit rouvrir les documents pour tout contrôler.
 
-Une API en panne, une citation floue, une référence absente : la ligne passe au
-gris « non vérifié ». Jamais au vert par défaut. C'est la seule règle qui rend
-un outil de vérification utilisable par un avocat.
+**Notre but n'est pas de supprimer la vérification — elle reste sa
+responsabilité — mais de la rendre rapide.** Le juriste ne refait pas la
+recherche : il suit un raisonnement déjà tracé, et confirme ou corrige en
+quelques secondes. Le temps rendu retourne là où est sa valeur : apprécier la
+matérialité d'un risque, croiser les chantiers, repérer ce qui manque, et
+traduire les constats en garanties, conditions suspensives ou ajustement de prix.
 
-## Les quatre contrôles
+## La règle qui tient tout
 
-Sur chaque affirmation, toujours les mêmes quatre questions, dans le même ordre.
+> **Un constat n'entre au rapport que si le passage sur lequel il repose existe
+> mot pour mot dans le document nommé.**
 
-| | La question | Ce qu'elle attrape |
-|---|---|---|
-| 1 | **Elle existe ?** | Le numéro de pourvoi ou l'article inventé. |
-| 2 | **En vigueur à la date des faits ?** | Le barème de 2017 appliqué à des faits de 2016 ; l'article abrogé. |
-| 3 | **Quel rang ?** | La circulaire invoquée comme si elle liait le juge. |
-| 4 | **Elle dit bien cela ?** | La vraie décision à laquelle on fait dire autre chose — l'erreur la plus dangereuse, parce que la plus difficile à voir. |
+Un constat non appuyé est **rejeté**, et le rejet est consigné à l'écran. Le
+juriste voit donc toujours soit une preuve, soit un trou. Jamais une affirmation
+flottante.
 
-Le verdict d'ensemble d'une affirmation est **le plus sévère** de ses quatre
-contrôles.
+Deux corollaires que l'interface porte partout :
+
+- **Ce qui n'est pas prouvé est marqué « non établi ».** Le contrat de
+  crédit-bail garanti est au dossier mais illisible : Visa dit qu'il ne peut pas
+  établir l'encours, et ne reprend pas le chiffre avancé par le vendeur.
+- **Un passage lu par machine n'a pas la force d'un passage lu dans un fichier.**
+  Les constats issus d'un scan portent la mention « lu par reconnaissance » et
+  demandent confirmation sur l'original.
 
 ## Les six écrans
 
-L'interface est écrite pour un juriste, pas pour un ingénieur : six écrans
-numérotés dans l'ordre où on les traverse, et aucun jargon technique.
+| | Écran | Ce qu'il répond |
+|---|---|---|
+| 1 | **La data room** | Qu'est-ce qui a été lu, et qu'est-ce qui ne l'a pas été ? |
+| 2 | **Les chantiers** | Que cherche-t-on, et où les conclusions s'arrêtent-elles ? |
+| 3 | **Le tableau** | Qu'a-t-on relevé, et d'où cela vient-il ? |
+| 4 | **Les constats** | L'extrait et la rédaction côte à côte, avec le chemin complet. |
+| 5 | **Les réponses du vendeur** | Que dit-il, et que disent ses propres pièces ? |
+| 6 | **Au contrat de cession** | Qu'en fait-on : garantie, condition suspensive, prix ? |
 
-1. **Accueil** — ce que fait Visa, ce que veulent dire les quatre couleurs, vos dossiers.
-2. **Soumettre un texte** — le texte, et la date des faits. Rien d'autre à renseigner.
-3. **Le déroulé** — les six étapes du contrôle sur un schéma qui se lit de gauche à droite. Chaque carte s'ouvre sur ses tâches, une par une, avec la preuve de chacune.
-4. **Le rapport** — une ligne par affirmation ; on en ouvre une et on voit les quatre contrôles, le texte officiel avec le passage surligné, la pyramide des normes, la frise des versions, et ce que l'adversaire opposerait.
-5. **Le raisonnement** — le fil complet d'une affirmation, pas par pas, jusqu'à la conclusion. Voir ci-dessous.
-6. **Le journal d'audit** — sources, identifiants, versions comparées, verdicts, relecture du juriste. Export PDF par l'impression du navigateur.
-
-## Le fil du raisonnement
-
-C'est l'écran qui répond à la question qu'on pose à toute IA juridique :
-**« d'où sort cette conclusion ? »**
-
-Le fil se lit de gauche à droite et se déroule pas par pas, dans l'ordre où Visa
-les a franchis :
+L'écran 4 est le cœur. L'extrait du document et le texte rédigé sont côte à côte,
+même largeur, même hauteur : le juriste lit les deux d'un seul regard. En dessous,
+le **fil de provenance** se déroule pas à pas —
 
 ```
- L'affirmation ──► La référence ──► La requête ──► La source ──┬─► 1. Elle existe ?      ──┐
-                      citée          envoyée       retrouvée    ├─► 2. En vigueur ?       ──┤
-                                                               ├─► 3. Quel rang ?        ──┼──► L'avocat ──► LA
-                                                               └─► 4. Elle dit cela ?    ──┘    adverse      CONCLUSION
+ La question ─► N parcourus ─┬─► ✓ document retenu (clause, page) ─┐
+                             ├─► ✕ écarté — version tronquée       │
+                             └─► ✕ écarté — brouillon non signé    │
+                                                                   ▼
+            Le passage copié ─► Ce qui est rédigé ─► Le droit ─► Le contrat
 ```
 
-Chaque pas se clique et se lit en entier : ce que Visa a fait, **la requête
-exacte** envoyée à la base, ce qu'il a constaté, ce qu'il en déduit, et l'outil
-employé. La conclusion ne nomme pas seulement une couleur : elle dit **quoi
-faire** — retirer la référence, corriger la version citée, ne pas la présenter
-comme obligatoire, ou déposer en l'état.
+## Le harnais
 
-Deux partis pris :
+Sept étapes, chacune consignée dans la trace de l'audit.
 
-- **Les quatre contrôles sont toujours montrés**, même quand l'un d'eux ne peut
-  rien conclure. Un contrôle sauté serait un contrôle invisible.
-- **Rien n'est écrit à la main.** Le fil est *dérivé* du dossier — citation,
-  source retrouvée, contrôles, contradiction. Il ne peut donc jamais raconter
-  autre chose que ce que le rapport conclut, et le jeu de test vérifie
-  précisément cet invariant.
+| Étape | Ce qu'elle fait | Avec quoi |
+|---|---|---|
+| Triage | Ouvre chaque fichier, écarte doublons et brouillons avec leur motif | lecture locale |
+| Reconnaissance | Lit les scans sans couche de texte | `mistral-ocr-latest` |
+| Périmètre | Confronte ce qui est arrivé à la liste de demandes | lecture locale |
+| Dépouillement | Cherche les clauses, question par question | motifs + barrière mot pour mot |
+| Droit | Vérifie que la clause relevée tient en droit | Légifrance et Judilibre |
+| Réponses | Éprouve chaque réponse du vendeur contre le registre | confrontation |
+| Contrat | Traduit chaque risque en mécanisme de cession | règles de l'audit |
 
-L'animation n'est pas décorative : elle dit qu'un verdict est le bout d'une
-chaîne, et non une opinion rendue d'un bloc. `prefers-reduced-motion` affiche le
-fil complet, sans mouvement.
+L'interface **dit toujours quel moteur a répondu**. Annoncer un modèle qui n'a pas
+tourné serait la première entorse à la promesse du produit : le champ `moteur` du
+résultat décrit ce qui s'est réellement exécuté, et le bandeau de l'écran 1 le
+reprend mot pour mot.
 
-## Le déroulé, étape par étape
+## Les skills
 
-```
- Le texte ──► Découpage ──┬─► Légifrance ──┐
-                          │                │   ┌──────────────────────┐
-                          │                ├──►│ 1. Elle existe ?     │
-                          └─► Judilibre ───┘   │ 2. En vigueur ?      │──► Contradiction ──► Journal
-                                               │ 3. Quel rang ?       │
-                                               │ 4. Elle dit cela ?   │
-                                               └──────────────────────┘
-```
+Le savoir-faire est écrit, relisible par un juriste, dans [`skills/`](skills) :
 
-**La contradiction** mérite un mot. Un second agent joue l'avocat adverse et
-doit citer un passage exact à l'appui de son objection. Visa vérifie ensuite ce
-passage **mot pour mot** dans le texte officiel : s'il ne l'y retrouve pas,
-l'objection est écartée. Le contradicteur non plus n'a pas le droit d'inventer.
+- [**triage-data-room**](skills/triage-data-room/SKILL.md) — aucun fichier écarté
+  sans motif vérifiable. Traite les deux formes de doublon, dont la version
+  tronquée, qui porte souvent le nom le plus rassurant.
+- [**extraction-ancree**](skills/extraction-ancree/SKILL.md) — la barrière mot
+  pour mot, les trois comptes (parcourus, consultés, retenu), et la distinction
+  entre « non établi » et « fait établi, portée inconnue ».
+- [**constat-vers-cession**](skills/constat-vers-cession/SKILL.md) — le choix du
+  mécanisme : garantie, condition suspensive ou ajustement de prix.
 
-Cette vérification est faite à l'affichage, par `passageDansSource`, et non lue
-dans une donnée stockée. Elle regarde le texte courant **et** chaque version
-connue, parce qu'une objection peut reposer sur la version applicable aux faits
-plutôt que sur celle en vigueur aujourd'hui.
+## La data room de démonstration
+
+21 fichiers, qui reproduisent ce qu'un juriste trouve vraiment :
+
+- le même contrat deux fois, dont une **version tronquée qui a perdu l'article
+  14.2** — précisément la clause de changement de contrôle ;
+- un **brouillon « ne pas signer »** rangé à côté du bail signé, avec un loyer
+  différent ;
+- un **avenant séparé** qui porte l'engagement de volume de 4 200 à 5 600 tonnes ;
+- un **scan sans couche de texte**, lu par reconnaissance : il révèle une garantie
+  autonome de 850 000 € consentie pour la dette d'un **tiers** ;
+- un **.pdf corrompu** : le crédit-bail garanti, donc un encours non établi ;
+- **six réponses du vendeur, toutes contredites** par les pièces qu'il a
+  lui-même versées ;
+- 13 lignes de la liste de demandes restées sans réponse.
+
+Aucun document réel, aucune donnée personnelle.
+
+## Le jeu de test
+
+`npm run verif` contrôle les promesses du produit, dans l'ordre de leur
+importance, sans navigateur :
+
+1. tout passage cité existe **mot pour mot** dans le document nommé ;
+2. le renvoi (clause, page, ligne) désigne bien l'endroit du passage ;
+3. rien n'a été tiré d'un document illisible ou écarté ;
+4. un passage lu par reconnaissance est signalé et demande confirmation, et le
+   moteur ne s'attribue jamais un modèle qui n'a pas tourné ;
+5. ce qui est affirmé sans preuve est marqué « non établi » ;
+6. chaque réponse du vendeur déclarée inexacte est appuyée sur un passage
+   retrouvé ;
+7. la couverture est exacte — la somme des documents classés égale le nombre de
+   fichiers versés, et le compte des non-lus ne peut pas être minoré ;
+8. chaque écran se rend, y compris la fiche de chaque constat.
+
+Ce jeu de test a attrapé deux erreurs réelles pendant la construction : des
+renvois de clause qui désignaient l'article précédent, et un constat qui se
+déclarait « non établi » alors que son passage le prouvait.
+
+## Les clés
+
+Les clés vivent dans `.env`, **hors du dépôt**, et **sans préfixe `VITE_`** :
+une variable `VITE_*` entre dans le bundle et devient lisible par quiconque ouvre
+les outils de développement. Le navigateur n'appelle que notre propre `/api`,
+servi par [`server/api.mjs`](server/api.mjs).
+
+| Clé | Pour quoi | État constaté |
+|---|---|---|
+| `MISTRAL_API_KEY` | reconnaissance de caractères, et extraction assistée | fonctionne |
+| `PISTE_CLIENT_ID` / `_SECRET` | Légifrance et Judilibre | fonctionne en bac à sable |
+| `PISTE_ENV` | `sandbox` ou `production` | la production refuse ces identifiants |
+
+Le bac à sable PISTE renvoie de **vraies** données : les trois versions datées de
+l'article L. 1235-3, et 706 décisions sur la contrepartie financière d'une clause
+de non-concurrence.
 
 ## Le code
 
 ```
+server/
+  documents.mjs     lecture, pagination, détection de clause, triage
+  sondes.mjs        les 15 questions d'audit — le savoir-faire
+  extraction.mjs    le moteur et la barrière mot pour mot
+  piste.mjs         Légifrance et Judilibre
+  mistral.mjs       reconnaissance de caractères, et état réel du modèle
+  harnais.mjs       les sept étapes et la trace
+  api.mjs           /api/audit, /api/document, /api/etat, relance en flux
 src/
-  types.ts              le vocabulaire : verdicts, contrôles, sources, étapes
-  store.ts              l'état : l'écran, le dossier, l'avancement du contrôle
-  styles.css            du papier plutôt qu'un terminal
-  data/sources.ts       les sources officielles mises en cache (démo hors ligne)
-  data/dossier.ts       le mémo piégé et ses 14 affirmations — notre jeu de test
-  engine/etapes.ts      les six étapes et leurs tâches séparées
-  engine/raisonnement.ts  le fil d'une affirmation, dérivé du dossier
-  engine/piste.ts       Légifrance et Judilibre, et la vérification mot pour mot
-  engine/mistral.ts     le découpage et la contradiction
-  components/           le schéma du contrôle, le fil du raisonnement, la pyramide, la frise
-  views/                les six écrans
-verif/jeuDeTest.tsx     le jeu de test, sans navigateur
+  types.ts          le vocabulaire de l'audit
+  store.ts          l'état : l'écran, le constat ouvert, les filtres
+  components/       le fil de provenance, les pièces partagées
+  views/            les six écrans et le lecteur de document
+skills/             les trois méthodes
+dataroom/           les 21 fichiers de démonstration
+verif/jeuDeTest.tsx le jeu de test
 ```
-
-### Brancher les vraies bases
-
-`engine/piste.ts` est écrit et prêt : jeton OAuth, `getArticleWithIdAndNum`,
-`getArticleByCid` pour les versions, recherche au fonds `JURI` par numéro de
-pourvoi, `consult/juri`, et Judilibre. Les identifiants des dix codes les plus
-cités y sont listés.
-
-Deux pièges relevés dans les recherches, traités dans le code : les dates
-Légifrance arrivent en millisecondes, et une fin d'application en **2999**
-signifie « pas de date de fin ». Le bac à sable et la production ont des
-identifiants distincts ; `VITE_PISTE_ENV` choisit.
-
-## Le jeu de test
-
-`npm run verif` contrôle trois choses, sans navigateur :
-
-1. chaque écran se rend sans planter, y compris la fiche de chacune des 14 affirmations ;
-2. tout passage surligné existe mot pour mot dans le texte officiel ;
-3. le fil du raisonnement dit la même chose que le rapport — même verdict, quatre
-   contrôles toujours présents, numérotation sans trou, requête complète, et une
-   conclusion qui dit quoi faire ;
-4. le verdict rendu correspond au verdict attendu par des juristes.
-
-Le jeu de test couvre les cas que Visa doit attraper : décision inventée, vraie
-décision à la mauvaise portée, article abrogé, article en vigueur aujourd'hui
-mais pas à la date des faits, décision postérieure aux faits, circulaire
-présentée comme obligatoire, et affirmation sans aucune source.
 
 ## Ce qui reste à faire
 
-- **Relecture juriste des sources de démonstration.** Les numéros de pourvoi et
-  les extraits de `data/sources.ts` sont tenus pour exacts mais n'ont pas été
-  recoupés sur Légifrance avec de vrais identifiants.
+- **Extraction assistée par le modèle.** `mistral.mjs` expose
+  `chercherPassage` : le modèle propose un passage, qui passe ensuite la même
+  barrière mot pour mot. Le branchement dans `extraction.mjs` reste à faire ; les
+  motifs tiennent la place en attendant, et le bandeau le dit.
 - **Compte PISTE en production.** Le bac à sable est immédiat ; la production est
   une étape à part, au délai non documenté.
-- **Import de pièces du dossier**, pour vérifier aussi les faits (« signé le
-  3 mars » quand la pièce 4 dit « 3 mai ») — l'extension data room.
+- **Relance incrémentale.** Dire ce qui change quand le vendeur verse de nouveaux
+  documents, plutôt que de recalculer en silence.
+- **Export du rapport** en .docx, avec les renvois en notes de bas de page.
 
 ## D'où vient ce produit
 
-Le brief et les chiffres sont dans [`../recherches/`](../recherches), notamment
-[06-idee-visa.md](../recherches/06-idee-visa.md). En trois points :
-
-- **La confiance est le problème.** Enquête CNB 2025 : 64 % des avocats utilisent ChatGPT, 46 % citent les erreurs comme limite n°1.
-- **Les hallucinations arrivent devant les juges français.** TA Orléans, 29 décembre 2025 : 17 références fictives dans une requête.
-- **Personne ne vérifie la date ni le rang.** Clearbrief et KeyCite sont américains ; aucun outil trouvé ne contrôle « en vigueur à la date des faits » ni la hiérarchie des normes en droit français. Et depuis mars 2026, le CNB demande un journal des usages de l'IA que personne ne fournit.
+Les recherches du matin sont dans [`../recherches/`](../recherches). Le constat
+qui a conduit à ce produit : les outils de data room citent l'endroit du
+document, mais aucun ne dit ce qu'il n'a pas lu, ni ne vérifie que la clause
+relevée tient au regard du droit en vigueur.

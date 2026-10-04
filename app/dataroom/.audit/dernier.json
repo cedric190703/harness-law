@@ -1,17 +1,24 @@
 {
-  "id": "audit-1791112353677",
+  "id": "audit-1791113234807",
   "operation": "Projet Sodimex — acquisition de 100 % des titres",
   "cible": "SODIMEX SAS, RCS Lyon 412 785 339",
   "cote": "l'acquéreur",
   "dateReference": "2026-10-04",
-  "lanceLe": "2026-10-04T11:12:33.677Z",
-  "dureeMs": 1180,
+  "lanceLe": "2026-10-04T11:27:14.807Z",
+  "dureeMs": 2004,
   "moteur": {
-    "extraction": "motifs, puis vérification sur le fichier",
+    "extraction": "recherche par motifs, puis vérification mot pour mot sur le fichier",
+    "reconnaissance": {
+      "employee": true,
+      "modele": "mistral-ocr-latest",
+      "documents": [
+        "D18"
+      ]
+    },
     "modele": {
-      "disponible": false,
-      "cause": "quota",
-      "message": "La clé Mistral est valide mais son quota d'inférence est épuisé : l'extraction se fait par motifs, et chaque passage reste vérifié sur le fichier."
+      "disponible": true,
+      "cause": null,
+      "message": "Mistral répond (magistral-medium-latest)."
     },
     "droit": "Légifrance et Judilibre en direct (bac à sable)"
   },
@@ -20,6 +27,11 @@
       "id": "triage",
       "titre": "Triage de la data room",
       "quoi": "Ouvrir chaque fichier, écarter les doublons et les brouillons, dire ce qui est illisible."
+    },
+    {
+      "id": "reconnaissance",
+      "titre": "Lecture des documents scannés",
+      "quoi": "Lire par reconnaissance de caractères ce qui n'a pas de couche de texte."
     },
     {
       "id": "perimetre",
@@ -57,85 +69,97 @@
       "etape": "triage",
       "etat": "en cours",
       "detail": "Ouverture des fichiers de la data room.",
-      "a": "2026-10-04T11:12:32.767Z"
+      "a": "2026-10-04T11:27:13.139Z"
+    },
+    {
+      "etape": "reconnaissance",
+      "etat": "en cours",
+      "detail": "Lecture de « scan garantie BRE (1).png » par reconnaissance de caractères.",
+      "a": "2026-10-04T11:27:13.153Z"
     },
     {
       "etape": "triage",
       "etat": "terminée",
       "detail": "21 fichiers ouverts.",
-      "a": "2026-10-04T11:12:32.796Z"
+      "a": "2026-10-04T11:27:14.054Z"
+    },
+    {
+      "etape": "reconnaissance",
+      "etat": "terminée",
+      "detail": "1 document scanné lu par reconnaissance de caractères.",
+      "a": "2026-10-04T11:27:14.054Z"
     },
     {
       "etape": "perimetre",
       "etat": "en cours",
       "detail": "Lecture de la liste de demandes.",
-      "a": "2026-10-04T11:12:32.796Z"
+      "a": "2026-10-04T11:27:14.054Z"
     },
     {
       "etape": "perimetre",
       "etat": "terminée",
       "detail": "19 demandes, 13 non satisfaites.",
-      "a": "2026-10-04T11:12:32.796Z"
+      "a": "2026-10-04T11:27:14.054Z"
     },
     {
       "etape": "depouillement",
       "etat": "en cours",
-      "detail": "14 questions d'audit sur 6 chantiers.",
-      "a": "2026-10-04T11:12:32.797Z"
+      "detail": "15 questions d'audit sur 6 chantiers.",
+      "a": "2026-10-04T11:27:14.055Z"
     },
     {
       "etape": "depouillement",
       "etat": "terminée",
-      "detail": "16 constats, 0 rejetés faute de passage retrouvé.",
-      "a": "2026-10-04T11:12:32.815Z"
+      "detail": "18 constats, 0 rejetés faute de passage retrouvé.",
+      "a": "2026-10-04T11:27:14.082Z"
     },
     {
       "etape": "droit",
       "etat": "en cours",
       "detail": "Interrogation de Légifrance et Judilibre.",
-      "a": "2026-10-04T11:12:32.815Z"
+      "a": "2026-10-04T11:27:14.082Z"
     },
     {
       "etape": "droit",
       "etat": "terminée",
       "detail": "1 constats appuyés sur le texte officiel.",
-      "a": "2026-10-04T11:12:33.675Z"
+      "a": "2026-10-04T11:27:14.805Z"
     },
     {
       "etape": "reponses",
       "etat": "en cours",
       "detail": "6 réponses du vendeur à éprouver.",
-      "a": "2026-10-04T11:12:33.676Z"
+      "a": "2026-10-04T11:27:14.805Z"
     },
     {
       "etape": "reponses",
       "etat": "terminée",
-      "detail": "5 réponses sur 6 contredites par les documents.",
-      "a": "2026-10-04T11:12:33.676Z"
+      "detail": "6 réponses sur 6 contredites par les documents.",
+      "a": "2026-10-04T11:27:14.806Z"
     },
     {
       "etape": "spa",
       "etat": "en cours",
       "detail": "Traduction des risques en mécanismes de cession.",
-      "a": "2026-10-04T11:12:33.676Z"
+      "a": "2026-10-04T11:27:14.806Z"
     },
     {
       "etape": "spa",
       "etat": "terminée",
-      "detail": "10 mécanismes proposés.",
-      "a": "2026-10-04T11:12:33.676Z"
+      "detail": "12 mécanismes proposés.",
+      "a": "2026-10-04T11:27:14.806Z"
     },
     {
       "etape": "rapport",
       "etat": "en cours",
       "detail": "Classement par gravité et calcul de la couverture.",
-      "a": "2026-10-04T11:12:33.676Z"
+      "a": "2026-10-04T11:27:14.806Z"
     },
     {
       "etape": "rapport",
       "etat": "terminée",
-      "detail": "16 constats classés.",
-      "a": "2026-10-04T11:12:33.677Z"
+      "detail": "18 constats classés.",
+      "a": "2026-10-04T11:27:14.807Z"
     }
   ],
   "documents": [
@@ -149,6 +173,11 @@
       "empreinte": "7edf0cc45ca291d3",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -165,6 +194,11 @@
       "empreinte": "15042c039f9d4651",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -181,6 +215,11 @@
       "empreinte": "18f724bd8decbdac",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -197,6 +236,11 @@
       "empreinte": "78beb5c77560bad9",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "avenant",
       "motifTri": "Avenant : il modifie un contrat qu'il faut retrouver pour lire le texte en vigueur.",
       "parentDe": "02 - Contrats commerciaux/Contrat_fourniture_METALUX_2021.txt",
@@ -213,6 +257,11 @@
       "empreinte": "08d4c9a42dba8a27",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -229,6 +278,11 @@
       "empreinte": "e13fdf8ec02618c3",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -248,6 +302,11 @@
       "empreinte": "2c75a61282d7923a",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "ecarte",
       "motifTri": "Brouillon non signé : mention « ne pas signer » en tête et aucune signature au document.",
       "parentDe": null,
@@ -264,6 +323,11 @@
       "empreinte": "bd4b7cd59d716a16",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "ecarte",
       "motifTri": "Version tronquée de « Contrat_fourniture_METALUX_2021.txt » : le début est identique, mais ce fichier s'arrête plus tôt et il manque les articles 14, 19.",
       "parentDe": null,
@@ -280,6 +344,11 @@
       "empreinte": "b968a5a667847a4f",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -296,6 +365,11 @@
       "empreinte": "2ee7922775fca623",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -312,6 +386,11 @@
       "empreinte": "51bde787e7dacc13",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -328,6 +407,11 @@
       "empreinte": "ee3421c48ecd117d",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -344,6 +428,11 @@
       "empreinte": "24381ef3212ea90a",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -360,6 +449,11 @@
       "empreinte": "291bc28405b5b9a0",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -376,6 +470,11 @@
       "empreinte": "d936d7f0eb694318",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -392,6 +491,11 @@
       "empreinte": "2bbbec255a3a4f73",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -400,14 +504,15 @@
     },
     {
       "id": "D17",
-      "chemin": "06 - Divers/Doc1_final_v3.pdf",
-      "nom": "Doc1_final_v3.pdf",
+      "chemin": "06 - Divers/credit-bail CB-2024-0871 (scan).pdf",
+      "nom": "credit-bail CB-2024-0871 (scan).pdf",
       "dossier": "06 - Divers",
       "extension": ".pdf",
       "octets": 2000,
       "empreinte": "e89abde0d1512042",
       "lisible": false,
       "motifIllisible": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
+      "origineTexte": null,
       "role": "illisible",
       "motifTri": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
       "parentDe": null,
@@ -422,14 +527,19 @@
       "extension": ".png",
       "octets": 427647,
       "empreinte": "155b1c96c6f39d0b",
-      "lisible": false,
-      "aReconnaitre": true,
-      "motifIllisible": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
-      "role": "illisible",
-      "motifTri": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
+      "lisible": true,
+      "aReconnaitre": false,
+      "motifIllisible": null,
+      "origineTexte": {
+        "par": "reconnaissance",
+        "modele": "mistral-ocr-latest",
+        "aConfirmer": true
+      },
+      "role": "retenu",
+      "motifTri": null,
       "parentDe": null,
-      "lignes": 0,
-      "pages": 0
+      "lignes": 23,
+      "pages": 1
     },
     {
       "id": "D19",
@@ -441,6 +551,11 @@
       "empreinte": "028b2ae10eeca89a",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "retenu",
       "motifTri": null,
       "parentDe": null,
@@ -457,6 +572,11 @@
       "empreinte": "7c733c29ff74d40e",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "liste-demandes",
       "motifTri": "Liste de demandes : elle fixe le périmètre et sert à dire ce qui manque.",
       "parentDe": null,
@@ -473,6 +593,11 @@
       "empreinte": "ab0f13235c61d9dc",
       "lisible": true,
       "aReconnaitre": false,
+      "origineTexte": {
+        "par": "fichier",
+        "modele": null,
+        "aConfirmer": false
+      },
       "role": "reponses-vendeur",
       "motifTri": "Réponses du vendeur : chaque affirmation est éprouvée contre les documents.",
       "parentDe": null,
@@ -713,6 +838,71 @@
   },
   "constats": [
     {
+      "id": "CORP-03.2",
+      "sonde": "CORP-03",
+      "chantier": "corporate",
+      "question": "Sûretés et engagements hors bilan",
+      "pourquoi": "Une garantie autonome engage la cible sans figurer à son bilan, et le président ne peut la consentir seul.",
+      "valeur": "La garantie couvre la dette d'un tiers : Gerland Logistique SAS, et non la cible",
+      "redaction": "La garantie ne couvre pas une dette de la cible : elle garantit les sommes dues par la société Gerland Logistique SAS au titre du crédit-bail n° CB-2024-0871. La cible s'engage donc pour un tiers, dont le nom renvoie à son associé Participations Gerland. L'autorisation donnée par l'assemblée du 12 juin 2024 vise « une garantie au profit de la Banque Régionale de l'Est, en couverture du contrat de crédit-bail portant sur la ligne d'assemblage » sans nommer le débiteur garanti : elle ne permet pas d'établir que les associés ont autorisé un engagement pour le compte d'un tiers.",
+      "gravite": "critique",
+      "impact": "La cible porte 850 000 euros de risque pour une société qui n'entre pas dans le périmètre de l'acquisition. L'engagement est dépourvu de contrepartie apparente pour elle, ce qui l'expose à une remise en cause, et l'autorisation statutaire exigée à l'article 17 des statuts n'est pas établie pour ce débiteur.",
+      "liens": [
+        "CORP-01"
+      ],
+      "spa": {
+        "mecanisme": "condition suspensive",
+        "redaction": "Mainlevée de la garantie autonome du 27 juin 2024, ou substitution du vendeur à la cible comme garant, avant la date de réalisation. À défaut, remise d'une ratification expresse par la collectivité des associés nommant le débiteur garanti, et contre-garantie du vendeur à première demande pour la durée résiduelle."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D18",
+          "D19"
+        ],
+        "consultes": [
+          "D01",
+          "D18"
+        ],
+        "retenu": "D18",
+        "nomRetenu": "scan garantie BRE (1).png",
+        "cheminRetenu": "06 - Divers/scan garantie BRE (1).png",
+        "page": 1,
+        "ligne": 11,
+        "clause": null,
+        "extrait": "Le Garant s'engage irrevocablement a payer au Beneficiaire, a premiere demande et sans pouvoir opposer aucune exception, toute somme due par la societe GERLAND LOGISTIQUE SAS au titre du contrat de credit-bail n. CB-2024-0871 portant sur la ligne d'assemblage du site de Venissieux.",
+        "motif": "GERLAND LOGISTIQUE",
+        "origineTexte": {
+          "par": "reconnaissance",
+          "modele": "mistral-ocr-latest",
+          "aConfirmer": true
+        },
+        "ecartes": [
+          {
+            "document": "D01",
+            "nom": "PV_AG_2024_06_12.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
       "id": "CONT-01.2",
       "sonde": "CONT-01",
       "chantier": "contrats",
@@ -745,6 +935,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -759,6 +950,11 @@
         "clause": "Article 14.2 — RÉSILIATION",
         "extrait": "14.2 — Le contrat sera résilié de plein droit, sans indemnité, en cas de\nchangement direct ou indirect du contrôle du Distributeur au sens de\nl'article L. 233-3 du code de commerce, sauf accord préalable et écrit du\nFournisseur. Le Distributeur informe le Fournisseur de tout projet de cette\nnature au moins soixante (60) jours avant sa réalisation.",
         "motif": "changement\\s+(?:direct\\s+ou\\s+indirect\\s+)?d[eu]\\s+contrôle",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D05",
@@ -807,6 +1003,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -820,6 +1017,11 @@
         "clause": null,
         "extrait": "RAPPELS\nImpôt sur les sociétés                           126 000 €\nIntérêts de retard                                18 900 €\nMajoration de 40 % pour manquement délibéré       50 400 €\nTOTAL                                            195 300 €",
         "motif": "TOTAL\\s+195 300",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": []
       },
       "relu": false
@@ -857,6 +1059,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -871,6 +1074,11 @@
         "clause": null,
         "extrait": "Observation portée par le teneur de registre : la cession du 3 mars 2024 au\nprofit de Participations Gerland a été inscrite sans que soit joint le\nprocès-verbal d'agrément prévu à l'article 11 des statuts.",
         "motif": "agr[ée]ment",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D02",
@@ -882,19 +1090,84 @@
       "relu": false
     },
     {
-      "id": "CORP-03",
+      "id": "CORP-03.1",
       "sonde": "CORP-03",
       "chantier": "corporate",
       "question": "Sûretés et engagements hors bilan",
       "pourquoi": "Une garantie autonome engage la cible sans figurer à son bilan, et le président ne peut la consentir seul.",
-      "valeur": "Montant de la garantie : non établi",
-      "redaction": "La convention de garantie elle-même n'a pas pu être lue : le seul exemplaire versé est un scan sans couche de texte. Le montant de l'engagement, sa durée et son caractère autonome ou accessoire ne sont donc pas établis par le dossier. Le vendeur avance 500 000 euros en réponse Q3, sans pièce à l'appui.",
+      "valeur": "Garantie autonome de 850 000 € à première demande, jusqu'au 30 juin 2031",
+      "redaction": "La convention du 27 juin 2024 est une garantie autonome à première demande, plafonnée à 850 000 euros en principal, outre intérêts et frais, consentie jusqu'au 30 juin 2031. Le garant renonce expressément à opposer toute exception tirée du contrat de base. L'engagement ne figure pas au bilan. Ce passage a été lu par reconnaissance de caractères sur un scan : il doit être confirmé sur l'original avant d'être opposé.",
       "gravite": "élevée",
-      "impact": "Un engagement hors bilan de montant inconnu. Tant que la pièce n'est pas lisible, le chiffre du vendeur ne peut pas être repris au rapport.",
+      "impact": "Engagement hors bilan de 850 000 euros, appelable sans débat sur le fond. Le vendeur l'a chiffré à 500 000 euros en réponse Q3, soit 350 000 euros de moins que la pièce.",
       "liens": [],
       "spa": {
+        "mecanisme": "garantie",
+        "redaction": "Déclaration et garantie du vendeur sur l'exhaustivité des engagements hors bilan, et garantie spécifique couvrant tout appel de la garantie autonome du 27 juin 2024 au-delà du montant déclaré, jusqu'à son échéance du 30 juin 2031."
+      },
+      "nonEtabli": false,
+      "droit": null,
+      "provenance": {
+        "parcourus": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D09",
+          "D10",
+          "D11",
+          "D12",
+          "D13",
+          "D14",
+          "D15",
+          "D16",
+          "D18",
+          "D19"
+        ],
+        "consultes": [
+          "D01",
+          "D18"
+        ],
+        "retenu": "D18",
+        "nomRetenu": "scan garantie BRE (1).png",
+        "cheminRetenu": "06 - Divers/scan garantie BRE (1).png",
+        "page": 1,
+        "ligne": 15,
+        "clause": null,
+        "extrait": "Le montant maximum de la garantie est fixe a HUIT CENT CINQUANTE MILLE (850 000) EUROS en principal, outre interets et frais.",
+        "motif": "montant maximum de la garantie",
+        "origineTexte": {
+          "par": "reconnaissance",
+          "modele": "mistral-ocr-latest",
+          "aConfirmer": true
+        },
+        "ecartes": [
+          {
+            "document": "D01",
+            "nom": "PV_AG_2024_06_12.txt",
+            "pourquoi": "Contient un passage proche, moins précis que celui retenu."
+          }
+        ]
+      },
+      "relu": false
+    },
+    {
+      "id": "CORP-04",
+      "sonde": "CORP-04",
+      "chantier": "corporate",
+      "question": "Dette garantie : le contrat de crédit-bail sous-jacent",
+      "pourquoi": "Une garantie ne s'apprécie que contre la dette qu'elle couvre : il faut l'encours, l'échéancier et les cas de déchéance.",
+      "valeur": "Encours garanti : non établi",
+      "redaction": "Le contrat de crédit-bail n° CB-2024-0871, que la garantie du 27 juin 2024 couvre, figure à la data room mais n'a pas pu être ouvert : le fichier porte l'extension .pdf sans en être un. L'encours restant dû, l'échéancier et les cas de déchéance du terme ne sont donc pas établis. La ligne K4 de la liste de demandes, qui réclamait les contrats de financement et crédits-baux, reste sans réponse exploitable.",
+      "gravite": "élevée",
+      "impact": "On ne peut pas dire à quelle hauteur la garantie de 850 000 euros est susceptible d'être appelée aujourd'hui. Le plafond est connu, l'exposition réelle ne l'est pas.",
+      "liens": [
+        "CORP-03"
+      ],
+      "spa": {
         "mecanisme": "condition suspensive",
-        "redaction": "Remise d'un exemplaire lisible et complet de la convention de garantie consentie à la Banque Régionale de l'Est, et déclaration du vendeur sur le montant maximum de l'engagement."
+        "redaction": "Remise d'un exemplaire lisible du contrat de crédit-bail n° CB-2024-0871 et d'une attestation de l'encours restant dû à la date de réalisation, émise par la Banque Régionale de l'Est."
       },
       "nonEtabli": true,
       "droit": null,
@@ -914,23 +1187,31 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
-          "D01"
+          "D01",
+          "D18"
         ],
-        "retenu": "D18",
-        "nomRetenu": "scan garantie BRE (1).png",
-        "cheminRetenu": "06 - Divers/scan garantie BRE (1).png",
+        "retenu": "D17",
+        "nomRetenu": "credit-bail CB-2024-0871 (scan).pdf",
+        "cheminRetenu": "06 - Divers/credit-bail CB-2024-0871 (scan).pdf",
         "page": null,
         "ligne": null,
         "clause": null,
         "extrait": null,
         "motif": null,
+        "origineTexte": null,
         "ecartes": [
           {
             "document": "D01",
             "nom": "PV_AG_2024_06_12.txt",
+            "pourquoi": "Lu, mais il ne porte pas l'information recherchée."
+          },
+          {
+            "document": "D18",
+            "nom": "scan garantie BRE (1).png",
             "pourquoi": "Lu, mais il ne porte pas l'information recherchée."
           }
         ]
@@ -970,6 +1251,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -984,6 +1266,11 @@
         "clause": "Article 9 — CESSION DU BAIL",
         "extrait": "ARTICLE 9 — CESSION DU BAIL\nLe Preneur ne peut céder son droit au bail qu'avec l'accord écrit et préalable\ndu Bailleur. Le changement de contrôle du Preneur est assimilé à une cession\nau sens du présent article. À défaut d'accord, le Bailleur peut demander la\nrésiliation du bail.",
         "motif": "changement\\s+(?:direct\\s+ou\\s+indirect\\s+)?d[eu]\\s+contrôle",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D06",
@@ -1032,6 +1319,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1047,6 +1335,11 @@
         "clause": null,
         "extrait": "Les volumes effectivement commandés au titre de l'exercice 2025 s'élèvent à\n4 870 tonnes, soit un déficit de 730 tonnes.",
         "motif": "déficit de\\s+\\d",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D04",
@@ -1136,7 +1429,7 @@
             ]
           },
           "base": "Légifrance et Judilibre, bac à sable",
-          "a": "2026-10-04T11:12:33.675Z"
+          "a": "2026-10-04T11:27:14.805Z"
         }
       },
       "provenance": {
@@ -1155,6 +1448,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1170,6 +1464,11 @@
         "clause": "Article 9 — CLAUSE DE NON-CONCURRENCE",
         "extrait": "Aucune contrepartie financière n'est stipulée au titre de la présente clause.",
         "motif": "Aucune contrepartie financière n'est stipulée",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D12",
@@ -1200,7 +1499,7 @@
         "mecanisme": "condition suspensive",
         "redaction": "Communication des contrats de travail de MM. Damiens et de Mmes Royer et Tual avant la réalisation, et régularisation des clauses de non-concurrence dépourvues de contrepartie financière."
       },
-      "nonEtabli": true,
+      "nonEtabli": false,
       "droit": null,
       "provenance": {
         "parcourus": [
@@ -1218,6 +1517,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1231,6 +1531,11 @@
         "clause": null,
         "extrait": "Cadres soumis à une clause de non-concurrence : 4 (MM. Lefèvre, Damiens,\nMmes Royer et Tual). Les contrats de MM. Damiens et de Mmes Royer et Tual\nn'ont pas été versés à la data room.",
         "motif": "n'ont pas été versés à la data room",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": []
       },
       "relu": false
@@ -1268,6 +1573,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1281,6 +1587,11 @@
         "clause": null,
         "extrait": "Aucun acte juridique au sens de l'article 28.3 du règlement (UE) 2016/679\nn'a été conclu avec ce prestataire. Le contrat cadre du 11 septembre 2023\nmentionne la sous-traitance à son article 12 mais ne comporte pas les\nclauses requises.",
         "motif": "Aucun acte juridique au sens de l'article 28",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": []
       },
       "relu": false
@@ -1315,6 +1626,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1329,6 +1641,11 @@
         "clause": "Article 11 — CESSION DES ACTIONS — AGRÉMENT",
         "extrait": "ARTICLE 11 — CESSION DES ACTIONS — AGRÉMENT\nToute cession d'actions à un tiers non associé est soumise à l'agrément\npréalable de la collectivité des associés statuant à la majorité des deux\ntiers des voix des associés présents ou représentés.",
         "motif": "agr[ée]ment",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D03",
@@ -1369,6 +1686,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1384,6 +1702,11 @@
         "clause": "Article 1 — MODIFICATION DE L'ARTICLE 8 (ENGAGEMENT DE VOLUME)",
         "extrait": "ARTICLE 1 — MODIFICATION DE L'ARTICLE 8 (ENGAGEMENT DE VOLUME)\nL'article 8 du contrat est remplacé par les dispositions suivantes :\n« Le Distributeur s'engage sur un volume annuel minimum de 5 600 tonnes. En\ncas de manquement, une indemnité de 58 euros par tonne manquante est due. »",
         "motif": "volume annuel minimum de",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D06",
@@ -1434,6 +1757,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1448,6 +1772,11 @@
         "clause": "Article 2 — MODIFICATION DE L'ARTICLE 5 (DURÉE)",
         "extrait": "ARTICLE 2 — MODIFICATION DE L'ARTICLE 5 (DURÉE)\nLe délai de dénonciation prévu à l'article 5 est porté de douze (12) à\nvingt-quatre (24) mois.",
         "motif": "délai de dénonciation.{0,60}porté",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D06",
@@ -1493,6 +1822,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1506,6 +1836,11 @@
         "clause": "Article 15 — RESPONSABILITÉ",
         "extrait": "ARTICLE 15 — RESPONSABILITÉ\nLa responsabilité du Prestataire est limitée, toutes causes confondues, à\ntrois (3) mois de rémunération.",
         "motif": "responsabilité.{0,80}limitée",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": []
       },
       "relu": false
@@ -1543,6 +1878,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1556,6 +1892,11 @@
         "clause": null,
         "extrait": "Observation du cabinet comptable :\nLe crédit d'impôt recherche de l'exercice 2025 a été calculé en incluant les\ndépenses de personnel de deux salariés dont les travaux relèvent, selon la\ndocumentation technique fournie, du développement de série. L'éligibilité de\nces dépenses, soit 41 000 euros de crédit, n'est pas acquise.",
         "motif": "L'éligibilité de\\s*\\n?ces dépenses",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": []
       },
       "relu": false
@@ -1592,6 +1933,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1606,6 +1948,11 @@
         "clause": null,
         "extrait": "TOTAL DES DEMANDES : 214 500 euros.",
         "motif": "TOTAL DES DEMANDES",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D14",
@@ -1646,6 +1993,7 @@
           "D14",
           "D15",
           "D16",
+          "D18",
           "D19"
         ],
         "consultes": [
@@ -1661,6 +2009,11 @@
         "clause": null,
         "extrait": "Répartition : A. Rieux 144 000 (60,0 %), C. Vasseur 64 000 (26,7 %),\nParticipations Gerland SAS 32 000 (13,3 %).",
         "motif": "Répartition\\s*:",
+        "origineTexte": {
+          "par": "fichier",
+          "modele": null,
+          "aConfirmer": false
+        },
         "ecartes": [
           {
             "document": "D02",
@@ -1736,15 +2089,22 @@
       "constats": [
         "CORP-03"
       ],
-      "verdict": "non vérifiable",
-      "pourquoi": "La convention de garantie n'a pas pu être lue : le seul exemplaire versé est un scan sans couche de texte. Le chiffre avancé n'est appuyé par aucune pièce lisible du dossier.",
+      "verdict": "inexacte",
+      "pourquoi": "La convention du 27 juin 2024, lue par reconnaissance de caractères sur le scan versé, plafonne la garantie à 850 000 euros : le vendeur la minore de 350 000 euros. La réponse omet en outre que la garantie est autonome, à première demande, et qu'elle couvre la dette d'un tiers, Gerland Logistique SAS, et non celle de la cible.",
       "appuis": [
         {
-          "constat": "CORP-03",
+          "constat": "CORP-03.1",
           "document": "scan garantie BRE (1).png",
           "clause": null,
-          "page": null,
-          "extrait": null
+          "page": 1,
+          "extrait": "Le montant maximum de la garantie est fixe a HUIT CENT CINQUANTE MILLE (850 000) EUROS en principal, outre interets et frais."
+        },
+        {
+          "constat": "CORP-03.2",
+          "document": "scan garantie BRE (1).png",
+          "clause": null,
+          "page": 1,
+          "extrait": "Le Garant s'engage irrevocablement a payer au Beneficiaire, a premiere demande et sans pouvoir opposer aucune exception, toute somme due par la societe GERLAND LOGISTIQUE SAS au titre du contrat de credit-bail n. CB-2024-0871 portant sur la ligne d'assemblage du site de Venissieux."
         }
       ]
     },
@@ -1826,14 +2186,40 @@
       }
     },
     {
-      "constat": "CORP-03",
+      "constat": "CORP-03.1",
       "chantier": "corporate",
       "question": "Sûretés et engagements hors bilan",
       "gravite": "élevée",
-      "mecanisme": "condition suspensive",
-      "redaction": "Remise d'un exemplaire lisible et complet de la convention de garantie consentie à la Banque Régionale de l'Est, et déclaration du vendeur sur le montant maximum de l'engagement.",
+      "mecanisme": "garantie",
+      "redaction": "Déclaration et garantie du vendeur sur l'exhaustivité des engagements hors bilan, et garantie spécifique couvrant tout appel de la garantie autonome du 27 juin 2024 au-delà du montant déclaré, jusqu'à son échéance du 30 juin 2031.",
       "appui": {
         "document": "scan garantie BRE (1).png",
+        "clause": null,
+        "page": 1
+      }
+    },
+    {
+      "constat": "CORP-03.2",
+      "chantier": "corporate",
+      "question": "Sûretés et engagements hors bilan",
+      "gravite": "critique",
+      "mecanisme": "condition suspensive",
+      "redaction": "Mainlevée de la garantie autonome du 27 juin 2024, ou substitution du vendeur à la cible comme garant, avant la date de réalisation. À défaut, remise d'une ratification expresse par la collectivité des associés nommant le débiteur garanti, et contre-garantie du vendeur à première demande pour la durée résiduelle.",
+      "appui": {
+        "document": "scan garantie BRE (1).png",
+        "clause": null,
+        "page": 1
+      }
+    },
+    {
+      "constat": "CORP-04",
+      "chantier": "corporate",
+      "question": "Dette garantie : le contrat de crédit-bail sous-jacent",
+      "gravite": "élevée",
+      "mecanisme": "condition suspensive",
+      "redaction": "Remise d'un exemplaire lisible du contrat de crédit-bail n° CB-2024-0871 et d'une attestation de l'encours restant dû à la date de réalisation, émise par la Banque Régionale de l'Est.",
+      "appui": {
+        "document": "credit-bail CB-2024-0871 (scan).pdf",
         "clause": null,
         "page": null
       }
@@ -1945,7 +2331,7 @@
   ],
   "couverture": {
     "total": 21,
-    "depouilles": 15,
+    "depouilles": 16,
     "ecartes": [
       {
         "id": "D07",
@@ -1961,15 +2347,9 @@
     "illisibles": [
       {
         "id": "D17",
-        "nom": "Doc1_final_v3.pdf",
+        "nom": "credit-bail CB-2024-0871 (scan).pdf",
         "pourquoi": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
         "aReconnaitre": false
-      },
-      {
-        "id": "D18",
-        "nom": "scan garantie BRE (1).png",
-        "pourquoi": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
-        "aReconnaitre": true
       }
     ],
     "procedure": 2,
@@ -2096,7 +2476,7 @@
         },
         {
           "id": "D17",
-          "nom": "Doc1_final_v3.pdf",
+          "nom": "credit-bail CB-2024-0871 (scan).pdf",
           "role": "illisible",
           "motif": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
           "octets": 2000
@@ -2104,8 +2484,8 @@
         {
           "id": "D18",
           "nom": "scan garantie BRE (1).png",
-          "role": "illisible",
-          "motif": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
+          "role": "retenu",
+          "motif": null,
           "octets": 427647
         },
         {
@@ -2132,6 +2512,18 @@
       ]
     },
     {
+      "etape": "reconnaissance",
+      "outil": "mistral-ocr-latest",
+      "detail": [
+        {
+          "document": "D18",
+          "nom": "scan garantie BRE (1).png",
+          "modele": "mistral-ocr-latest",
+          "caracteres": 992
+        }
+      ]
+    },
+    {
       "etape": "perimetre",
       "outil": "lecture locale",
       "lignes": 19,
@@ -2139,18 +2531,18 @@
     },
     {
       "etape": "depouillement",
-      "outil": "motifs",
+      "outil": "Mistral + motifs",
       "moteur": {
-        "disponible": false,
-        "cause": "quota",
-        "message": "La clé Mistral est valide mais son quota d'inférence est épuisé : l'extraction se fait par motifs, et chaque passage reste vérifié sur le fichier."
+        "disponible": true,
+        "cause": null,
+        "message": "Mistral répond (magistral-medium-latest)."
       },
       "detail": [
         {
           "quoi": "recherche",
           "sonde": "CORP-01",
           "question": "Agrément des cessions d'actions",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D02",
             "D03"
@@ -2162,7 +2554,7 @@
           "quoi": "recherche",
           "sonde": "CORP-02",
           "question": "Capital et répartition des titres",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D02",
             "D03",
@@ -2175,18 +2567,31 @@
           "quoi": "recherche",
           "sonde": "CORP-03",
           "question": "Sûretés et engagements hors bilan",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
-            "D01"
+            "D01",
+            "D18"
           ],
-          "passages": 1,
+          "passages": 5,
+          "moteur": "motifs"
+        },
+        {
+          "quoi": "recherche",
+          "sonde": "CORP-04",
+          "question": "Dette garantie : le contrat de crédit-bail sous-jacent",
+          "parcourus": 16,
+          "candidats": [
+            "D01",
+            "D18"
+          ],
+          "passages": 2,
           "moteur": "motifs"
         },
         {
           "quoi": "recherche",
           "sonde": "CONT-01",
           "question": "Clause de changement de contrôle",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D05",
             "D06"
@@ -2198,7 +2603,7 @@
           "quoi": "recherche",
           "sonde": "CONT-02",
           "question": "Engagement de volume minimum",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D04",
             "D06",
@@ -2211,7 +2616,7 @@
           "quoi": "recherche",
           "sonde": "CONT-03",
           "question": "Durée, reconduction et dénonciation",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D04",
             "D06"
@@ -2223,7 +2628,7 @@
           "quoi": "recherche",
           "sonde": "CONT-04",
           "question": "Limitation de responsabilité du prestataire",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D09"
           ],
@@ -2234,7 +2639,7 @@
           "quoi": "recherche",
           "sonde": "SOC-01",
           "question": "Clause de non-concurrence : contrepartie financière",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D10",
             "D12",
@@ -2247,7 +2652,7 @@
           "quoi": "recherche",
           "sonde": "SOC-02",
           "question": "Intéressement : provision de l'exercice",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D14"
           ],
@@ -2258,7 +2663,7 @@
           "quoi": "recherche",
           "sonde": "SOC-03",
           "question": "Contrats de travail non communiqués",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D12"
           ],
@@ -2269,7 +2674,7 @@
           "quoi": "recherche",
           "sonde": "FISC-01",
           "question": "Contrôle fiscal : rappels et état de la procédure",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D13"
           ],
@@ -2280,7 +2685,7 @@
           "quoi": "recherche",
           "sonde": "FISC-02",
           "question": "Crédit d'impôt recherche : éligibilité",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D14"
           ],
@@ -2291,7 +2696,7 @@
           "quoi": "recherche",
           "sonde": "LIT-01",
           "question": "Contentieux prud'homal : demandes et provision",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D14",
             "D15"
@@ -2303,7 +2708,7 @@
           "quoi": "recherche",
           "sonde": "RGPD-01",
           "question": "Acte de sous-traitance au sens de l'article 28 du RGPD",
-          "parcourus": 15,
+          "parcourus": 16,
           "candidats": [
             "D19"
           ],
@@ -2337,7 +2742,7 @@
         },
         {
           "q": "Q3",
-          "verdict": "non vérifiable"
+          "verdict": "inexacte"
         },
         {
           "q": "Q4",
@@ -2362,7 +2767,15 @@
           "mecanisme": "condition suspensive"
         },
         {
-          "constat": "CORP-03",
+          "constat": "CORP-03.1",
+          "mecanisme": "garantie"
+        },
+        {
+          "constat": "CORP-03.2",
+          "mecanisme": "condition suspensive"
+        },
+        {
+          "constat": "CORP-04",
           "mecanisme": "condition suspensive"
         },
         {
@@ -2404,7 +2817,7 @@
       "outil": "règles de l'audit",
       "couverture": {
         "total": 21,
-        "depouilles": 15,
+        "depouilles": 16,
         "ecartes": [
           {
             "id": "D07",
@@ -2420,15 +2833,9 @@
         "illisibles": [
           {
             "id": "D17",
-            "nom": "Doc1_final_v3.pdf",
+            "nom": "credit-bail CB-2024-0871 (scan).pdf",
             "pourquoi": "Le fichier porte l'extension .pdf mais n'en est pas un : son en-tête est absent. Fichier probablement corrompu au dépôt.",
             "aReconnaitre": false
-          },
-          {
-            "id": "D18",
-            "nom": "scan garantie BRE (1).png",
-            "pourquoi": "Document scanné : image sans couche de texte. Une reconnaissance de caractères est nécessaire.",
-            "aReconnaitre": true
           }
         ],
         "procedure": 2,

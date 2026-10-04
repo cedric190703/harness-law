@@ -1,156 +1,231 @@
-// Le jeu de test. Il répond à une question qu'un jury posera : « comment
-// savez-vous que ça marche ? »
+// Le jeu de test. Il répond à la question qu'un jury posera : « comment savez-vous
+// que le rapport ne dit rien de faux ? »
 //
-// Trois choses sont contrôlées, sans navigateur :
-//   1. chaque écran se rend sans planter, y compris la fiche de chaque
-//      affirmation (c'est là que vivent la pyramide, la frise et la
-//      contradiction) ;
-//   2. tout passage surligné existe mot pour mot dans le texte officiel —
-//      c'est la promesse centrale de Visa ;
-//   3. le verdict rendu correspond au verdict attendu, affirmation par
-//      affirmation.
+// Il n'y a pas de navigateur ici. On contrôle les promesses du produit, dans
+// l'ordre de leur importance :
+//
+//   1. tout passage cité existe MOT POUR MOT dans le document nommé ;
+//   2. le renvoi (clause, page) désigne bien l'endroit du passage ;
+//   3. rien n'a été tiré d'un document illisible ou écarté ;
+//   4. ce que le rapport affirme sans preuve est marqué « non établi » ;
+//   5. chaque réponse du vendeur déclarée inexacte est appuyée sur un passage ;
+//   6. la couverture est exacte : le compte des non-lus ne peut pas être minoré ;
+//   7. chaque écran se rend sans planter.
 //
 //   npm run verif
 
 import { renderToString } from "react-dom/server";
-import { Accueil } from "../src/views/Accueil";
-import { Nouvelle } from "../src/views/Nouvelle";
-import { Rapport } from "../src/views/Rapport";
-import { Journal } from "../src/views/Journal";
-import { Raisonnement } from "../src/views/Raisonnement";
-import { lire, ouvrirAffirmation } from "../src/store";
-import { passageDansSource } from "../src/engine/piste";
-import { construireRaisonnement, quoiFaire } from "../src/engine/raisonnement";
-import type { Verdict } from "../src/types";
-
-/** Ce que des juristes attendent de chaque ligne du mémo piégé. */
-const ATTENDU: Record<string, Verdict> = {
-  A01: "vert",
-  A02: "rouge", // article abrogé en 2008
-  A03: "vert",
-  A04: "vert",
-  A05: "orange", // barème de 2017 appliqué à des faits de 2016
-  A06: "rouge", // circulaire, et elle ne dit pas cela
-  A07: "vert",
-  A08: "orange", // décision postérieure aux faits
-  A09: "rouge", // numéro de pourvoi inexistant
-  A10: "rouge", // l'arrêt dit l'inverse
-  A11: "vert",
-  A12: "vert",
-  A13: "vert",
-  A14: "gris", // aucune source citée
-};
+import { clauseDe, situer, LIGNES_PAR_PAGE, type DocumentLu } from "../server/documents.mjs";
+import { auditer } from "../server/harnais.mjs";
+import { passagePresent } from "../server/extraction.mjs";
+import { DataRoom } from "../src/views/DataRoom";
+import { Chantiers } from "../src/views/Chantiers";
+import { Tableau } from "../src/views/Tableau";
+import { Constats } from "../src/views/Constats";
+import { Vendeur } from "../src/views/Vendeur";
+import { Spa } from "../src/views/Spa";
+import { poser } from "../src/store";
+import type { Audit } from "../src/types";
 
 let echecs = 0;
 const rate = (quoi: string) => {
   echecs++;
   console.error(`  ✕ ${quoi}`);
 };
+const titre = (t: string) => console.log(`\n${t}`);
+const ok = (t: string) => console.log(`  ✓ ${t}`);
 
-console.log("\nLes écrans se rendent-ils ?");
+// On éprouve le corpus exact qui a servi à l'audit : un document scanné puis lu
+// par reconnaissance n'est plus le même que sur le disque.
+let documents: DocumentLu[] = [];
+const audit = (await auditer({ racine: "./dataroom", surCorpus: (d) => (documents = d) })) as unknown as Audit;
+const parId = new Map(documents.map((d) => [d.id, d]));
+
+// ------------------------------------------------------------------- 1. preuve
+titre("1. Tout passage cité existe-t-il mot pour mot dans le document nommé ?");
+let avecPreuve = 0;
+for (const c of audit.constats) {
+  const p = c.provenance;
+  if (!p.extrait) {
+    if (!c.nonEtabli) rate(`${c.id} — aucun passage cité et le constat ne se dit pas « non établi ».`);
+    continue;
+  }
+  const doc = p.retenu ? parId.get(p.retenu) : null;
+  if (!doc) {
+    rate(`${c.id} — le document retenu « ${p.retenu} » n'existe pas dans la data room.`);
+    continue;
+  }
+  if (!passagePresent(doc.texte, p.extrait)) {
+    rate(`${c.id} — le passage cité ne se retrouve pas dans « ${doc.nom} ».`);
+    continue;
+  }
+  avecPreuve++;
+}
+ok(`${avecPreuve} constats appuyés sur un passage retrouvé`);
+
+// -------------------------------------------------------------------- 2. renvoi
+titre("2. Le renvoi désigne-t-il l'endroit du passage ?");
+for (const c of audit.constats) {
+  const p = c.provenance;
+  if (!p.extrait || !p.retenu) continue;
+  const doc = parId.get(p.retenu)!;
+  const ou = situer(doc, p.extrait);
+  if (!ou) {
+    rate(`${c.id} — le passage ne peut pas être situé dans « ${doc.nom} ».`);
+    continue;
+  }
+  if (p.page !== ou.page) rate(`${c.id} — page annoncée ${p.page}, page réelle ${ou.page}.`);
+  if (p.ligne !== ou.ligne) rate(`${c.id} — ligne annoncée ${p.ligne}, ligne réelle ${ou.ligne}.`);
+  const attendue = clauseDe(doc, p.extrait);
+  if (p.clause !== attendue) rate(`${c.id} — clause annoncée « ${p.clause} », clause réelle « ${attendue} ».`);
+  // Une page annoncée doit exister dans le document.
+  if (p.page && p.page > Math.ceil(doc.texte.split("\n").length / LIGNES_PAR_PAGE)) {
+    rate(`${c.id} — page ${p.page} au-delà de la fin de « ${doc.nom} ».`);
+  }
+}
+ok("tous les renvois vérifiés contre le document");
+
+// ------------------------------------------------------- 3. rien des non-lus
+titre("3. Rien n'a-t-il été tiré d'un document illisible ou écarté ?");
+const interdits = new Set(documents.filter((d) => d.role === "illisible" || d.role === "ecarte").map((d) => d.id));
+for (const c of audit.constats) {
+  const r = c.provenance.retenu;
+  if (!r || !interdits.has(r)) continue;
+  const doc = parId.get(r)!;
+  // Un constat peut *nommer* un illisible, mais alors il n'en tire rien et se
+  // déclare non établi. C'est exactement ce qu'on veut vérifier.
+  if (doc.role === "illisible" && c.nonEtabli && !c.provenance.extrait) continue;
+  rate(`${c.id} — repose sur « ${doc.nom} » (${doc.role}) sans se déclarer non établi.`);
+}
+for (const c of audit.constats) {
+  for (const id of c.provenance.consultes) {
+    const d = parId.get(id);
+    if (d && (d.role === "illisible" || d.role === "ecarte")) {
+      rate(`${c.id} — « ${d.nom} » (${d.role}) compté parmi les documents consultés.`);
+    }
+  }
+}
+ok("aucun constat ne tire d'information d'un document non lu");
+
+// ------------------------------------------------- 3bis. texte lu par machine
+titre("3bis. Un passage lu par reconnaissance est-il signalé comme tel ?");
+const parReconnaissance = audit.constats.filter((c) => c.provenance.origineTexte?.par === "reconnaissance");
+for (const c of parReconnaissance) {
+  const o = c.provenance.origineTexte!;
+  if (!o.aConfirmer) rate(`${c.id} — lu par reconnaissance sans demander confirmation sur l'original.`);
+  if (!o.modele) rate(`${c.id} — lu par reconnaissance sans nommer le modèle employé.`);
+  const doc = parId.get(c.provenance.retenu!)!;
+  // Le passage doit se retrouver dans le texte reconnu, pas ailleurs.
+  if (!passagePresent(doc.texte, c.provenance.extrait!)) {
+    rate(`${c.id} — le passage ne se retrouve pas dans le texte reconnu de « ${doc.nom} ».`);
+  }
+}
+// Le moteur doit déclarer la reconnaissance dès qu'elle a servi.
+const r = audit.moteur.reconnaissance;
+if (parReconnaissance.length && !r.employee) {
+  rate("le moteur ne déclare pas la reconnaissance alors que des constats en viennent.");
+}
+if (r.employee) {
+  for (const c of parReconnaissance) {
+    if (!r.documents.includes(c.provenance.retenu!)) {
+      rate(`${c.id} — vient de ${c.provenance.retenu}, absent de la liste des documents reconnus.`);
+    }
+  }
+}
+// Et il ne doit jamais s'attribuer un modèle qui n'a pas tourné.
+if (/magistral|mistral-medium/i.test(audit.moteur.extraction) && !audit.moteur.modele.disponible) {
+  rate("le moteur annonce une extraction par Mistral alors que le modèle n'a pas répondu.");
+}
+ok(
+  parReconnaissance.length
+    ? `${parReconnaissance.length} constats issus d'un scan, tous signalés et à confirmer`
+    : "aucun constat issu d'un scan",
+);
+
+// ------------------------------------------------------------- 4. non établi
+titre("4. Ce qui n'est pas prouvé est-il marqué « non établi » ?");
+const nonEtablis = audit.constats.filter((c) => c.nonEtabli);
+for (const c of nonEtablis) {
+  if (!c.impact) rate(`${c.id} — non établi mais sans explication de ce que cela coûte.`);
+  if (c.provenance.extrait) rate(`${c.id} — se dit non établi tout en citant un passage.`);
+}
+ok(`${nonEtablis.length} constats se déclarent non établis, aucun n'affirme un fait`);
+
+// ------------------------------------------------------ 5. réponses vendeur
+titre("5. Chaque réponse déclarée inexacte est-elle appuyée sur un passage ?");
+for (const e of audit.epreuves) {
+  if (e.verdict !== "inexacte") continue;
+  if (!e.appuis.length) {
+    rate(`${e.question} — déclarée inexacte sans aucun constat au soutien.`);
+    continue;
+  }
+  const avecExtrait = e.appuis.filter((a) => a.extrait);
+  if (!avecExtrait.length) rate(`${e.question} — déclarée inexacte sans aucun passage cité.`);
+  for (const a of avecExtrait) {
+    const c = audit.constats.find((x) => x.id === a.constat);
+    if (!c) {
+      rate(`${e.question} — renvoie au constat ${a.constat}, qui n'existe pas.`);
+      continue;
+    }
+    const doc = c.provenance.retenu ? parId.get(c.provenance.retenu) : null;
+    if (doc && !passagePresent(doc.texte, a.extrait!)) {
+      rate(`${e.question} — le passage cité n'est pas dans « ${doc.nom} ».`);
+    }
+  }
+}
+const inexactes = audit.epreuves.filter((e) => e.verdict === "inexacte").length;
+ok(`${inexactes} réponses contredites, chacune appuyée sur un passage retrouvé`);
+
+// -------------------------------------------------------------- 6. couverture
+titre("6. La couverture est-elle exacte ?");
+const cv = audit.couverture;
+if (cv.total !== documents.length) rate(`couverture : ${cv.total} documents annoncés, ${documents.length} réels.`);
+const depouillesReels = documents.filter((d) => d.role === "retenu" || d.role === "avenant").length;
+if (cv.depouilles !== depouillesReels) rate(`couverture : ${cv.depouilles} dépouillés annoncés, ${depouillesReels} réels.`);
+const illisiblesReels = documents.filter((d) => d.role === "illisible").length;
+if (cv.illisibles.length !== illisiblesReels) rate(`couverture : ${cv.illisibles.length} illisibles annoncés, ${illisiblesReels} réels.`);
+for (const i of cv.illisibles) if (!i.pourquoi) rate(`couverture : « ${i.nom} » illisible sans motif.`);
+for (const e of cv.ecartes) if (!e.pourquoi) rate(`couverture : « ${e.nom} » écarté sans motif.`);
+const somme = cv.depouilles + cv.illisibles.length + cv.ecartes.length + cv.procedure;
+if (somme !== cv.total) rate(`couverture : ${somme} documents classés pour ${cv.total} versés — un fichier échappe au compte.`);
+ok(`${cv.total} documents, tous classés et chacun avec son motif`);
+
+// ------------------------------------------------------------------- 7. écrans
+titre("7. Les écrans se rendent-ils ?");
+poser({ audit });
 for (const [nom, Vue] of [
-  ["Accueil", Accueil],
-  ["Soumettre un texte", Nouvelle],
-  ["Le rapport", Rapport],
-  ["Le journal d'audit", Journal],
-  ["Le raisonnement", Raisonnement],
-] as [string, () => JSX.Element][]) {
+  ["La data room", DataRoom],
+  ["Les chantiers", Chantiers],
+  ["Le tableau", Tableau],
+  ["Les constats", Constats],
+  ["Les réponses du vendeur", Vendeur],
+  ["Au contrat de cession", Spa],
+] as [string, (p: { audit: Audit }) => JSX.Element][]) {
   try {
-    renderToString(<Vue />);
-    console.log(`  ✓ ${nom}`);
+    renderToString(<Vue audit={audit} />);
+    ok(nom);
   } catch (e) {
     rate(`${nom} — ${e instanceof Error ? e.message : e}`);
   }
 }
-
-const affirmations = lire().dossier.affirmations;
-
-console.log("\nLa fiche de chaque affirmation se rend-elle ?");
-for (const a of affirmations) {
+// La fiche d'un constat : c'est là que vivent le fil et le droit applicable.
+for (const c of audit.constats) {
   try {
-    ouvrirAffirmation(a.id);
-    renderToString(<Rapport />);
+    poser({ audit, constatOuvert: c.id });
+    renderToString(<Constats audit={audit} />);
   } catch (e) {
-    rate(`${a.id} — ${e instanceof Error ? e.message : e}`);
+    rate(`fiche ${c.id} — ${e instanceof Error ? e.message : e}`);
   }
 }
-console.log(`  ✓ ${affirmations.length} fiches`);
-ouvrirAffirmation(null);
+ok(`${audit.constats.length} fiches de constat`);
+poser({ constatOuvert: null });
 
-console.log("\nChaque passage surligné existe-t-il dans le texte officiel ?");
-for (const a of affirmations) {
-  const s = a.source;
-  if (s?.passage && s.texte && !s.texte.includes(s.passage)) {
-    rate(`${a.id} — le passage surligné est absent du texte officiel.`);
-  }
-  if (a.contradiction && s) {
-    const retrouve = passageDansSource(s, a.contradiction.passage);
-    if (retrouve !== a.contradiction.passageRetrouve) {
-      rate(
-        `${a.id} — la contradiction est annoncée « ${a.contradiction.passageRetrouve ? "retrouvée" : "écartée"} » ` +
-          `mais la vérification mot pour mot dit le contraire.`,
-      );
-    }
-  }
-}
-console.log("  ✓ tous les passages contrôlés");
-
-console.log("\nLe fil du raisonnement dit-il la même chose que le rapport ?");
-for (const a of affirmations) {
-  const pas = construireRaisonnement(a, lire().dossier.dateDesFaits);
-
-  // Le fil part toujours de l'affirmation et finit toujours par une conclusion.
-  if (pas[0]?.genre !== "affirmation") rate(`${a.id} — le fil ne part pas de l'affirmation.`);
-  const conclusion = pas.at(-1);
-  if (conclusion?.genre !== "conclusion") rate(`${a.id} — le fil ne finit pas par une conclusion.`);
-
-  // L'invariant qui compte : la conclusion du fil ne peut pas différer du
-  // verdict du rapport, sinon Visa se contredirait d'un écran à l'autre.
-  if (conclusion && conclusion.verdict !== a.verdict) {
-    rate(`${a.id} — le fil conclut « ${conclusion.verdict} » quand le rapport dit « ${a.verdict} ».`);
-  }
-
-  // Les quatre contrôles sont toujours montrés, même quand l'un ne conclut rien.
-  const controles = pas.filter((p) => p.genre === "controle");
-  if (controles.length !== 4) rate(`${a.id} — ${controles.length} contrôles dans le fil au lieu de 4.`);
-  controles.forEach((p, i) => {
-    if (p.numeroControle !== i + 1) rate(`${a.id} — contrôle ${p.titre} numéroté ${p.numeroControle} au rang ${i + 1}.`);
-  });
-  for (const p of pas.filter((x) => x.genre !== "controle")) {
-    if (p.numeroControle !== null) rate(`${a.id} — le pas ${p.id} porte un numéro de contrôle sans en être un.`);
-  }
-
-  // Les numéros sont consécutifs : un pas manquant serait un pas caché.
-  pas.forEach((p, i) => {
-    if (p.ordre !== i + 1) rate(`${a.id} — pas ${p.id} numéroté ${p.ordre} au rang ${i + 1}.`);
-  });
-
-  // Une requête affichée doit porter l'identifiant ou le numéro réellement cherché.
-  const requete = pas.find((p) => p.requete)?.requete;
-  if (a.citation && !requete) rate(`${a.id} — une source est citée mais aucune requête n'est montrée.`);
-  if (requete && (requete.includes("LEGITEXT…") || requete.includes('"num": "…"'))) {
-    rate(`${a.id} — la requête montrée est incomplète : ${requete.replace(/\n/g, " ")}`);
-  }
-
-  // Une conclusion doit dire quoi faire, pas seulement nommer une couleur.
-  if (quoiFaire(a).length < 30) rate(`${a.id} — la conclusion ne dit pas quoi faire.`);
-}
-console.log(`  ✓ ${affirmations.length} fils contrôlés`);
-
-console.log("\nLes verdicts correspondent-ils à ce que des juristes attendent ?");
-let justes = 0;
-for (const a of affirmations) {
-  const attendu = ATTENDU[a.id];
-  if (!attendu) {
-    rate(`${a.id} — aucun verdict attendu n'est écrit dans le jeu de test.`);
-  } else if (a.verdict !== attendu) {
-    rate(`${a.id} — attendu « ${attendu} », rendu « ${a.verdict} ».`);
-  } else {
-    justes++;
-  }
-}
-const total = affirmations.length;
-console.log(`  ${justes === total ? "✓" : "✕"} ${justes} sur ${total} (${Math.round((justes / total) * 100)} %)`);
-
+// ------------------------------------------------------------------- synthèse
+const g = audit.constats.reduce<Record<string, number>>((a, c) => ({ ...a, [c.gravite]: (a[c.gravite] ?? 0) + 1 }), {});
+console.log(
+  `\n${audit.constats.length} constats (${Object.entries(g).map(([k, v]) => `${v} ${k}`).join(", ")}) · ` +
+    `${audit.mecanismes.length} mécanismes · ${cv.demandesManquantes} demandes non satisfaites`,
+);
+console.log(`moteur : ${audit.moteur.extraction} | droit : ${audit.moteur.droit}`);
 console.log(echecs ? `\n${echecs} problème(s).\n` : "\nTout passe.\n");
 process.exit(echecs ? 1 : 0);

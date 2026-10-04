@@ -9,7 +9,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "verif": "vite build --ssr verif/jeuDeTest.tsx --outDir verif/dist --logLevel warn && node verif/dist/jeuDeTest.js",
+    "verif": "vite build --config verif/vite.config.ts --ssr verif/jeuDeTest.tsx --logLevel warn && node verif/dist/jeuDeTest.js",
     "test": "npm run typecheck && npm run verif"
   },
   "dependencies": {

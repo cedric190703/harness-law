@@ -1,128 +1,155 @@
-// L'état de l'application, tenu dans un petit magasin maison.
-//
-// Visa n'a que trois choses à retenir : l'écran affiché, le dossier en cours,
-// et jusqu'où le contrôle est allé. Tout le reste se recalcule.
+// L'état de l'application. L'audit vient du serveur ; le reste n'est que la
+// position du juriste dans le dossier : l'écran, le constat ouvert, le filtre.
 
 import { useEffect, useState } from "react";
-import { DOSSIER_DEMO } from "./data/dossier";
-import { construireEtapes } from "./engine/etapes";
-import type { Affirmation, Dossier, EtapeId } from "./types";
+import type { Audit, Chantier, Constat, Gravite, TexteDocument } from "./types";
 
-export type Ecran = "accueil" | "nouvelle" | "controle" | "rapport" | "raisonnement" | "journal";
-
-/** 0 : rien de lancé. 6 : les six étapes sont passées. */
-export type Avancement = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type Ecran = "dataroom" | "chantiers" | "tableau" | "constats" | "vendeur" | "spa";
 
 type Etat = {
   ecran: Ecran;
-  dossier: Dossier;
-  avancement: Avancement;
-  /** L'étape dépliée sur le schéma du contrôle. */
-  etapeOuverte: EtapeId | null;
-  /** L'affirmation ouverte dans le rapport. */
-  affirmationOuverte: string | null;
-  /** Le contrôle est-il en train de se dérouler sous les yeux du juriste ? */
-  enCours: boolean;
+  audit: Audit | null;
+  /** Null tant que l'audit n'est pas arrivé ; porte le message en cas d'échec. */
+  erreur: string | null;
+  constatOuvert: string | null;
+  documentOuvert: string | null;
+  chantierFiltre: string | null;
+  graviteFiltre: Gravite | null;
+  /** L'avancement d'un relancement en cours, étape par étape. */
+  enCours: { etape: string; detail: string }[] | null;
 };
 
-function dossierDemo(avancement: Avancement): Dossier {
-  return {
-    ...DOSSIER_DEMO,
-    affirmations: avancement >= 3 ? DOSSIER_DEMO.affirmations : [],
-    etapes: construireEtapes(DOSSIER_DEMO.affirmations, DOSSIER_DEMO.dateDesFaits, avancement),
-  };
-}
-
 let etat: Etat = {
-  ecran: "accueil",
-  dossier: dossierDemo(6),
-  avancement: 6,
-  etapeOuverte: null,
-  affirmationOuverte: null,
-  enCours: false,
+  ecran: "dataroom",
+  audit: null,
+  erreur: null,
+  constatOuvert: null,
+  documentOuvert: null,
+  chantierFiltre: null,
+  graviteFiltre: null,
+  enCours: null,
 };
 
 const abonnes = new Set<() => void>();
-
-function diffuser() {
-  abonnes.forEach((f) => f());
-}
-
-export function lire(): Etat {
-  return etat;
-}
-
 export function poser(partiel: Partial<Etat>) {
   etat = { ...etat, ...partiel };
-  diffuser();
+  abonnes.forEach((f) => f());
 }
+export const lire = () => etat;
 
-/** S'abonner à une tranche de l'état, comme le ferait un store minimal. */
 export function useEtat<T>(selecteur: (e: Etat) => T): T {
   const [valeur, setValeur] = useState(() => selecteur(etat));
   useEffect(() => {
     const ecouter = () => setValeur(selecteur(etat));
     abonnes.add(ecouter);
     ecouter();
-    return () => {
-      abonnes.delete(ecouter);
-    };
-    // Le sélecteur est recréé à chaque rendu : on ne s'abonne qu'une fois.
+    return () => void abonnes.delete(ecouter);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return valeur;
 }
 
-export function aller(ecran: Ecran) {
-  poser({ ecran });
+export const aller = (ecran: Ecran) => poser({ ecran });
+
+export async function chargerAudit() {
+  try {
+    const r = await fetch("/api/audit");
+    if (!r.ok) throw new Error(`Le serveur a répondu ${r.status}.`);
+    poser({ audit: await r.json(), erreur: null });
+  } catch (e) {
+    poser({ erreur: e instanceof Error ? e.message : String(e) });
+  }
 }
 
-/** Rejoue le contrôle étape par étape, pour que le juriste le voie se faire. */
-export function lancerLeControle() {
+/**
+ * Relance l'audit et suit son avancement. Le juriste voit le travail se faire :
+ * c'est aussi ce qui lui dit quelles étapes existent.
+ */
+export async function relancerAudit() {
   if (etat.enCours) return;
-  poser({ ecran: "controle", avancement: 0, enCours: true, etapeOuverte: null, dossier: dossierDemo(0) });
-  // Le découpage et la recherche des sources prennent plus longtemps que le
-  // reste : les durées ci-dessous reflètent l'ordre de grandeur réel.
-  const durees = [900, 1600, 2200, 1500, 1800, 700];
-  let cumul = 0;
-  durees.forEach((duree, i) => {
-    cumul += duree;
-    setTimeout(() => {
-      const avancement = (i + 1) as Avancement;
-      poser({ avancement, dossier: dossierDemo(avancement), enCours: avancement < 6 });
-    }, cumul);
-  });
+  poser({ enCours: [] });
+  try {
+    const r = await fetch("/api/audit/relancer", { method: "POST" });
+    if (!r.body) throw new Error("Le serveur n'a rien diffusé.");
+    const lecteur = r.body.getReader();
+    const decodeur = new TextDecoder();
+    let tampon = "";
+    for (;;) {
+      const { done, value } = await lecteur.read();
+      if (done) break;
+      tampon += decodeur.decode(value, { stream: true });
+      const blocs = tampon.split("\n\n");
+      tampon = blocs.pop() ?? "";
+      for (const bloc of blocs) {
+        const type = bloc.match(/^event:\s*(.+)$/m)?.[1];
+        const donnees = bloc.match(/^data:\s*(.+)$/m)?.[1];
+        if (!type || !donnees) continue;
+        const d = JSON.parse(donnees);
+        if (type === "etape" && d.etat === "terminée") {
+          poser({ enCours: [...(etat.enCours ?? []), { etape: d.etape, detail: d.detail }] });
+        } else if (type === "erreur") {
+          poser({ erreur: d.message });
+        }
+      }
+    }
+    await chargerAudit();
+  } catch (e) {
+    poser({ erreur: e instanceof Error ? e.message : String(e) });
+  } finally {
+    poser({ enCours: null });
+  }
 }
 
-/** Repart d'un contrôle déjà passé, sans rejouer l'animation. */
-export function afficherResultat() {
-  poser({ ecran: "controle", avancement: 6, enCours: false, dossier: dossierDemo(6) });
+/** Le cache des textes de documents : on ne les redemande pas deux fois. */
+const textes = new Map<string, TexteDocument>();
+
+export async function texteDocument(id: string): Promise<TexteDocument | null> {
+  if (textes.has(id)) return textes.get(id)!;
+  const r = await fetch(`/api/document?id=${encodeURIComponent(id)}`);
+  if (!r.ok) return null;
+  const d = (await r.json()) as TexteDocument;
+  textes.set(id, d);
+  return d;
 }
 
-export function ouvrirEtape(id: EtapeId | null) {
-  poser({ etapeOuverte: etat.etapeOuverte === id ? null : id });
+export function ouvrirConstat(id: string | null) {
+  poser({ ecran: etat.ecran === "constats" ? "constats" : "constats", constatOuvert: id });
 }
 
-export function ouvrirAffirmation(id: string | null) {
-  // Depuis le fil du raisonnement, changer d'affirmation ne doit pas ramener
-  // au rapport : on reste là où le juriste était.
-  poser({ ecran: etat.ecran === "raisonnement" ? "raisonnement" : "rapport", affirmationOuverte: id });
+export const ouvrirDocument = (id: string | null) => poser({ documentOuvert: id });
+
+export function basculerRelu(id: string) {
+  if (!etat.audit) return;
+  const constats = etat.audit.constats.map((c) => (c.id === id ? { ...c, relu: !c.relu } : c));
+  poser({ audit: { ...etat.audit, constats } });
 }
 
-/** Ouvre le fil du raisonnement sur une affirmation donnée. */
-export function ouvrirRaisonnement(id: string) {
-  poser({ ecran: "raisonnement", affirmationOuverte: id });
+// --------------------------------------------------------------------- aides
+
+export const GRAVITES: Gravite[] = ["critique", "élevée", "moyenne", "faible"];
+
+/** Compte les constats par gravité. */
+export function compterGravites(constats: Constat[]): Record<Gravite, number> {
+  const c = { critique: 0, "élevée": 0, moyenne: 0, faible: 0 } as Record<Gravite, number>;
+  for (const x of constats) c[x.gravite] += 1;
+  return c;
 }
 
-/** La relecture du juriste : c'est elle qui clôt le journal. */
-export function basculerValidation(id: string) {
-  const affirmations: Affirmation[] = etat.dossier.affirmations.map((a) =>
-    a.id === id ? { ...a, valideParLeJuriste: !a.valideParLeJuriste } : a,
-  );
-  poser({ dossier: { ...etat.dossier, affirmations } });
+export function constatsDuChantier(audit: Audit, chantier: string): Constat[] {
+  return audit.constats.filter((c) => c.chantier === chantier);
 }
 
-export function toutValider() {
-  const affirmations = etat.dossier.affirmations.map((a) => ({ ...a, valideParLeJuriste: true }));
-  poser({ dossier: { ...etat.dossier, affirmations } });
+export function nomChantier(chantiers: Chantier[], id: string): string {
+  return chantiers.find((c) => c.id === id)?.nom ?? id;
+}
+
+/** « 4 octobre 2026 » — les dates se lisent en français dans un dossier. */
+export function formaterDate(iso: string): string {
+  const mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const d = new Date(iso);
+  return `${d.getDate()}${d.getDate() === 1 ? "er" : ""} ${mois[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+export function court(texte: string, max: number): string {
+  return texte.length <= max ? texte : `${texte.slice(0, max - 1).trimEnd()}…`;
 }
