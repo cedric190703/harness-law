@@ -1,4 +1,0 @@
-2 runs: 1 tasks x ['base', 'skill'] x 1 — model mistral-medium-3.5, judges ['mistral-medium-3.5']
-[base ] banking-finance/compare-credit-agreement-against-term-sheet: not graded criteria, all-pass=None, 26.6s
-[skill] banking-finance/compare-credit-agreement-against-term-sheet: not graded criteria, all-pass=None, 26.6s
-model                        cond  runs  all-pass  criteria    tokens in/out (avg)  min/run

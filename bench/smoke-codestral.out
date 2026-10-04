@@ -1,6 +1,0 @@
-2 runs: 1 tasks x ['base', 'skill'] x 1 — model codestral-latest, judges ['codestral-latest']
-[base ] banking-finance/compare-credit-agreement-against-term-sheet: 0/33 criteria, all-pass=False, 19.3s
-[skill] banking-finance/compare-credit-agreement-against-term-sheet: 0/33 criteria, all-pass=False, 25.6s
-model                        cond  runs  all-pass  criteria    tokens in/out (avg)  min/run
-codestral-latest             base     1      0.0%      0.0%        6,221/172            0.3
-codestral-latest             skill    1      0.0%      0.0%        8,192/396            0.4
