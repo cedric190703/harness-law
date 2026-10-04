@@ -108,17 +108,24 @@ def claude_code(a, depart: Path, run_depart: str) -> None:
     config = json.loads((depart / "config.json").read_text())
     modele = a.model or config.get("model", "claude-code/sonnet").split("/")[-1]
     skills = config.get("skills") or banc.BASE_SKILLS
-    horodatage = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
-    run_id = f"{nom_tache}/claude-code-{modele}-boucle/{horodatage}"
-    dossier = banc.LAB / "results" / run_id
+    if a.reprendre:  # une boucle interrompue (coupure réseau…) : on repart de ses tours déjà faits
+        dossier = Path(a.reprendre).resolve()
+        run_id = dossier.relative_to((banc.LAB / "results").resolve()).as_posix()
+    else:
+        horodatage = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+        run_id = f"{nom_tache}/claude-code-{modele}-boucle/{horodatage}"
+        dossier = banc.LAB / "results" / run_id
     journal_texte = banc.ROOT / "bench" / "logs" / (run_id.replace("/", "__") + ".log")
     journal_texte.parent.mkdir(parents=True, exist_ok=True)
     debut = time.time()
 
     # Tour 0 : la revue du livrable de départ (refaite si absente ou demandée).
     tour0 = dossier / "tours" / "tour-0"
-    shutil.copytree(depart / "output", tour0 / "output")
-    if (depart / "revue-visa.json").exists() and not a.refaire:  # déjà jugé : on reprend cette revue
+    if not (tour0 / "output").exists():
+        shutil.copytree(depart / "output", tour0 / "output")
+    if (tour0 / "revue-visa.json").exists():
+        revue = json.loads((tour0 / "revue-visa.json").read_text())
+    elif (depart / "revue-visa.json").exists() and not a.refaire:  # déjà jugé : on reprend cette revue
         for nom in ("revue-visa.md", "revue-visa.json", "revue-legora.txt"):
             shutil.copy2(depart / nom, tour0 / nom)
         revue = json.loads((tour0 / "revue-visa.json").read_text())
@@ -130,16 +137,32 @@ def claude_code(a, depart: Path, run_depart: str) -> None:
     tours, contamine = [], False
     precedent = tour0
     for n in range(1, a.tours + 1):
+        ici = dossier / "tours" / f"tour-{n}"
+        if (ici / "metrics.json").exists():  # tour déjà fait (reprise)
+            r = {"journal": [json.loads(l) for l in (ici / "transcript.jsonl").read_text().splitlines() if l.strip()],
+                 "metriques": json.loads((ici / "metrics.json").read_text())}
+            r["contamine"] = bool(r["metriques"].get("contamine"))
+            tours.append(r)
+            if r["contamine"]:
+                contamine = True
+                break
+            revue = (json.loads((ici / "revue-visa.json").read_text()) if (ici / "revue-visa.json").exists()
+                     else verifier.verifier(ici, a.modele_verif, tour=n))
+            historique.append({**resume(revue), "agent_secondes": r["metriques"].get("wall_clock_seconds"),
+                               "agent_cout_usd": r["metriques"].get("cout_estime_usd")})
+            print(f"Tour {n} (repris) : {revue['bloquants']} bloquants {revue['bloquants_par_categorie']}", flush=True)
+            precedent = ici
+            continue
         if revue["bloquants"] == 0:
             break
         print(f"Tour {n} : Claude Code ({modele}) corrige…", flush=True)
         r = lancer(t, precedent / "output", precedent / "revue-visa.md", modele, skills, a.delai, journal_texte)
-        ici = dossier / "tours" / f"tour-{n}"
         (ici / "output").mkdir(parents=True)
         for f in r["sorties"]:
             shutil.copy2(f, ici / "output" / f.name)
         (ici / "transcript.jsonl").write_text("".join(json.dumps({**e, "tour": n}, ensure_ascii=False) + "\n" for e in r["journal"]))
         r["metriques"]["espace"] = str(archiver(r["espace"]))
+        r["metriques"]["contamine"] = r["contamine"]
         (ici / "metrics.json").write_text(json.dumps(r["metriques"], indent=2, ensure_ascii=False))
         tours.append(r)
         if r["contamine"]:
@@ -208,6 +231,7 @@ def main() -> None:
     p.add_argument("--judges", nargs="+", default=JUGES)
     p.add_argument("--pas-noter", action="store_true")
     p.add_argument("--refaire", action="store_true", help="refaire la revue du lancement de départ même si elle existe")
+    p.add_argument("--reprendre", help="dossier d'une boucle interrompue (…/claude-code-<modèle>-boucle/<horodatage>)")
     a = p.parse_args()
     depart = Path(a.lancement)
     if not depart.exists():

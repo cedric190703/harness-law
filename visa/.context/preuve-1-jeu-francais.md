@@ -1,17 +1,43 @@
 # Preuve 1 : Visa mesuré sur un jeu de test en droit français
 
 Mesure du 4 octobre 2026. Jeu : `app/src/eval/jeu-fr.ts` ; preuve des étiquettes : `app/scripts/prouver-jeu.ts` ;
-mesure : `app/scripts/eval.ts` ; résultats détaillés : `app/src/eval/resultats-passage-a.json` et
-`app/src/eval/resultats.json` (passage B). **Le jeu n'a pas encore été relu par un juriste** (voir la fin).
+mesure : `app/scripts/eval.ts` et `app/scripts/eval-modele-seul.ts` ; résultats détaillés :
+`app/src/eval/resultats-*.json` (`resultats.json` = passage B du jeu de base). **Le jeu n'a pas encore été relu par un juriste** (voir la fin).
 
 ## En une phrase
 
-Sur 58 affirmations juridiques dont chaque étiquette est prouvée sur Légifrance, Visa a signalé **les 30 affirmations
-fausses** et n'en a mis **aucune en vert**, à chaque passage. Il n'a mis en rouge qu'une seule affirmation juste, et
-seulement dans un passage sur deux : un arrêt trop long pour son juge. Son défaut : il est trop prudent. Environ une
-affirmation juste sur deux finit en orange « à revoir » au lieu de vert.
+Sur 70 affirmations juridiques dont chaque étiquette est prouvée sur Légifrance (jeu de base, cas difficiles,
+références réelles relevées par des juges), **le même Mistral, laissé seul, valide en vert 17 des 42 affirmations
+fausses (40 %). Visa en valide 1 (2 %)** : une décision citée avec la mauvaise chambre, contrôle que Visa ne fait
+pas encore. Sur le jeu de base et sur les vraies affaires : 0 faux vert. Son défaut : il est prudent. Environ une
+affirmation juste sur deux finit en orange « à revoir », au lieu de vert.
 
-## Les chiffres
+## Résultat par bloc (le chiffre du pitch)
+
+| Bloc | Affirmations fausses | **Visa** : fausses mises en vert | **Mistral seul** : fausses mises en vert | Visa : justes en rouge | Mistral seul : justes en rouge |
+|---|---|---|---|---|---|
+| Jeu de base (58 affirmations) | 30 | **0** (passages A et B) | **12** (40 %) | 0 et 1 sur 25 | 1 sur 25 |
+| Cas difficiles (7) | 7 | **1** (mauvaise chambre) | **4** (57 %) | — | — |
+| Vraies affaires, base Charlotin (5) | 5 | **0** | **1** (20 %) | — | — |
+| **Total** | **42** | **1 (2 %)** | **17 (40 %)** | | |
+
+*Mistral seul* = le même modèle (`mistral-large-latest`), sans Légifrance ni garde-fou. On lui donne chaque
+affirmation, sa source et la date des faits, avec les mêmes définitions de couleurs que Visa
+(`scripts/eval-modele-seul.ts`). Exemples de faux verts : trois décisions inventées (« la décision existe »), « six mois
+de période d'essai pour un cadre » (c'est quatre), « huit jours de rétractation » (c'est quinze), la prescription de
+« dix ans » (c'est cinq), l'arrêt Chronopost lu à l'envers, « jurisprudence constante » sans référence. En contrepartie,
+Mistral seul met en vert 24 affirmations justes sur 25, contre 12 pour Visa.
+
+Le faux vert de Visa : « Cass. 3e civ., 6 octobre 2006, n° 05-13.255 ». Le numéro, la date et le contenu sont bons,
+mais l'arrêt est de l'Assemblée plénière. Visa vérifie la date d'une décision, pas sa formation. Un contrôle de la
+chambre est prêt et testé hors réseau, mais l'équipe a décidé de ne pas le brancher avant la démo : **limite connue** (annexe en fin de rapport).
+
+**Temps et coût d'une passe complète** (58 affirmations, 9 notes) : environ 0,06 $ (53 appels à Mistral Large,
+51 000 jetons en entrée et 23 000 en sortie, au prix public de 0,5 $ et 1,5 $ par million). Elle dure de 5 à
+13 minutes, selon que la clé est libre ou partagée : 15 requêtes par minute, partagées avec les autres agents de
+l'équipe. Les cas difficiles coûtent 0,01 $ en 3 minutes, les vraies affaires 0,006 $ en 2 minutes.
+
+## Jeu de base : les chiffres détaillés
 
 Deux mesures complètes, sur un cache vide, avec le code final (correctifs ci-dessous) :
 
@@ -126,6 +152,60 @@ En résumé : **le découpage (Mistral) et la recherche des sources ne ratent ri
 erreurs viennent du juge. Il répond « partiel » sur des détails, et parfois sur un chiffre faux. Ce n'est jamais
 dangereux (pas de faux vert), mais c'est du bruit pour l'avocat.
 
+## Variante du prompt du juge (testée, non adoptée)
+
+Variante demandée : « PARTIEL seulement si la différence change le sens juridique (condition, délai, montant, champ
+d'application) ; une simple différence de formulation reste SOUTIENT ». Elle a été testée sans toucher au prompt de
+Visa : le script de mesure réécrit la règle dans la requête (`--juge-variante`). Même découpage que le passage B,
+juge relancé.
+
+| | Juge actuel (passage B) | Variante |
+|---|---|---|
+| Faux verts | 0 / 33 | 0 / 33 |
+| Justes en vert | 12 / 25 | **17 / 25** |
+| **Justes en rouge (faux rouges)** | 1 / 25 | **3 / 25** (N1-3, N1-7, N3-5) |
+| Même couleur qu'attendu | 43 / 58 | 49 / 58 |
+
+La variante ne crée pas de faux vert. Mais elle fait passer des « partiel » à « ne soutient pas », donc des
+affirmations justes en rouge : le préavis de deux mois et l'homologation en quinze jours. **Recommandation : garder
+le juge actuel.** Un faux rouge accuse à tort l'avocat. Ce chiffre est de toute façon optimiste : la variante a été
+écrite en regardant ce même jeu, et n'a été mesurée qu'une fois.
+
+## Cas difficiles (7 affirmations, `--jeu difficile`)
+
+| Cas | Attendu | Visa | Mistral seul |
+|---|---|---|---|
+| D1-1 « tiennent lieu de loi » cité à l'article 1134 (ancienne numérotation, 1103 depuis 2016) | rouge | rouge | orange |
+| D1-2 responsabilité délictuelle citée à l'article 1382 (1240 depuis 2016) | rouge | rouge | orange |
+| D2-1 rétractation de « quatorze » jours (L1237-13 : quinze) | rouge | rouge | rouge |
+| D2-2 essai d'un cadre de « sept mois » renouvellement compris (L1221-21 : huit) | rouge | rouge | **vert** |
+| D2-3 Cass. soc. 10 juillet **2003**, n° 00-45.135 (réel : 2002) | orange | orange | **vert** |
+| D3-1 restitution du dépôt en deux mois, faits de 2013 (loi de 1989, changée en 2014) | orange | orange | **vert** |
+| D3-2 Cass. **3e civ.** 6 octobre 2006, n° 05-13.255 (réel : Assemblée plénière) | orange | **vert** | **vert** |
+
+Les 7 étiquettes sont prouvées sur Légifrance (`bun scripts/prouver-jeu.ts --jeu difficile`). Le bloc est plus petit
+que prévu (7 cas au lieu de 15 à 20), faute de temps. Le cas « bon article, mauvais alinéa » n'est pas couvert.
+
+## Vraies affaires françaises (base Charlotin, `--jeu charlotin`)
+
+Références citées par des avocats et relevées par le juge, prises telles que la base Charlotin les donne :
+
+| Référence citée | Affaire | Sur Légifrance | Visa | Mistral seul |
+|---|---|---|---|---|
+| CE, 7 février 2018, n° 409302 | CAA Bordeaux, 26 févr. 2026, n° 25BX02906 | introuvable | rouge | **vert** |
+| CE, 27 juin 2019, n° 420269 | TA Orléans, 7 janv. 2026, n° 2506907 | introuvable | rouge | orange |
+| CE, 12 octobre 2012, GISTI et FAPIL, n° 34728 | idem | le n° est un arrêt du 12 janvier 1983 | rouge | orange |
+| CE, 9 juin 1978, n° 05873 | idem | le n° est un arrêt du 16 juin 1978 | orange | rouge |
+| CAA Lyon, 18 janvier 2022, n° 20LY01957 | idem | introuvable | rouge | orange |
+
+Résultat : Visa signale 5 références sur 5, sans aucun faux vert. Mistral seul en valide une en vert (« la décision
+existe »). Chaque référence a été confirmée introuvable, ou attribuée à une autre décision, sur Légifrance
+(jurisprudence administrative) et sur Judilibre. La phrase qui entoure chaque référence est reconstituée : la base
+Charlotin donne la référence, pas l'argument de l'avocat. Les références « détournées » (vraie décision, mauvais
+propos) et celles sans numéro (« CE, 11 janvier 2007, Association SOS Racisme ») ne sont pas reprises. L'affaire
+TA Orléans du 29 décembre 2025 (n° 2506461, 15 décisions inventées) non plus, car l'export ne donne pas ses
+références exactes.
+
 ## Correctifs apportés pendant la mesure (dans le code, pas encore commités)
 
 1. **Code de procédure civile lu comme Code civil** (`codeVersLegitext`, `src/lib/sources.ts`). « procedure civile »
@@ -138,8 +218,14 @@ dangereux (pas de faux vert), mais c'est du bruit pour l'avocat.
    la loi n° 89-462 » est cherché comme un article, avec ses versions (contrôle de date compris).
 3. `cache.ts` : dossier de cache réglable (`VISA_CACHE_DIR`), pour mesurer sur un cache neuf sans toucher au cache de la démo.
 
-Tests ajoutés dans `src/lib/regles.test.ts`. Sans le correctif 2 (passage 1), les 3 affirmations du bail sur la
-loi de 1989 sortaient en gris.
+Tests ajoutés dans `src/lib/regles.test.ts`.
+
+Avant et après chaque correctif :
+
+| | Avant | Après |
+|---|---|---|
+| Correctif 1 (procédure civile) | Article 9 du CPC → article 9 du Code civil (vie privée) ; article 909 du CPC → article 909 du Code civil (libéralités) ; articles 538, 750-1 et 700-1 → « introuvables ». L'article 538, cité à juste titre, sortait donc en rouge : au moins 1 faux rouge certain, 2 probables. Constaté sur Légifrance, pas mesuré avec le juge. | Les 5 citations du CPC sont dans les couleurs attendues, sauf l'article 538 (orange, juge trop strict) |
+| Correctif 2 (lois non codifiées) | Passage 1 : les 3 affirmations sur la loi de 1989 en gris | Passages A et B : les 3 sont retrouvées et contrôlées, plus aucune en gris. 1 est dans la couleur attendue, 2 sont en orange (juge trop strict pour l'une, trop doux pour l'autre). Le cas difficile D3-1 (texte modifié en 2014) est bien en orange |
 
 ## Stabilité
 
@@ -160,6 +246,9 @@ La couleur d'une même affirmation varie d'un passage à l'autre seulement sur l
 
 ## Limites (à dire si on présente ces chiffres)
 
+- **Limite connue : la chambre d'une décision n'est pas contrôlée.** C'est 1 faux vert sur 42 affirmations fausses
+  (« Cass. 3e civ. » pour un arrêt d'Assemblée plénière). Le correctif est prêt mais non branché (annexe).
+
 - **Jeu construit par un agent, pas par des juristes.** Chaque étiquette est prouvée mécaniquement sur le texte
   officiel, mais le jugement « juste / ne dit pas ça » est le mien. Relecture juriste nécessaire.
 - **Petit échantillon.** 0 faux vert sur 30 fausses, c'est une borne haute d'environ 10 % à 95 % de confiance (règle de trois).
@@ -175,12 +264,17 @@ La couleur d'une même affirmation varie d'un passage à l'autre seulement sur l
 - **Non testé** : pièces du dossier, décisions administratives, décrets et arrêtés, codes absents de la liste de Visa
   (Code de l'organisation judiciaire, etc. : gris « non identifiable »), date des faits détectée dans le texte (ici,
   elle est fournie), décisions longues autres que celle du 11 mai 2022.
+- **Mistral seul** : un seul passage par bloc, avec un prompt que j'ai écrit (les mêmes définitions de couleurs que
+  Visa). Un autre prompt ou un autre modèle donnerait un autre chiffre. Il reçoit chaque affirmation isolée, pas la note.
 - Le rattachement des affirmations est heuristique. Vérifié à la main au passage A : chaque affirmation attendue
   retrouve la bonne. Une phrase de faits (« Son contrat comporte une clause de non-concurrence… ») est aussi rattachée
   à N2-5, sans effet sur sa couleur, puisqu'elle ne cite aucune source. Deux autres phrases de faits restent hors jeu.
 
 ## Ce qu'il faudrait faire ensuite (par ordre d'effet)
 
+0. **Contrôler la chambre d'un arrêt de la Cour de cassation** (orange si la formation citée diffère du titre
+   officiel). C'est le seul faux vert observé. Le code est prêt et testé hors réseau sur toutes les décisions du jeu
+   (annexe). Il n'est pas branché, par décision de l'équipe : on ne touche plus au code partagé avant la démo.
 1. **Juge** : réserver « partiel » aux omissions qui changent la solution, et classer un chiffre ou une durée contraire
    en « ne soutient pas ». Cela ferait passer environ 10 affirmations justes d'orange à vert.
 2. **Juge** : sur les décisions longues, lui donner le passage pertinent ou tout le texte, pas les 15 000 premiers
@@ -211,4 +305,32 @@ cd visa/app
 bun scripts/prouver-jeu.ts     # preuve des étiquettes sur Légifrance (sans modèle, ~3 min)
 bun scripts/eval.ts            # mesure complète sur cache neuf (5 à 15 min selon la limite Mistral)
 bun scripts/eval.ts --notes N1,N4 --sans-relance-piste
+bun scripts/eval.ts --jeu difficile --sortie src/eval/resultats-difficile.json
+bun scripts/eval.ts --jeu charlotin --sortie src/eval/resultats-charlotin.json
+bun scripts/eval.ts --juge-variante --sortie src/eval/resultats-variante.json
+bun scripts/eval-modele-seul.ts [--jeu difficile|charlotin]   # condition « Mistral seul »
+```
+
+## Annexe : contrôle de la chambre, prêt et non branché
+
+À ajouter dans `controlerDateEtRang` (`src/lib/controles.ts`) pour une décision de la Cour de cassation :
+contrôle « date » en orange quand `formationCassation(s.juridiction)` et `formationCassation(officielle.titre)` sont
+connues toutes les deux et diffèrent. Testé hors réseau sur toutes les décisions du jeu : les formations citées
+correctement sont reconnues identiques (sociale, commerciale, 2e civile, Assemblée plénière, titres Légifrance et
+Judilibre). « Cass. 3e civ. » contre « Assemblée plénière » est bien détecté. Une juridiction non reconnue
+(« Cour de cassation » seule, « CE ») ne déclenche rien.
+
+```ts
+/** « Cass. 3e civ. », « Chambre civile 3 », « civ3 » → « Chambre civile 3 » ; null si non reconnue. */
+export function formationCassation(texte: string | null | undefined): string | null {
+  const t = normaliser(texte ?? "");
+  if (/\bassemblee pleniere\b|\bass plen\b|\bass pl\b|\bap\b/.test(t)) return "Assemblée plénière";
+  if (/\bmixte\b/.test(t)) return "Chambre mixte";
+  const civ = /\bcivile? (\d)\b/.exec(t) ?? /\b(\d)(?:e|re|er|ere|eme)? civ/.exec(t) ?? /\bciv(\d)\b/.exec(t);
+  if (civ) return `Chambre civile ${civ[1]}`;
+  if (/\bsoc(iale)?\b/.test(t)) return "Chambre sociale";
+  if (/\bcom(m|merciale)?\b/.test(t)) return "Chambre commerciale";
+  if (/\bcrim(inelle)?\b/.test(t)) return "Chambre criminelle";
+  return null;
+}
 ```

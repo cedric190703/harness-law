@@ -98,7 +98,7 @@ def summary() -> None:
     rows = [json.loads(line) for line in RESULTS.read_text().splitlines() if line.strip()]
     groups: dict[tuple, list] = {}
     for r in rows:
-        if r.get("graded"):
+        if r.get("graded") and r.get("n_passed") is not None and r.get("n_criteria") is not None:
             groups.setdefault((r["model"], r.get("effort"), r["condition"]), []).append(r)
     print(f"{'model':28} {'cond':5} {'runs':>4} {'all-pass':>9} {'criteria':>9} {'tokens in/out (avg)':>22} {'min/run':>8}")
     for (model, effort, cond), rs in sorted(groups.items(), key=lambda kv: (kv[0][0], str(kv[0][1]), kv[0][2])):

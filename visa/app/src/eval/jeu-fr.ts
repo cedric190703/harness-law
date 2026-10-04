@@ -16,7 +16,8 @@ export type TypeCas =
   | "ne_dit_pas_ca"
   | "texte_modifie"
   | "circulaire"
-  | "reference_floue";
+  | "reference_floue"
+  | "decision_mal_citee";
 
 export const LIBELLE_TYPE: Record<TypeCas, string> = {
   juste: "Affirmation juste",
@@ -27,6 +28,7 @@ export const LIBELLE_TYPE: Record<TypeCas, string> = {
   texte_modifie: "Texte modifié depuis les faits",
   circulaire: "Circulaire invoquée comme obligatoire",
   reference_floue: "Référence floue ou absente",
+  decision_mal_citee: "Vraie décision mal citée (date ou chambre)",
 };
 
 export interface CasAttendu {
@@ -783,3 +785,189 @@ export const JEU_FR: NoteDeTest[] = [
     ],
   },
 ];
+
+/**
+ * Affaires réelles françaises (base Charlotin, HEC) : références citées par des avocats et relevées par le juge.
+ * Les références viennent des décisions ; la phrase qui les entoure est reconstituée.
+ * TA Orléans, 29 décembre 2025, n° 2506461 n'est pas repris : l'export ne donne pas ses références exactes.
+ */
+export const JEU_CHARLOTIN: NoteDeTest[] = [
+  {
+    id: "C1",
+    titre: "REQUÊTE D'APPEL — CAA Bordeaux, n° 25BX02906 (arrêt du 26 février 2026)",
+    domaine: "Contentieux administratif",
+    dateFaits: "2025-10-01",
+    faits: "Contexte : requête d'appel contre un refus de l'administration, rédigée avec une IA.",
+    cas: [
+      {
+        id: "C1-1",
+        passage:
+          "Le Conseil d'État a jugé que l'administration ne peut légalement refuser la demande sans examiner l'ensemble de la situation personnelle du requérant (CE, 7 février 2018, n° 409302).",
+        attendu: "rouge",
+        type: "decision_inventee",
+        raison: "Relevée par la CAA de Bordeaux comme inexistante ; aucun n° 409302 au Conseil d'État sur Légifrance.",
+        source: decision("CE", "2018-02-07", "409302", "CE, 7 février 2018, n° 409302"),
+      },
+    ],
+  },
+  {
+    id: "C2",
+    titre: "MÉMOIRE — TA Orléans, reconduite à la frontière, n° 2506907 (jugement du 7 janvier 2026)",
+    domaine: "Droit des étrangers",
+    dateFaits: "2025-12-01",
+    faits: "Contexte : mémoire contre une mesure d'éloignement, rédigé avec une IA.",
+    cas: [
+      {
+        id: "C2-1",
+        passage:
+          "Le Conseil d'État exige que le préfet procède à un examen particulier de la situation de l'étranger avant toute mesure d'éloignement (CE, 27 juin 2019, n° 420269).",
+        attendu: "rouge",
+        type: "decision_inventee",
+        raison: "Relevée par le TA d'Orléans comme inexistante ; aucun n° 420269 sur Légifrance.",
+        source: decision("CE", "2019-06-27", "420269", "CE, 27 juin 2019, n° 420269"),
+      },
+      {
+        id: "C2-2",
+        passage:
+          "Le juge administratif contrôle la proportionnalité de la mesure d'éloignement au regard du droit au respect de la vie privée et familiale (CE, 12 octobre 2012, GISTI et FAPIL, n° 34728).",
+        attendu: "rouge",
+        type: "decision_mal_citee",
+        raison:
+          "Relevée par le TA comme inexistante. Le n° 34728 désigne une décision du Conseil d'État du 12 janvier 1983, sans rapport.",
+        source: decision("CE", "2012-10-12", "34728", "CE, 12 octobre 2012, GISTI et FAPIL, n° 34728"),
+      },
+      {
+        id: "C2-3",
+        passage:
+          "Une mesure de reconduite à la frontière doit être motivée en fait et en droit (CE, 9 juin 1978, Lebon, n° 05873).",
+        attendu: "rouge",
+        type: "decision_mal_citee",
+        raison: "Relevée par le TA comme inexistante. Le n° 05873 désigne une décision du Conseil d'État du 16 juin 1978.",
+        source: decision("CE", "1978-06-09", "05873", "CE, 9 juin 1978, n° 05873"),
+      },
+      {
+        id: "C2-4",
+        passage:
+          "La cour administrative d'appel de Lyon a annulé une obligation de quitter le territoire dans une situation identique (CAA Lyon, 18 janvier 2022, n° 20LY01957).",
+        attendu: "rouge",
+        type: "decision_inventee",
+        raison: "Relevée par le TA d'Orléans comme inexistante ; aucun n° 20LY01957 sur Légifrance.",
+        source: decision("CAA Lyon", "2022-01-18", "20LY01957", "CAA Lyon, 18 janvier 2022, n° 20LY01957"),
+      },
+    ],
+  },
+];
+
+/** Cas difficiles : un chiffre faux d'une unité, une ancienne numérotation, une décision mal citée, une loi modifiée. */
+export const JEU_DIFFICILE: NoteDeTest[] = [
+  {
+    id: "D1",
+    titre: "NOTE — Litige contractuel Kappa / Lambda",
+    domaine: "Droit des contrats",
+    dateFaits: "2022-09-01",
+    faits: "Contexte : contrat de prestation conclu le 15 mars 2022 ; le prestataire n'a pas livré et le client a subi un dommage.",
+    cas: [
+      {
+        id: "D1-1",
+        passage:
+          "Les conventions légalement formées tiennent lieu de loi à ceux qui les ont faites (article 1134 du Code civil).",
+        attendu: "rouge",
+        type: "ne_dit_pas_ca",
+        raison:
+          "Ancienne numérotation : depuis le 1er octobre 2016, l'article 1134 traite de l'erreur sur les qualités du cocontractant (la règle est à l'article 1103).",
+        source: article(CC, "1134", "article 1134 du Code civil"),
+        preuve: "L'erreur sur les qualités essentielles du cocontractant",
+      },
+      {
+        id: "D1-2",
+        passage:
+          "Tout fait quelconque de l'homme qui cause à autrui un dommage oblige celui par la faute duquel il est arrivé à le réparer (article 1382 du Code civil).",
+        attendu: "rouge",
+        type: "ne_dit_pas_ca",
+        raison:
+          "Ancienne numérotation : la règle est à l'article 1240 depuis 2016 ; l'article 1382 porte aujourd'hui sur les présomptions judiciaires.",
+        source: article(CC, "1382", "article 1382 du Code civil"),
+        preuve: "Les présomptions qui ne sont pas établies par la loi",
+      },
+    ],
+  },
+  {
+    id: "D2",
+    titre: "NOTE — Rupture et période d'essai chez Mu Services",
+    domaine: "Droit du travail",
+    dateFaits: "2023-02-01",
+    faits: "Contexte : la société Mu Services, 30 salariés, nous interroge le 1er février 2023.",
+    cas: [
+      {
+        id: "D2-1",
+        passage:
+          "Après la signature de la convention de rupture conventionnelle, chaque partie dispose d'un délai de rétractation de quatorze jours calendaires (article L. 1237-13 du Code du travail).",
+        attendu: "rouge",
+        type: "ne_dit_pas_ca",
+        raison: "Chiffre faux d'une unité : quinze jours calendaires.",
+        source: article(CT, "L1237-13", "article L. 1237-13 du Code du travail"),
+        preuve: "dispose d'un délai de quinze jours calendaires pour exercer son droit de rétractation",
+      },
+      {
+        id: "D2-2",
+        passage:
+          "Pour un cadre, la durée de la période d'essai, renouvellement compris, ne peut pas dépasser sept mois (article L. 1221-21 du Code du travail).",
+        attendu: "rouge",
+        type: "ne_dit_pas_ca",
+        raison: "Chiffre faux d'une unité : huit mois pour les cadres.",
+        source: article(CT, "L1221-21", "article L. 1221-21 du Code du travail"),
+        preuve: "Huit mois pour les cadres.",
+      },
+      {
+        id: "D2-3",
+        passage:
+          "La Cour de cassation exige, pour la validité d'une clause de non-concurrence, une contrepartie financière versée au salarié (Cass. soc., 10 juillet 2003, n° 00-45.135).",
+        attendu: "orange",
+        type: "decision_mal_citee",
+        raison: "Bonne décision, mauvaise date : l'arrêt n° 00-45.135 est du 10 juillet 2002.",
+        source: decision("Cass. soc.", "2003-07-10", "00-45.135", "Cass. soc., 10 juillet 2003, n° 00-45.135"),
+      },
+    ],
+  },
+  {
+    id: "D3",
+    titre: "NOTE — Bail de M. Noël : restitution du dépôt de garantie et trouble causé à un voisin",
+    domaine: "Bail",
+    dateFaits: "2013-06-01",
+    faits: "Contexte : M. Noël a rendu les clés de son logement le 1er juin 2013 ; un commerçant voisin se plaint de l'état de l'immeuble.",
+    cas: [
+      {
+        id: "D3-1",
+        passage:
+          "Le dépôt de garantie est restitué dans un délai maximal de deux mois à compter de la restitution des clés par le locataire (article 22 de la loi n° 89-462 du 6 juillet 1989).",
+        attendu: "orange",
+        type: "texte_modifie",
+        raison:
+          "Juste en 2013 (version 2009-2014). Depuis la loi ALUR (27 mars 2014), le délai est d'un mois si l'état des lieux de sortie est conforme.",
+        source: article(LOI_1989, "22", "article 22 de la loi n° 89-462 du 6 juillet 1989"),
+        preuve: "Il est restitué dans un délai maximal de deux mois à compter de la restitution des clés par le locataire",
+        preuveActuelle: "délai maximal d'un mois",
+      },
+      {
+        id: "D3-2",
+        passage:
+          "Le tiers à un contrat de bail peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage (Cass. 3e civ., 6 octobre 2006, n° 05-13.255).",
+        attendu: "orange",
+        type: "decision_mal_citee",
+        raison:
+          "Bonne décision, bonne date, mauvaise formation : l'arrêt n° 05-13.255 est de l'Assemblée plénière, pas de la 3e chambre civile.",
+        source: decision("Cass. 3e civ.", "2006-10-06", "05-13.255", "Cass. 3e civ., 6 octobre 2006, n° 05-13.255"),
+        preuve: "Assemblée plénière",
+      },
+    ],
+  },
+];
+
+/** Le jeu choisi en ligne de commande : --jeu base (défaut), difficile ou charlotin. */
+export function jeuChoisi(argv: string[]): { nom: string; notes: NoteDeTest[] } {
+  const i = argv.indexOf("--jeu");
+  const nom = i > 0 ? (argv[i + 1] ?? "base") : "base";
+  if (nom === "charlotin") return { nom, notes: JEU_CHARLOTIN };
+  if (nom === "difficile") return { nom, notes: JEU_DIFFICILE };
+  return { nom: "base", notes: JEU_FR };
+}

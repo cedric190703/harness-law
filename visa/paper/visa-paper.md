@@ -6,7 +6,7 @@
 
 ## Abstract
 
-Legal AI tools now draft memos, compare contracts and review data rooms, but lawyers cannot rely on their output: tools invent authorities, make real sources say what they do not say, and silently omit items. We ask whether a **verification layer**, which forces every claim to be tied to a verbatim, machine-checked source and every requirement of a governing document to be accounted for, makes legal AI more reliable. Visa applies this principle in three forms: an after-the-fact checker that verifies each claim of an AI answer against official French sources (Légifrance, Judilibre) under the rule *no proof, no green*; a loop that sends each problem, with its official evidence, back to the AI that wrote the text and re-verifies the correction; and a "concordance" method that an agent follows while working. On a French claim set whose 58 labels were each proven on Légifrance, the checker flagged all 30 false claims, with no false green and no false red. On Harvey's public Legal Agent Bench (LAB), we ran three agents (Legora, Claude Code with Sonnet 5.5, Mistral Medium 3.5) without and with the method on identical inputs, graded against the official rubric by two judges from different model families, which agree on 498 of 511 criterion verdicts. On development tasks, the method takes Legora from 26/38 to 38/38 (a full pass) by recovering four omitted closing deliverables, and Mistral Medium 3.5 from 36–38/52 to 48/52; it is neutral to slightly negative for Claude Code, which already solves these tasks. Held-out measurements are in progress.
+Legal AI tools now draft memos, compare contracts and review data rooms, but lawyers cannot rely on their output: tools invent authorities, make real sources say what they do not say, and silently omit items. We ask whether a **verification layer**, which forces every claim to be tied to a verbatim, machine-checked source and every requirement of a governing document to be accounted for, makes legal AI more reliable. Visa applies this principle in three forms: an after-the-fact checker that verifies each claim of an AI answer against official French sources (Légifrance, Judilibre) under the rule *no proof, no green*; a loop that sends each problem, with its official evidence, back to the AI that wrote the text and re-verifies the correction; and a "concordance" method that an agent follows while working. On French claims whose labels were each proven on Légifrance, including references that courts found fabricated in real filings, the same Mistral model marks 17 of 42 false claims as correct when used alone, and 1 of 42 inside Visa; on the 58-claim base set, Visa flagged all 30 false claims in two passes without a false green. On Harvey's public Legal Agent Bench (LAB), we ran three agents (Legora, Claude Code with Sonnet 5.5, Mistral Medium 3.5) without and with the method on identical inputs, graded against the official rubric by two judges from different model families, which agree on 498 of 511 criterion verdicts. On development tasks, the method takes Legora from 26/38 to 38/38 (a full pass) by recovering four omitted closing deliverables, and Mistral Medium 3.5 from 36–38/52 to 48/52; it is neutral to slightly negative for Claude Code, which already solves these tasks. On ContractNLI, Visa lowers false entailments from 28% to 3% at the cost of confirming far fewer true ones. Held-out LAB measurements are in progress.
 
 ## 1. Introduction
 
@@ -19,7 +19,7 @@ Our premise is that verification should be a product layer rather than a propert
 - **Visa**, a verification layer that checks each claim of a legal AI answer for existence, validity at the date of the facts, normative rank and support by the cited text, with a verbatim guard that prevents the verifier itself from inventing evidence, and that renders the result as a map of evidence.
 - **The Visa loop**, which returns each problem with its official evidence to the AI that wrote the text and accepts a correction only if it passes the same checks.
 - **A concordance method** packaged as an agent skill, and as a Legora skill: a forward pass over every requirement of the reference document, a reverse pass, verbatim quotes checked by script, and a report drafted from the ledger.
-- **A controlled evaluation protocol** on public LAB tasks (pre-registered dev/test split, identical inputs, isolation of agents from rubrics and from each other, two judges from different families) and a French claim set with officially proven labels.
+- **A controlled evaluation protocol** on public LAB tasks (pre-registered dev/test split, identical inputs, isolation of agents from rubrics and from each other, two judges from different families) a French claim set with officially proven labels, ContractNLI, and a fictional French data room with a sealed answer key.
 
 ## 2. Related work
 
@@ -41,17 +41,17 @@ Our premise is that verification should be a product layer rather than a propert
 
 ✓ yes · ~ partly · ✗ no (or nothing found in the source).
 
-| Work or tool | Kind | Source exists | Version at the date of the facts | Rank of the norm | Support, with verbatim proof | Omissions |
-|---|---|---|---|---|---|---|
-| **Visa** | verification layer on any model, French law | ✓ Légifrance, Judilibre, case file | ✓ all versions of an article, the one in force at the date of the facts is selected | ✓ simplified hierarchy (a circular invoked as binding turns orange) | ✓ opposing-counsel judge must quote an excerpt found verbatim by script; no proof, grey | ✓ concordance ledger (forward and reverse pass) with scripted checks |
-| KeyCite and Quick Check (Thomson Reuters) | commercial, US law | ✓ | ~ current status (no longer good law; amended, repealed, superseded); nothing found on versions at a past date | ✗ | ~ compares quoted text with the cited source; does not say whether the source supports the proposition | ~ suggests additional authority, not the requirements of a reference document |
-| Clearbrief Cite Check Report (Ambrogi, 2025) | commercial, US law | ✓ missing sources | ✗ | ✗ | ~ semantic similarity score, non-generative NLP, no verified excerpt | ✗ |
-| LePhantomCite (Liu et al., 2026) | benchmark of 1,300 excerpts and agentic checkers | ✓ nonexistent citation, inconsistent name or reporter | ✗ not in the taxonomy | ✗ | ~ detects distorted citations and misrepresented content (GPT-5 agentic: 84.4% recall, 55.0% F1), but the checker's verdict is not itself proven | ✗ |
-| *Is this Citation on Point?* (Verma, 2026) | study, US law | ✓ wrong case caught 93–100% | ✗ | ✗ | ~ pinpoint support caught 37–61%, model judgment without verified excerpt | ✗ |
-| FiscalQA Pro (Cymbler et al., 2026) | benchmark and version-aware retriever, French tax code | ~ | ✓ 32,436 article versions; 0% with static RAG, 98.3% version-aware | ✗ | ~ deterministic grading by expected values, no evidence excerpt | ✗ |
-| Prior et al., 2026 (ICAIL) | benchmark and RAG, German law | ~ | ✓ fact-date extraction and version filtering | ✗ | ✗ LLM-judge grading | ✗ |
-| Taranukhin and Shwartz, 2026 (AI4Law workshop) | position paper: "legal warrant" framework | ✓ as a criterion | ✓ as a criterion ("current for the date of analysis") | ~ "legal status" of the authority | ✓ as a criterion ("supports the proposition"), small pilot, no scripted check | ✗ |
-| FActScore and SAFE (Min et al., 2023; Wei et al., 2024) | generic factuality metric | — | ✗ | ✗ | ~ atomic facts judged by a model against a source or web search, no verbatim excerpt | ✗ |
+| Work or tool | Exists | Version at date of facts | Rank of norm | Support, verbatim proof | Omissions |
+|---|---|---|---|---|---|
+| **Visa** (French law, any model) | ✓ Légifrance, Judilibre, case file | ✓ version in force at the date of the facts | ✓ simplified hierarchy | ✓ judge's quote checked by script; else grey | ✓ concordance ledger |
+| KeyCite, Quick Check (US, commercial) | ✓ | ~ current status only | ✗ | ~ quote vs. source, not support | ~ suggests authority |
+| Clearbrief (US, commercial) | ✓ | ✗ | ✗ | ~ similarity score, no excerpt | ✗ |
+| LePhantomCite (Liu et al., 2026) | ✓ | ✗ | ✗ | ~ detects distortion (84.4% recall, 55.0% F1); verdict not proven | ✗ |
+| Verma, 2026 | ✓ 93–100% | ✗ | ✗ | ~ pinpoints 37–61%, no excerpt | ✗ |
+| FiscalQA Pro (Cymbler et al., 2026) | ~ | ✓ 98.3% (static RAG 0%) | ✗ | ~ expected values, no excerpt | ✗ |
+| Prior et al., 2026 (German law) | ~ | ✓ fact-date filtering | ✗ | ✗ LLM-judge grading | ✗ |
+| Taranukhin and Shwartz, 2026 | ✓ criterion | ✓ criterion | ~ "legal status" | ✓ criterion, small pilot, no script | ✗ |
+| FActScore, SAFE | — | ✗ | ✗ | ~ model judgment, no verbatim excerpt | ✗ |
 
 **What is new in Visa.**
 
@@ -137,7 +137,7 @@ Scores are criteria passed out of the task's criteria, given as Opus 5.5 / GPT-5
 | Agent | Task 1: closing checklist vs. agreement (38) | Task 2: disclosure schedules vs. reps (52) | Task 3: closing documents (33) |
 |---|---|---|---|
 | Legora, without | 26 | 45 | not run |
-| Legora, with | **38 (pass)** | [PENDING] | not run |
+| Legora, with | **38 (pass)** | not run | not run |
 | Claude Code, without | **38 (pass)** | 48 | **33 (pass)** |
 | Claude Code, with | 37 | 48 / 50 | **33 (pass)** |
 | Mistral Medium 3.5, without | 23 † | 38 / 36 | 18 / 19 |
@@ -155,38 +155,68 @@ Scores are criteria passed out of the task's criteria, given as Opus 5.5 / GPT-5
 
 ### 5.2 Held-out test tasks (7 tasks, measured once)
 
-[PENDING] Runs for Claude Code (without and with the method) are complete on four of the seven tasks and running on the others; Legora runs without and with the Legora skill are complete on one test task and being graded. One Claude Code run was flagged by the isolation detector and is excluded. We will report task passes and criteria passed, without reading criterion-level results.
+[PENDING] At the time of writing, Claude Code deliverables exist without the method on all seven test tasks and with it on five; a third condition, the benchmark loop (an independent Mistral reviewer returns problems to the agent, which corrects them), is running on three. Legora runs without and with the Legora skill are complete on one test task. Grading with both judges is in progress. One Claude Code run was flagged by the isolation detector and does not count. We will report task passes and criteria passed, without reading criterion-level results.
 
 | Agent | Tasks passed without | Tasks passed with | Criteria passed without | Criteria passed with |
 |---|---|---|---|---|
-| Claude Code, Sonnet 5.5 | – / 7 | – / 7 | – | – |
-| Legora | – | – | – | – |
+| Claude Code, Sonnet 5.5 | [PENDING] | [PENDING] | [PENDING] | [PENDING] |
+| Claude Code, Sonnet 5.5, with the loop | — | [PENDING] | — | [PENDING] |
+| Legora | [PENDING] | [PENDING] | [PENDING] | [PENDING] |
 
 ### 5.3 French claim set (after-the-fact Visa)
 
-Nine short memos "written by an AI" (dismissal, hiring, fixed-term contracts, distribution, online sale, residential lease, harassment, civil procedure), each with its date of the facts, contain 58 claims with a cited source. Each label was proven on the official databases by a script, without a model: existence, applicable version and its dates, a verbatim excerpt of that version grounding the label, absence from Légifrance and Judilibre for invented references, and the exact title for circulars. Labels: 25 green (true), 22 red (4 nonexistent articles, 4 invented decisions, 4 texts not in force at the date of the facts, 10 misstatements), 8 orange (5 texts amended since the facts, 3 circulars presented as binding), 3 grey (vague references). Models: Mistral Large for extraction and judging. Cost of a full pass: about $0.06.
+**Set.** Nine short memos "written by an AI" (dismissal, hiring, fixed-term contracts, distribution, online sale, residential lease, harassment, civil procedure), each with its date of the facts, contain 58 claims with a cited source. Each label was proven on the official databases by a script, without a model: existence, applicable version and its dates, a verbatim excerpt of that version grounding the label, absence from Légifrance and Judilibre for invented references, and the exact title for circulars. Labels: 25 green (true), 22 red (4 nonexistent articles, 4 invented decisions, 4 texts not in force at the date of the facts, 10 misstatements of a figure, period or condition), 8 orange (5 texts amended since the facts, 3 circulars presented as binding), 3 grey (vague references). Two further blocks: 7 harder cases (old article numbering, a period off by one unit, a decision with the wrong year or the wrong chamber, a text changed after the facts), and 5 references that French courts found fabricated or misattributed in real filings, taken from Charlotin's database and each confirmed on Légifrance and Judilibre.
 
-| Measure (first complete pass) | Value |
-|---|---|
-| False claims (red or orange expected) not marked green | **30 / 30** |
-| False greens (non-green expected, marked green) | **0 / 33** |
-| False reds (true claims marked red) | **0 / 25** |
-| True claims confirmed green | 12 / 25 |
-| Exact color | 43 / 58 |
+**Baseline.** "Model alone" is the same model (Mistral Large, `mistral-large-latest`), given each claim, its source and the date of the facts with the same color definitions, but without Légifrance and without the guard.
 
-Every error type was flagged in every instance (invented decisions 4/4, nonexistent articles 4/4, not in force 4/4, misstatements 10/10, amended texts 5/5, circulars 3/3, vague references 3/3). The weakness is caution: 12 of 25 true claims come out orange, because the judge answers "partial" on wording details. A second pass for stability, a model-alone baseline (the same Mistral model asked to judge each claim without Légifrance and without the guard) and 15 to 20 harder cases are [PENDING]. The set was written by our team and has not yet been reviewed by an independent lawyer.
+| Block | False claims | Visa: false claims marked green | Model alone: false claims marked green |
+|---|---|---|---|
+| Base set (58 claims) | 30 | **0** (two complete passes) | 12 (40%) |
+| Harder cases | 7 | **1** (wrong chamber) | 4 (57%) |
+| Real court cases (Charlotin) | 5 | **0** | 1 (20%) |
+| **Total** | **42** | **1 (2%)** | **17 (40%)** |
+
+The model alone validates as correct, among others, invented decisions ("the decision exists"), a six-month probation period for an executive (the law says four), an eight-day withdrawal period (fifteen) and a ten-year limitation period (five). Visa's single false green is a real decision cited with the right number, date and content but the wrong chamber (a plenary-assembly ruling cited as a third civil chamber ruling): Visa checks a decision's date, not its formation. A chamber check is written and tested offline but was not enabled before the demonstration.
+
+| Base set, two complete passes on an empty cache | Pass A | Pass B |
+|---|---|---|
+| False claims (red or orange expected) not marked green | **30 / 30** | **30 / 30** |
+| False greens (non-green expected, marked green) | **0 / 33** | **0 / 33** |
+| False reds (true claims marked red) | 0 / 25 | 1 / 25 |
+| True claims confirmed green | 12 / 25 | 12 / 25 |
+| Exact color | 43 / 58 | 43 / 58 |
+
+Every error type was flagged in every instance (invented decisions 4/4, nonexistent articles 4/4, not in force 4/4, misstatements 10/10, amended texts 5/5, circulars 3/3, vague references 3/3). Extraction and retrieval missed nothing on this set; every color error comes from the judge. The price is caution: about half of the true claims come out orange, because the judge answers "partial" on wording details, whereas the model alone marks 24 of 25 true claims green. The one false red (pass B) is a long Court of Cassation decision whose conclusion lies beyond the 15,000 characters the judge reads. A stricter definition of "partial" kept zero false greens and raised true greens to 17/25, but produced 3 false reds; we kept the current judge, since a false red wrongly accuses the lawyer. A full pass costs about $0.06 (53 Mistral calls) and takes 5 to 13 minutes, bound by the shared rate limit of the API key.
 
 ### 5.4 The Visa loop on the demonstration memo
 
-On the demonstration memo (a 2016 dismissal and non-compete clause, ten claims), the first verification found 5 false claims, 3 to review and 2 verified. After one round of the loop, the second version had 0 false claims, 4 to review and 2 verified; the model deleted four unsupported passages (a repealed article number, an invented one-year cap, a decision cited for a proposition it does not contain, a circular) and rewrote two against the version in force on 15 March 2016, for example "the indemnity cannot be lower than the last six months' salaries (article L. 1235-3 of the Labour Code, in its version in force on 15 March 2016)" instead of a four-month cap. The guard rejected two proposed corrections: one cited an invented article (L. 1121-5) and one an off-topic Social Security Code article. Corrected passages mostly remain orange because the current rule flags any text amended since the facts, even when the correct version is cited. This is a single demonstration run; the loop on LAB deliverables, where an independent Mistral reviewer returns omissions, misstatements and recomputed figures to the agent, is [PENDING].
+On the demonstration memo (a 2016 dismissal and non-compete clause, ten claims), the first verification found 5 false claims, 3 to review and 2 verified. After one round of the loop, the second version had 0 false claims, 4 to review and 2 verified. The model rewrote two passages against the version in force on 15 March 2016: "capped at four months' salary" became "the indemnity, payable by the employer, cannot be lower than the last six months' salaries (article L. 1235-3 of the Labour Code, in its version in force on 15 March 2016)", with the official excerpt found verbatim; the statutory severance of "a quarter of a month per year of service" became one fifth, plus two fifteenths beyond ten years (article R. 1234-2, same date). It deleted four passages: a false "one-year maximum", a real decision cited for something it does not say, a circular presented as binding, and an old article number (L. 122-14-4) that Visa reported as not found although it did exist, most likely a retrieval miss, so that deletion was over-cautious. While the correction step was being developed, the guard rejected two proposed corrections: one cited an invented article (L. 1121-5), the other an off-topic Social Security Code article. Corrected passages mostly remain orange, because the current rule flags any text amended since the facts even when the correct version is cited; and the A3 rewrite omits that in 2016 the six-month floor applied only with two years of service and eleven employees (article L. 1235-5), because Visa only sees the cited article. This is a single demonstration run, not reviewed by a lawyer. The loop on LAB deliverables, where an independent Mistral reviewer returns omissions, misstatements and recomputed figures to the agent, is [PENDING].
 
 ### 5.5 Due diligence on a French data room
 
-[PENDING] A fictional French data room (Orionis Mobility, 159 documents in 18 standard rubrics) was built by a team member with 16 planted anomalies; the answer key is sealed from the people writing the method. Claude Code runs without and with a due diligence method (inventory, coverage register, verified excerpts for each red flag, cross-checks between rubrics) are complete or running, and an independent grader scores recall of the planted anomalies with both judges.
+A fictional French data room (Orionis Mobility, 159 documents in 18 standard rubrics) was built by a team member with 16 planted anomalies; the answer key stayed sealed from the people writing the method and was opened only by an independent grader. Claude Code (Sonnet 5.5) reviewed the room without and with a due diligence method (inventory, coverage register, verified excerpt for each red flag, cross-checks between rubrics). Each planted anomaly was graded found, partial or missed by both judges, which agreed on all 16 in both runs.
+
+| Claude Code, Sonnet 5.5 | Without the method | With the method |
+|---|---|---|
+| Planted anomalies found (partial) | 15 (1) / 16 | 15 (1) / 16 |
+| Report excerpts found verbatim in the data room | 174 / 183 (95%) | 180 / 180 (100%) |
+| Documents cited in the report | 108 / 159 (68%) | 110 / 159 (69%) |
+
+The method changes nothing on recall, which is already near the ceiling on a room of this size, and makes every quoted excerpt checkable. Excerpts too short to be checked were left out of the count (45 without, 107 with the method), so the two proof rates do not cover the same excerpts. One run per condition.
 
 ### 5.6 ContractNLI
 
-[PENDING] 150 test pairs (50 entailment, 50 contradiction, 50 not mentioned), Mistral alone against Mistral with Visa's adversarial judge and verbatim guard; the key measure is false greens (non-entailed hypotheses declared entailed).
+On 150 test pairs of ContractNLI (Koreeda and Manning, 2021), drawn with seed 20261004 (50 entailment, 50 contradiction, 50 not mentioned, whole contract given), we compare Mistral Large alone with the same model inside Visa (opposing-counsel judge and verbatim guard, unchanged). A "false green" is a non-entailed hypothesis declared entailed; a grey is never a false green.
+
+| | Model alone | Visa |
+|---|---|---|
+| **False greens** | **28 / 100 (28%)** | **3 / 100 (3%)** |
+| Precision of greens (entailment) | 39 / 67 (58%) | 13 / 16 (81%) |
+| True entailments confirmed (recall) | 39 / 50 (78%) | 13 / 50 (26%) |
+| Accuracy, three labels | 91 / 150 (61%) | 54 / 150 (36%) |
+| Verdicts discarded by the guard (grey) | — | 23 / 150 (15%) |
+
+The three false greens of Visa are also false greens of the model alone; Visa avoids 25 of its 28 and creates none (exact McNemar test, p ≈ 6 × 10⁻⁸). When Visa quotes, it quotes the right place: 82 of 88 verified excerpts overlap an official evidence span. Two findings temper this. First, **the guard did not remove any false green on this set: the opposing-counsel stance did**; removing the guard gives the same 3 false greens and two more correct greens. Second, Visa has no real "not mentioned" answer (its judge says "does not support"), and it disputes general hypotheses that the contract qualifies, hence the drop in accuracy. A remaining error type is negation by exception: a verbatim quote can be real while another clause of the contract overrides it. Cost: 300 calls, about $0.47 and 54 minutes, bound by the rate limit.
 
 ## 6. Discussion
 
@@ -196,7 +226,7 @@ On the demonstration memo (a 2016 dismissal and non-compete clause, ten claims),
 
 **When it does not help.** When the agent already covers the task, as Claude Code does on these development tasks, the method adds constraints without adding coverage, and can cost a criterion (task 1). The one error that no condition caught, a miscomputed exhibit total, points to a check the method lacks: recomputing every figure of the documents and of the report by script, which the Visa loop's reviewer now does. Any such change is validated on development tasks only.
 
-**After-the-fact verification.** On the French set, the guard does what it is designed for: no false claim passes as verified. The cost is caution (half of the true claims need a second look), which is the right side to err on for a lawyer but limits time savings; a stricter definition of "partial" is being tested, with zero false greens as the acceptance rule.
+**After-the-fact verification.** On ContractNLI, false greens drop from 28% to 3%, but the cost is high (true entailments confirmed fall from 78% to 26%), and the guard is not what removes the false greens; the adversarial stance is. The guard's role is different: it makes every green come with a passage the lawyer can check. On the French claims, the same model goes from 40% to 2% false greens once it must find the official text and quote it verbatim: the gain comes from the retrieval and the guard, not from a better model. The cost is caution (half of the true claims need a second look), which is the right side to err on for a lawyer but limits time savings. Two changes would remove the observed errors: checking the chamber of a decision (the one false green) and giving the judge the relevant passage of long decisions (the one false red).
 
 ## 7. Limitations
 
@@ -206,14 +236,15 @@ On the demonstration memo (a 2016 dismissal and non-compete clause, ten claims),
 - **Public tasks.** Possible training contamination.
 - **Human steps in Legora.** Plan approval is manual, although identical across conditions. Legora inverted reference and subject in the method condition of task 1.
 - **Different harnesses.** Claude Code and Legora are not run in Harvey's harness, so cross-agent comparisons mix model and tool effects; within-agent comparisons (without vs. with) do not.
-- **Team-written French set.** Labels are proven on official sources by script, but the claims were written by the team and not yet reviewed by an independent lawyer; the coverage is limited to 19 codes plus a few statutes and decisions, with no EU law or collective agreements (those stay grey).
+- **Team-written French set.** Labels are proven on official sources by script, but the claims were written by the team and not yet reviewed by an independent lawyer. The memos are cleaner than real AI answers (one claim per paragraph), the invented decision numbers fall in a range the Court of Cassation does not use, and only the existence of circulars is checked, not what they are said to contain. Zero false greens on 30 false claims is compatible with a true rate of up to about 10% (rule of three, 95%); the baseline uses a single prompt and a single pass. Coverage is limited to 19 codes plus a few statutes and decisions, with no EU law or collective agreements (those stay grey).
 - **Isolation incidents, found and fixed during the day.** (1) An agent under test ran `pkill -f soffice`; because every Claude Code command line contained the word "soffice" (in the inherited file-format manual), this killed concurrent runs. Killed runs produced no deliverable and were re-run; the system prompt now goes through a file. (2) Sub-sessions launched from our scripts inherited the environment of the team's coordinating session, including its messaging channel and token; an interruption of that session could reach them, and an agent under test could in principle have messaged the team. We stripped these variables from every run; the audit of all kept transcripts found no use of messaging tools. (3) Earlier, a shared `/tmp`, listable sibling workspaces and large tool outputs stored outside the workspace were closed. One run was lost to an archiving error and re-run, and one exploratory run that loaded personal settings is excluded.
 
 ## 8. Conclusion and future work
 
 A verification layer is cheap to add and agent-agnostic. On the first M&A task it turned a failing commercial tool into a passing one by forcing it to account for every requirement of the governing document; on a French claim set it flagged every false claim without a single false green; and its loop returns proven problems to the AI that made them. Next steps:
 
-- complete the held-out LAB measurement, the French set baseline and ContractNLI;
+- complete the held-out LAB measurement, and have the French claim set reviewed by independent lawyers;
+- give the judge a real "not mentioned" answer and accept quotes cut with an ellipsis when every piece is verbatim and in order;
 - time a lawyer verifying the demonstration memo by hand versus with the evidence map;
 - grade with the official API judges;
 - add scripted recomputation of figures to the method;
@@ -257,7 +288,7 @@ Run identifiers under `harvey-labs/results/corporate-ma/<task>/`.
 | 1 | Legora | `legora-base/20261004-131842-558458` | `legora-skill/20261004-133520-495811` |
 | 1 | Claude Code | `claude-code-sonnet-base/20261004-131336-947962` | `claude-code-sonnet-skill/20261004-131831-582658` |
 | 1 | Mistral | `mistral-medium-3.5-high-base/20261004-132603-069767` | `mistral-medium-3.5-high-skill/20261004-132603-069885` |
-| 2 | Legora | `legora-base/20261004-150946-572367` | — |
+| 2 | Legora | `legora-base/20261004-150946-572367` | not run |
 | 2 | Claude Code | `claude-code-sonnet-base/20261004-134830-495786` | `claude-code-sonnet-skill/20261004-133851-230603` |
 | 2 | Mistral | `mistral-medium-3.5-high-base/20261004-141516-096437` | `mistral-medium-3.5-high-skill/20261004-143737-681436` |
 | 3 | Claude Code | `claude-code-sonnet-base/20261004-133414-134739` | `claude-code-sonnet-skill/20261004-134412-236589` |
@@ -268,6 +299,7 @@ Run identifiers under `harvey-labs/results/corporate-ma/<task>/`.
 > Compare the attached APA against the closing checklist and produce a categorized, severity-rated deviation report. Output: `closing-checklist-deviation-report.docx`.
 >
 > Use this verification method (concordance table). One missed or misstated item makes the report wrong, so trade speed for completeness:
+>
 > 1. Roles: identify the REFERENCE document (what governs), the SUBJECT document (what is checked) and any context documents. Read every document in full.
 > 2. Forward pass: build a concordance table (use a Tabular Review if helpful). Walk the REFERENCE section by section, including definitions, schedules and exhibits. Every operative requirement gets a row (term, amount, date, party, condition, deliverable, certificate, consent, schedule), not only the ones that look important. For each row: reference section + verbatim quote, the SUBJECT counterpart + verbatim quote, and a status: match / deviation / missing (in the reference, absent from the subject).
 > 3. Reverse pass: walk the SUBJECT section by section and add a row for anything with no basis in the reference (added), including wrong cross-references.

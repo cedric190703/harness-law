@@ -40,6 +40,7 @@ MODELE = "mistral-large-latest"
 # Tarifs publics Mistral (USD par million de jetons, entrée / sortie), pour une estimation du coût.
 TARIFS = {"mistral-large": (0.5, 1.5), "mistral-medium": (0.4, 2.0)}
 MOTS_PAR_MORCEAU = 3500
+PARALLELE = 3  # appels Mistral simultanés par vérification (plusieurs boucles tournent en même temps)
 CONSIGNE_A_TELEVERSER = Path.home() / "lab-claude-code" / "a-televerser"
 JETONS = {"entree": 0, "sortie": 0, "appels": 0}
 ECARTES: list[dict] = []  # ce que le relecteur a proposé et que le script a rejeté, pour comprendre
@@ -51,23 +52,34 @@ def mistral(systeme: str, message: str, modele: str, max_tokens: int = 16000) ->
     cle = banc.load_env().get("MISTRAL_API_KEY")
     if not cle:
         sys.exit("MISTRAL_API_KEY manque dans .env")
-    corps = json.dumps({"model": modele, "temperature": 0, "top_p": 1, "max_tokens": max_tokens,
+    # En flux : une longue réponse sans un octet pendant des minutes se fait couper par le réseau.
+    corps = json.dumps({"model": modele, "temperature": 0, "top_p": 1, "max_tokens": max_tokens, "stream": True,
                         "response_format": {"type": "json_object"},
                         "messages": [{"role": "system", "content": systeme}, {"role": "user", "content": message}]}).encode()
-    attente = 5.0
-    for essai in range(7):
+    attente, essais = 5.0, 10
+    for essai in range(essais):
         requete = urllib.request.Request("https://api.mistral.ai/v1/chat/completions", data=corps,
                                          headers={"Authorization": f"Bearer {cle}", "Content-Type": "application/json"})
         try:
-            with urllib.request.urlopen(requete, timeout=900) as r:
-                reponse = json.loads(r.read())
+            morceaux, usage = [], {}
+            with urllib.request.urlopen(requete, timeout=300) as r:
+                for ligne in r:
+                    ligne = ligne.decode("utf-8", "replace").strip()
+                    if not ligne.startswith("data:") or ligne == "data: [DONE]":
+                        continue
+                    evenement = json.loads(ligne[5:])
+                    usage = evenement.get("usage") or usage
+                    for choix in evenement.get("choices") or []:
+                        morceaux.append((choix.get("delta") or {}).get("content") or "")
+            reponse = {"usage": usage, "choices": [{"message": {"content": "".join(morceaux)}}]}
             break
         except urllib.error.HTTPError as e:
-            if e.code not in (429, 500, 502, 503, 504) or essai == 6:
+            if e.code not in (429, 500, 502, 503, 504) or essai == essais - 1:
                 raise RuntimeError(f"Mistral {e.code} : {e.read()[:300]!r}") from None
-        except (urllib.error.URLError, OSError, http.client.HTTPException) as e:  # coupure, délai, connexion réinitialisée
-            if essai == 6:
+        except (urllib.error.URLError, OSError, http.client.HTTPException, json.JSONDecodeError) as e:  # coupure réseau
+            if essai == essais - 1:
                 raise RuntimeError(f"Mistral injoignable : {e}") from None
+            print(f"[verifier] Mistral : {e}, nouvel essai dans {min(attente, 90):.0f} s", file=sys.stderr, flush=True)
         time.sleep(min(attente, 90))
         attente *= 2
     usage = reponse.get("usage", {})
@@ -410,7 +422,7 @@ def ce_qui_manque(consigne: str, docs: dict, livrable: str, role: dict, modele: 
         autres = {n: d for n, d in docs.items() if n != ref}
         parts = morceaux(docs[ref]["texte"])
         taches += [(ref, m, i + 1, len(parts), autres) for i, m in enumerate(parts)]
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=PARALLELE) as pool:
         resultats = list(pool.map(lambda t: (t[0], elements_du_morceau(consigne, t[0], t[1], t[2], t[3], t[4], role, modele)),
                                   taches))
     elements, ecartes = [], 0
@@ -438,7 +450,7 @@ def ce_qui_manque(consigne: str, docs: dict, livrable: str, role: dict, modele: 
             elements.append(e)
     lots = [elements[i:i + 40] for i in range(0, len(elements), 40)]
     verdicts: dict = {}
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=PARALLELE) as pool:
         for v in pool.map(lambda lot: traitement(consigne, lot, livrable, modele), lots):
             verdicts.update(v)
     livrable_norm = normalize(livrable)
@@ -697,7 +709,7 @@ def verifier(dossier: Path, modele: str = MODELE, tour: int | None = None) -> di
         else:
             gardes.append(f)
     a_confirmer = gardes
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=PARALLELE) as pool:
         avis = list(pool.map(lambda f: confirmer(f, docs, consigne, modele), a_confirmer))
     for f, a in zip(a_confirmer, avis):
         if a.get("contredit") is True:

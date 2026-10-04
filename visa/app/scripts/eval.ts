@@ -5,6 +5,7 @@
  *   bun scripts/eval.ts --notes N1,N4        # quelques notes seulement
  *   bun scripts/eval.ts --cache .cache/eval/2026-10-04T15-00-00   # rejoue ou reprend une mesure
  *   bun scripts/eval.ts --sans-relance-piste # Visa tel quel : une panne de Légifrance donne du gris
+ *   bun scripts/eval.ts --juge-variante --sortie src/eval/resultats-variante.json
  *
  * Lance verifierTexte() sur chaque note, une par une, avec sa date des faits ; relie chaque affirmation
  * découpée par Mistral à l'affirmation attendue, puis calcule détection, faux verts, faux rouges,
@@ -13,7 +14,7 @@
  */
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { JEU_FR, LIBELLE_TYPE, texteNote, type NoteDeTest, type TypeCas } from "@/eval/jeu-fr";
+import { jeuChoisi, LIBELLE_TYPE, texteNote, type NoteDeTest, type TypeCas } from "@/eval/jeu-fr";
 import {
   calculerMesures,
   rattacher,
@@ -31,6 +32,14 @@ import { normaliser } from "@/lib/verbatim";
 
 /** Prix publics Mistral Large (mistral.ai/pricing, 4 octobre 2026), en dollars par million de jetons. */
 const PRIX_PAR_MILLION = { entree: 0.5, sortie: 1.5 };
+/**
+ * Variante du juge (--juge-variante), testée sans remplacer le prompt de Visa : la règle du PARTIEL est réécrite
+ * dans la requête envoyée à Mistral. Réglée sur ce même jeu : son chiffre est optimiste.
+ */
+const PARTIEL_ACTUEL = `- "PARTIEL" : le texte dit quelque chose de proche mais l'affirmation exagère, omet une condition ou une exception`;
+const PARTIEL_VARIANTE = `- "PARTIEL" : seulement si la différence change le sens juridique (condition, délai, montant, champ d'application) ; une simple différence de formulation reste SOUTIENT`;
+const JUGE_VARIANTE = process.argv.includes("--juge-variante");
+
 /** Limite de Mistral Large sur cette clé : 15 requêtes par minute. On espace les appels. */
 const INTERVALLE_MS = Number(process.env.EVAL_INTERVALLE_MS ?? 4500);
 
@@ -78,6 +87,16 @@ globalThis.fetch = Object.assign(
     const url = typeof entree === "string" ? entree : entree instanceof URL ? entree.href : entree.url;
     if (url.includes("piste.gouv.fr")) return appelPiste(url, entree, init);
     if (!url.startsWith("https://api.mistral.ai/")) return fetchOriginal(entree, init);
+    if (JUGE_VARIANTE && typeof init?.body === "string") {
+      const corps = JSON.parse(init.body) as { messages: { content: string }[] };
+      const systeme = corps.messages[0];
+      if (systeme?.content.includes(PARTIEL_ACTUEL)) {
+        systeme.content = systeme.content.replace(PARTIEL_ACTUEL, PARTIEL_VARIANTE);
+        init = { ...init, body: JSON.stringify(corps) };
+      } else if (systeme?.content.includes("AVOCAT DE LA PARTIE ADVERSE")) {
+        throw new Error("Variante du juge : la règle du PARTIEL a changé dans moteur.ts");
+      }
+    }
     for (let essai = 0; ; essai++) {
       const creneau = Math.max(Date.now(), prochainCreneau);
       prochainCreneau = creneau + INTERVALLE_MS;
@@ -189,7 +208,8 @@ const pct = (t: Taux) => (t.taux === null ? "—" : `${Math.round(t.taux * 100)}
 
 async function main() {
   const filtre = option("--notes")?.split(",");
-  const notes = JEU_FR.filter((n) => !filtre || filtre.includes(n.id));
+  const jeu = jeuChoisi(process.argv);
+  const notes = jeu.notes.filter((n) => !filtre || filtre.includes(n.id));
   const debut = Date.now();
   // Empreinte du code mesuré, prise au lancement : plusieurs personnes modifient Visa en même temps.
   const codeMesure = Object.fromEntries(
@@ -272,13 +292,15 @@ async function main() {
   }
   console.log(`\n${enTrop.length} affirmations découpées hors jeu (faits, transitions) ; ${consommation.appels} appels Mistral, ${consommation.entree} + ${consommation.sortie} jetons, ~${cout.toFixed(3)} $, ${duree} s, ${consommation.refus429} refus 429, ${pannesPiste.length} pannes PISTE${RELANCE_PISTE ? " relancées" : ""}.`);
 
-  const fichier = path.join(process.cwd(), "src/eval/resultats.json");
+  const fichier = path.resolve(option("--sortie") ?? "src/eval/resultats.json");
   await writeFile(
     fichier,
     `${JSON.stringify(
       {
         date: new Date().toISOString(),
         notes: parNote,
+        jeu: jeu.nom,
+        jugeVariante: JUGE_VARIANTE,
         modeles: {
           extraction: MODELE_EXTRACTION,
           juge: MODELE_JUGE,

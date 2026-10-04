@@ -15,7 +15,7 @@ import { legifrance, pisteConfigure } from "@/lib/piste";
 import { normaliserNumeroArticle, retrouverSource } from "@/lib/sources";
 import type { SourceCitee, SourceOfficielle } from "@/lib/types";
 import { contientVerbatim, normaliser } from "@/lib/verbatim";
-import { JEU_FR, texteNote, type CasAttendu, type NoteDeTest } from "@/eval/jeu-fr";
+import { jeuChoisi, texteNote, type CasAttendu, type NoteDeTest } from "@/eval/jeu-fr";
 
 type Brut = Record<string, unknown>;
 
@@ -122,7 +122,7 @@ async function prouver(note: NoteDeTest, c: CasAttendu): Promise<Preuve> {
   if (c.type === "article_inexistant" || c.type === "decision_inventee") {
     if (r && r !== "non_identifiable") echec(`la source existe : ${r.titre} (${r.url})`);
     else if (r === "non_identifiable") echec("référence non identifiable : impossible de prouver l'inexistence");
-    else constats.push(s.type === "decision" ? "Introuvable sur Légifrance (JURI) et Judilibre." : "Introuvable sur Légifrance.");
+    else constats.push(s.type === "decision" ? "Introuvable sur Légifrance (jurisprudence judiciaire ou administrative) et Judilibre." : "Introuvable sur Légifrance.");
     if (s.type === "article_code" && s.code && s.numero) {
       for (const date of [note.dateFaits, new Date().toISOString().slice(0, 10)]) {
         if (await articleDansRecherche(s.code, s.numero, date)) echec(`la recherche Légifrance trouve l'article au ${date}`);
@@ -159,6 +159,13 @@ async function prouver(note: NoteDeTest, c: CasAttendu): Promise<Preuve> {
       echec(`l'extrait « ${c.preuveActuelle} » figure déjà dans la version des faits`);
     else constats.push(`Version actuelle seulement : « ${c.preuveActuelle} ».`);
   }
+  if (c.type === "decision_mal_citee") {
+    if (s.date !== r.date) constats.push(`Le numéro existe, mais la décision est du ${r.date}, pas du ${s.date} : ${r.titre}.`);
+    else if (c.preuve && normaliser(r.titre).includes(normaliser(c.preuve)))
+      constats.push(`Bonne date, mais la formation réelle est « ${c.preuve} » (citée : ${s.juridiction}).`);
+    else echec(`la décision correspond à la référence citée (${r.titre})`);
+    return { ...preuve, ok, constats };
+  }
   if (s.type === "decision" && s.date !== r.date) echec(`date citée ${s.date} ≠ date réelle ${r.date}`);
 
   switch (c.type) {
@@ -188,7 +195,8 @@ async function main() {
   const preuves: Preuve[] = [];
   const ids = new Set<string>();
 
-  for (const note of JEU_FR) {
+  const jeu = jeuChoisi(process.argv);
+  for (const note of jeu.notes) {
     const texte = texteNote(note);
     console.log(`\n${note.id} — ${note.titre} (faits du ${note.dateFaits})`);
     for (const c of note.cas) {
@@ -227,7 +235,7 @@ async function main() {
   console.log(`Par étiquette : ${JSON.stringify(parEtiquette)}`);
 
   await writeFile(
-    path.join(process.cwd(), "src/eval/preuves.json"),
+    path.join(process.cwd(), jeu.nom === "base" ? "src/eval/preuves.json" : `src/eval/preuves-${jeu.nom}.json`),
     `${JSON.stringify({ date: new Date().toISOString(), temoins, preuves }, null, 2)}\n`,
   );
   if (echecs.length > 0 || !temoins) process.exit(1);
