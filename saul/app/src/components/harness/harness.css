@@ -84,3 +84,12 @@
 .empty-tab{padding:28px 20px}
 .graph-empty>b{font-size:12px}
 }
+
+/* Documents staged in the composer: they travel with the mission, not before it. */
+.legal-app .composer-files{display:flex;flex-wrap:wrap;gap:6px;padding:12px 13px 0}
+.legal-app .composer-file{display:inline-flex;align-items:center;gap:6px;max-width:100%;background:#f2f6ec;border:1px solid #e0e8d6;border-radius:7px;padding:5px 5px 5px 9px;font-size:10px;color:#425640}
+.legal-app .composer-file>svg{color:#5d7458;flex-shrink:0}
+.legal-app .composer-file>b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:230px}
+.legal-app .composer-file>small{color:#6a7a66;flex-shrink:0}
+.legal-app .composer-file>.icon-button{padding:2px;border:0;background:transparent;color:#6a7a66;flex-shrink:0}
+.legal-app .composer-file>.icon-button:hover{color:#2f4430}
