@@ -4,7 +4,7 @@
   python bench/lab.py harness <lab_core.harness.run args>
   python bench/lab.py eval    <lab_core.evaluation.run_eval args>
 
-1. Mistral calls retry on rate limits (429) and server errors, with backoff. The stock
+1. Mistral calls retry on rate limits (429), server errors and network timeouts, with backoff. The stock
    adapter fails the whole task on the first 429. Applies equally to both conditions.
 2. Mistral model names that do not start with "mistral" (codestral-*, magistral-*) are
    routed to the Mistral adapter and judge.
@@ -18,6 +18,7 @@ import sys
 import time
 
 RETRY_STATUS = {429, 500, 502, 503, 504}
+NETWORK_ERRORS = {"ReadTimeout", "ConnectTimeout", "ConnectError", "RemoteProtocolError", "ReadError"}
 
 
 def _status(exc: Exception) -> int | None:
@@ -38,8 +39,10 @@ def with_retry(fn, attempts: int = 8):
                 return fn(*args, **kwargs)
             except Exception as exc:
                 status = _status(exc)
-                if status not in RETRY_STATUS or attempt == attempts - 1:
+                network = type(exc).__name__ in NETWORK_ERRORS
+                if (status not in RETRY_STATUS and not network) or attempt == attempts - 1:
                     raise
+                status = status or type(exc).__name__
                 wait = min(delay, 90) + random.uniform(0, 2)
                 print(f"[bench] Mistral {status}, retry {attempt + 1}/{attempts - 1} in {wait:.0f}s", file=sys.stderr, flush=True)
                 time.sleep(wait)
