@@ -366,6 +366,142 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
 }
 .etapes-ruban .pas.fait { background: var(--marine-pale); color: var(--marine); border-color: #d2dcea; font-weight: 550; }
 
+/* ---------------- le fil du raisonnement ----------------
+   Les pas apparaissent un par un. L'animation n'est pas décorative : elle dit
+   qu'un verdict est le bout d'une chaîne, et non une opinion rendue d'un bloc. */
+
+.fil { min-height: 560px; }
+
+/* Le choix de l'affirmation, en haut de l'écran. */
+.choix-affirmation {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 24px; border-bottom: 1px solid var(--trait);
+  background: var(--papier-2); flex: none;
+}
+.choix-titre {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--encre-3); font-weight: 650; flex: none;
+}
+.choix-liste { display: flex; gap: 6px; flex-wrap: wrap; }
+.puce-affirmation {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px 5px 9px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--trait-fort); background: var(--carte);
+  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
+  color: var(--encre-2); transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+}
+.puce-affirmation:hover { transform: translateY(-1px); box-shadow: var(--ombre); }
+.puce-affirmation .rond { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.puce-affirmation.c-vert .rond { background: var(--vert); }
+.puce-affirmation.c-orange .rond { background: var(--orange); }
+.puce-affirmation.c-rouge .rond { background: var(--rouge); }
+.puce-affirmation.c-gris .rond { background: var(--gris); }
+.puce-affirmation.actif { background: var(--marine); border-color: var(--marine); color: #fff; }
+
+/* La phrase vérifiée, rappelée au-dessus du fil. */
+.fil-entete {
+  padding: 15px 24px 14px; border-bottom: 1px solid var(--trait);
+  background: var(--papier); flex: none;
+}
+.fil-phrase {
+  display: flex; align-items: flex-start; gap: 11px;
+  font-family: var(--serif); font-size: 17px; line-height: 1.4; max-width: 94ch;
+}
+.fil-phrase > span:last-child { padding-top: 1px; }
+.fil-cite { color: var(--encre-3); font-size: 12.5px; margin-top: 7px; }
+.fil-cite b { color: var(--marine-clair); }
+
+/* Le suiveur : où en est le fil. */
+.fil-barre {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--carte); border: 1px solid var(--trait); border-radius: var(--rayon);
+  box-shadow: var(--ombre); padding: 9px 13px;
+}
+.fil-compte { font-size: 12.5px; color: var(--encre-2); white-space: nowrap; }
+.fil-compte b { font-variant-numeric: tabular-nums; }
+.fil-jauge { width: 130px; height: 5px; border-radius: 999px; background: var(--papier-2); overflow: hidden; }
+.fil-jauge > span {
+  display: block; height: 100%; background: var(--marine);
+  transition: width 0.42s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+/* L'apparition d'un pas. */
+@keyframes pas-apparait {
+  from { opacity: 0; transform: translateY(16px) scale(0.93); }
+  to { opacity: 1; transform: none; }
+}
+/* Le halo du pas qui vient de tomber : il attire l'œil une fois, puis s'éteint. */
+@keyframes pas-halo {
+  0% { box-shadow: 0 0 0 0 rgba(47, 74, 115, 0.3), var(--ombre); }
+  70% { box-shadow: 0 0 0 12px rgba(47, 74, 115, 0), var(--ombre); }
+  100% { box-shadow: 0 0 0 0 rgba(47, 74, 115, 0), var(--ombre); }
+}
+
+.pas-noeud {
+  background: var(--carte); border: 1px solid var(--trait); border-radius: var(--rayon);
+  box-shadow: var(--ombre); padding: 13px 16px 14px 19px; cursor: pointer;
+  position: relative; overflow: hidden; text-align: left;
+  display: flex; flex-direction: column;
+  animation: pas-apparait 0.42s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+}
+.pas-noeud:hover { box-shadow: var(--ombre-forte); transform: translateY(-2px); }
+.pas-noeud.ouvert { border-color: var(--marine); box-shadow: 0 0 0 3px var(--marine-pale), var(--ombre-forte); }
+.pas-noeud.dernier { animation: pas-apparait 0.42s cubic-bezier(0.22, 0.9, 0.3, 1) both, pas-halo 1.6s ease-out 0.42s; }
+.pas-noeud .filet { position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--trait-fort); }
+.pas-noeud.p-vert .filet { background: var(--vert); }
+.pas-noeud.p-orange .filet { background: var(--orange); }
+.pas-noeud.p-rouge .filet { background: var(--rouge); }
+.pas-noeud.p-gris .filet { background: var(--gris); }
+
+.pas-haut { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.pas-ordre {
+  width: 19px; height: 19px; flex: none; display: grid; place-items: center;
+  border-radius: 50%; background: var(--marine); color: #fff;
+  font-size: 10.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.pas-genre {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--encre-3); font-weight: 700;
+}
+.pas-jeton { margin-left: auto; }
+.pas-jeton .jeton { padding: 2px 8px 2px 7px; font-size: 11px; }
+.pas-titre { font-family: var(--serif); font-size: 15.5px; line-height: 1.25; margin-bottom: 6px; }
+.pas-constat {
+  font-size: 12.5px; line-height: 1.45; color: var(--encre-2);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pas-constat.pas-sans { color: var(--encre-3); }
+.pas-outil { margin-top: auto; padding-top: 7px; font-size: 10.5px; color: var(--encre-3); }
+
+.pas-controle { padding-top: 11px; padding-bottom: 11px; }
+.pas-controle .pas-titre { font-family: var(--sans); font-weight: 650; font-size: 14px; }
+.pas-controle .pas-constat { -webkit-line-clamp: 2; }
+
+/* La conclusion : la seule carte qui s'autorise un fond coloré. */
+.pas-conclusion { border-width: 1.5px; }
+.pas-conclusion .pas-titre { font-size: 17px; }
+.pas-conclusion.p-vert { background: var(--vert-pale); border-color: var(--vert); }
+.pas-conclusion.p-orange { background: var(--orange-pale); border-color: var(--orange); }
+.pas-conclusion.p-rouge { background: var(--rouge-pale); border-color: var(--rouge); }
+.pas-conclusion.p-gris { background: var(--gris-pale); border-color: var(--gris); }
+.pas-conclusion .pas-constat { color: var(--encre); font-weight: 500; }
+
+/* Le tiroir du fil laisse voir l'en-tête de l'écran. */
+.fil-tiroir { top: auto; height: calc(100% - 140px); bottom: 14px; }
+.requete {
+  margin: 0; padding: 11px 13px; border-radius: var(--rayon-sm);
+  background: #1c2f4e; color: #dce5f2; overflow-x: auto;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11.5px; line-height: 1.55;
+}
+
+/* Quelqu'un qui préfère moins de mouvement voit le fil complet, sans animation. */
+@media (prefers-reduced-motion: reduce) {
+  .pas-noeud, .pas-noeud.dernier { animation: none; }
+  .fil-jauge > span, .barre > span { transition: none; }
+  .en-cours-point { animation: none; }
+}
+
 /* ---------------- responsive ---------------- */
 
 @media (max-width: 1080px) {
@@ -376,6 +512,8 @@ textarea.champ { min-height: 260px; resize: vertical; font-size: 14.5px; line-he
   .onglet { width: auto; white-space: nowrap; }
   .entete, .vue { padding-left: 20px; padding-right: 20px; }
   .vue > div > div[style*="330px"] { grid-template-columns: 1fr !important; }
+  .tiroir, .fil-tiroir { position: static; width: auto; height: auto; max-height: 420px; margin: 14px; }
+  .choix-affirmation { align-items: flex-start; flex-direction: column; gap: 8px; }
 }
 
 /* ---------------- l'export PDF du journal ----------------

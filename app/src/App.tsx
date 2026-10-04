@@ -6,6 +6,7 @@ import { Accueil } from "./views/Accueil";
 import { Nouvelle } from "./views/Nouvelle";
 import { Controle } from "./views/Controle";
 import { Rapport } from "./views/Rapport";
+import { Raisonnement } from "./views/Raisonnement";
 import { Journal } from "./views/Journal";
 import { aller, afficherResultat, lancerLeControle, useEtat, type Ecran } from "./store";
 import { compter, formaterDate } from "./engine/etapes";
@@ -41,9 +42,17 @@ const ECRANS: { id: Ecran; nom: string; num: string; soustitre: string; intro: s
     intro: "Une ligne par affirmation. Ouvrez-en une pour voir les quatre contrôles et le texte officiel.",
   },
   {
+    id: "raisonnement",
+    nom: "Le raisonnement",
+    num: "5",
+    soustitre: "Comment Visa a conclu",
+    intro:
+      "Le fil se déroule de gauche à droite, pas par pas, jusqu'à la conclusion. Cliquez un pas pour le lire en entier.",
+  },
+  {
     id: "journal",
     nom: "Le journal d'audit",
-    num: "5",
+    num: "6",
     soustitre: "La pièce pour le dossier",
     intro: "Sources, identifiants, versions comparées, verdicts, relecture. Prêt pour le guide CNB.",
   },
@@ -130,7 +139,7 @@ export function App() {
                 ))}
               </div>
             )}
-            {dossier.affirmations.length > 0 && ecran !== "controle" && ecran !== "nouvelle" && (
+            {dossier.affirmations.length > 0 && ecran !== "controle" && ecran !== "nouvelle" && ecran !== "raisonnement" && (
               <span className="rangee" style={{ gap: 7 }}>
                 {ORDRE.filter((v) => c[v]).map((v) => (
                   <Jeton key={v} verdict={v} texte={`${c[v]} ${MOT[v].toLowerCase()}`} />
@@ -153,6 +162,7 @@ export function App() {
         {ecran === "nouvelle" && <Nouvelle />}
         {ecran === "controle" && <Controle />}
         {ecran === "rapport" && <Rapport />}
+        {ecran === "raisonnement" && <Raisonnement />}
         {ecran === "journal" && <Journal />}
       </main>
     </div>

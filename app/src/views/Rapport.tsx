@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import { CONTROLES, compter, formaterDate } from "../engine/etapes";
-import { basculerValidation, ouvrirAffirmation, useEtat } from "../store";
+import { basculerValidation, ouvrirAffirmation, ouvrirRaisonnement, useEtat } from "../store";
 import { BarreSynthese, FriseVersions, Jeton, MOT, ORDRE, Pyramide, TexteOfficiel } from "../components/ui";
 import { passageDansSource } from "../engine/piste";
 import type { Affirmation, Verdict } from "../types";
@@ -116,13 +116,14 @@ function Fiche({ affirmation: a, dateDesFaits }: { affirmation: Affirmation; dat
         </div>
         <p style={{ fontSize: 15, lineHeight: 1.6, marginBottom: 11 }}>{a.phrase}</p>
         <div className="sous">{a.citation ? <>Cité comme : <b style={{ color: "var(--marine-clair)" }}>{a.citation}</b></> : "Aucune référence citée."}</div>
-        <button
-          className={`bouton sm ${a.valideParLeJuriste ? "" : "fort"}`}
-          style={{ marginTop: 14 }}
-          onClick={() => basculerValidation(a.id)}
-        >
-          {a.valideParLeJuriste ? "✓ Relue — annuler" : "Marquer comme relue"}
-        </button>
+        <div className="rangee" style={{ marginTop: 14, gap: 9 }}>
+          <button className="bouton fort sm" onClick={() => ouvrirRaisonnement(a.id)}>
+            Voir le raisonnement →
+          </button>
+          <button className="bouton sm" onClick={() => basculerValidation(a.id)}>
+            {a.valideParLeJuriste ? "✓ Relue — annuler" : "Marquer comme relue"}
+          </button>
+        </div>
       </div>
 
       <div className="carte">

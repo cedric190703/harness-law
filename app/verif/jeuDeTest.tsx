@@ -17,8 +17,10 @@ import { Accueil } from "../src/views/Accueil";
 import { Nouvelle } from "../src/views/Nouvelle";
 import { Rapport } from "../src/views/Rapport";
 import { Journal } from "../src/views/Journal";
+import { Raisonnement } from "../src/views/Raisonnement";
 import { lire, ouvrirAffirmation } from "../src/store";
 import { passageDansSource } from "../src/engine/piste";
+import { construireRaisonnement, quoiFaire } from "../src/engine/raisonnement";
 import type { Verdict } from "../src/types";
 
 /** Ce que des juristes attendent de chaque ligne du mémo piégé. */
@@ -51,6 +53,7 @@ for (const [nom, Vue] of [
   ["Soumettre un texte", Nouvelle],
   ["Le rapport", Rapport],
   ["Le journal d'audit", Journal],
+  ["Le raisonnement", Raisonnement],
 ] as [string, () => JSX.Element][]) {
   try {
     renderToString(<Vue />);
@@ -91,6 +94,48 @@ for (const a of affirmations) {
   }
 }
 console.log("  ✓ tous les passages contrôlés");
+
+console.log("\nLe fil du raisonnement dit-il la même chose que le rapport ?");
+for (const a of affirmations) {
+  const pas = construireRaisonnement(a, lire().dossier.dateDesFaits);
+
+  // Le fil part toujours de l'affirmation et finit toujours par une conclusion.
+  if (pas[0]?.genre !== "affirmation") rate(`${a.id} — le fil ne part pas de l'affirmation.`);
+  const conclusion = pas.at(-1);
+  if (conclusion?.genre !== "conclusion") rate(`${a.id} — le fil ne finit pas par une conclusion.`);
+
+  // L'invariant qui compte : la conclusion du fil ne peut pas différer du
+  // verdict du rapport, sinon Visa se contredirait d'un écran à l'autre.
+  if (conclusion && conclusion.verdict !== a.verdict) {
+    rate(`${a.id} — le fil conclut « ${conclusion.verdict} » quand le rapport dit « ${a.verdict} ».`);
+  }
+
+  // Les quatre contrôles sont toujours montrés, même quand l'un ne conclut rien.
+  const controles = pas.filter((p) => p.genre === "controle");
+  if (controles.length !== 4) rate(`${a.id} — ${controles.length} contrôles dans le fil au lieu de 4.`);
+  controles.forEach((p, i) => {
+    if (p.numeroControle !== i + 1) rate(`${a.id} — contrôle ${p.titre} numéroté ${p.numeroControle} au rang ${i + 1}.`);
+  });
+  for (const p of pas.filter((x) => x.genre !== "controle")) {
+    if (p.numeroControle !== null) rate(`${a.id} — le pas ${p.id} porte un numéro de contrôle sans en être un.`);
+  }
+
+  // Les numéros sont consécutifs : un pas manquant serait un pas caché.
+  pas.forEach((p, i) => {
+    if (p.ordre !== i + 1) rate(`${a.id} — pas ${p.id} numéroté ${p.ordre} au rang ${i + 1}.`);
+  });
+
+  // Une requête affichée doit porter l'identifiant ou le numéro réellement cherché.
+  const requete = pas.find((p) => p.requete)?.requete;
+  if (a.citation && !requete) rate(`${a.id} — une source est citée mais aucune requête n'est montrée.`);
+  if (requete && (requete.includes("LEGITEXT…") || requete.includes('"num": "…"'))) {
+    rate(`${a.id} — la requête montrée est incomplète : ${requete.replace(/\n/g, " ")}`);
+  }
+
+  // Une conclusion doit dire quoi faire, pas seulement nommer une couleur.
+  if (quoiFaire(a).length < 30) rate(`${a.id} — la conclusion ne dit pas quoi faire.`);
+}
+console.log(`  ✓ ${affirmations.length} fils contrôlés`);
 
 console.log("\nLes verdicts correspondent-ils à ce que des juristes attendent ?");
 let justes = 0;

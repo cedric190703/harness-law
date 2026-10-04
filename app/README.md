@@ -38,16 +38,51 @@ Sur chaque affirmation, toujours les mêmes quatre questions, dans le même ordr
 Le verdict d'ensemble d'une affirmation est **le plus sévère** de ses quatre
 contrôles.
 
-## Les cinq écrans
+## Les six écrans
 
-L'interface est écrite pour un juriste, pas pour un ingénieur : cinq écrans
+L'interface est écrite pour un juriste, pas pour un ingénieur : six écrans
 numérotés dans l'ordre où on les traverse, et aucun jargon technique.
 
 1. **Accueil** — ce que fait Visa, ce que veulent dire les quatre couleurs, vos dossiers.
 2. **Soumettre un texte** — le texte, et la date des faits. Rien d'autre à renseigner.
 3. **Le déroulé** — les six étapes du contrôle sur un schéma qui se lit de gauche à droite. Chaque carte s'ouvre sur ses tâches, une par une, avec la preuve de chacune.
 4. **Le rapport** — une ligne par affirmation ; on en ouvre une et on voit les quatre contrôles, le texte officiel avec le passage surligné, la pyramide des normes, la frise des versions, et ce que l'adversaire opposerait.
-5. **Le journal d'audit** — sources, identifiants, versions comparées, verdicts, relecture du juriste. Export PDF par l'impression du navigateur.
+5. **Le raisonnement** — le fil complet d'une affirmation, pas par pas, jusqu'à la conclusion. Voir ci-dessous.
+6. **Le journal d'audit** — sources, identifiants, versions comparées, verdicts, relecture du juriste. Export PDF par l'impression du navigateur.
+
+## Le fil du raisonnement
+
+C'est l'écran qui répond à la question qu'on pose à toute IA juridique :
+**« d'où sort cette conclusion ? »**
+
+Le fil se lit de gauche à droite et se déroule pas par pas, dans l'ordre où Visa
+les a franchis :
+
+```
+ L'affirmation ──► La référence ──► La requête ──► La source ──┬─► 1. Elle existe ?      ──┐
+                      citée          envoyée       retrouvée    ├─► 2. En vigueur ?       ──┤
+                                                               ├─► 3. Quel rang ?        ──┼──► L'avocat ──► LA
+                                                               └─► 4. Elle dit cela ?    ──┘    adverse      CONCLUSION
+```
+
+Chaque pas se clique et se lit en entier : ce que Visa a fait, **la requête
+exacte** envoyée à la base, ce qu'il a constaté, ce qu'il en déduit, et l'outil
+employé. La conclusion ne nomme pas seulement une couleur : elle dit **quoi
+faire** — retirer la référence, corriger la version citée, ne pas la présenter
+comme obligatoire, ou déposer en l'état.
+
+Deux partis pris :
+
+- **Les quatre contrôles sont toujours montrés**, même quand l'un d'eux ne peut
+  rien conclure. Un contrôle sauté serait un contrôle invisible.
+- **Rien n'est écrit à la main.** Le fil est *dérivé* du dossier — citation,
+  source retrouvée, contrôles, contradiction. Il ne peut donc jamais raconter
+  autre chose que ce que le rapport conclut, et le jeu de test vérifie
+  précisément cet invariant.
+
+L'animation n'est pas décorative : elle dit qu'un verdict est le bout d'une
+chaîne, et non une opinion rendue d'un bloc. `prefers-reduced-motion` affiche le
+fil complet, sans mouvement.
 
 ## Le déroulé, étape par étape
 
@@ -81,10 +116,11 @@ src/
   data/sources.ts       les sources officielles mises en cache (démo hors ligne)
   data/dossier.ts       le mémo piégé et ses 14 affirmations — notre jeu de test
   engine/etapes.ts      les six étapes et leurs tâches séparées
+  engine/raisonnement.ts  le fil d'une affirmation, dérivé du dossier
   engine/piste.ts       Légifrance et Judilibre, et la vérification mot pour mot
   engine/mistral.ts     le découpage et la contradiction
-  components/           le schéma du contrôle, le tiroir des tâches, la pyramide, la frise
-  views/                les cinq écrans
+  components/           le schéma du contrôle, le fil du raisonnement, la pyramide, la frise
+  views/                les six écrans
 verif/jeuDeTest.tsx     le jeu de test, sans navigateur
 ```
 
@@ -106,7 +142,10 @@ identifiants distincts ; `VITE_PISTE_ENV` choisit.
 
 1. chaque écran se rend sans planter, y compris la fiche de chacune des 14 affirmations ;
 2. tout passage surligné existe mot pour mot dans le texte officiel ;
-3. le verdict rendu correspond au verdict attendu par des juristes.
+3. le fil du raisonnement dit la même chose que le rapport — même verdict, quatre
+   contrôles toujours présents, numérotation sans trou, requête complète, et une
+   conclusion qui dit quoi faire ;
+4. le verdict rendu correspond au verdict attendu par des juristes.
 
 Le jeu de test couvre les cas que Visa doit attraper : décision inventée, vraie
 décision à la mauvaise portée, article abrogé, article en vigueur aujourd'hui

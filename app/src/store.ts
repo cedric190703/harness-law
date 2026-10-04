@@ -8,7 +8,7 @@ import { DOSSIER_DEMO } from "./data/dossier";
 import { construireEtapes } from "./engine/etapes";
 import type { Affirmation, Dossier, EtapeId } from "./types";
 
-export type Ecran = "accueil" | "nouvelle" | "controle" | "rapport" | "journal";
+export type Ecran = "accueil" | "nouvelle" | "controle" | "rapport" | "raisonnement" | "journal";
 
 /** 0 : rien de lancé. 6 : les six étapes sont passées. */
 export type Avancement = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -104,7 +104,14 @@ export function ouvrirEtape(id: EtapeId | null) {
 }
 
 export function ouvrirAffirmation(id: string | null) {
-  poser({ ecran: "rapport", affirmationOuverte: id });
+  // Depuis le fil du raisonnement, changer d'affirmation ne doit pas ramener
+  // au rapport : on reste là où le juriste était.
+  poser({ ecran: etat.ecran === "raisonnement" ? "raisonnement" : "rapport", affirmationOuverte: id });
+}
+
+/** Ouvre le fil du raisonnement sur une affirmation donnée. */
+export function ouvrirRaisonnement(id: string) {
+  poser({ ecran: "raisonnement", affirmationOuverte: id });
 }
 
 /** La relecture du juriste : c'est elle qui clôt le journal. */
