@@ -50,7 +50,7 @@ export function addDocuments(id:string,files:{name:string;data:Buffer}[]):Projec
   save(p);return p;
 }
 function executable(provider:Provider){const configured=provider==='claude'?process.env.LEGAL_CLAUDE_BIN:process.env.LEGAL_VIBE_BIN;const local=path.join(os.homedir(),'.local/bin',provider);return configured||(fs.existsSync(local)?local:provider);}
-export function agents():AgentInfo[]{return (['claude','vibe'] as Provider[]).map(id=>({id,name:id==='claude'?'Claude Code':'Mistral Vibe',installed:spawnSync(executable(id),['--version'],{timeout:5000,stdio:'pipe'}).status===0}));}
+export function agents():AgentInfo[]{return (['claude','vibe'] as Provider[]).map(id=>({id,name:id==='claude'?'Claude Code':'Mistral (API)',installed:spawnSync(executable(id),['--version'],{timeout:5000,stdio:'pipe'}).status===0}));}
 export function skillInfo(){return {name:'cross-document-review',hash:hash(fs.readFileSync(path.join(SKILL,'SKILL.md'))),content:fs.readFileSync(path.join(SKILL,'SKILL.md'),'utf8'),steps:STEPS};}
 function event(p:Project,r:Run,kind:TraceEvent['kind'],text:string,extra:Partial<TraceEvent>={}){
   const e:TraceEvent={id:randomUUID(),at:now(),kind,text,...extra};r.events.push(e);
@@ -84,7 +84,7 @@ function promptFor(p:Project,r:Run,repair:string){
 }
 async function agent(p:Project,r:Run,repair=''){
   r.attempt++;const attempt=r.attempt;
-  event(p,r,'system',`${r.provider==='claude'?'Claude Code':'Mistral Vibe'} reçoit la mission et le skill version ${r.skillHash.slice(0,10)}. Passage ${attempt}.`);
+  event(p,r,'system',`${r.provider==='claude'?'Claude Code':'Mistral (API)'} reçoit la mission et le skill version ${r.skillHash.slice(0,10)}. Passage ${attempt}.`);
   const prompt=promptFor(p,r,repair);fs.writeFileSync(path.join(runDir(p.id,r.id),`prompt-${attempt}.txt`),prompt,{mode:0o600});
   const allowance=r.cost===undefined?r.budget/2:r.budget-r.cost;
   if(allowance<.05)throw new Error('Budget épuisé avant la passe suivante.');
