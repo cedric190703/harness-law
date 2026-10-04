@@ -6,12 +6,22 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 export function proxy(request: NextRequest) {
   const attendu = process.env.SAUL_MOT_DE_PASSE;
-  if (!attendu) return NextResponse.next();
+  if (!attendu) {
+    if (process.env.SAUL_EN_LIGNE === "1") {
+      return new NextResponse("Accès indisponible : protection non configurée", { status: 503 });
+    }
+    return NextResponse.next();
+  }
   const entete = request.headers.get("authorization") ?? "";
   const [schema, valeur] = entete.split(" ");
   if (schema === "Basic" && valeur) {
-    const motDePasse = atob(valeur).split(":").slice(1).join(":");
-    if (motDePasse === attendu) return NextResponse.next();
+    try {
+      const identifiants = atob(valeur);
+      const separateur = identifiants.indexOf(":");
+      if (separateur >= 0 && identifiants.slice(separateur + 1) === attendu) return NextResponse.next();
+    } catch {
+      // Un en-tête mal formé reste un refus d'accès, pas une erreur serveur.
+    }
   }
   return new NextResponse("Accès protégé", {
     status: 401,
