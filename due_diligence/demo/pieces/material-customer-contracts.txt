@@ -1,0 +1,141 @@
+================================================================================
+                  MATERIAL CUSTOMER CONTRACTS - SUMMARY
+                  Rocky Environmental Services, Inc. ("RES")
+                  Prepared for Project Ridgeline diligence
+                  Date: January 8, 2025
+================================================================================
+
+This document summarizes certain material customer contracts of Rocky
+Environmental Services, Inc. The summaries below are qualified in their entirety
+by the underlying agreements, copies of which are included in the data room under
+the "Customer Contracts" tab.
+
+--------------------------------------------------------------------------------
+1. U.S. DEPARTMENT OF ENERGY CONTRACT
+--------------------------------------------------------------------------------
+
+    Customer:           U.S. Department of Energy ("DOE")
+    Contract No.:       DE-EM-0005523
+    Contract Type:      Indefinite-delivery, indefinite-quantity (IDIQ) with
+                        firm-fixed-price and time-and-materials task orders
+    Award Date:         September 2021
+    Period of Performance: Base period of five (5) years through September 2026,
+                        with options
+    Contract Ceiling:   $45,000,000
+    Ceiling Remaining:  $12,300,000 (as of the date of this summary)
+    TTM Revenue:        $24,400,000
+    % of TTM Revenue:   19.2%
+    Scope:              Environmental remediation, waste management and related
+                        field services supporting government facilities and
+                        remediation sites.
+
+    1.1  General. The Contract incorporates the Federal Acquisition Regulation
+         (FAR) by reference, including applicable clauses relating to the
+         Government's rights and the Contractor's obligations.
+
+    1.2  Assignment. The Contract is subject to the Anti-Assignment Act and
+         FAR Subpart 42.12 (Novation and Change-of-Name Agreements). Under
+         FAR 42.12, when a Contractor's assets are transferred, the transfer
+         may give rise to the need for a novation agreement, and the transferee
+         generally is not entitled to recognition as the successor to the
+         Government contract unless and until a novation agreement is executed
+         with the cognizant contracting officer. FAR 42.12 sets forth the
+         circumstances in which a novation may be requested and the procedures
+         for processing such requests.
+
+    1.3  Successor contractors and government approvals. Consistent with FAR
+         42.12 and applicable clauses, recognition of a successor contractor is
+         subject to the discretion and approval of the contracting officer, and
+         the Government may recognize a successor in interest only through a
+         properly executed novation or change-of-name agreement. The Contract
+         includes customary provisions regarding the Government's rights,
+         termination for convenience, and the contracting officer's authority.
+
+    1.4  Contracting officer rights. The contracting officer retains authority
+         over contract administration, including with respect to any request for
+         recognition of a successor contractor. The Company makes no
+         representation regarding whether, or on what terms, a novation would be
+         granted with respect to any transaction.
+
+    1.5  Assignment/novation in the Transaction. Buyer's counsel has requested
+         additional information regarding the potential application of FAR 42.12
+         to the Transaction. The Company is providing the underlying Contract
+         and related correspondence for Buyer's review. This summary does not
+--------------------------------------------------------------------------------
+2. CONSOLIDATED MINING CORP. MASTER SERVICE AGREEMENT
+--------------------------------------------------------------------------------
+
+    Customer:           Consolidated Mining Corp.
+    Agreement:          Master Service Agreement
+    Contract No.:       CMS-MSA-2019-114
+    Effective Date:     March 1, 2019
+    Term:               Initial term through February 28, 2025, with automatic
+                        one-year renewals unless terminated
+    TTM Revenue:        $14,500,000
+    % of TTM Revenue:   11.4%
+    Scope:              Waste management, industrial cleaning, remediation and
+                        related field services at the customer's mining sites.
+
+    2.1  General. The Master Service Agreement sets forth the framework terms
+         under which the Company provides services pursuant to work orders,
+         task authorizations and purchase orders issued from time to time. The
+         agreement contains customary commercial terms, including scheduling,
+         invoicing and payment, insurance and indemnity, change-order
+         procedures, and health, safety and environmental requirements.
+
+    2.2  Termination for convenience. The customer may terminate the agreement,
+         or any work order issued thereunder, for convenience upon sixty (60)
+         days' prior written notice to the Company. This termination-for-
+         convenience provision is standard for agreements of this type.
+
+    2.3  Termination for cause. Either party may terminate for material breach
+         not cured within a specified cure period, subject to the terms of the
+         agreement.
+
+    2.4  Assignment. The agreement contains customary restrictions on assignment
+         by the Company without the customer's prior written consent, subject to
+         exceptions for assignments to affiliates and successors by operation of
+         law.
+
+    2.5  Renewal. The agreement renews automatically for successive one-year
+         terms unless either party provides notice of non-renewal in accordance
+         with the agreement.
+
+--------------------------------------------------------------------------------
+3. OTHER SIGNIFICANT CUSTOMER RELATIONSHIPS
+--------------------------------------------------------------------------------
+
+The following additional relationships are included for context; copies of the
+underlying agreements are included in the data room where available.
+
+    Customer                        Nature of Relationship          Approx. TTM
+    ------------------------------  ------------------------------  -----------
+    Cascade Refining & Energy       MSA / service agreement         $9.8M
+    Intermountain Utilities Co.     MSA / standing offer            $7.6M
+    Granite State Transportation    Service agreement               $5.1M
+    Various federal agencies        Task orders / contracts         (incl. DOE)
+    Various state and local         Service agreements              $4.2M
+    agencies
+
+The Company's top ten customers collectively represented approximately 67% of
+TTM revenue. The Company believes its customer relationships are generally
+long-standing, although certain agreements are terminable on short notice or are
+subject to renewal, expiration or re-competition in the ordinary course.
+
+--------------------------------------------------------------------------------
+4. GENERAL NOTES
+--------------------------------------------------------------------------------
+
+    4.1  The summaries in this document are provided for convenience and are
+         qualified by the underlying agreements.
+
+    4.2  Certain customer agreements contain restrictions on assignment and
+         provisions addressing changes in ownership or control. Buyer is
+         conducting a review of all material customer agreements to identify any
+         required consents or notices in connection with the Transaction.
+
+    4.3  Revenue amounts shown reflect the trailing twelve months ended
+         September 30, 2024, and are consistent with the Company's quality of
+         earnings materials.
+
+[End of Material Customer Contracts Summary.]

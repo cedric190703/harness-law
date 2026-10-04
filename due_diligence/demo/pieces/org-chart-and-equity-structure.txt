@@ -1,0 +1,146 @@
+================================================================================
+              ORGANIZATIONAL CHART AND EQUITY STRUCTURE
+              Rocky Environmental Services, Inc. ("RES")
+              Prepared for Project Ridgeline diligence
+              Date: January 8, 2025
+================================================================================
+
+--------------------------------------------------------------------------------
+1. LEGAL ENTITY ORGANIZATION CHART
+--------------------------------------------------------------------------------
+
+                        Rocky Environmental Services, Inc.
+                          (Utah corporation - Parent)
+                                     |
+        +--------------------+-------+-------+--------------------+
+        |                    |               |                    |
+   Pinnacle Waste      RES Field       Rocky Remediation     RES Transport,
+   Solutions, LLC      Services, LLC   Services, LLC         LLC
+   (Utah LLC)          (Utah LLC)      (Colorado LLC)        (Utah LLC)
+   100%                100%            100%                  100%
+        |                    |               |                    |
+        +--------------------+-------+-------+--------------------+
+                                     |
+                        Rocky Environmental Services
+                        of Wyoming, LLC
+                        (Wyoming LLC - 100%)
+
+All subsidiaries are wholly owned, directly or indirectly, by Rocky Environmental
+Services, Inc. The Company prepares consolidated financial statements covering
+the parent and all subsidiaries.
+
+--------------------------------------------------------------------------------
+2. ENTITY DETAILS
+--------------------------------------------------------------------------------
+
+2.1  Rocky Environmental Services, Inc. (Parent)
+     Jurisdiction:       Utah
+     Entity Type:        Corporation
+     Formation:          1994
+     Principal Office:   3480 South Commerce Way, Suite 200, Salt Lake City, UT
+     Ownership:          100% held by the Shareholders identified in Section 4.
+     Role:               Holding company and primary operating company; employs
+                         corporate and field personnel.
+
+2.2  Pinnacle Waste Solutions, LLC
+     Jurisdiction:       Utah
+     Entity Type:        Limited liability company
+     Formation:          2009
+     Acquired by RES:    March 2022
+     Ownership:          100% owned by Rocky Environmental Services, Inc.
+     Registered Agent:   Registered agent service, Salt Lake City, Utah
+     Status:             Legally existing and in good standing. Currently dormant
+                         and substantially inactive; the entity does not
+                         currently conduct independent operations or maintain
+                         separate employees or bank accounts.
+     Notes:              The entity remains legally existing and has not been
+                         dissolved or merged into any other entity.
+
+2.3  RES Field Services, LLC
+     Jurisdiction:       Utah
+     Entity Type:        Limited liability company
+     Ownership:          100% owned by Rocky Environmental Services, Inc.
+     Role:               Field services and labor resources.
+
+2.4  Rocky Remediation Services, LLC
+     Jurisdiction:       Colorado
+     Entity Type:        Limited liability company
+     Ownership:          100% owned by Rocky Environmental Services, Inc.
+     Role:               Remediation and environmental construction services.
+
+2.5  RES Transport, LLC
+     Jurisdiction:       Utah
+     Entity Type:        Limited liability company
+     Ownership:          100% owned by Rocky Environmental Services, Inc.
+     Role:               Transportation and logistics.
+
+2.6  Rocky Environmental Services of Wyoming, LLC
+     Jurisdiction:       Wyoming
+     Entity Type:        Limited liability company
+     Ownership:          100% owned by Rocky Environmental Services, Inc.
+     Role:               Wyoming operations and facilities.
+
+--------------------------------------------------------------------------------
+3. SUBSIDIARY GUARANTORS AND PLEDGES
+--------------------------------------------------------------------------------
+
+Each of the subsidiaries is a guarantor under the Credit Agreement with High
+Plains Bank, N.A., and the equity interests of each subsidiary are pledged to
+--------------------------------------------------------------------------------
+4. EQUITY OWNERSHIP - ROCKY ENVIRONMENTAL SERVICES, INC. (PARENT)
+--------------------------------------------------------------------------------
+
+The outstanding equity of the parent consists solely of common stock. Ownership
+is as follows:
+
+    Shareholder                          Shares        % Ownership
+    ----------------------------------   -----------   -----------
+    Douglas R. Kessler                   4,900,000        49.0%
+    The Kessler Family Trust (2011)      2,400,000        24.0%
+    Margaret L. Ortega                   1,500,000        15.0%
+    Steven P. Halloran                     700,000         7.0%
+    RES Employee Stock Ownership Trust     500,000         5.0%
+    ----------------------------------   -----------   -----------
+    Total                               10,000,000       100.0%
+
+No shareholder agreement, voting trust or similar arrangement affecting the
+equity of the parent has been located, other than (i) a buy-sell agreement dated
+2004 among certain shareholders and (ii) the transfer restrictions contained in
+the Company's organizational documents.
+
+--------------------------------------------------------------------------------
+5. INTELLECTUAL PROPERTY OWNERSHIP
+--------------------------------------------------------------------------------
+
+The Company's proprietary operational software platform, RidgeTrack, was
+developed internally by Company employees and is owned and used by the Company
+in its operations. No U.S. copyright registration has been obtained with respect
+to RidgeTrack. Ownership of development work product is addressed through the
+Company's employment arrangements with its personnel.
+
+--------------------------------------------------------------------------------
+6. OTHER OWNERSHIP MATTERS
+--------------------------------------------------------------------------------
+
+    6.1  The Company holds no equity interests in any entity other than the
+         subsidiaries listed above.
+
+    6.2  No subsidiary holds any equity interest in the parent or in any other
+         subsidiary other than as shown above.
+
+    6.3  The Company's interests in joint ventures, if any, are de minimis or
+         none.
+
+--------------------------------------------------------------------------------
+7. OFFICERS AND KEY MANAGEMENT
+--------------------------------------------------------------------------------
+
+    Name                    Title
+    ----------------------  ------------------------------------------
+    Douglas R. Kessler      Chief Executive Officer
+    Margaret L. Ortega      Chief Operating Officer
+    Anthony R. Boyle        Chief Financial Officer
+    Cynthia M. Reyes        Vice President, Operations
+    Grant T. Whitmore       Vice President, Business Development
+
+[End of Organizational Chart and Equity Structure.]

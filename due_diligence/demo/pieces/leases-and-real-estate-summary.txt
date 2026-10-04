@@ -1,0 +1,169 @@
+================================================================================
+                 LEASES AND REAL ESTATE SUMMARY
+                 Rocky Environmental Services, Inc. ("RES")
+                 Prepared for Project Ridgeline diligence
+                 Date: January 8, 2025
+================================================================================
+
+This schedule summarizes the owned and leased real property used by Rocky
+Environmental Services, Inc. and its subsidiaries as of the date hereof. Where
+available, lease document references and recorded instruments are identified.
+Copies of the referenced documents are included in the data room under the
+"Real Estate" tab.
+
+--------------------------------------------------------------------------------
+1. PORTFOLIO SUMMARY
+--------------------------------------------------------------------------------
+
+    #   Facility / Use                     City, State        Tenure
+    --  ---------------------------------  -----------------  ----------
+    1   Corporate HQ & Field Operations    Salt Lake City, UT Leased
+    2   Salt Lake City Transfer Station    Salt Lake City, UT Leased
+    3   Grand Junction Industrial Yard     Grand Junction, CO Owned
+    4   Casper Field Services              Casper, WY         Leased
+    5   Idaho Falls Field Office           Idaho Falls, ID    Leased
+    6   Elko Field Office                  Elko, NV           Leased
+    7   Rifle Equipment Yard               Rifle, CO          Leased
+    8   Billings Field Office              Billings, MT       Leased
+
+--------------------------------------------------------------------------------
+2. OWNED PROPERTY
+--------------------------------------------------------------------------------
+
+2.1  Grand Junction Industrial Yard
+     Address:        4820 Highway 6 & 50, Grand Junction, Colorado 81505
+     Parcel:         Mesa County APN 2701-XXX-XX-XXX
+     Size:           Approximately 9.5 acres; shop (approx. 22,000 sq. ft.),
+                     maintenance building (approx. 8,500 sq. ft.) and paved yard
+     Acquired:       December 2009 (purchased; subsequently improved)
+     Encumbrance:    Deed of trust in favor of High Plains Bank, N.A. securing
+                     the Credit Agreement dated January 17, 2023.
+
+     Valuation. Based on an appraisal prepared by High Country Valuation Group,
+     LLC dated November 30, 2022, the Grand Junction property was appraised at a
+     market value of $6,800,000. The appraisal was prepared for financing
+     purposes. Management is not aware of any material change in the physical
+     condition or use of the property since the date of the appraisal.
+
+     Environmental. The property has historically been used for equipment
+     storage, maintenance and field-service staging. Environmental matters
+     relating to this property are addressed in the environmental permit and
+     compliance schedule and in the Phase II environmental site assessment
+     executive summary included in the data room.
+
+--------------------------------------------------------------------------------
+3. LEASED PROPERTIES
+--------------------------------------------------------------------------------
+
+3.1  Corporate HQ & Field Operations
+     Address:        3480 South Commerce Way, Suite 200, Salt Lake City, UT 84104
+     Landlord:       Commerce Way Associates, LLC
+     Lease Date:     April 1, 2019
+     Term:           April 1, 2019 - March 31, 2029 (10 years)
+     Base Rent:      $22.50 / sq. ft. / yr. (approx. 34,000 sq. ft.)
+     Notes:          Standard commercial lease with one (1) five-year renewal
+                     option. Contains customary assignment and subletting
+                     provisions requiring landlord consent (not to be
+                     unreasonably withheld).
+
+3.2  Salt Lake City Transfer Station (2100 West North Temple)
+     Address:        2100 West North Temple, Salt Lake City, UT 84116
+     Landlord:       Wasatch Industrial Properties, LLC
+     Lease Date:     June 1, 2018
+     Original Tenant: Pinnacle Waste Solutions, LLC
+     Term:           June 1, 2018 - May 31, 2028 (10 years, with one (1)
+                     five-year renewal option)
+     Base Rent:      $18.75 / sq. ft. / yr. (approx. 18,500 sq. ft. of building;
+                     paved transfer yard approximately 2.2 acres)
+     Notes:          See Section 4 below.
+
+3.3  Casper Field Services
+     Address:        1350 Bryan Stock Trail, Casper, WY 82601
+     Landlord:       Casper Business Park, LLC
+     Lease Date:     September 1, 2020
+     Term:           September 1, 2020 - August 31, 2025
+     Base Rent:      $12,400 / month
+
+3.4  Idaho Falls Field Office
+     Address:        2945 East Lincoln Road, Idaho Falls, ID 83401
+     Landlord:       Snake River Industrial, LLC
+     Lease Date:     March 15, 2021
+     Term:           Month-to-month following initial one-year term
+     Base Rent:      $6,200 / month
+
+3.5  Elko Field Office
+     Address:        3920 Idaho Street, Elko, NV 89801
+     Landlord:       Ruby Mountain Holdings, LLC
+     Lease Date:     July 1, 2021
+     Term:           July 1, 2021 - June 30, 2026
+     Base Rent:      $7,800 / month
+
+3.6  Rifle Equipment Yard
+     Address:        0150 County Road 346, Rifle, CO 81650
+     Landlord:       Garfield County Properties, LLC
+     Lease Date:     May 1, 2019
+     Term:           May 1, 2019 - April 30, 2029
+     Base Rent:      $9,500 / month
+
+3.7  Billings Field Office
+     Address:        5300 Midland Road, Billings, MT 59101
+     Landlord:       Yellowstone Commercial, LLC
+     Lease Date:     October 1, 2022
+     Term:           October 1, 2022 - September 30, 2027
+--------------------------------------------------------------------------------
+4. SALT LAKE CITY TRANSFER STATION - ASSIGNMENT AND CHANGE OF CONTROL
+--------------------------------------------------------------------------------
+
+4.1  The lease for the Salt Lake City transfer station located at 2100 West
+     North Temple was originally executed on June 1, 2018 by Wasatch Industrial
+     Properties, LLC, as Landlord, and Pinnacle Waste Solutions, LLC, as Tenant.
+     RES acquired Pinnacle Waste Solutions, LLC in March 2022. The transfer
+     station has been occupied and used for transfer operations by personnel of
+     the RES group since the acquisition.
+
+4.2  A complete historical lease file for the Salt Lake City transfer station
+     has not been located. The Company's files contain the original 2018 lease
+     and amendments through 2021, together with rent invoices addressed to
+     "Pinnacle Waste Solutions, LLC." No assignment, novation or other
+     instrument transferring the tenant's interest in the lease to Rocky
+     Environmental Services, Inc., and no written consent of the Landlord to
+     such a transfer, has been located.
+
+4.3  The lease contains the following provision (summarized):
+
+        "Assignment and Subletting; Change of Control. Tenant shall not
+        assign this Lease or sublet all or any part of the Premises, and
+        shall not permit any transfer of a controlling interest in Tenant
+        (whether by sale of equity, merger, consolidation or otherwise),
+        in each case without the prior written consent of Landlord. Any
+        assignment, sublease or transfer of control effected without such
+        consent shall, at Landlord's option, constitute a default under
+        this Lease. For purposes of this Section, a transfer of a
+        controlling interest in Tenant includes any direct or indirect
+        change in the ownership or control of Tenant, including by
+        operation of a sale of all or substantially all of Tenant's
+        equity or assets or of any parent entity."
+
+4.4  Management has not obtained the Landlord's consent to any assignment of the
+     lease or to the acquisition of Pinnacle Waste Solutions, LLC. Counsel is
+     reviewing whether consent is required in connection with the Transaction.
+     The Landlord has continued to accept rent and has not raised the
+     assignment issue with the Company to date.
+
+--------------------------------------------------------------------------------
+5. OTHER REAL ESTATE NOTES
+--------------------------------------------------------------------------------
+
+5.1  No real property other than the Grand Junction Industrial Yard is owned by
+     RES or its subsidiaries. No title insurance policies or ALTA surveys have
+     been located for any leased property.
+
+5.2  The Grand Junction property secures the obligations of RES under the
+     Credit Agreement with High Plains Bank, N.A. A release of the deed of trust
+     will be required at or prior to closing in connection with the repayment of
+     the Obligations.
+
+5.3  Certain leased locations (Idaho Falls) are occupied on a month-to-month
+     basis following expiration of the initial term.
+
+[End of Real Estate Summary.]

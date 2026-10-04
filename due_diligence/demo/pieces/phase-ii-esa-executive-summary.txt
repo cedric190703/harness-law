@@ -1,0 +1,148 @@
+================================================================================
+          PHASE II ENVIRONMENTAL SITE ASSESSMENT - EXECUTIVE SUMMARY
+================================================================================
+
+     Site:            Grand Junction Industrial Yard
+                      4820 Highway 6 & 50
+                      Grand Junction, Mesa County, Colorado 81505
+
+     Prepared for:    Rocky Environmental Services, Inc.
+
+     Prepared by:     Frontier Geosciences & Environmental, LLC
+                      1450 Larimer Street, Suite 620, Denver, CO 80202
+
+     Report Date:     June 28, 2019
+
+     Project No.:     19-0417
+
+     Report Title:    Phase II Environmental Site Assessment, Grand Junction
+                      Industrial Yard, Grand Junction, Colorado
+
+--------------------------------------------------------------------------------
+1. INTRODUCTION AND PURPOSE
+--------------------------------------------------------------------------------
+
+Frontier Geosciences & Environmental, LLC ("Frontier") was retained by Rocky
+Environmental Services, Inc. ("RES" or the "Company") to conduct a Phase II
+Environmental Site Assessment (the "Phase II ESA") of the Grand Junction
+Industrial Yard located at 4820 Highway 6 & 50, Grand Junction, Colorado (the
+"Site"). The Phase II ESA was performed to evaluate potential soil and
+groundwater impacts identified as recognized environmental conditions in the
+previously completed Phase I Environmental Site Assessment (dated May 2019) and
+to assess the nature and extent of impacted media in areas of historical
+industrial use at the Site.
+
+The Site has been used for industrial purposes for several decades, including
+equipment storage, maintenance and staging, fueling, and the handling of
+regulated and non-regulated materials associated with field operations.
+
+This document is an executive summary of the Phase II ESA report. It is intended
+to be read in conjunction with the full report and its appendices, which are
+included in the data room under the "Environmental" tab.
+
+--------------------------------------------------------------------------------
+2. SUBSURFACE INVESTIGATION SCOPE
+--------------------------------------------------------------------------------
+
+The Phase II ESA scope of work included:
+
+    (a)  advancement of soil borings and collection of soil samples at
+         multiple depths across the yard and near historical fueling, storage
+         and maintenance areas;
+
+    (b)  installation of temporary groundwater monitoring points and collection
+         of groundwater samples;
+
+    (c)  laboratory analysis for volatile organic compounds (VOCs), semi-
+         volatile organic compounds (SVOCs), total petroleum hydrocarbons (TPH),
+         polychlorinated biphenyls (PCBs) and select metals, as appropriate to
+         the historical uses identified; and
+
+    (d)  a screening-level comparison of analytical results to applicable
+         Colorado soil and groundwater standards.
+
+--------------------------------------------------------------------------------
+3. FINDINGS
+--------------------------------------------------------------------------------
+
+3.1  Soil. Analytical results indicate the presence of constituents in soil
+     above applicable screening levels in several areas of the Site. Constituents
+     detected in the impacted areas are consistent with historical industrial and
+     maintenance activities conducted at the Site.
+
+3.2  Nature of impacts. The historical laboratory data and site conditions
+     evaluated by Frontier are consistent with contamination resulting from
+     gradual releases associated with long-term historical operations, rather
+     than a discrete, sudden or accidental release event. The observed
+     distribution of constituents in soil is consistent with gradual
+     contamination that has occurred over an extended period.
+
+3.3  Groundwater. Groundwater was encountered beneath the Site at depths
+     evaluated during the assessment. Detected constituents and general
+     groundwater conditions suggest that groundwater beneath portions of the
+     Site may be impacted. Frontier recommended additional groundwater
+     characterization to further delineate conditions.
+
+3.4  Potential migration. Based on the conditions observed, there is the
+     potential for contaminant migration beyond the immediate areas of the
+     detected impacts, including through subsurface soils and, potentially,
+     toward groundwater. The extent of migration was not fully delineated by the
+--------------------------------------------------------------------------------
+4. ESTIMATED REMEDIATION COSTS
+--------------------------------------------------------------------------------
+
+Based on the conditions identified and the remediation assumptions known as of
+June 2019, Frontier estimated the range of costs to implement a program to
+address the identified soil conditions at the Site to be approximately
+$1,800,000 to $2,600,000.
+
+That estimate was based on the information, conditions and assumptions known at
+the time the Phase II ESA was prepared, including:
+
+    (a)  the nature and extent of contamination identified as of the assessment
+         date;
+
+    (b)  assumptions regarding the potential for contaminant migration and the
+         area of impacted media requiring management;
+
+    (c)  assumed groundwater conditions and the potential scope of any
+         groundwater management activities;
+
+    (d)  assumed excavation, handling, transportation and off-site disposal
+         costs for impacted media, including landfill tipping fees; and
+
+    (e)  then-applicable federal, state and local regulatory requirements and
+         agency expectations.
+
+The estimate did not reflect, and did not attempt to predict, potential changes
+in conditions, contaminant migration, disposal costs, regulatory requirements
+or remediation approaches that could arise after the date of the assessment.
+No updated or current remediation cost estimate has been prepared for the Site.
+
+--------------------------------------------------------------------------------
+5. RECOMMENDATIONS
+--------------------------------------------------------------------------------
+
+Frontier recommended that RES (i) perform additional delineation of soil impacts,
+(ii) conduct further groundwater characterization, (iii) evaluate remediation
+alternatives with respect to the identified conditions, and (iv) maintain
+appropriate regulatory coordination. The recommendations were provided for
+planning purposes.
+
+--------------------------------------------------------------------------------
+6. RELIANCE AND LIMITATIONS
+--------------------------------------------------------------------------------
+
+This executive summary and the underlying Phase II ESA were prepared for the
+exclusive use and benefit of Rocky Environmental Services, Inc., and are subject
+to the limitations, qualifications and assumptions set forth in the full report.
+No party other than the Company is entitled to rely on the report without the
+express written consent of Frontier and the Company.
+
+     Note: No Phase II Environmental Site Assessment has been performed at the
+     Grand Junction Industrial Yard since the June 2019 assessment. The
+     Company's environmental remediation accrual, which is maintained across
+     all facilities, is described in the environmental permits and compliance
+     schedule and in the quality of earnings response included in the data room.
+
+[End of Phase II Executive Summary.]

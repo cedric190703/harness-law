@@ -1,0 +1,188 @@
+================================================================================
+                     INSURANCE PROGRAM SUMMARY
+                     Rocky Environmental Services, Inc. ("RES")
+                     Policy Year: 2024-2025
+                     Prepared: January 8, 2025
+================================================================================
+
+This summary describes the material insurance policies maintained by Rocky
+Environmental Services, Inc. and its subsidiaries as of the date hereof.
+Coverage summaries are provided for diligence purposes and do not amend,
+supersede or replace the terms of the underlying policies. Copies of the
+underlying policies are included in the data room under the "Insurance" tab.
+
+--------------------------------------------------------------------------------
+1. PROGRAM OVERVIEW
+--------------------------------------------------------------------------------
+
+    Line of Coverage            Insurer                    Limit
+    --------------------------  -------------------------  ------------------
+    Commercial General          Granite Peak Insurance     $1,000,000 occ.
+    Liability (CGL)             Company                    $2,000,000 agg.
+    Commercial Auto             Granite Peak Insurance     $1,000,000 CSL
+                                Company
+    Workers' Compensation       State Compensation Fund /  Statutory
+                                Granite Peak Insurance
+    Umbrella / Excess           Cascade National           $25,000,000
+                                Assurance Corp.            (each occ./agg.)
+    Property (All Risk)         Sentinel Mutual            $28,000,000
+                                Insurance
+    Environmental / Pollution   American Environmental     $10,000,000
+    Liability (EIL) /            Indemnity Company          (each loss)
+    Contractors Pollution
+    Directors' & Officers       Lakeside Specialty         $10,000,000
+    (D&O)                       Insurance
+
+--------------------------------------------------------------------------------
+2. COMMERCIAL GENERAL LIABILITY (CGL)
+--------------------------------------------------------------------------------
+
+    Insurer:            Granite Peak Insurance Company
+    Policy No.:         GP-CGL-2024-04417
+    Policy Period:      July 1, 2024 - July 1, 2025
+    Limits:             $1,000,000 each occurrence; $2,000,000 general aggregate;
+                        $2,000,000 products-completed operations aggregate;
+                        $100,000 fire damage; $10,000 medical expense
+    Deductible/SIR:     $25,000 per occurrence
+    Coverage:           Bodily injury and property damage liability arising from
+                        the Company's premises, operations, products and
+                        completed operations. Includes contractors' liability,
+                        explosion, collapse and underground (XCU) coverage
+                        where indicated by endorsement.
+    Exclusions (sel.):  Pollution (limited and as modified by endorsement);
+                        professional services; auto; workers' compensation.
+
+--------------------------------------------------------------------------------
+3. COMMERCIAL AUTO
+--------------------------------------------------------------------------------
+
+    Insurer:            Granite Peak Insurance Company
+    Policy No.:         GP-AUTO-2024-04418
+    Policy Period:      July 1, 2024 - July 1, 2025
+    Limits:             $1,000,000 combined single limit (owned, hired,
+                        non-owned); $5,000 medical payments
+    Deductible:         $10,000 comprehensive / $25,000 collision
+    Coverage:           Liability and physical damage for the Company's owned,
+                        hired and non-owned vehicles and trailers.
+
+--------------------------------------------------------------------------------
+4. WORKERS' COMPENSATION
+--------------------------------------------------------------------------------
+
+    Insurer:            Granite Peak Insurance Company / State Compensation Fund
+    Policy No.:         GP-WC-2024-04419
+    Policy Period:      July 1, 2024 - July 1, 2025
+    Limits:             Statutory (Part One); $1,000,000 employer's liability
+                        (Parts Two and Three)
+    Coverage:           Statutory workers' compensation and employer's liability
+                        coverage for employees in all states of operation.
+
+--------------------------------------------------------------------------------
+5. UMBRELLA / EXCESS LIABILITY
+--------------------------------------------------------------------------------
+
+    Insurer:            Cascade National Assurance Corp.
+    Policy No.:         CNA-UX-2024-11902
+    Policy Period:      July 1, 2024 - July 1, 2025
+    Limits:             $25,000,000 each occurrence / annual aggregate in excess
+                        of the scheduled underlying policies
+    Underlying:         CGL, Commercial Auto, Employer's Liability
+    Exclusions (sel.):  Follows form to underlying with respect to pollution;
+                        further subject to the absolute pollution exclusion and
+                        any buy-back provided by the underlying EIL policy.
+
+--------------------------------------------------------------------------------
+6. PROPERTY (ALL RISK)
+--------------------------------------------------------------------------------
+
+    Insurer:            Sentinel Mutual Insurance
+    Policy No.:         SM-PROP-2024-77321
+    Policy Period:      July 1, 2024 - July 1, 2025
+    Limits:             $28,000,000 blanket; including real and personal
+                        property, equipment floater and business interruption
+    Deductible:         $50,000 (property); 72-hour waiting period (BI)
+    Coverage:           All-risk property coverage for owned and leased
+                        buildings, contents, and scheduled vehicles and
+--------------------------------------------------------------------------------
+7. ENVIRONMENTAL / POLLUTION LIABILITY (EIL / CONTRACTORS POLLUTION)
+--------------------------------------------------------------------------------
+
+    Insurer:            American Environmental Indemnity Company
+    Policy No.:         AEI-EIL-2024-44012
+    Policy Period:      July 1, 2024 - July 1, 2025
+    Coverage Form:      Combined Environmental Impairment Liability and
+                        Contractors Pollution Liability
+    Limits:             $10,000,000 each loss; $10,000,000 policy aggregate
+    Self-Insured        $100,000 each loss (claims-made basis)
+    Retention:
+    Coverage:           Third-party liability for bodily injury, property
+                        damage and environmental remediation costs arising from
+                        pollution conditions caused by the insured, including
+                        sudden and accidental releases and certain gradual
+                        conditions as expressly provided by the policy.
+    Claims Basis:       Claims-made and reported.
+
+    Key Exclusions and Limitations (summarized):
+
+        (a)  Known Conditions. The policy does not provide coverage for any
+             pollution condition, contamination, release or threatened release
+             that was known to any insured prior to the policy inception date,
+             or that is described in any notice, report or other document
+             furnished to the insurer.
+
+        (b)  Gradual Contamination at Owned Facilities. The policy excludes
+             coverage for, and does not insure any liability, loss, cost or
+             expense arising out of or in connection with, any gradual
+             contamination, gradual pollution, gradual release or gradual
+             seepage, migration or discharge of pollutants, contaminants or
+             hazardous substances at or from any location or facility that is
+             owned, leased or operated by any insured. For the avoidance of
+             doubt, coverage is not provided for remediation of, or liability
+             arising from, pre-existing or gradual contamination originating at
+             owned locations, including contamination attributable to historical
+             operations. Coverage under this policy is limited to pollution
+             conditions arising from the insured's operations that are not
+             otherwise excluded, as further set forth in the policy.
+
+        (c)  Prior Acts / Retroactive Date. Coverage applies only to pollution
+             conditions that commence on or after the retroactive date of
+             July 1, 2019, subject to the terms of the policy.
+
+        (d)  Other standard exclusions, including contractual liability
+             assumed, fines and penalties (except defense costs where covered),
+             and asbestos.
+
+--------------------------------------------------------------------------------
+8. DIRECTORS' AND OFFICERS' LIABILITY (D&O)
+--------------------------------------------------------------------------------
+
+    Insurer:            Lakeside Specialty Insurance
+    Policy No.:         LSI-DO-2024-88130
+    Policy Period:      July 1, 2024 - July 1, 2025
+    Limits:             $10,000,000 (Side A/B/C)
+    Retention:          $250,000 (company reimbursement / entity cover); $0
+                        Side A
+    Coverage:           Management liability coverage for the Company's
+                        directors and officers and entity securities claims.
+    Notes:              The policy contains change-of-control provisions
+                        customary for a transaction of this type. Coverage for
+                        wrongful acts occurring prior to a change of control
+                        continues for the applicable run-off period as provided
+                        in the policy.
+
+--------------------------------------------------------------------------------
+9. GENERAL NOTES
+--------------------------------------------------------------------------------
+
+    9.1  All policies are subject to their terms, conditions, exclusions,
+         limitations, deductibles and retentions. This summary is qualified in
+         its entirety by the underlying policies.
+
+    9.2  The Company maintains limits that management believes are customary and
+         adequate for a business of its size and risk profile.
+
+    9.3  Notice. The Company has provided notice of claims and circumstances to
+         applicable insurers in the ordinary course where it has determined that
+         notice is appropriate under the policies.
+
+[End of Insurance Program Summary.]

@@ -1,0 +1,153 @@
+================================================================================
+              ENVIRONMENTAL PERMITS AND COMPLIANCE SCHEDULE
+              Rocky Environmental Services, Inc. ("RES")
+              Prepared for Project Ridgeline diligence
+              Date: January 8, 2025
+================================================================================
+
+This schedule identifies material environmental permits, approvals and related
+compliance items for the facilities and operations of Rocky Environmental
+Services, Inc. and its subsidiaries. Permit references and agency tracking
+numbers are provided where available. Copies of issued permits are included in
+the data room under the "Environmental" tab.
+
+--------------------------------------------------------------------------------
+1. HAZARDOUS WASTE PERMITS
+--------------------------------------------------------------------------------
+
+1.1  Utah - Salt Lake City Transfer Station
+     Permit No.:            UTH-0441
+     Facility:              Salt Lake City Transfer Station
+                            2100 West North Temple, Salt Lake City, UT 84116
+     Permit Holder:         Pinnacle Waste Solutions, LLC
+     Issuing Agency:        Utah Department of Environmental Quality (UDEQ),
+                            Division of Waste Management and Radiation Control
+     Regulatory Basis:      Utah Administrative Code R315-3 (Hazardous Waste
+                            Management), including R315-3-3 through R315-3-5
+                            (permit requirements and permit modifications), and
+                            applicable provisions of 40 C.F.R. Part 270 as
+                            incorporated by reference.
+     Permit Type:           Hazardous waste transfer/storage facility permit
+     Issued:                February 14, 2019
+     Expiration:            February 13, 2029
+     Status:                Active. Records reflect that the permit currently
+                            remains in the name of Pinnacle Waste Solutions,
+                            LLC. No final, formally issued permit transfer or
+                            reissuance to Rocky Environmental Services, Inc. has
+                            been located in the Company's files or in agency
+                            records reviewed to date.
+
+     Note: RES acquired Pinnacle Waste Solutions, LLC in March 2022. The Salt
+     Lake City transfer station has been operated under the existing permit by
+     personnel of the RES group since that time. The Company's environmental
+     staff report that agency correspondence and periodic compliance submittals
+     have been made under the existing permit number. The Company's files do not
+     contain a final permit modification or transfer reflecting RES as the
+     permit holder.
+
+     Under R315-3 and applicable permitting practice, a change in the ownership
+     or operational control of a permitted hazardous waste facility is generally
+     addressed through permit modification procedures, and the manner in which
+     such changes are documented can vary. The Company has not requested
+     confirmatory written guidance from the agency regarding the current
+     registration of this permit.
+
+1.2  Wyoming - Casper Facility
+     Permit No.:            WY-HW-2019-033
+     Facility:              Casper Field Services / Storage Yard
+                            1350 Bryan Stock Trail, Casper, WY 82601
+     Permit Holder:         Rocky Environmental Services, Inc.
+     Issuing Agency:        Wyoming Department of Environmental Quality (WDEQ),
+                            Solid and Hazardous Waste Division
+     Regulatory Basis:      Wyoming Hazardous Waste Rules, Chapter 3; 40 C.F.R.
+                            Parts 260-270 as incorporated.
+     Issued:                December 1, 2019
+     Expiration:            November 30, 2024
+     Renewal Application:   Timely filed October 15, 2024 (i.e., on or before
+                            the expiration date and within any applicable
+                            filing window). Under the agency's timely-renewal
+                            practice and applicable continuation rules, the
+                            permit continues in effect, and the facility may
+                            continue authorized operations, while the renewal
+                            application is pending agency processing.
+     Status:                Renewal pending; operations continuing under the
+                            timely-filed renewal application.
+
+--------------------------------------------------------------------------------
+2. AIR PERMITS
+--------------------------------------------------------------------------------
+
+2.1  Utah - Salt Lake City Transfer Station
+     Permit No.:            UTH-AIR-0712
+     Permit Holder:         Pinnacle Waste Solutions, LLC
+     Description:           Minor source permit for miscellaneous emissions
+                            associated with transfer operations.
+     Expiration:            June 30, 2027
+     Status:                Active.
+
+2.2  Colorado - Grand Junction Industrial Yard
+     Permit No.:            CO-GJ-AP-2210
+     Permit Holder:         Rocky Environmental Services, Inc.
+     Description:           Permit for shop operations and associated emissions.
+--------------------------------------------------------------------------------
+3. STORMWATER AND WATER PERMITS
+--------------------------------------------------------------------------------
+
+3.1  Multi-Sector General Permit (MSGP) / State Equivalents
+     The Company maintains industrial stormwater coverage for its yard and
+     transfer facilities in Utah, Colorado, Wyoming, Idaho, Nevada and Montana,
+     including coverage under the U.S. EPA Multi-Sector General Permit for
+     Stormwater Discharges Associated with Industrial Activity and applicable
+     state-issued general permits. Stormwater Pollution Prevention Plans (SWPPPs)
+     are maintained for each covered facility.
+
+3.2  Utah - Salt Lake City Transfer Station
+     Stormwater Coverage:   Utah MSGP (state-issued general permit)
+     Reference:             UTR-Coverage-XXXX (transfer station sector)
+     Status:                Active.
+
+--------------------------------------------------------------------------------
+4. TRANSPORTATION AND WASTE HANDLING AUTHORIZATIONS
+--------------------------------------------------------------------------------
+
+4.1  The Company maintains hazardous and non-hazardous waste transporter
+     registrations and USDOT registrations for its fleet to operate in the
+     states in which it provides transportation services, including Utah,
+     Colorado, Wyoming, Idaho, Nevada and Montana.
+
+4.2  The Company maintains a valid EPA Identification (EPA ID) Number for each
+     facility that generates, transports, treats, stores or disposes of
+     hazardous waste, and utilizes authorized treatment, storage and disposal
+     facilities (TSDFs) for off-site disposal.
+
+--------------------------------------------------------------------------------
+5. COMPLIANCE HISTORY AND NOTES
+--------------------------------------------------------------------------------
+
+5.1  General. The Company's EHS department maintains a compliance calendar,
+     conducts periodic facility audits, provides employee training, and tracks
+     regulatory inspections and correspondence. The Company believes its
+     operations are conducted in substantial compliance with applicable
+     environmental requirements.
+
+5.2  Agency correspondence. From time to time, the Company receives inspection
+     reports, information requests and notices from environmental agencies in
+     the ordinary course. Certain regulatory matters are separately summarized in
+     the litigation and regulatory matters schedule included in the data room.
+
+5.3  Salt Lake City transfer station. Agency correspondence relating to the
+     transfer station during the period since the Pinnacle acquisition has been
+     addressed under permit number UTH-0441. The Company is reviewing the
+     documentation of the permit holder of record in connection with the
+     Transaction.
+
+5.4  Wyoming Casper facility. The pending renewal of permit WY-HW-2019-033 is
+     being handled in the ordinary course. The Company is not aware of any
+     compliance issue affecting the facility's ability to continue operations
+     during the renewal process.
+
+5.5  Remediation accrual. The Company maintains an environmental remediation
+     accrual of approximately $3,200,000 across all facilities combined, which
+     management believes is adequate for its currently identified obligations.
+
+[End of Environmental Permits and Compliance Schedule.]

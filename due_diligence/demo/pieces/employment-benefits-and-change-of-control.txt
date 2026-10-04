@@ -1,0 +1,162 @@
+================================================================================
+     EMPLOYMENT, EMPLOYEE BENEFITS, LABOR AND CHANGE-OF-CONTROL SCHEDULE
+     Rocky Environmental Services, Inc. ("RES")
+     Prepared for Project Ridgeline diligence
+     Date: January 8, 2025
+================================================================================
+
+This schedule summarizes certain employment, employee benefits, labor relations
+and executive compensation matters relating to Rocky Environmental Services,
+Inc. and its subsidiaries. Copies of the underlying plans, agreements and
+notices are included in the data room under the "Employment" tab.
+
+--------------------------------------------------------------------------------
+1. WORKFORCE SUMMARY
+--------------------------------------------------------------------------------
+
+    -  Total employees: approximately 410
+    -  Field technicians and operators: approximately 300
+    -  Administrative and support: approximately 60
+    -  Management and supervisory: approximately 50
+    -  States of employment: Utah, Colorado, Wyoming, Idaho, Nevada, Montana
+
+The Company's workforce is non-union as of the date hereof, subject to the
+pending representation petition described in Section 5.
+
+--------------------------------------------------------------------------------
+2. EXECUTIVE EMPLOYMENT AND RETENTION
+--------------------------------------------------------------------------------
+
+The Company has entered into employment agreements with each of its executive
+officers. Each executive employment agreement contains customary terms regarding
+base salary, bonus, benefits, confidentiality, non-competition, non-solicitation
+and severance. Certain agreements provide for enhanced payments upon a
+termination of employment in connection with a change of control, described in
+Section 6.
+
+--------------------------------------------------------------------------------
+3. EMPLOYEE BENEFITS
+--------------------------------------------------------------------------------
+
+The Company sponsors the following employee benefit plans:
+
+    (a)  a safe harbor 401(k) retirement plan (the "401(k) Plan");
+
+    (b)  group health, dental and vision plans;
+
+    (c)  group life and AD&D insurance;
+
+    (d)  short-term and long-term disability plans;
+
+    (e)  flexible spending and health savings accounts; and
+
+    (f)  other customary fringe benefits.
+
+--------------------------------------------------------------------------------
+4. 401(K) PLAN
+--------------------------------------------------------------------------------
+
+    4.1  Plan name:           Rocky Environmental Services, Inc. 401(k) Plan
+    4.2  Plan type:           Safe harbor 401(k) plan (matched)
+    4.3  Plan Year:           Calendar year (January 1 - December 31)
+    4.4  Safe harbor match:   The Plan provides a safe harbor matching
+                              contribution under the basic matching formula.
+    4.5  Safe harbor notice:  A safe harbor notice is provided to eligible
+                              employees within the applicable period prior to
+                              the beginning of each Plan Year.
+    4.6  Suspension of match: Employer matching contributions under the Plan were
+                              suspended for the period from January 2023 through
+                              June 2023. The suspension was communicated to
+                              participants and reflected administratively in
+                              payroll and plan records. Employer matching
+                              contributions resumed in July 2023.
+
+    4.7  Administrative Note: The Plan documents and administrator records are
+         provided in the data room. The Company has not obtained a
+         determination letter specifically addressing the mid-year suspension of
+         safe harbor matching contributions, and the Company is reviewing the
+--------------------------------------------------------------------------------
+5. LABOR RELATIONS - PENDING REPRESENTATION PETITION
+--------------------------------------------------------------------------------
+
+    5.1  On November 4, 2024, a representation (election) petition was filed
+         with the National Labor Relations Board ("NLRB") seeking to represent a
+         unit of the Company's field technicians.
+
+    5.2  Petition details (as filed):
+         -  Filing date:             November 4, 2024
+         -  Affected employees:      62 field technicians
+         -  Locations:               Grand Junction, Colorado and Casper, Wyoming
+         -  Petitioner:              A labor organization
+         -  Proposed unit:           Field technicians at the specified
+                                     locations
+         -  Status:                  Petition pending; the regional office is
+                                     processing the petition, including any
+                                     issues relating to the appropriate unit and
+                                     eligibility.
+
+    5.3  The Company is participating in the NLRB process in the ordinary course
+         and is providing information requested by the regional office. The
+         Company's response to the organizing effort is being handled in
+         accordance with applicable law. The outcome of the petition process is
+         not yet determined, and no collective bargaining agreement is currently
+         in place with respect to the affected employees.
+
+    5.4  The Company's workforce was non-union prior to the filing of the
+         petition.
+
+--------------------------------------------------------------------------------
+6. EXECUTIVE CHANGE-OF-CONTROL SEVERANCE
+--------------------------------------------------------------------------------
+
+    6.1  Each of the Company's executive officers is party to an employment
+         agreement or change-of-control agreement providing for severance and
+         related payments upon certain qualifying terminations of employment in
+         connection with, or within a specified period following, a change of
+         control of the Company. The Transaction, if consummated, would
+         constitute a change of control for purposes of these agreements, and
+         the payments below are or may become payable to the affected executives
+         in connection with the Transaction.
+
+    6.2  The potential payments to the Company's executive officers are
+         summarized below:
+
+         Officer                      Title                 Potential Payment
+         ---------------------------  --------------------  -----------------
+         Douglas R. Kessler           CEO                   $1,312,500
+         Margaret L. Ortega           COO                   $1,312,500
+         Anthony R. Boyle             CFO                   $  425,000
+         Cynthia M. Reyes             VP Operations         $  375,000
+         Grant T. Whitmore            VP Business           $  350,000
+                                      Development
+         ---------------------------  --------------------  -----------------
+         Total                                              $3,775,000
+
+    6.3  The payments above represent the aggregate potential amounts payable to
+         the five executives, including severance, bonus and related amounts, in
+         each case in connection with the Transaction or a qualifying
+         termination of employment related thereto, as applicable. The actual
+         amounts payable will depend on the terms of the applicable agreements
+         and whether the specified triggering events occur.
+
+    6.4  The Company has not determined how the amounts described in this
+         Section will be characterized for purposes of the Transaction.
+
+--------------------------------------------------------------------------------
+7. OTHER EMPLOYMENT MATTERS
+--------------------------------------------------------------------------------
+
+    7.1  The Company is not aware of any material employment litigation,
+         discrimination claims, wage-and-hour claims or governmental employment
+         investigations, other than routine matters arising in the ordinary
+         course.
+
+    7.2  The Company maintains workers' compensation insurance as described in
+         the insurance program summary.
+
+    7.3  Certain employees are party to confidentiality, non-competition and
+         non-solicitation agreements, and the Company's personnel are subject to
+         confidentiality obligations relating to the Company's proprietary
+         information and systems.
+
+[End of Employment, Benefits, Labor and Change-of-Control Schedule.]

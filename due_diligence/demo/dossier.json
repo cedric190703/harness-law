@@ -1,0 +1,103 @@
+{
+  "title": "Projet Ridgeline",
+  "client": "Équipe acquéreur",
+  "as_of": "2025-01-08",
+  "scope": "Exemple de revue partielle du financement, des contentieux et des contrats commerciaux.",
+  "limitations": [
+    "Démonstration : trois constats préparés à partir des pièces fournies, sans analyse automatique du reste de la data room.",
+    "Les fichiers sont des textes et synthèses. Les références sont des lignes, pas des pages originales.",
+    "Les signatures, l’exhaustivité des contrats et la situation postérieure au 8 janvier 2025 ne sont pas vérifiées.",
+    "Aucune pièce non consultée ne doit être interprétée comme exempte de risque."
+  ],
+  "documents": {
+    "credit-agreement.txt": {
+      "decision": "retenue",
+      "reason": "Source de travail retenue sous réserve de l’original complet signé",
+      "sha256": "f80ed66a78db0791d1442a65aedccd800ce869414d84bbcf1b0de86e23138441"
+    },
+    "material-customer-contracts.txt": {
+      "decision": "retenue",
+      "reason": "Source de travail retenue sous réserve de l’original complet signé",
+      "sha256": "cc54303be275d63c490320a004d97607343dd5fb0ea34119d9382cc7d3c0093d"
+    },
+    "litigation-and-regulatory-matters.txt": {
+      "decision": "retenue",
+      "reason": "Source de travail retenue sous réserve de l’original complet signé",
+      "sha256": "7f8661c35afe7944f4d2f8bb9f86ae790fb65f759ae182f784bc7468cef5a3e4"
+    }
+  },
+  "findings": [
+    {
+      "id": "DD-001",
+      "topic": "Remboursement lors du changement de contrôle",
+      "workstream": "Financement",
+      "priority": "Élevée",
+      "statement": "Les extraits du crédit prévoient un remboursement intégral des prêts cinq jours ouvrés après un changement de contrôle et l’arrêt immédiat des engagements du prêteur.",
+      "impact": "Le financement de la réalisation doit intégrer le remboursement éventuel. Le montant à décaisser et les consentements disponibles restent à confirmer dans le contrat complet et le décompte du prêteur.",
+      "recommendation": "Obtenir le contrat complet, les avenants et le décompte de remboursement ; faire confirmer par le juriste le consentement bancaire ou le refinancement à prévoir avant la réalisation.",
+      "question": "Merci de fournir le contrat signé et ses avenants, les consentements bancaires et un décompte de remboursement à la date de réalisation.",
+      "selection_reason": "Disposition contractuelle plus précise qu’une présentation générale de la dette ; seules des pages extraites ont été fournies.",
+      "consulted": [
+        "credit-agreement.txt"
+      ],
+      "evidence": [
+        {
+          "path": "credit-agreement.txt",
+          "sha256": "f80ed66a78db0791d1442a65aedccd800ce869414d84bbcf1b0de86e23138441",
+          "clause": "Section 2.06(a) et (b)",
+          "line_start": 157,
+          "line_end": 164,
+          "quote": "(a)  The Borrower shall repay the Loans in full, together with accrued and\n         unpaid interest, all fees and any amounts payable under Section 2.05,\n         on the date that is five (5) Business Days after the occurrence of a\n         Change of Control.\n\n    (b)  Upon and after the occurrence of a Change of Control, the Lender's\n         commitments to make further Loans shall immediately terminate and the\n         Lender shall have no obligation to make any further credit extensions."
+        }
+      ]
+    },
+    {
+      "id": "DD-002",
+      "topic": "Exposition CDPHE contestée et absence de provision spécifique",
+      "workstream": "Contentieux et environnement",
+      "priority": "Élevée",
+      "statement": "Le tableau vendeur présente deux scénarios de pénalité CDPHE : 450 000 USD selon la société et 1 162 500 USD selon l’agence. Il indique qu’aucune provision spécifique n’a été comptabilisée.",
+      "impact": "L’écart entre les scénarios est de 712 500 USD (1 162 500 − 450 000). Il s’agit de positions rapportées par le vendeur, sans décision finale établissant une dette de ce montant.",
+      "recommendation": "Recouper avec les courriers de l’agence et les conseils du vendeur ; soumettre au juriste l’opportunité d’une garantie spécifique ou d’une retenue, sans assimiler automatiquement le plafond allégué à une dette certaine.",
+      "question": "Fournir les courriers CDPHE, la réponse des conseils, l’évaluation actualisée et le traitement comptable de ce dossier.",
+      "selection_reason": "Le tableau contentieux distingue explicitement les deux positions ; la décision de l’agence et les justificatifs comptables ne sont pas fournis dans cette fiche.",
+      "consulted": [
+        "litigation-and-regulatory-matters.txt"
+      ],
+      "evidence": [
+        {
+          "path": "litigation-and-regulatory-matters.txt",
+          "sha256": "7f8661c35afe7944f4d2f8bb9f86ae790fb65f759ae182f784bc7468cef5a3e4",
+          "clause": "Sections 1.7 et 1.8",
+          "line_start": 39,
+          "line_end": 51,
+          "quote": "1.7  Potential penalty. The applicable statutory maximum civil penalty is\n         $37,500 per day of violation. The parties differ in their\n         characterization of the number of days of alleged violation:\n\n           -  The Company's position is that there were 12 violation days,\n              implying an exposure of approximately $450,000 (12 x $37,500).\n\n           -  The CDPHE's position, as most recently communicated, is that there\n              were 31 violation days, implying an exposure of approximately\n              $1,162,500 (31 x $37,500).\n\n    1.8  Reserve. Management has not recorded a specific balance-sheet reserve\n         for the penalties asserted by CDPHE in this matter."
+        }
+      ]
+    },
+    {
+      "id": "DD-003",
+      "topic": "Résiliation discrétionnaire du contrat Consolidated Mining",
+      "workstream": "Contrats commerciaux",
+      "priority": "Modérée",
+      "statement": "Selon la synthèse vendeur, Consolidated Mining peut résilier le contrat ou un ordre de travail pour convenance avec un préavis de soixante jours.",
+      "impact": "La durée de la relation commerciale n’est pas sécurisée par cette seule synthèse. La matérialité doit être appréciée au regard des revenus concernés et du contrat original.",
+      "recommendation": "Obtenir le contrat original et ses avenants ; apprécier la stabilité de la relation et les assurances ou protections de prix pertinentes avec l’équipe de transaction.",
+      "question": "Fournir le MSA CMS-MSA-2019-114 signé, les avenants et les éventuels avis de résiliation ou non-renouvellement.",
+      "selection_reason": "La synthèse fournie contient une description précise de la résiliation ; elle ne remplace pas le contrat sous-jacent auquel elle renvoie.",
+      "consulted": [
+        "material-customer-contracts.txt"
+      ],
+      "evidence": [
+        {
+          "path": "material-customer-contracts.txt",
+          "sha256": "cc54303be275d63c490320a004d97607343dd5fb0ea34119d9382cc7d3c0093d",
+          "clause": "Section 2.2",
+          "line_start": 86,
+          "line_end": 89,
+          "quote": "2.2  Termination for convenience. The customer may terminate the agreement,\n         or any work order issued thereunder, for convenience upon sixty (60)\n         days' prior written notice to the Company. This termination-for-\n         convenience provision is standard for agreements of this type."
+        }
+      ]
+    }
+  ]
+}

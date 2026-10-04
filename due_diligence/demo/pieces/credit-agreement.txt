@@ -1,0 +1,251 @@
+================================================================================
+                SENIOR SECURED CREDIT AGREEMENT (EXCERPTS)
+================================================================================
+
+                          Dated as of January 17, 2023
+
+                                     among
+
+                     ROCKY ENVIRONMENTAL SERVICES, INC.,
+                                  as Borrower,
+
+                    CERTAIN SUBSIDIARIES OF THE BORROWER,
+                                as Guarantors,
+
+                                      and
+
+                         HIGH PLAINS BANK, N.A.,
+                                   as Lender
+
+--------------------------------------------------------------------------------
+                              TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+
+ARTICLE I    DEFINITIONS AND ACCOUNTING TERMS
+ARTICLE II   THE COMMITMENTS AND CREDIT EXTENSIONS
+ARTICLE III  TAXES, YIELD PROTECTION AND ILLEGALITY
+ARTICLE IV   CONDITIONS PRECEDENT
+ARTICLE V    REPRESENTATIONS AND WARRANTIES
+ARTICLE VI   AFFIRMATIVE COVENANTS
+ARTICLE VII  NEGATIVE COVENANTS
+ARTICLE VIII EVENTS OF DEFAULT AND REMEDIES
+ARTICLE IX   MISCELLANEOUS
+
+[This document contains selected excerpts of the Credit Agreement and is
+provided for information purposes. Capitalized terms used but not defined herein
+have the meanings given in the Credit Agreement.]
+
+--------------------------------------------------------------------------------
+ARTICLE I - DEFINITIONS AND ACCOUNTING TERMS
+--------------------------------------------------------------------------------
+
+SECTION 1.01  Defined Terms.
+
+"Applicable Margin" means, with respect to SOFR Loans, 2.35% per annum, and with
+respect to Base Rate Loans, 1.35% per annum.
+
+"Borrower" means Rocky Environmental Services, Inc., a Utah corporation.
+
+"Change of Control" means the occurrence of any of the following: (a) any
+"person" or "group" (within the meaning of Sections 13(d) and 14(d) of the
+Securities Exchange Act of 1934) becomes the beneficial owner, directly or
+indirectly, of 35% or more of the equity interests of the Borrower entitled to
+vote for the election of directors; (b) during any period of twelve consecutive
+months, individuals who at the beginning of such period constituted the board of
+directors of the Borrower (together with any new directors whose election or
+nomination was approved by a majority of the directors then in office) cease for
+any reason to constitute a majority of the board of directors of the Borrower;
+or (c) the Borrower ceases to own, directly or indirectly, 100% of the equity
+interests of each of its subsidiaries.
+
+"Commitment" means, collectively, the Revolving Commitment and the Term
+Commitment.
+
+"Guarantors" means each subsidiary of the Borrower that executes a Guaranty,
+including Pinnacle Waste Solutions, LLC.
+
+"Indebtedness" means, as to any Person, all obligations for borrowed money,
+capital lease obligations, and other obligations of such Person evidenced by
+notes, bonds or similar instruments.
+
+"Loan Documents" means this Agreement, the Notes, the Guaranty, the Security
+Documents and each other document executed in connection herewith.
+
+"Obligations" means all advances, debts, liabilities, obligations and covenants
+of the Borrower and the other Loan Parties owing to the Lender under the Loan
+Documents, whether now existing or hereafter arising.
+
+"Revolving Commitment" means the commitment of the Lender to make Revolving
+Loans in an aggregate principal amount not to exceed $15,000,000.
+
+"Term Commitment" means the commitment of the Lender to make the Term Loan on
+the Closing Date in an aggregate principal amount equal to $30,000,000.
+
+"Term Loan Maturity Date" means January 17, 2030.
+
+"Revolving Maturity Date" means January 17, 2028.
+
+--------------------------------------------------------------------------------
+ARTICLE II - THE COMMITMENTS AND CREDIT EXTENSIONS
+--------------------------------------------------------------------------------
+
+SECTION 2.01  The Term Loan.
+
+    (a)  Subject to the terms and conditions set forth herein, the Lender made a
+         single term loan to the Borrower on the Closing Date in the original
+         principal amount of $30,000,000 (the "Term Loan"). The Term Loan was
+         funded in a single drawing on January 17, 2023. Amounts repaid or
+         prepaid in respect of the Term Loan may not be reborrowed.
+
+    (b)  The Term Loan amortizes in equal quarterly installments of $375,000,
+         payable on the last Business Day of each fiscal quarter, commencing
+         March 31, 2023. The remaining unpaid principal balance of the Term Loan
+         is due and payable on the Term Loan Maturity Date.
+
+    (c)  As of December 31, 2024, the outstanding principal balance of the Term
+         Loan was $26,300,000.
+
+SECTION 2.02  The Revolving Loans.
+
+    (a)  Subject to the terms and conditions set forth herein, the Lender agrees
+         to make revolving loans (the "Revolving Loans") to the Borrower from
+         time to time, up to but not exceeding the Revolving Commitment. Amounts
+         borrowed and repaid under the Revolving Loans may be reborrowed.
+
+    (b)  As of December 31, 2024, the outstanding principal balance of the
+         Revolving Loans was $12,400,000.
+
+SECTION 2.03  Interest.
+
+    (a)  The Term Loan and the Revolving Loans bear interest at a rate per annum
+         equal to the applicable SOFR rate plus the Applicable Margin, or at
+         the Borrower's election, the Base Rate plus the Applicable Margin.
+
+    (b)  Interest on the Loans is payable quarterly in arrears on the last
+         Business Day of each fiscal quarter and on each maturity date.
+
+SECTION 2.04  Optional Prepayments.
+
+    (a)  The Borrower may, upon not less than five (5) Business Days' prior
+         written notice to the Lender, prepay the Revolving Loans in whole or in
+         part at any time without premium or penalty (other than customary
+         breakage costs).
+
+    (b)  The Borrower may, upon not less than five (5) Business Days' prior
+         written notice to the Lender, prepay the Term Loan in whole or in part,
+         in each case subject to Section 2.05.
+
+SECTION 2.05  Prepayment Premium.
+
+    (a)  If the Borrower prepays or repays any portion of the Term Loan
+         (whether voluntarily, involuntarily, as a result of acceleration, or
+         otherwise, and including in connection with any repayment required
+         under Section 2.06), the Borrower shall pay to the Lender, concurrently
+         therewith, a prepayment premium equal to 1.00% of the principal amount
+         of the Term Loan then being prepaid or repaid, if such prepayment or
+         repayment occurs on or prior to the third (3rd) anniversary of the
+         Closing Date.
+
+    (b)  No prepayment premium shall be payable in respect of any prepayment or
+         repayment of the Term Loan occurring after the third (3rd) anniversary
+         of the Closing Date.
+
+    (c)  The third (3rd) anniversary of the Closing Date is January 17, 2026.
+
+SECTION 2.06  Mandatory Prepayments; Change of Control.
+
+    (a)  The Borrower shall repay the Loans in full, together with accrued and
+         unpaid interest, all fees and any amounts payable under Section 2.05,
+         on the date that is five (5) Business Days after the occurrence of a
+         Change of Control.
+
+    (b)  Upon and after the occurrence of a Change of Control, the Lender's
+         commitments to make further Loans shall immediately terminate and the
+         Lender shall have no obligation to make any further credit extensions.
+
+    (c)  The Borrower shall give the Lender prompt written notice (and in any
+         event within two (2) Business Days) of the occurrence of any Change of
+         Control or of any event or circumstance that would reasonably be
+         expected to result in a Change of Control.
+
+    (d)  Any repayment required under this Section 2.06 shall be accompanied by
+--------------------------------------------------------------------------------
+ARTICLE VII - NEGATIVE COVENANTS (SELECTED PROVISIONS)
+--------------------------------------------------------------------------------
+
+SECTION 7.01  Indebtedness. The Borrower shall not, and shall not permit any
+subsidiary to, create, incur or assume any Indebtedness, except for Permitted
+Indebtedness.
+
+SECTION 7.02  Liens. The Borrower shall not, and shall not permit any subsidiary
+to, create or permit to exist any Lien on any of its property, except for
+Permitted Liens.
+
+SECTION 7.03  Fundamental Changes. The Borrower shall not, and shall not permit
+any subsidiary to, merge, consolidate, liquidate, dissolve or enter into any
+transaction that results in a Change of Control, except as permitted under the
+Loan Documents.
+
+SECTION 7.04  Financial Covenants. The Borrower shall maintain, as of the last
+day of each fiscal quarter:
+
+    (a)  a maximum Total Leverage Ratio of 3.50 to 1.00; and
+
+    (b)  a minimum Fixed Charge Coverage Ratio of 1.25 to 1.00.
+
+--------------------------------------------------------------------------------
+ARTICLE VIII - EVENTS OF DEFAULT AND REMEDIES
+--------------------------------------------------------------------------------
+
+SECTION 8.01  Events of Default. Each of the following constitutes an Event of
+Default:
+
+    (a)  the Borrower fails to pay any principal of any Loan when due, or fails
+         to pay any interest, fee or other amount within three (3) Business Days
+         after the same becomes due;
+
+    (b)  the Borrower fails to perform or observe any covenant contained in
+         Article VII (other than as a result of a Change of Control permitted by
+         the Lender);
+
+    (c)  any representation or warranty made by any Loan Party proves to have
+         been incorrect in any material respect when made;
+
+    (d)  the occurrence of a Change of Control, subject to the Borrower's
+         repayment obligations under Section 2.06; or
+
+    (e)  the Borrower or any subsidiary becomes subject to any bankruptcy,
+         insolvency or similar proceeding.
+
+SECTION 8.02  Remedies. Upon the occurrence and during the continuance of an
+Event of Default, the Lender may, among other things, declare all Obligations
+immediately due and payable, terminate its commitments, and exercise all rights
+and remedies available under the Loan Documents and applicable law.
+
+--------------------------------------------------------------------------------
+ARTICLE IX - MISCELLANEOUS
+--------------------------------------------------------------------------------
+
+SECTION 9.01  Governing Law. This Agreement is governed by, and construed in
+accordance with, the laws of the State of Utah.
+
+SECTION 9.02  Security. The Obligations are secured by a first-priority security
+interest in substantially all of the Borrower's and the Guarantors' personal
+property, including accounts receivable, inventory, equipment and general
+intangibles, and by a deed of trust on the Borrower's owned real property in
+Grand Junction, Colorado.
+
+--------------------------------------------------------------------------------
+SCHEDULE 1 - OUTSTANDING OBLIGATIONS (as of December 31, 2024)
+--------------------------------------------------------------------------------
+
+    Facility                          Outstanding Principal
+    ------------------------------    ---------------------
+    Revolving Loans                   $ 12,400,000
+    Term Loan                         $ 26,300,000
+    ------------------------------    ---------------------
+    Total Outstanding                 $ 38,700,000
+
+    Accrued and unpaid interest is in addition to the amounts shown above.
+
+[End of excerpts.]
