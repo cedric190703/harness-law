@@ -3,7 +3,7 @@ import { judilibre, legifrance } from "./piste";
 import type { SourceCitee, SourceOfficielle, VersionTexte } from "./types";
 import { normaliser, texteBrut } from "./verbatim";
 
-/** Identifiants Légifrance des codes les plus cités (source : DILA). */
+/** Légifrance ids of the most-cited codes (source: DILA). */
 const CODES: Record<string, string> = {
   civil: "LEGITEXT000006070721",
   penal: "LEGITEXT000006070719",
@@ -54,7 +54,7 @@ export function articleCite(brut: string): string | null {
   return m ? normaliserNumeroArticle(m[1]) : null;
 }
 
-/** Les dates Légifrance arrivent en millisecondes ; 2999 = « sans fin ». */
+/** Légifrance dates arrive in milliseconds; 2999 means “no end date”. */
 function dateIso(d: unknown): string | null {
   if (d === null || d === undefined || d === "") return null;
   const date = typeof d === "number" ? new Date(d) : new Date(String(d));
@@ -245,12 +245,12 @@ function chercherPiece(c: SourceCitee, pieces: Piece[]): SourceOfficielle | null
     pieces.find((p, i) => new RegExp(`\\b(piece|pce|p) (n )?${i + 1}\\b`).test(cible));
   if (!piece) return null;
   return {
-    base: "Dossier",
+    base: "Case file",
     id: piece.nom,
     titre: piece.nom,
     url: null,
     rang: 0,
-    rangLibelle: "Pièce du dossier",
+    rangLibelle: "Document in the case file",
     etat: null,
     date: null,
     texte: piece.texte,
@@ -258,7 +258,7 @@ function chercherPiece(c: SourceCitee, pieces: Piece[]): SourceOfficielle | null
   };
 }
 
-/** Retrouve une source citée dans la base officielle adaptée (ou dans les pièces du dossier). */
+/** Finds a cited source in the right official database (or among the case-file documents). */
 export async function retrouverSource(
   c: SourceCitee,
   pieces: Piece[],

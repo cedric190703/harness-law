@@ -83,19 +83,19 @@ async function preparation() {
   return preparation!;
 }
 
-describe("découpage", () => {
-  test("numérote les affirmations A1, A2…", () => {
+describe("splitting up the answer", () => {
+  test("numbers the statements A1, A2…", () => {
     const { affirmations, erreurs } = validerDecoupage(REPONSE, DECOUPAGE);
     expect(erreurs).toEqual([]);
     expect(affirmations.map((a) => a.id)).toEqual(["A1", "A2", "A3", "A4", "A5", "A6"]);
   });
-  test("refuse un passage reformulé (pas copié de la réponse)", () => {
+  test("rejects a rephrased passage (not copied from the answer)", () => {
     const { erreurs } = validerDecoupage(REPONSE, {
       affirmations: [{ passage: "Le salaire du salarié s'élève à 3 000 euros par mois.", resume: "", sources: [] }],
     });
     expect(erreurs[0]).toContain("A1");
   });
-  test("refuse un type de source inconnu et une date mal formée", () => {
+  test("rejects an unknown source type and a malformed date", () => {
     const { erreurs } = validerDecoupage(REPONSE, {
       date_faits: "03/03/2020",
       affirmations: [
@@ -107,37 +107,37 @@ describe("découpage", () => {
       ],
     });
     expect(erreurs.some((e) => e.includes("doctrine"))).toBe(true);
-    expect(erreurs.some((e) => e.includes("AAAA-MM-JJ"))).toBe(true);
+    expect(erreurs.some((e) => e.includes("YYYY-MM-DD"))).toBe(true);
   });
 });
 
-describe("préparation", () => {
-  test("seules les sources retrouvées avec un texte sont à juger", async () => {
+describe("preparation", () => {
+  test("only sources found with a text are to be judged", async () => {
     const p = await preparation();
     expect(p.elements.filter((e) => e.texteAJuger !== null).map((e) => e.id)).toEqual(["A1-1", "A2-1"]);
   });
-  test("date des faits : saisie > texte > aujourd'hui", async () => {
+  test("date of the facts: entered > text > today", async () => {
     const saisie = await preparer(REPONSE, DECOUPAGE, { titre: "x", dateSaisie: "2019-01-01", pieces: PIECES });
     expect(saisie.preparation?.dateFaits).toBe("2019-01-01");
-    expect(saisie.preparation?.origineDate).toBe("saisie");
+    expect(saisie.preparation?.origineDate).toBe("entered");
     const texte = await preparation();
-    expect(texte.origineDate).toBe("texte");
+    expect(texte.origineDate).toBe("text");
     const inconnue = await preparer(REPONSE, { ...DECOUPAGE, date_faits: null }, {
       titre: "x",
       pieces: PIECES,
       aujourdhui: "2026-10-04",
     });
     expect(inconnue.preparation?.dateFaits).toBe("2026-10-04");
-    expect(inconnue.preparation?.origineDate).toBe("aujourd'hui");
+    expect(inconnue.preparation?.origineDate).toBe("today");
   });
 });
 
-describe("conclusion : sans preuve, rien n'est vert", () => {
-  test("chaque cas reçoit la bonne couleur", async () => {
+describe("conclusion: without evidence, nothing is green", () => {
+  test("each case gets the right colour", async () => {
     const carte = conclure(await preparation(), [SOUTIENT_A1, CONTREDIT_A2], "2026-10-04T12:00:00Z");
     const statut = Object.fromEntries(carte.resultats.map((r) => [r.affirmation.id, r.statut]));
     expect(statut).toEqual({
-      A1: "vert", // pièce retrouvée, extrait mot pour mot, SOUTIENT
+      A1: "vert", // document found, excerpt word for word, SOUTIENT
       A2: "rouge", // la pièce dit le contraire
       A3: "orange", // circulaire : rang inférieur
       A4: "gris", // aucune source citée
@@ -146,26 +146,26 @@ describe("conclusion : sans preuve, rien n'est vert", () => {
     });
     expect(carte.synthese).toEqual({ vert: 1, orange: 1, rouge: 2, gris: 2 });
   });
-  test("un extrait inventé fait écarter le verdict, même SOUTIENT", async () => {
+  test("an invented excerpt sets the verdict aside, even SOUTIENT", async () => {
     const invente = { ...SOUTIENT_A1, extrait: "Le salarié percevra un salaire mensuel brut de 4 500 euros" };
     const carte = conclure(await preparation(), [invente], "2026-10-04T12:00:00Z");
     const a1 = carte.resultats[0];
     expect(a1.statut).toBe("gris");
     expect(a1.verifications[0].jugement?.extraitRetrouve).toBe(false);
   });
-  test("un élément non jugé ou au verdict inconnu reste gris", async () => {
+  test("an unjudged item, or one with an unknown verdict, stays grey", async () => {
     const p = await preparation();
     expect(conclure(p, [], "t").resultats[0].statut).toBe("gris");
     const farfelu = { ...SOUTIENT_A1, verdict: "PEUT_ETRE" as never };
     expect(conclure(p, [farfelu], "t").resultats[0].statut).toBe("gris");
   });
-  test("PARTIEL donne orange", async () => {
+  test("PARTIEL gives orange", async () => {
     const partiel = { ...SOUTIENT_A1, verdict: "PARTIEL" as const, correction: "Brut, pas net." };
     expect(conclure(await preparation(), [partiel], "t").resultats[0].statut).toBe("orange");
   });
 });
 
-describe("réécritures proposées par l'agent", () => {
+describe("rewrites proposed by the agent", () => {
   const PERIODE = {
     id: "A2",
     source: "A2-1",
@@ -173,7 +173,7 @@ describe("réécritures proposées par l'agent", () => {
     extrait: "La période d'essai est fixée à deux mois, renouvelable une fois",
     explication: "Le contrat prévoit deux mois, pas six.",
   };
-  test("chaque orange ou rouge reçoit une proposition ou ce qu'il reste à faire", async () => {
+  test("every orange or red gets a proposal, or what is left to do", async () => {
     const carte = conclure(await preparation(), [SOUTIENT_A1, CONTREDIT_A2], "t", [PERIODE]);
     const r = Object.fromEntries(carte.resultats.map((x) => [x.affirmation.id, x.reecriture ?? null]));
     expect(r.A1).toBeNull(); // vert
@@ -185,14 +185,14 @@ describe("réécritures proposées par l'agent", () => {
     expect(r.A5?.type).toBe("source_a_trouver");
     expect(r.A5?.propose).toBe("Le contrat a été signé le 3 mars 2020 [source à trouver].");
   });
-  test("sans extrait retrouvé mot pour mot, pas de proposition", async () => {
+  test("with no word-for-word excerpt, no proposal", async () => {
     const invente = { ...PERIODE, extrait: "La période d'essai est fixée à deux mois, non renouvelable" };
     const carte = conclure(await preparation(), [SOUTIENT_A1, CONTREDIT_A2], "t", [invente]);
     const a2 = carte.resultats[1].reecriture;
     expect(a2?.type).toBe("a_la_main");
     expect(a2?.propose).toBeNull();
   });
-  test("la carte affiche la réécriture dans les données de la page", async () => {
+  test("the map carries the rewrite in the page data", async () => {
     const html = rendreCarte(conclure(await preparation(), [SOUTIENT_A1, CONTREDIT_A2], "t", [PERIODE]));
     const json = JSON.parse(html.split('<script id="donnees" type="application/json">')[1].split("</script>")[0]);
     expect(json.revisions.A2).toEqual({
@@ -205,7 +205,7 @@ describe("réécritures proposées par l'agent", () => {
   });
 });
 
-describe("version en vigueur à la date des faits", () => {
+describe("version in force at the date of the facts", () => {
   const article: SourceOfficielle = {
     base: "Légifrance",
     id: "LEGIARTI0001",
@@ -222,19 +222,19 @@ describe("version en vigueur à la date des faits", () => {
     ],
   };
   const citee = { brut: "article L. 1235-3", type: "article_code" as const, numero: "L1235-3" };
-  test("faits de 2016 : le texte a changé depuis → orange, version de 2008", () => {
+  test("2016 facts: the text has changed since → orange, the 2008 version", () => {
     const r = controlerDateEtRang(citee, article, "2016-03-15");
     expect(r.version?.debut).toBe("2008-05-01");
     expect(r.controles.find((c) => c.nom === "date")?.statut).toBe("orange");
   });
-  test("faits antérieurs à toute version → rouge", () => {
+  test("facts earlier than any version → red", () => {
     const r = controlerDateEtRang(citee, article, "2001-01-01");
     expect(r.controles.find((c) => c.nom === "date")?.statut).toBe("rouge");
   });
 });
 
-describe("page HTML", () => {
-  test("un passage piégé ne peut pas casser la page", async () => {
+describe("the HTML page", () => {
+  test("a booby-trapped passage cannot break the page", async () => {
     const piege = "Selon la pièce </script><script>alert(1)</script> le salaire est fixé (pièce n° 1).";
     const { preparation: p } = await preparer(
       piege,

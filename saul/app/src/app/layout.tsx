@@ -7,7 +7,7 @@ const serif = Source_Serif_4({ variable: "--font-serif", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Saul — Legal workspace",
-  description: "Pilotez vos agents juridiques, suivez le workflow et remontez aux preuves de chaque section.",
+  description: "Drive your legal agents, follow the workflow, and trace every section back to its evidence.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

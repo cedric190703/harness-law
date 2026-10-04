@@ -2,12 +2,12 @@ import type { Carte } from "./carte";
 import { MENTION, diffMots } from "./correction";
 
 /**
- * La carte des sources en une page HTML autonome (aucune dépendance, ouvrable
- * hors ligne) : les affirmations à gauche, les sources à droite, un lien coloré
- * par vérification. Toutes les données passent par textContent, jamais par innerHTML.
+ * The source map as a self-contained HTML page (no dependency, opens offline):
+ * the statements on the left, the sources on the right, one coloured link per
+ * check. All data goes through textContent, never through innerHTML.
  */
 export function rendreCarte(carte: Carte): string {
-  // Le passage avant / après de chaque réécriture, calculé ici pour que la page n'ait aucune règle à elle.
+  // The before / after of each rewrite, computed here so the page carries no rule of its own.
   const revisions = Object.fromEntries(
     carte.resultats.flatMap((r) =>
       r.reecriture && r.reecriture.propose !== null
@@ -16,9 +16,9 @@ export function rendreCarte(carte: Carte): string {
     ),
   );
   const donnees = JSON.stringify({ ...carte, revisions, mentions: MENTION }).replace(/</g, "\\u003c");
-  const titre = `Carte des sources — ${carte.titre}`.replace(/[<>&"]/g, "");
+  const titre = `Source map — ${carte.titre}`.replace(/[<>&"]/g, "");
   return `<!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,11 +29,11 @@ export function rendreCarte(carte: Carte): string {
 <div class="page">
   <main class="principal">
     <header class="entete" id="entete"></header>
-    <details class="texte" id="texte"><summary>Voir le texte analysé, passages surlignés</summary><div class="texte-corps" id="texte-corps"></div></details>
+    <details class="texte" id="texte"><summary>See the text that was analysed, with the passages highlighted</summary><div class="texte-corps" id="texte-corps"></div></details>
     <div class="carte" id="carte">
-      <section class="colonne" id="col-aff"><h2>Ce que dit l'IA</h2></section>
+      <section class="colonne" id="col-aff"><h2>What the AI says</h2></section>
       <div class="gouttiere" aria-hidden="true"></div>
-      <section class="colonne" id="col-src"><h2>Sources citées</h2></section>
+      <section class="colonne" id="col-src"><h2>Sources cited</h2></section>
       <svg class="liens" id="liens" aria-hidden="true"></svg>
     </div>
     <footer class="pied" id="pied"></footer>
@@ -146,11 +146,13 @@ body { background: var(--fond); color: var(--texte); font: 14px/1.45 system-ui, 
 const JS = `
 (function () {
   var carte = JSON.parse(document.getElementById("donnees").textContent);
-  var LIBELLE_AFF = { vert: "vérifiée", orange: "à revoir", rouge: "fausse", gris: "non vérifiée" };
-  var LIBELLE_SRC = { vert: "retrouvée", orange: "à revoir", rouge: "problème", gris: "non vérifiée" };
-  var LIBELLE_CTRL = { existe: "Existe ?", date: "En vigueur ?", rang: "Rang", contenu: "Dit-elle ça ?" };
+  var LIBELLE_AFF = { vert: "verified", orange: "to review", rouge: "false", gris: "not verified" };
+  var LIBELLE_SRC = { vert: "found", orange: "to review", rouge: "problem", gris: "not verified" };
+  var LIBELLE_CTRL = { existe: "Exists?", date: "In force?", rang: "Rank", contenu: "Says that?" };
+  // The verdict literals stay as the engine records them; they are translated for the reader here.
+  var LIBELLE_VERDICT = { SOUTIENT: "supports it", PARTIEL: "partly", NE_SOUTIENT_PAS: "does not support it", HORS_SUJET: "off the point" };
   var ICONE = { vert: "✓", orange: "!", rouge: "✗", gris: "?" };
-  var TYPE = { article_code: "Article de code", decision: "Décision", loi: "Loi", ordonnance: "Ordonnance", decret: "Décret", arrete: "Arrêté", circulaire: "Circulaire", piece: "Pièce du dossier", autre: "Autre" };
+  var TYPE = { article_code: "Code article", decision: "Decision", loi: "Statute", ordonnance: "Ordinance", decret: "Decree", arrete: "Ministerial order", circulaire: "Circular", piece: "Case-file document", autre: "Autre" };
   var PIRE = ["rouge", "orange", "gris", "vert"];
 
   function el(tag, attrs) {
@@ -172,7 +174,7 @@ const JS = `
   function dateFr(iso) { if (!iso) return "?"; var p = iso.split("-"); return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : iso; }
   function norm(t) { return (t || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(); }
 
-  // Les sources, dédoublonnées : une source citée par plusieurs affirmations n'a qu'un bloc.
+  // Sources, de-duplicated: a source cited by several statements gets one block.
   var sources = [], parCle = {}, liens = [];
   carte.resultats.forEach(function (r) {
     r.verifications.forEach(function (v, j) {
@@ -189,23 +191,23 @@ const JS = `
   });
   sources.forEach(function (s) { s.statut = s.statuts.length ? pire(s.statuts) : "gris"; });
 
-  // En-tête
+  // Header
   var entete = document.getElementById("entete");
   var syn = carte.synthese, n = carte.resultats.length;
-  var origine = carte.origineDate === "saisie" ? "saisie" : carte.origineDate === "texte" ? "trouvée dans le texte" : "inconnue : vérifié à la date du jour";
+  var origine = carte.origineDate === "entered" ? "as entered" : carte.origineDate === "text" ? "found in the text" : "unknown: checked against today";
   entete.appendChild(el("h1", { texte: carte.titre }));
-  entete.appendChild(el("p", { classe: "sous", texte: "Carte des sources · date des faits : " + dateFr(carte.dateFaits) + " (" + origine + ")" }));
-  if (!carte.basesConnectees) entete.appendChild(el("p", { classe: "alerte", texte: "Bases officielles non connectées : les textes de loi et les décisions n'ont pas pu être vérifiés. Ils restent en gris." }));
-  if (carte.origineDate === "aujourd'hui") entete.appendChild(el("p", { classe: "alerte", texte: "Date des faits inconnue : les textes sont contrôlés dans leur version d'aujourd'hui. Relance avec la date des faits pour vérifier la bonne version." }));
+  entete.appendChild(el("p", { classe: "sous", texte: "Source map · date of the facts: " + dateFr(carte.dateFaits) + " (" + origine + ")" }));
+  if (!carte.basesConnectees) entete.appendChild(el("p", { classe: "alerte", texte: "Official databases are not connected: the statutes and decisions could not be checked. They stay grey." }));
+  if (carte.origineDate === "today") entete.appendChild(el("p", { classe: "alerte", texte: "The date of the facts is unknown: texts are checked in today's version. Re-run with the date of the facts to check the right version." }));
   entete.appendChild(el("div", { classe: "compteurs" },
-    el("span", { classe: "compteur" }, el("b", { texte: String(n) }), n > 1 ? "affirmations" : "affirmation"),
-    el("span", { classe: "compteur st-vert" }, el("b", { texte: String(syn.vert), style: "color:var(--c)" }), "vérifiées"),
-    el("span", { classe: "compteur st-orange" }, el("b", { texte: String(syn.orange), style: "color:var(--c)" }), "à revoir"),
-    el("span", { classe: "compteur st-rouge" }, el("b", { texte: String(syn.rouge), style: "color:var(--c)" }), "fausses"),
-    el("span", { classe: "compteur st-gris" }, el("b", { texte: String(syn.gris), style: "color:var(--c)" }), "non vérifiées")
+    el("span", { classe: "compteur" }, el("b", { texte: String(n) }), n > 1 ? "statements" : "statement"),
+    el("span", { classe: "compteur st-vert" }, el("b", { texte: String(syn.vert), style: "color:var(--c)" }), "verified"),
+    el("span", { classe: "compteur st-orange" }, el("b", { texte: String(syn.orange), style: "color:var(--c)" }), "to review"),
+    el("span", { classe: "compteur st-rouge" }, el("b", { texte: String(syn.rouge), style: "color:var(--c)" }), "false"),
+    el("span", { classe: "compteur st-gris" }, el("b", { texte: String(syn.gris), style: "color:var(--c)" }), "not verified")
   ));
   var legende = el("div", { classe: "legende" });
-  [["vert", "", "la source dit bien cela"], ["orange", "", "à revoir"], ["rouge", "6 4", "fausse ou introuvable"], ["gris", "2 4", "non vérifiée"]].forEach(function (l) {
+  [["vert", "", "the source does say this"], ["orange", "", "to review"], ["rouge", "6 4", "false or not found"], ["gris", "2 4", "not verified"]].forEach(function (l) {
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", "0"); line.setAttribute("y1", "4"); line.setAttribute("x2", "28"); line.setAttribute("y2", "4");
@@ -214,35 +216,35 @@ const JS = `
     svg.appendChild(line);
     legende.appendChild(el("span", null, svg, l[2]));
   });
-  legende.appendChild(el("span", { texte: "Survole ou clique un bloc pour suivre ses liens." }));
+  legende.appendChild(el("span", { texte: "Hover or click a block to follow its links." }));
   entete.appendChild(legende);
 
   // Blocs
   var colAff = document.getElementById("col-aff"), colSrc = document.getElementById("col-src");
   var blocsAff = {}, blocsSrc = {};
-  if (n === 0) colAff.appendChild(el("p", { classe: "vide", texte: "Aucune affirmation juridique dans ce texte." }));
+  if (n === 0) colAff.appendChild(el("p", { classe: "vide", texte: "No legal statement in this text." }));
   carte.resultats.forEach(function (r) {
     var a = r.affirmation;
     var b = el("button", { classe: "bloc st-" + r.statut, type: "button" },
-      el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: "Affirmation " + a.id }), el("span", { classe: "pastille", texte: LIBELLE_AFF[r.statut] })),
+      el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: "Statement " + a.id }), el("span", { classe: "pastille", texte: LIBELLE_AFF[r.statut] })),
       el("div", { classe: "corps", texte: a.passage }),
       r.statut !== "vert" && r.message ? el("div", { classe: "note", texte: r.message }) : null,
-      r.reecriture ? el("div", { classe: "note", texte: r.reecriture.type === "remplacer" ? "Correction proposée, sourcée" : "Correction : " + (carte.mentions || {})[r.reecriture.type] }) : null,
-      a.sources.length === 0 ? el("div", { classe: "note", texte: "Aucune source citée." }) : null
+      r.reecriture ? el("div", { classe: "note", texte: r.reecriture.type === "remplacer" ? "Correction proposed, sourced" : "Correction: " + (carte.mentions || {})[r.reecriture.type] }) : null,
+      a.sources.length === 0 ? el("div", { classe: "note", texte: "No source cited." }) : null
     );
     b.addEventListener("mouseenter", function () { survoler({ aff: a.id }); });
     b.addEventListener("mouseleave", function () { survoler(null); });
     b.addEventListener("click", function () { choisir({ aff: a.id }); });
     blocsAff[a.id] = b; colAff.appendChild(b);
   });
-  if (sources.length === 0 && n > 0) colSrc.appendChild(el("p", { classe: "vide", texte: "Aucune source citée." }));
+  if (sources.length === 0 && n > 0) colSrc.appendChild(el("p", { classe: "vide", texte: "No source cited." }));
   sources.forEach(function (s) {
     var o = s.officielle;
-    var detail = o ? o.base + (o.rang > 0 ? " · " + o.rangLibelle : "") : s.statut === "rouge" ? "introuvable" : "non retrouvée";
+    var detail = o ? o.base + (o.rang > 0 ? " · " + o.rangLibelle : "") : s.statut === "rouge" ? "not found" : "not retrieved";
     var b = el("button", { classe: "bloc st-" + s.statut, type: "button" },
       el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: TYPE[s.citee.type] || "Source" }), el("span", { classe: "pastille", texte: LIBELLE_SRC[s.statut] })),
       el("div", { classe: "corps titre-src", texte: o ? o.titre : s.citee.brut }),
-      el("div", { classe: "note", texte: detail + " · citée " + s.refs.length + " fois" })
+      el("div", { classe: "note", texte: detail + " · cited " + s.refs.length + " time(s)" })
     );
     b.addEventListener("mouseenter", function () { survoler({ src: s.cle }); });
     b.addEventListener("mouseleave", function () { survoler(null); });
@@ -275,7 +277,7 @@ const JS = `
     appliquer();
   }
 
-  // Survol et sélection
+  // Hover and selection
   var survol = null, choix = null;
   function cible() { return survol || choix; }
   function appliquer() {
@@ -295,18 +297,18 @@ const JS = `
   function survoler(t) { survol = t; appliquer(); }
   function choisir(t) { choix = t; survol = null; appliquer(); remplirPanneau(); }
 
-  // Panneau de détail
+  // Detail panel
   var panneau = document.getElementById("panneau");
   function remplirPanneau() {
     while (panneau.firstChild) panneau.removeChild(panneau.firstChild);
     panneau.classList.toggle("ouvert", !!choix);
     if (!choix) {
-      panneau.appendChild(el("h2", { texte: "Détail" }));
-      panneau.appendChild(el("p", { classe: "vide", texte: "Clique une affirmation pour voir ses contrôles, le raisonnement de l'avocat adverse et le passage exact du texte officiel. Clique une source pour lire le texte." }));
-      panneau.appendChild(el("p", { classe: "vide", texte: "Règle : sans preuve, rien n'est vert. Un verdict ne compte que si son extrait est retrouvé mot pour mot dans le texte officiel." }));
+      panneau.appendChild(el("h2", { texte: "Detail" }));
+      panneau.appendChild(el("p", { classe: "vide", texte: "Click a statement to see its checks, opposing counsel's reasoning and the exact passage of the official text. Click a source to read the text." }));
+      panneau.appendChild(el("p", { classe: "vide", texte: "The rule: without evidence, nothing is green. A verdict counts only if its excerpt is found word for word in the official text." }));
       return;
     }
-    panneau.appendChild(el("button", { classe: "fermer", type: "button", texte: "Fermer", onclick: function () { choisir(null); } }));
+    panneau.appendChild(el("button", { classe: "fermer", type: "button", texte: "Close", onclick: function () { choisir(null); } }));
     if (choix.aff) panneauAffirmation(choix.aff); else panneauSource(choix.src);
   }
   function listeControles(controles) {
@@ -336,7 +338,7 @@ const JS = `
   function panneauAffirmation(id) {
     var r = carte.resultats.filter(function (x) { return x.affirmation.id === id; })[0];
     var a = r.affirmation;
-    panneau.appendChild(el("div", { classe: "haut st-" + r.statut }, el("span", { classe: "etiquette", texte: "Affirmation " + a.id + " · " }), el("span", { classe: "pastille", texte: LIBELLE_AFF[r.statut] })));
+    panneau.appendChild(el("div", { classe: "haut st-" + r.statut }, el("span", { classe: "etiquette", texte: "Statement " + a.id + " · " }), el("span", { classe: "pastille", texte: LIBELLE_AFF[r.statut] })));
     panneau.appendChild(el("blockquote", { classe: "citation st-" + r.statut, texte: a.passage }));
     if (a.resume) panneau.appendChild(el("p", { classe: "vide", texte: a.resume }));
     if (r.message && r.statut !== "vert") panneau.appendChild(el("p", { texte: r.message }));
@@ -345,11 +347,11 @@ const JS = `
       var o = v.officielle, j = v.jugement;
       var bloc = el("div", { classe: "source-bloc st-" + v.statut });
       bloc.appendChild(el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: TYPE[v.citee.type] || "Source" }), el("span", { classe: "pastille", texte: LIBELLE_AFF[v.statut] })));
-      bloc.appendChild(el("div", { classe: "titre-src", texte: "Cité : " + v.citee.brut }));
-      if (o) bloc.appendChild(el("div", null, "Retrouvé : ", o.url ? el("a", { classe: "lien", href: o.url, target: "_blank", rel: "noopener", texte: o.titre }) : o.titre));
+      bloc.appendChild(el("div", { classe: "titre-src", texte: "Cited: " + v.citee.brut }));
+      if (o) bloc.appendChild(el("div", null, "Found: ", o.url ? el("a", { classe: "lien", href: o.url, target: "_blank", rel: "noopener", texte: o.titre }) : o.titre));
       bloc.appendChild(listeControles(v.controles));
       if (j) {
-        bloc.appendChild(el("h3", { texte: "Avocat adverse : " + j.verdict.replace(/_/g, " ").toLowerCase() }));
+        bloc.appendChild(el("h3", { texte: "Opposing counsel: " + (LIBELLE_VERDICT[j.verdict] || j.verdict.replace(/_/g, " ").toLowerCase()) }));
         if (j.raisonnement && j.raisonnement.length) {
           var ol = el("ol", { classe: "raisonnement" });
           j.raisonnement.forEach(function (e) { ol.appendChild(el("li", { texte: e })); });
@@ -357,35 +359,35 @@ const JS = `
         }
         if (j.extrait) {
           bloc.appendChild(el("blockquote", { classe: "citation " + (j.extraitRetrouve ? "st-vert" : "st-rouge"), texte: j.extrait }));
-          bloc.appendChild(el("div", { classe: "preuve " + (j.extraitRetrouve ? "st-vert" : "st-rouge"), texte: j.extraitRetrouve ? "✓ Extrait retrouvé mot pour mot dans le texte officiel" : "✗ Extrait introuvable dans le texte officiel : verdict écarté" }));
+          bloc.appendChild(el("div", { classe: "preuve " + (j.extraitRetrouve ? "st-vert" : "st-rouge"), texte: j.extraitRetrouve ? "✓ Excerpt found word for word in the official text" : "✗ Excerpt not found in the official text: verdict set aside" }));
         }
-        if (j.correction) bloc.appendChild(el("p", null, el("b", { texte: "Ce que dit vraiment le texte : " }), j.correction));
+        if (j.correction) bloc.appendChild(el("p", null, el("b", { texte: "What the text really says: " }), j.correction));
       }
       if (o && o.versions && o.versions.length > 1 && v.versionApplicable) {
         var courante = o.versions[o.versions.length - 1];
         if (courante.texte !== v.versionApplicable.texte) {
-          var d = el("details", null, el("summary", { texte: "Comparer la version des faits et la version actuelle" }));
+          var d = el("details", null, el("summary", { texte: "Compare the version at the date of the facts with the current one" }));
           d.appendChild(el("div", { classe: "versions" },
-            el("div", null, el("div", { classe: "etiquette", texte: "Au " + dateFr(carte.dateFaits) + " (du " + dateFr(v.versionApplicable.debut) + ")" }), el("div", { classe: "officiel", texte: v.versionApplicable.texte })),
-            el("div", null, el("div", { classe: "etiquette", texte: "Aujourd'hui (depuis le " + dateFr(courante.debut) + ")" }), el("div", { classe: "officiel", texte: courante.texte }))
+            el("div", null, el("div", { classe: "etiquette", texte: "On " + dateFr(carte.dateFaits) + " (from " + dateFr(v.versionApplicable.debut) + ")" }), el("div", { classe: "officiel", texte: v.versionApplicable.texte })),
+            el("div", null, el("div", { classe: "etiquette", texte: "Today (since " + dateFr(courante.debut) + ")" }), el("div", { classe: "officiel", texte: courante.texte }))
           ));
           bloc.appendChild(d);
         }
       }
       panneau.appendChild(bloc);
     });
-    if (a.sources.length === 0) panneau.appendChild(el("p", { classe: "vide", texte: "Aucune source n'est citée à l'appui : cette affirmation est à vérifier à la main." }));
+    if (a.sources.length === 0) panneau.appendChild(el("p", { classe: "vide", texte: "No source is cited in support: this statement must be checked by hand." }));
   }
   function blocReecriture(r) {
     var p = r.reecriture, s = p.source, d = (carte.revisions || {})[r.affirmation.id];
     var bloc = el("div", { classe: "source-bloc " + (p.type === "remplacer" ? "st-vert" : "st-orange") });
-    bloc.appendChild(el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: p.type === "remplacer" ? "Correction proposée" : "Correction" }), el("span", { classe: "pastille", texte: (carte.mentions || {})[p.type] || "" })));
+    bloc.appendChild(el("div", { classe: "haut" }, el("span", { classe: "etiquette", texte: p.type === "remplacer" ? "Correction proposed" : "Correction" }), el("span", { classe: "pastille", texte: (carte.mentions || {})[p.type] || "" })));
     if (d) bloc.appendChild(el("p", { classe: "revision" }, d.prefixe, d.retire ? el("del", { texte: d.retire }) : null, d.retire && d.ajoute ? " " : null, d.ajoute ? el("ins", { texte: d.ajoute }) : null, d.suffixe));
     bloc.appendChild(el("p", { texte: p.motif }));
     if (s) {
       bloc.appendChild(el("div", null, "Source : ", s.url ? el("a", { classe: "lien", href: s.url, target: "_blank", rel: "noopener", texte: s.citation }) : s.citation, " — " + s.base + (s.version ? ", version " + s.version : "")));
       bloc.appendChild(el("blockquote", { classe: "citation st-vert", texte: s.extrait }));
-      bloc.appendChild(el("div", { classe: "preuve st-vert", texte: "✓ Extrait retrouvé mot pour mot dans le texte officiel" }));
+      bloc.appendChild(el("div", { classe: "preuve st-vert", texte: "✓ Excerpt found word for word in the official text" }));
     }
     return bloc;
   }
@@ -394,11 +396,11 @@ const JS = `
     panneau.appendChild(el("div", { classe: "haut st-" + s.statut }, el("span", { classe: "etiquette", texte: (TYPE[s.citee.type] || "Source") + " · " }), el("span", { classe: "pastille", texte: LIBELLE_SRC[s.statut] })));
     panneau.appendChild(el("h2", { texte: o ? o.titre : s.citee.brut }));
     if (o) {
-      panneau.appendChild(el("p", { classe: "vide" }, o.base + (o.rang > 0 ? " · " + o.rangLibelle : "") + (o.date ? " · " + dateFr(o.date) : "") + " · ", o.url ? el("a", { classe: "lien", href: o.url, target: "_blank", rel: "noopener", texte: "ouvrir la source officielle" }) : ""));
+      panneau.appendChild(el("p", { classe: "vide" }, o.base + (o.rang > 0 ? " · " + o.rangLibelle : "") + (o.date ? " · " + dateFr(o.date) : "") + " · ", o.url ? el("a", { classe: "lien", href: o.url, target: "_blank", rel: "noopener", texte: "open the official source" }) : ""));
     } else {
-      panneau.appendChild(el("p", { classe: "vide", texte: "Cette source n'a pas été retrouvée telle que citée." }));
+      panneau.appendChild(el("p", { classe: "vide", texte: "This source was not found as cited." }));
     }
-    panneau.appendChild(el("h3", { texte: "Citée par" }));
+    panneau.appendChild(el("h3", { texte: "Cited by" }));
     var puces = el("div", { classe: "puces" });
     s.refs.forEach(function (ref) { puces.appendChild(el("button", { classe: "puce", type: "button", texte: ref.aff, onclick: function () { choisir({ aff: ref.aff }); } })); });
     panneau.appendChild(puces);
@@ -413,13 +415,13 @@ const JS = `
     if (o) {
       var texte = (s.version && s.version.texte) || o.texte;
       if (texte) {
-        panneau.appendChild(el("h3", { texte: s.version ? "Texte en vigueur au " + dateFr(carte.dateFaits) : "Texte officiel" }));
+        panneau.appendChild(el("h3", { texte: s.version ? "Text in force on " + dateFr(carte.dateFaits) : "Official text" }));
         panneau.appendChild(texteSurligne(texte, extraits));
       }
     }
   }
 
-  // Texte analysé, passages surlignés
+  // The analysed text, with highlighted passages
   (function () {
     var corps = document.getElementById("texte-corps"), t = carte.reponse || "";
     var plages = [];
@@ -436,7 +438,7 @@ const JS = `
     corps.appendChild(document.createTextNode(t.slice(pos)));
   })();
 
-  document.getElementById("pied").textContent = "Généré le " + new Date(carte.generee).toLocaleString("fr-FR") + " par le skill « vérifier les sources » de Saul. Sans preuve, rien n'est vert.";
+  document.getElementById("pied").textContent = "Generated on " + new Date(carte.generee).toLocaleString("en-GB") + " by Saul's « verify the sources » skill. Without evidence, nothing is green.";
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") choisir(null); });
   zone.addEventListener("click", function (e) { if (e.target === zone || e.target.classList.contains("gouttiere") || e.target.classList.contains("colonne")) choisir(null); });
   remplirPanneau();

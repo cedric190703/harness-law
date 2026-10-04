@@ -310,11 +310,11 @@ export function retenirProposition(plan: PlanRedaction, original: string, p: Pro
 /* ───────────── Mode révision ───────────── */
 
 export const MENTION: Record<Reecriture["type"], string> = {
-  remplacer: "réécrit",
-  source_a_trouver: "source à trouver",
-  supprimer: "passage à supprimer",
-  rang_superieur: "à appuyer sur un texte de rang supérieur",
-  a_la_main: "à réécrire à la main",
+  remplacer: "rewritten",
+  source_a_trouver: "source to find",
+  supprimer: "passage to delete",
+  rang_superieur: "to support with a higher-ranking text",
+  a_la_main: "to rewrite by hand",
 };
 
 /** Le passage avant / après, réduit à ce qui change (mot à mot, au début et à la fin). */

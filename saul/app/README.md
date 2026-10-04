@@ -2,6 +2,22 @@
 
 L’application reçoit une mission et ses pièces, exécute Claude Code ou Mistral Vibe avec le skill `skills/cross-document-review` de la branche `youssef/bench-revue`, contrôle les sorties et permet de relire le livrable section par section avec ses preuves.
 
+L’interface et les livrables produits sont en anglais ; cette documentation reste en français, comme le reste du dépôt. Le mémo de démonstration de `/verification` reste en français : c’est le texte juridique français soumis à la vérification.
+
+## Types de livrables
+
+La mission peut être lancée librement, ou à partir d’un des cinq types proposés dans la conversation. Un type n’est pas un simple prompt : il ajoute ses consignes à l’agent **et** sa propre validation de structure, appliquée avant que le livrable ne devienne téléchargeable. Un défaut renvoie l’agent en correction avec le motif exact.
+
+| Type | Livrable | Ce que la validation exige |
+| --- | --- | --- |
+| Disclosure schedules | Annexes de divulgation de la garantie de passif | Tableau `Warranty / Exception / Document / Location / Excerpt` ; chaque exception nomme la pièce de la data room et porte l’extrait exact |
+| Requests and questions to the seller | Demandes complémentaires et questions au vendeur | Tableau `Ref / Request or question / Why it is asked / Finding / Priority` ; chaque demande cite un constat **existant** du registre |
+| Key contracts table | Tableau des contrats clés et fiches de synthèse | Tableau d’ensemble (parties, durée, changement de contrôle, exclusivité, résiliation) **et** une fiche par contrat avec l’extrait de chaque clause |
+| Letters to counterparties | Lettres aux cocontractants | Un tableau récapitulatif et **exactement** une section `letter-N` par ligne, produites en série |
+| Chain of title and cap table | Chaîne de propriété des titres et table de capitalisation | Mouvements datés et sourcés (`Document` et `Excerpt` obligatoires sur chaque ligne), puis la table de capitalisation qui en découle |
+
+Le catalogue vit dans `src/lib/harness/usecases.ts` : titre, mission pré-remplie, consignes à l’agent et formes de tableaux attendues. Le registre de concordance et le contrôle mécanique de `skills/cross-document-review` ne sont pas modifiés ; chaque type se projette sur les statuts existants.
+
 ## Démarrage
 
 Depuis la racine du dépôt :
@@ -35,7 +51,7 @@ Les identifiants du fournisseur sont ceux du CLI local. Les documents restent st
 2. Choisir Claude Code ou Mistral Vibe et le budget maximal. Le serveur extrait les pièces, prépare les candidats et transmet le skill au CLI.
 3. Suivre les messages, appels d’outils et contrôles. Un contrôle en échec déclenche au plus une correction. Le bouton d’arrêt interrompt le processus ; une nouvelle mission conserve l’historique des exécutions et repart des pièces du projet.
 4. Explorer le graphe : étapes du skill, outils observés, pièces, citations, constats et sections. Les cartes se déplacent et affichent un aperçu. Le bouton « Plein écran » agrandit le canvas (sortie par Échap), « Vue d’ensemble » montre tout le parcours et « Lecture 100 % » permet de lire un bloc. Sélectionner un nœud le recentre et ouvre ses détails : sources, citations, comparaison, recommandations, événements et liens navigables, selon les données disponibles. Le graphe s’exporte en JSON ; depuis une section, l’export conserve uniquement sa provenance.
-5. Ouvrir le livrable puis cliquer une section. Seuls ses ancêtres documentaires sont affichés ; les étapes communes et outils sont dépliables. Télécharger le Word structuré et l’Excel comprenant les constats, preuves, sections et pièces.
+5. Ouvrir le livrable puis cliquer une section. Seuls ses ancêtres documentaires sont affichés ; les étapes communes et outils sont dépliables. Télécharger `deliverable.docx` et `tables.xlsx`, qui comprennent les constats, preuves, sections et pièces, ainsi qu’une feuille par tableau du livrable. Les livrables à tableaux larges (divulgation, demandes, contrats, capitalisation) sortent en paysage.
 
 ## Contrôles et traçabilité
 
@@ -57,7 +73,7 @@ Le budget est transmis au CLI et borne les deux tentatives (moitié du budget pa
 
 ## Validation réalisée
 
-- 44 tests passent, ainsi que lint, TypeScript et compilation de production.
+- 51 tests passent, ainsi que lint, TypeScript et compilation de production. Sept d’entre eux couvrent la validation de structure des cinq types de livrables.
 - Test réel Claude Code sur deux documents fictifs : quatre constats, six sections, correction automatique d’une référence documentaire incorrecte, contrôles finaux acceptés, Word et Excel générés. Coût déclaré par le CLI : 1,2541265 USD.
 - Parcours navigateur : dashboard, projet persistant, graphe, sélection d’une seule section, téléchargement et absence de débordement mobile.
 - Vibe : arguments vérifiés sur le CLI installé et normalisation des événements testée ; pas de mission juridique complète exécutée avec ce fournisseur.

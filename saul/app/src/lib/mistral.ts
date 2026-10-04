@@ -9,10 +9,10 @@ interface Message {
   content: string;
 }
 
-/** Appel Mistral en mode JSON. Les réponses sont mises en cache (rejouabilité de la démo). */
+/** Mistral call in JSON mode. Responses are cached, so the demo replays identically. */
 export async function mistralJson<T>(modele: string, messages: Message[]): Promise<T> {
   const cle = process.env.MISTRAL_API_KEY;
-  if (!cle) throw new Error("MISTRAL_API_KEY manquante dans app/.env.local");
+  if (!cle) throw new Error("MISTRAL_API_KEY is missing from app/.env.local");
 
   const { valeur } = await avecCache("mistral", { modele, messages }, async () => {
     for (let essai = 0; essai < 4; essai++) {
@@ -30,11 +30,11 @@ export async function mistralJson<T>(modele: string, messages: Message[]): Promi
         await new Promise((r) => setTimeout(r, 1500 * (essai + 1)));
         continue;
       }
-      if (!res.ok) throw new Error(`Mistral ${res.status} : ${await res.text()}`);
+      if (!res.ok) throw new Error(`Mistral ${res.status}: ${await res.text()}`);
       const data = await res.json();
       return data.choices[0].message.content as string;
     }
-    throw new Error("Mistral indisponible après 4 essais");
+    throw new Error("Mistral unavailable after 4 attempts");
   });
 
   return JSON.parse(valeur) as T;

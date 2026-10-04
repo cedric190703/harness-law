@@ -1,12 +1,15 @@
 /**
- * Mémo de démo « écrit par une IA » : licenciement de 2016 + clause de non-concurrence.
- * Il mélange des affirmations justes et des pièges (à faire valider par les juristes de l'équipe) :
- * - L1232-1, L1234-1, Cass. soc. 10/07/2002 n° 00-45.135 : justes ;
- * - L1121-1 : vrai article, mais il ne fixe aucune durée maximale ;
- * - L1235-3 : barème des ordonnances de 2017 appliqué à des faits de 2016 ;
- * - R1234-2 : indemnité légale au quart de mois, règle de 2017 appliquée à des faits de 2016 ;
- * - L1471-1 : deux ans, juste en 2016 mais le texte a changé depuis ;
- * - un arrêt qui n'existe pas, une circulaire présentée comme décisive, une ancienne numérotation.
+ * Demo memo, “written by an AI”: a 2016 dismissal plus a non-compete clause.
+ * The memo itself stays in French — it is the French legal text under test, and its
+ * citations are what Saul looks up on Légifrance and Judilibre.
+ *
+ * It mixes sound statements with traps (to be confirmed by the team's lawyers):
+ * - L1232-1, L1234-1, Cass. soc. 10/07/2002 no. 00-45.135: sound;
+ * - L1121-1: a real article, but it sets no maximum duration;
+ * - L1235-3: the 2017 ordinances' scale applied to facts from 2016;
+ * - R1234-2: statutory severance at a quarter of a month, a 2017 rule applied to 2016 facts;
+ * - L1471-1: two years, right in 2016 but the text has changed since;
+ * - a judgment that does not exist, a circular presented as decisive, an old numbering.
  */
 export const MEMO_DEMO = `NOTE — Dossier Martin c/ Société Delta Distribution
 

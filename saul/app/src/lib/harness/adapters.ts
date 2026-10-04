@@ -12,14 +12,14 @@ export function normalizeEvent(value: unknown): Observation[] {
     out.push({kind:'tool',tool:text(detail.toolName||detail.tool_name||e.title),toolId:text(e.id),input,text:`${text(detail.toolName||detail.tool_name||e.title)} · ${text(input.path??input.file_path??'')}`});
     if(['completed','failed','cancelled','skipped'].includes(text(state.status))) out.push({kind:state.status==='completed'?'tool':'error',toolId:text(e.id),text:text(state.outputText||state.output_text||state.output||state.error||state.reason||state.display)});
   }
-  if(e.type==='result' && e.is_error) out.push({kind:'error',text: text(e.result ?? e.errors ?? 'Échec du CLI')});
+  if(e.type==='result' && e.is_error) out.push({kind:'error',text: text(e.result ?? e.errors ?? 'The CLI failed')});
   if(message.role==='assistant') {
     if(typeof message.content==='string' && message.content) out.push({kind:'assistant',text:message.content});
     if(Array.isArray(message.content)) for(const raw of message.content) {
       const c=object(raw);
       if(c.type==='text' && c.text) out.push({kind:'assistant',text:text(c.text)});
       if(c.type==='tool_use') out.push({kind:'tool',tool:text(c.name),toolId:text(c.id),input:object(c.input),text:`${text(c.name)} · ${text(object(c.input).file_path ?? object(c.input).path ?? object(c.input).pattern ?? '')}`});
-      // Les blocs thinking et signatures ne sont ni exposés ni persistés.
+      // Thinking blocks and signatures are neither exposed nor persisted.
     }
     if(Array.isArray(message.tool_calls)) for(const raw of message.tool_calls) {
       const call=object(raw), fn=object(call.function); let input=object(fn.arguments);
