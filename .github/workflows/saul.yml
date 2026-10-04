@@ -2,10 +2,10 @@ name: Vérification Saul
 
 on:
   pull_request:
-    paths: ["saul/**", "skills/**", ".github/workflows/saul.yml"]
+    paths: ["saul/**", "skills/**", "paper/**", "bench/paper_snapshot.py", ".github/workflows/saul.yml"]
   push:
     branches: [main]
-    paths: ["saul/**", "skills/**", ".github/workflows/saul.yml"]
+    paths: ["saul/**", "skills/**", "paper/**", "bench/paper_snapshot.py", ".github/workflows/saul.yml"]
 
 concurrency:
   group: verification-saul-${{ github.ref }}
