@@ -17,14 +17,22 @@ python $WORKSPACE_DIR/skills/cross-document-review/scripts/extract_text.py
 
 This converts every document to plain text under `$WORKSPACE_DIR/text/` (one `.txt` per document, same base name) and prints an inventory. Then:
 
-- **Read every document in full** (`read` the original, or the `.txt`). Do not skim. Long documents: read in chunks until the end.
+- **Read every document in full, once** (`read` the original, or the `.txt`). Do not skim. Long documents: read in chunks until the end. Afterwards, look things up with `grep -n` on `$WORKSPACE_DIR/text/` instead of re-reading whole documents — your context is finite.
 - Assign each document a role: **REFERENCE** (what governs: term sheet, executed agreement, client instructions, spec, statute/regulation, selection criteria, prior version), **SUBJECT** (what is being checked), or **CONTEXT** (cover emails, notes, claims data, templates, checklists).
 - Identify **the client and its side** (e.g. borrower, the wife, the insured, the issuer's counsel). Every impact and recommendation is written from that side.
 - Identify the **parties, transaction, and key dates** exactly as named in the documents.
 
 ## Step 2 — Build the concordance ledger (forward pass)
 
-Create `$WORKSPACE_DIR/ledger.jsonl`, one JSON object per line. Walk the REFERENCE **section by section, including definitions, schedules, exhibits, tables, footnotes**. Every operative term gets a row — not only the ones that look important.
+First, list the figures that appear in only one document — the most likely deviations, omissions and additions:
+
+```bash
+python $WORKSPACE_DIR/skills/cross-document-review/scripts/check.py candidates
+```
+
+Every passage it lists must end up in the ledger. It is a starting point, not the whole review: wording changes without figures are not listed.
+
+Then create `$WORKSPACE_DIR/ledger.jsonl`, one JSON object per line. Walk the REFERENCE **section by section, including definitions, schedules, exhibits, tables, footnotes**. Every operative term gets a row — not only the ones that look important.
 
 ```json
 {"id": "R-012", "topic": "SOFR floor (Term Loan A)", "ref_doc": "executed-term-sheet.docx", "ref_loc": "Pricing", "ref_quote": "SOFR floor of 0.75%", "subj_doc": "draft-credit-agreement.docx", "subj_loc": "Section 1.01 'Adjusted Term SOFR'", "subj_quote": "shall not be less than 1.00%", "status": "deviation", "ref_value": "0.75%", "subj_value": "1.00%", "impact": "", "severity": "", "recommendation": "", "links": []}
@@ -61,7 +69,7 @@ For every `deviation`, `missing`, `added`, fill:
 python $WORKSPACE_DIR/skills/cross-document-review/scripts/check.py ledger
 ```
 
-It verifies that every quote exists verbatim in the named document, that every non-match row is complete, that every document was used, and it lists **reference/subject sections that no row covers**. For each uncovered section: read it, then add a row (`match` if nothing to flag). For each quote not found: fix the quote from the text, or correct the finding. Re-run until it reports `LEDGER OK`.
+It verifies that every quote exists verbatim in the named document, that every non-match row is complete, that every document was used, and it lists **passages of the compared documents whose figures no row mentions yet**. For each one: read it, then add a row stating the figure (`match` or `n/a` if the difference is legitimate). For each quote not found: fix the quote from the text, or correct the finding. Re-run until it reports `LEDGER OK`.
 
 ## Step 7 — Draft the deliverable from the ledger
 

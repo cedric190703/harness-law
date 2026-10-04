@@ -52,7 +52,7 @@ def run_one(task: str, condition: str, args, env: dict) -> dict:
     model_short = args.model.split("/")[-1] + (f"-{args.effort}" if args.effort else "")
     run_id = f"{task}/{model_short}-{condition}/{stamp}"
     skills = BASE_SKILLS + ([SKILL] if condition == "skill" else [])
-    cmd = ["uv", "run", "python", "-m", "lab_core.harness.run", "--model", args.model, "--task", task,
+    cmd = ["uv", "run", "python", str(ROOT / "bench" / "lab.py"), "harness", "--model", args.model, "--task", task,
            "--run-id", run_id, "--max-turns", str(args.max_turns), "--skills", *skills]
     if args.effort:
         cmd += ["--reasoning-effort", args.effort]
@@ -62,7 +62,7 @@ def run_one(task: str, condition: str, args, env: dict) -> dict:
     started = time.time()
     with log.open("w") as fh:
         agent = subprocess.run(cmd, cwd=LAB, env=env, stdout=fh, stderr=subprocess.STDOUT)
-        judge_cmd = ["uv", "run", "python", "-m", "lab_core.evaluation.run_eval", "--run-id", run_id,
+        judge_cmd = ["uv", "run", "python", str(ROOT / "bench" / "lab.py"), "eval", "--run-id", run_id,
                      "--task", task, "--judges", *args.judges]
         graded = subprocess.run(judge_cmd, cwd=LAB, env=env, stdout=fh, stderr=subprocess.STDOUT) if agent.returncode == 0 else None
     result_dir = LAB / "results" / run_id
@@ -132,8 +132,9 @@ def main() -> None:
     split = json.loads((ROOT / "bench" / "split.json").read_text())
     tasks = args.tasks or (split["dev"][:1] if args.set == "one" else split[args.set])
     env = load_env()
-    needed = ["ANTHROPIC_API_KEY"] + (["MISTRAL_API_KEY"] if args.model.startswith("mistral") else [])
-    needed += ["OPENAI_API_KEY"] if any(j.startswith("gpt") for j in args.judges) else []
+    key_for = {"claude": "ANTHROPIC_API_KEY", "mistral": "MISTRAL_API_KEY", "codestral": "MISTRAL_API_KEY", "magistral": "MISTRAL_API_KEY", "gpt": "OPENAI_API_KEY", "o": "OPENAI_API_KEY"}
+    needed = sorted({key for name in [args.model.split("/")[-1], *args.judges]
+                     for prefix, key in key_for.items() if name.startswith(prefix)})
     missing = [k for k in needed if not env.get(k)]
     if missing:
         sys.exit(f"missing in .env: {', '.join(missing)}")

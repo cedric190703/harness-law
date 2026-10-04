@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/youyoutucoco/orca/projects/harness-law/harvey-labs/lab_core/harness/run.py", line 409, in <module>
+    main(parser.parse_args())
+    ~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/youyoutucoco/orca/projects/harness-law/harvey-labs/lab_core/harness/run.py", line 360, in main
+    result = run_agent(
+        adapter=adapter,
+    ...<5 lines>...
+        transcript_path=str(results_dir / "transcript.jsonl"),
+    )
+  File "/Users/youyoutucoco/orca/projects/harness-law/harvey-labs/lab_core/harness/agent_loop.py", line 73, in run_agent
+    response = adapter.chat(messages, tools)
+  File "/Users/youyoutucoco/orca/projects/harness-law/harvey-labs/lab_core/harness/adapters/mistral.py", line 72, in chat
+    response = self.client.chat.complete(**kwargs)
+  File "/Users/youyoutucoco/orca/projects/harness-law/harvey-labs/.venv/lib/python3.13/site-packages/mistralai/client/chat.py", line 287, in complete
+    raise errors.SDKError("API error occurred", http_res, http_res_text)
+mistralai.client.errors.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Loading task: banking-finance/compare-credit-agreement-against-term-sheet
+Sandbox: podman (documents=/Users/youyoutucoco/orca/projects/harness-law/harvey-labs/tasks/banking-finance/compare-credit-agreement-against-term-sheet/documents)
+Creating adapter for: mistral-medium-3.5
+Starting agent loop (max 200 turns)...
+Tools: 7 (bash, read, write, edit, glob, grep, finish)
+Skills: docx, pptx, xlsx, cross-document-review
+Documents: /Users/youyoutucoco/orca/projects/harness-law/harvey-labs/tasks/banking-finance/compare-credit-agreement-against-term-sheet/documents
+Output: /Users/youyoutucoco/orca/projects/harness-law/harvey-labs/results/banking-finance/compare-credit-agreement-against-term-sheet/mistral-medium-3.5-high-skill/20261004-113328-386329/output
+
