@@ -1,0 +1,28 @@
+{
+  "name": "visa",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Visa — le contrôle technique des réponses d'IA juridique",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "verif": "vite build --ssr verif/jeuDeTest.tsx --outDir verif/dist --logLevel warn && node verif/dist/jeuDeTest.js",
+    "test": "npm run typecheck && npm run verif"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.3.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}
