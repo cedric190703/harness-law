@@ -4,7 +4,7 @@ export const runtime='nodejs';
 export const dynamic='force-dynamic';
 function local(request:Request,write=false){
   const host=request.headers.get('host')||'';
-  if(!/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host))throw new Error('Cette application accepte uniquement les connexions locales.');
+  if(process.env.SAUL_EN_LIGNE!=='1'&&!/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host))throw new Error('Cette application accepte uniquement les connexions locales.');
   if(write&&request.headers.get('origin')!==`http://${host}`&&request.headers.get('origin')!==`https://${host}`)throw new Error('Origine de la requête refusée.');
 }
 async function boundedBody(request:Request,limit:number){

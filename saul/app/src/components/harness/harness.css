@@ -33,3 +33,5 @@
 .legal-app .composer textarea{font-size:14px;line-height:1.75}.legal-app input::placeholder,.legal-app textarea::placeholder{color:#66766b;opacity:1}
 @media(min-width:981px){.legal-app .legal-sidebar nav>button,.legal-app .recent-projects>button{font-size:13px}.legal-app .breadcrumb{font-size:12px}}
 @media(max-width:680px){.legal-app .document-section>.markdown{font-size:14px}.legal-app .document-section h2{font-size:18px}.legal-app .project-tabs>button{font-size:11px}.legal-app .composer-foot span,.legal-app .provider-note{font-size:10px}.legal-app .project-header p{font-size:11px}.legal-app .page-heading p{font-size:12px}}
+
+.legora-link{display:inline-flex;align-items:center;gap:7px;border:1px solid #d5ddcc;border-radius:7px;padding:8px 12px;font-size:12px;color:#304b36;text-decoration:none;background:#fbfcf8}.legora-link:hover{background:#eef3e8}
