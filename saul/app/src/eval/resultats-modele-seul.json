@@ -1,0 +1,559 @@
+{
+  "date": "2026-10-04T13:55:46.476Z",
+  "modele": "mistral-large-latest",
+  "prompt": "Tu es un juriste français expérimenté. On te soumet une affirmation juridique tirée d'une note écrite par une IA, avec la source qu'elle cite, et la date des faits.\nDis si l'affirmation est juridiquement exacte, si la source citée existe et si elle dit bien cela, dans sa version applicable à la date des faits.\nRéponds en JSON : {\"statut\": \"vert\" | \"orange\" | \"rouge\" | \"gris\", \"raison\": \"une phrase\"}\n- \"vert\" : affirmation exacte, la source existe, elle dit bien cela et elle était en vigueur à la date des faits ;\n- \"orange\" : à revoir (texte modifié depuis les faits, circulaire présentée comme obligatoire, nuance importante omise) ;\n- \"rouge\" : fausse (source inexistante ou inventée, source qui ne dit pas cela, texte pas en vigueur à la date des faits) ;\n- \"gris\" : invérifiable (aucune source précise citée).",
+  "dureeSecondes": 860,
+  "mesures": {
+    "total": 58,
+    "parEtiquette": {
+      "vert": 25,
+      "orange": 8,
+      "rouge": 22,
+      "gris": 3
+    },
+    "detection": {
+      "n": 18,
+      "sur": 30,
+      "taux": 0.6
+    },
+    "detectionStricte": {
+      "n": 18,
+      "sur": 30,
+      "taux": 0.6
+    },
+    "fauxVertsSurFausses": {
+      "n": 12,
+      "sur": 30,
+      "taux": 0.4
+    },
+    "fauxVerts": {
+      "n": 14,
+      "sur": 33,
+      "taux": 0.42424242424242425
+    },
+    "fauxRouges": {
+      "n": 1,
+      "sur": 25,
+      "taux": 0.04
+    },
+    "vertsConfirmes": {
+      "n": 24,
+      "sur": 25,
+      "taux": 0.96
+    },
+    "exactitude": {
+      "n": 38,
+      "sur": 58,
+      "taux": 0.6551724137931034
+    },
+    "absentes": {
+      "n": 0,
+      "sur": 58,
+      "taux": 0
+    },
+    "matrice": {
+      "vert": {
+        "vert": 24,
+        "orange": 0,
+        "rouge": 1,
+        "gris": 0,
+        "absent": 0
+      },
+      "orange": {
+        "vert": 2,
+        "orange": 3,
+        "rouge": 3,
+        "gris": 0,
+        "absent": 0
+      },
+      "rouge": {
+        "vert": 10,
+        "orange": 1,
+        "rouge": 11,
+        "gris": 0,
+        "absent": 0
+      },
+      "gris": {
+        "vert": 2,
+        "orange": 1,
+        "rouge": 0,
+        "gris": 0,
+        "absent": 0
+      }
+    },
+    "parType": {
+      "juste": {
+        "n": 25,
+        "exactes": 24,
+        "signalees": 1,
+        "fauxVerts": 0,
+        "fauxRouges": 1,
+        "absentes": 0
+      },
+      "ne_dit_pas_ca": {
+        "n": 10,
+        "exactes": 3,
+        "signalees": 4,
+        "fauxVerts": 6,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "decision_inventee": {
+        "n": 4,
+        "exactes": 1,
+        "signalees": 1,
+        "fauxVerts": 3,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "reference_floue": {
+        "n": 3,
+        "exactes": 0,
+        "signalees": 1,
+        "fauxVerts": 2,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "texte_modifie": {
+        "n": 5,
+        "exactes": 1,
+        "signalees": 3,
+        "fauxVerts": 2,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "pas_en_vigueur": {
+        "n": 4,
+        "exactes": 3,
+        "signalees": 3,
+        "fauxVerts": 1,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "circulaire": {
+        "n": 3,
+        "exactes": 2,
+        "signalees": 3,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      },
+      "article_inexistant": {
+        "n": 4,
+        "exactes": 4,
+        "signalees": 4,
+        "fauxVerts": 0,
+        "fauxRouges": 0,
+        "absentes": 0
+      }
+    }
+  },
+  "lignes": [
+    {
+      "id": "N1-1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 1232-1 du Code du travail existait bien en 2023 et imposait une cause réelle et sérieuse pour un licenciement pour motif personnel."
+    },
+    {
+      "id": "N1-2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article L. 1232-2 du Code du travail impose un délai minimal de 5 jours ouvrables entre la présentation de la lettre de convocation et l'entretien préalable, et non 2 jours."
+    },
+    {
+      "id": "N1-3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article L. 1234-1 du Code du travail (version en vigueur au 15/06/2023) prévoit bien un préavis de deux mois pour un salarié ayant au moins deux ans d'ancienneté."
+    },
+    {
+      "id": "N1-4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article R. 1234-2 du Code du travail existait et prévoyait bien ce montant à la date des faits."
+    },
+    {
+      "id": "N1-5",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article L. 1235-3 du Code du travail, dans sa version en vigueur au 15/06/2023, prévoyait bien ce barème d'indemnités pour un licenciement sans cause réelle et sérieuse dans les conditions citées."
+    },
+    {
+      "id": "N1-6",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article L. 1471-1 du Code du travail (dans sa version en vigueur au 15/06/2023) prévoit bien un délai de deux ans pour contester un licenciement."
+    },
+    {
+      "id": "N1-7",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : la source citée existe, la Cour de cassation a bien rendu cet arrêt le 11 mai 2022, et le texte était en vigueur à la date des faits."
+    },
+    {
+      "id": "N1-8",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la source citée existe et était en vigueur à la date des faits (arrêt de la Chambre sociale de la Cour de cassation du 3 mars 2021, n° 19-48.207)."
+    },
+    {
+      "id": "N1-9",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, fondée sur une jurisprudence constante du Conseil d'État et de la Cour de cassation, notamment l'arrêt CE, 27 mars 2015, n° 371232, et applicable en 2023."
+    },
+    {
+      "id": "N2-1",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "raisonModele": "L'article L. 1235-3 du Code du travail en vigueur en 2016 prévoyait bien un plancher d'indemnité pour licenciement sans cause réelle et sérieuse, mais celui-ci était fixé à *six mois de salaire minimum* (et non systématiquement aux salaires des six derniers mois), avec des nuances selon l'ancienneté et la taille de l'entreprise."
+    },
+    {
+      "id": "N2-2",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "rouge",
+      "raisonModele": "L'article R. 1234-2 du Code du travail existait en 2016, mais il ne fixait pas ce montant minimal d'indemnité légale de licenciement (cette règle a été introduite plus tard par décret)."
+    },
+    {
+      "id": "N2-3",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "rouge",
+      "raisonModele": "L'article L. 1471-1 du Code du travail n'existe pas, et le délai de contestation d'un licenciement en 2016 était de 12 mois (article L. 1235-7, anciennement L. 1235-1 avant la réforme de 2017)."
+    },
+    {
+      "id": "N2-4",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article L. 1235-3-1 du Code du travail n'existait pas à la date des faits (2016-03-15), il a été introduit par l'ordonnance n°2017-1387 du 22 septembre 2017."
+    },
+    {
+      "id": "N2-5",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la source citée existe et était bien en vigueur à la date des faits, confirmant la nécessité d'une contrepartie financière pour la validité d'une clause de non-concurrence."
+    },
+    {
+      "id": "N2-6",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article L. 1121-1 du Code du travail ne traite pas de la durée des clauses de non-concurrence, et la limitation à un an relève de la jurisprudence, non de ce texte."
+    },
+    {
+      "id": "N3-1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 1221-19 du Code du travail (dans sa version en vigueur au 1er février 2023) prévoyait bien une période d'essai maximale de six mois pour les cadres en CDI, hors renouvellement."
+    },
+    {
+      "id": "N3-2",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 1221-21 du Code du travail existait bien en 2023 et prévoyait cette règle."
+    },
+    {
+      "id": "N3-3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 1243-8 du Code du travail existait et prévoyait bien cette indemnité de 10 % à la date des faits (2023-02-01)."
+    },
+    {
+      "id": "N3-4",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article L. 1237-13 du Code du travail, en vigueur à la date des faits, prévoyait bien un délai de rétractation de 15 jours calendaires (et non 8 jours, mais l'erreur de durée ne change pas le principe), et la source existe."
+    },
+    {
+      "id": "N3-5",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 1237-14 du Code du travail (dans sa version en vigueur au 1er février 2023) prévoyait bien ce délai de quinze jours ouvrables pour l'homologation tacite de la convention de rupture."
+    },
+    {
+      "id": "N3-6",
+      "type": "circulaire",
+      "attendu": "orange",
+      "obtenu": "rouge",
+      "raisonModele": "La circulaire DGT n° 2008/11 du 22 juillet 2008 existe, mais elle n'impose pas une telle règle au juge, les circulaires n'ayant pas de valeur normative contraignante."
+    },
+    {
+      "id": "N3-7",
+      "type": "circulaire",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "raisonModele": "L'instruction DGT n° 02 du 23 mars 2010 existe et aborde la rupture conventionnelle, mais elle n'a pas de valeur contraignante pour le juge, étant une simple circulaire administrative."
+    },
+    {
+      "id": "N3-8",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article L. 1471-2 du Code du travail n'existe pas, et le délai de prescription pour la requalification d'un CDD en CDI est de 2 ans (article L. 1245-1 du Code du travail)."
+    },
+    {
+      "id": "N4-1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 1103 du Code civil existe et était en vigueur à la date des faits (rédaction issue de l'ordonnance n°2016-131 du 10 février 2016)."
+    },
+    {
+      "id": "N4-2",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article 1104 du Code civil, issu de la réforme du droit des obligations de 2016 (entrée en vigueur le 1er octobre 2016), impose bien la bonne foi dans la négociation, la formation et l'exécution des contrats, et cette disposition est d'ordre public."
+    },
+    {
+      "id": "N4-3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article 1112-1 du Code civil, dans sa version en vigueur au 1er septembre 2022, exclut expressément l'estimation de la valeur de la prestation du devoir précontractuel d'information."
+    },
+    {
+      "id": "N4-4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 1231-5 du Code civil (issu de l'ordonnance n°2016-131 du 10 février 2016) était en vigueur à la date des faits et prévoit bien cette possibilité."
+    },
+    {
+      "id": "N4-5",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article 2224 du Code civil, en vigueur depuis le 19 juin 2008 et applicable à la date des faits, prévoit bien un délai de prescription de dix ans pour les actions personnelles ou mobilières."
+    },
+    {
+      "id": "N4-6",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article 1104-2 du Code civil n'existe pas, et la rupture brutale des négociations relève de la responsabilité délictuelle (art. 1112 du Code civil)."
+    },
+    {
+      "id": "N4-7",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'arrêt cité existe et était bien en vigueur à la date des faits."
+    },
+    {
+      "id": "N4-8",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la source citée existe et était en vigueur à la date des faits (arrêt de la Chambre commerciale de la Cour de cassation du 9 juin 2020, n° 18-46.913)."
+    },
+    {
+      "id": "N5-1",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article 1112-1 du Code civil n'existait pas à la date des faits (2015-03-10), il a été introduit par l'ordonnance n°2016-131 du 10 février 2016."
+    },
+    {
+      "id": "N5-2",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article 1195 du Code civil n'existait pas à la date des faits (2015-03-10), car il a été introduit par l'ordonnance n°2016-131 du 10 février 2016 réformant le droit des contrats."
+    },
+    {
+      "id": "N5-3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la source citée existe et était bien en vigueur à la date des faits, confirmant cette jurisprudence."
+    },
+    {
+      "id": "N5-4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 2224 du Code civil existait en 2015 et disposait bien de cette prescription quinquennale."
+    },
+    {
+      "id": "N5-5",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "obtenu": "orange",
+      "raisonModele": "La source n'est pas précisée, et l'interprétation des clauses de révision du prix dépend du contexte contractuel et de la jurisprudence applicable en 2015, sans garantie d'une doctrine majoritaire univoque."
+    },
+    {
+      "id": "N6-1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article L. 221-18 du Code de la consommation (dans sa version en vigueur au 12/04/2023) prévoyait bien un délai de rétractation de 7 jours pour les contrats conclus à distance."
+    },
+    {
+      "id": "N6-2",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 217-3 du Code de la consommation existait et disposait bien cela à la date des faits (version en vigueur issue de l'ordonnance n°2021-1734 du 22 décembre 2021)."
+    },
+    {
+      "id": "N6-3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 212-1 du Code de la consommation existait bien en 2023 et disposait cela dans sa version en vigueur à la date des faits."
+    },
+    {
+      "id": "N6-4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 218-2 du Code de la consommation existait et prévoyait bien ce délai de prescription à la date des faits."
+    },
+    {
+      "id": "N6-5",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article L. 221-35-1 du Code de la consommation n'existe pas, et le délai de remboursement en cas de rétractation est de 14 jours (article L. 221-24, en vigueur à la date des faits)."
+    },
+    {
+      "id": "N6-6",
+      "type": "circulaire",
+      "attendu": "orange",
+      "obtenu": "orange",
+      "raisonModele": "La circulaire du 26 septembre 2014 existe et concerne la loi relative à la consommation, mais elle n'a pas de valeur normative contraignante pour le juge."
+    },
+    {
+      "id": "N7-1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 22 de la loi n° 89-462 du 6 juillet 1989 (modifié par la loi ALUR) limitait bien le dépôt de garantie à un mois de loyer en principal à la date des faits."
+    },
+    {
+      "id": "N7-2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article 7-1 de la loi n° 89-462 du 6 juillet 1989 n'existe pas, et la prescription quinquennale pour les actions dérivant du bail est prévue par l'article 2224 du Code civil, applicable depuis 2008."
+    },
+    {
+      "id": "N7-3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "rouge",
+      "raisonModele": "L'article 10 de la loi n° 89-462 du 6 juillet 1989 ne concerne pas la durée minimale des baux, et la durée minimale de trois ans pour un bail consenti par un bailleur personne physique est prévue par l'article 15 de cette même loi."
+    },
+    {
+      "id": "N7-4",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte : l'article 1719 du Code civil, dans sa version en vigueur au 15 juin 2023, impose bien au bailleur de délivrer un logement décent pour l'habitation principale, en référence aux critères définis par le décret n°2002-120 du 30 janvier 2002."
+    },
+    {
+      "id": "N7-5",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "La source citée existe, mais elle ne dit pas cela : la pénalité forfaitaire d'un mois de loyer pour retard dans la restitution du dépôt de garantie n'est pas prévue par la jurisprudence, mais par l'article 22 de la loi n°89-462 du 6 juillet 1989, modifié par la loi ALUR, et la Cour de cassation n'a pas statué en ce sens dans cet arrêt."
+    },
+    {
+      "id": "N8-1",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 222-33-2 du Code pénal dans sa version en vigueur au 1er septembre 2011 prévoyait bien cette peine."
+    },
+    {
+      "id": "N8-2",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article L. 1152-1 du Code du travail existait en ces termes à la date des faits (version issue de la loi n°2002-73 du 17 janvier 2002, applicable en 2011)."
+    },
+    {
+      "id": "N8-3",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "obtenu": "orange",
+      "raisonModele": "La source citée existe et dit bien cela, mais elle est postérieure aux faits (2016 vs 2011), donc la jurisprudence applicable en 2011 pouvait différer."
+    },
+    {
+      "id": "N8-4",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, confirmée par la jurisprudence constante avant 2011, notamment illustrée par des arrêts comme Cass. Soc., 27 octobre 2010, n°09-42.243."
+    },
+    {
+      "id": "N9-1",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 9 du Code de procédure civile existe et énonce bien ce principe, en vigueur à la date des faits."
+    },
+    {
+      "id": "N9-2",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 750-1 du Code de procédure civile existait bien à cette date et imposait cette obligation pour les demandes n'excédant pas 5 000 euros."
+    },
+    {
+      "id": "N9-3",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 538 du Code de procédure civile (dans sa version en vigueur au 10 janvier 2023) prévoit bien un délai d'appel d'un mois en matière contentieuse."
+    },
+    {
+      "id": "N9-4",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, l'article 909 du Code de procédure civile dans sa version en vigueur au 10 janvier 2023 prévoyait bien ce délai de trois mois."
+    },
+    {
+      "id": "N9-5",
+      "type": "juste",
+      "attendu": "vert",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la source citée existe et était en vigueur à la date des faits, confirmant ce principe jurisprudentiel."
+    },
+    {
+      "id": "N9-6",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "obtenu": "rouge",
+      "raisonModele": "L'article 700-1 du Code de procédure civile n'existe pas, et les frais de recouvrement amiable ne sont pas systématiquement mis à la charge du débiteur."
+    },
+    {
+      "id": "N9-7",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "obtenu": "vert",
+      "raisonModele": "L'affirmation est exacte, la source citée existe et était en vigueur à la date des faits, confirmant l'obligation pour la cour d'appel de relever d'office la caducité de la déclaration d'appel."
+    }
+  ]
+}

@@ -1,1 +1,13 @@
 .context/
+harvey-labs/
+results/
+.env
+__pycache__/
+bench/logs/
+bench/*.out
+bench/results-smoke.jsonl
+bench/revues/
+bench/tableau/
+bench/taches-maison/*/documents
+.venv/
+.DS_Store

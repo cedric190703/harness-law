@@ -1,0 +1,36 @@
+name: Vérification Saul
+
+on:
+  pull_request:
+    paths: ["saul/**", "skills/**", ".github/workflows/saul.yml"]
+  push:
+    branches: [main]
+    paths: ["saul/**", "skills/**", ".github/workflows/saul.yml"]
+
+concurrency:
+  group: verification-saul-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verification:
+    name: verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: saul/app
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - name: Installer
+        run: bun install --frozen-lockfile
+      - name: Style
+        run: bun run lint
+      - name: Types
+        run: bun run typecheck
+      - name: Tests
+        run: bun run test
+      - name: Build
+        run: bun run build

@@ -1,0 +1,851 @@
+{
+  "date": "2026-10-04T12:28:51.673Z",
+  "temoins": true,
+  "preuves": [
+    {
+      "id": "N1-1",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1232-1 — Code du travail.",
+        "Date des faits 2023-06-15 : version du 2008-06-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Il est justifié par une cause réelle et sérieuse. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019071126",
+      "versionDesFaits": {
+        "debut": "2008-06-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N1-2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1232-2 — Code du travail.",
+        "Date des faits 2023-06-15 : version du 2008-05-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « L'entretien préalable ne peut avoir lieu moins de cinq jours ouvrables après la présentation »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006901000",
+      "versionDesFaits": {
+        "debut": "2008-05-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N1-3",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1234-1 — Code du travail.",
+        "Date des faits 2023-06-15 : version du 2008-05-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « d'au moins deux ans, à un préavis de deux mois »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006901112",
+      "versionDesFaits": {
+        "debut": "2008-05-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N1-4",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article R1234-2 — Code du travail.",
+        "Date des faits 2023-06-15 : version du 2017-09-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Un quart de mois de salaire par année d'ancienneté pour les années jusqu'à dix ans »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035644692",
+      "versionDesFaits": {
+        "debut": "2017-09-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N1-5",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1235-3 — Code du travail.",
+        "Date des faits 2023-06-15 : version du 2018-04-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « dont le montant est compris entre les montants minimaux et maximaux fixés dans le tableau ci-dessous »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762052",
+      "versionDesFaits": {
+        "debut": "2018-04-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N1-6",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1471-1 — Code du travail.",
+        "Date des faits 2023-06-15 : version du 2018-04-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Toute action portant sur la rupture du contrat de travail se prescrit par douze mois »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762126",
+      "versionDesFaits": {
+        "debut": "2018-04-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N1-7",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Cour de cassation, civile, Chambre sociale, 11 mai 2022, 21-14.490, Publié au bulletin.",
+        "Date des faits 2023-06-15 : décision (pas de versions) → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « les dispositions de l'article L. 1235-3 du code du travail sont compatibles avec les stipulations de l'article 10 de la Convention précitée »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/JURITEXT000045802457",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N1-8",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance (JURI) et Judilibre."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N1-9",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "ok": true,
+      "constats": [
+        "Aucune source identifiable dans le passage : gris par définition."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N2-1",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1235-3 — Code du travail.",
+        "Date des faits 2016-03-15 : version du 2008-05-01 au 2017-09-24 → contrôle date orange.",
+        "Extrait retrouvé mot pour mot : « ne peut être inférieure aux salaires des six derniers mois ».",
+        "Version actuelle seulement : « fixés dans le tableau ci-dessous »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762052",
+      "versionDesFaits": {
+        "debut": "2008-05-01",
+        "fin": "2017-09-24"
+      }
+    },
+    {
+      "id": "N2-2",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article R1234-2 — Code du travail.",
+        "Date des faits 2016-03-15 : version du 2008-07-20 au 2017-09-27 → contrôle date orange.",
+        "Extrait retrouvé mot pour mot : « ne peut être inférieure à un cinquième de mois de salaire par année d'ancienneté ».",
+        "Version actuelle seulement : « Un quart de mois de salaire par année d'ancienneté »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035644692",
+      "versionDesFaits": {
+        "debut": "2008-07-20",
+        "fin": "2017-09-27"
+      }
+    },
+    {
+      "id": "N2-3",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1471-1 — Code du travail.",
+        "Date des faits 2016-03-15 : version du 2013-06-17 au 2017-09-24 → contrôle date orange.",
+        "Extrait retrouvé mot pour mot : « Toute action portant sur l'exécution ou la rupture du contrat de travail se prescrit par deux ans ».",
+        "Version actuelle seulement : « se prescrit par douze mois »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762126",
+      "versionDesFaits": {
+        "debut": "2013-06-17",
+        "fin": "2017-09-24"
+      }
+    },
+    {
+      "id": "N2-4",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1235-3-1 — Code du travail.",
+        "Date des faits 2016-03-15 : aucune version en vigueur → contrôle date rouge.",
+        "Version actuelle seulement : « n'est pas applicable lorsque le juge constate que le licenciement est entaché »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762026",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N2-5",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Cour de Cassation, Chambre sociale, du 10 juillet 2002, 00-45.135, Publié au bulletin.",
+        "Date des faits 2016-03-15 : décision (pas de versions) → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « comporte l'obligation pour l'employeur de verser au salarié une contrepartie financière »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/JURITEXT000007046365",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N2-6",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1121-1 — Code du travail.",
+        "Date des faits 2016-03-15 : version du 2008-05-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Nul ne peut apporter aux droits des personnes et aux libertés individuelles et collectives de restrictions qui ne seraient pas justifiées par la nature de la tâche à accomplir »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006900785",
+      "versionDesFaits": {
+        "debut": "2008-05-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N3-1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1221-19 — Code du travail.",
+        "Date des faits 2023-02-01 : version du 2008-06-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Pour les cadres, de quatre mois. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019071113",
+      "versionDesFaits": {
+        "debut": "2008-06-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N3-2",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1221-21 — Code du travail.",
+        "Date des faits 2023-02-01 : version du 2008-06-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « La période d'essai peut être renouvelée une fois si un accord de branche étendu le prévoit. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019071109",
+      "versionDesFaits": {
+        "debut": "2008-06-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N3-3",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1243-8 — Code du travail.",
+        "Date des faits 2023-02-01 : version du 2008-05-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Cette indemnité est égale à 10 % de la rémunération totale brute versée au salarié. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006901219",
+      "versionDesFaits": {
+        "debut": "2008-05-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N3-4",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1237-13 — Code du travail.",
+        "Date des faits 2023-02-01 : version du 2008-06-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « dispose d'un délai de quinze jours calendaires pour exercer son droit de rétractation »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019071182",
+      "versionDesFaits": {
+        "debut": "2008-06-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N3-5",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1237-14 — Code du travail.",
+        "Date des faits 2023-02-01 : version du 2008-06-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « A défaut de notification dans ce délai, l'homologation est réputée acquise »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019071180",
+      "versionDesFaits": {
+        "debut": "2008-06-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N3-6",
+      "type": "circulaire",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Circulaire trouvée dans le fonds CIRC de Légifrance (id 2755)."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N3-7",
+      "type": "circulaire",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Circulaire trouvée dans le fonds CIRC de Légifrance (id 30846)."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N3-8",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance.",
+        "Recherche Légifrance des codes au 2023-02-01 : aucun article L1471-2.",
+        "Recherche Légifrance des codes au 2026-10-04 : aucun article L1471-2."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N4-1",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 1103 — Code civil.",
+        "Date des faits 2022-09-01 : version du 2016-10-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Les contrats légalement formés tiennent lieu de loi à ceux qui les ont faits. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032040777",
+      "versionDesFaits": {
+        "debut": "2016-10-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N4-2",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 1104 — Code civil.",
+        "Date des faits 2022-09-01 : version du 2016-10-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Les contrats doivent être négociés, formés et exécutés de bonne foi. Cette disposition est d'ordre public. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032040772",
+      "versionDesFaits": {
+        "debut": "2016-10-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N4-3",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 1112-1 — Code civil.",
+        "Date des faits 2022-09-01 : version du 2016-10-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « ce devoir d'information ne porte pas sur l'estimation de la valeur de la prestation »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032007138",
+      "versionDesFaits": {
+        "debut": "2016-10-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N4-4",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 1231-5 — Code civil.",
+        "Date des faits 2022-09-01 : version du 2016-10-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « le juge peut, même d'office, modérer ou augmenter la pénalité ainsi convenue si elle est manifestement excessive ou dérisoire »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032010131",
+      "versionDesFaits": {
+        "debut": "2016-10-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N4-5",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 2224 — Code civil.",
+        "Date des faits 2022-09-01 : version du 2008-06-19 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Les actions personnelles ou mobilières se prescrivent par cinq ans »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019017112",
+      "versionDesFaits": {
+        "debut": "2008-06-19",
+        "fin": null
+      }
+    },
+    {
+      "id": "N4-6",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance.",
+        "Recherche Légifrance des codes au 2022-09-01 : aucun article 1104-2.",
+        "Recherche Légifrance des codes au 2026-10-04 : aucun article 1104-2."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N4-7",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Cour de Cassation, Chambre commerciale, du 22 octobre 1996, 93-18.632, Publié au bulletin.",
+        "Date des faits 2022-09-01 : décision (pas de versions) → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « la clause limitative de responsabilité du contrat, qui contredisait la portée de l'engagement pris, devait être réputée non écrite »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/JURITEXT000007035966",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N4-8",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance (JURI) et Judilibre."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N5-1",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 1112-1 — Code civil.",
+        "Date des faits 2015-03-10 : aucune version en vigueur → contrôle date rouge.",
+        "Version actuelle seulement : « Celle des parties qui connaît une information dont l'importance est déterminante »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032007138",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N5-2",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 1195 — Code civil.",
+        "Date des faits 2015-03-10 : version du 1804-03-21 au 2016-10-01 → contrôle date orange.",
+        "Extrait retrouvé mot pour mot : « Si les deux choses sont péries sans la faute du débiteur ».",
+        "Version actuelle seulement : « Si un changement de circonstances imprévisible lors de la conclusion du contrat »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032041302",
+      "versionDesFaits": {
+        "debut": "1804-03-21",
+        "fin": "2016-10-01"
+      }
+    },
+    {
+      "id": "N5-3",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Cour de cassation, Assemblée plénière, 6 octobre 2006, 05-13.255, Publié au bulletin.",
+        "Date des faits 2015-03-10 : décision (pas de versions) → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « le tiers à un contrat peut invoquer, sur le fondement de la responsabilité délictuelle, un manquement contractuel dès lors que ce manquement lui a causé un dommage »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/JURITEXT000007052928",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N5-4",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 2224 — Code civil.",
+        "Date des faits 2015-03-10 : version du 2008-06-19 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Les actions personnelles ou mobilières se prescrivent par cinq ans »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019017112",
+      "versionDesFaits": {
+        "debut": "2008-06-19",
+        "fin": null
+      }
+    },
+    {
+      "id": "N5-5",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "ok": true,
+      "constats": [
+        "Aucune source identifiable dans le passage : gris par définition."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N6-1",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L221-18 — Code de la consommation.",
+        "Date des faits 2023-04-12 : version du 2016-07-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Le consommateur dispose d'un délai de quatorze jours pour exercer son droit de rétractation »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226842",
+      "versionDesFaits": {
+        "debut": "2016-07-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N6-2",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L217-3 — Code de la consommation.",
+        "Date des faits 2023-04-12 : version du 2021-10-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Il répond des défauts de conformité existant au moment de la délivrance du bien »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044142579",
+      "versionDesFaits": {
+        "debut": "2021-10-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N6-3",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L212-1 — Code de la consommation.",
+        "Date des faits 2023-04-12 : version du 2016-10-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « sont abusives les clauses qui ont pour objet ou pour effet de créer, au détriment du consommateur, un déséquilibre significatif »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032890812",
+      "versionDesFaits": {
+        "debut": "2016-10-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N6-4",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L218-2 — Code de la consommation.",
+        "Date des faits 2023-04-12 : version du 2016-07-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « L'action des professionnels, pour les biens ou les services qu'ils fournissent aux consommateurs, se prescrit par deux ans. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226897",
+      "versionDesFaits": {
+        "debut": "2016-07-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N6-5",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance.",
+        "Recherche Légifrance des codes au 2023-04-12 : aucun article L221-35-1.",
+        "Recherche Légifrance des codes au 2026-10-04 : aucun article L221-35-1."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N6-6",
+      "type": "circulaire",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Circulaire trouvée dans le fonds CIRC de Légifrance (id 38861)."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N7-1",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 22 — LEGITEXT000006069108.",
+        "Date des faits 2023-06-15 : version du 2014-03-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « il ne peut être supérieur à un mois de loyer en principal »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000028806696",
+      "versionDesFaits": {
+        "debut": "2014-03-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N7-2",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 7-1 — LEGITEXT000006069108.",
+        "Date des faits 2023-06-15 : version du 2014-03-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Toutes actions dérivant d'un contrat de bail sont prescrites par trois ans »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000028777184",
+      "versionDesFaits": {
+        "debut": "2014-03-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N7-3",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 10 — LEGITEXT000006069108.",
+        "Date des faits 2023-06-15 : version du 2014-03-27 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Le contrat de location est conclu pour une durée au moins égale à trois ans pour les bailleurs personnes physiques »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000028806675",
+      "versionDesFaits": {
+        "debut": "2014-03-27",
+        "fin": null
+      }
+    },
+    {
+      "id": "N7-4",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 1719 — Code civil.",
+        "Date des faits 2023-06-15 : version du 2009-03-28 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « De délivrer au preneur la chose louée et, s'il s'agit de son habitation principale, un logement décent »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020459127",
+      "versionDesFaits": {
+        "debut": "2009-03-28",
+        "fin": null
+      }
+    },
+    {
+      "id": "N7-5",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance (JURI) et Judilibre."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N8-1",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 222-33-2 — Code pénal.",
+        "Date des faits 2011-09-01 : version du 2002-01-18 au 2012-08-08 → contrôle date orange.",
+        "Extrait retrouvé mot pour mot : « est puni d'un an d'emprisonnement et de 15000 euros d'amende ».",
+        "Version actuelle seulement : « est puni de deux ans d'emprisonnement et de 30 000 € d'amende »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000029336939",
+      "versionDesFaits": {
+        "debut": "2002-01-18",
+        "fin": "2012-08-08"
+      }
+    },
+    {
+      "id": "N8-2",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article L1152-1 — Code du travail.",
+        "Date des faits 2011-09-01 : version du 2008-05-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Aucun salarié ne doit subir les agissements répétés de harcèlement moral »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006900818",
+      "versionDesFaits": {
+        "debut": "2008-05-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N8-3",
+      "type": "ne_dit_pas_ca",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Cour de cassation, civile, Chambre sociale, 13 avril 2016, 14-28.293, Publié au bulletin.",
+        "Date des faits 2011-09-01 : décision (pas de versions) → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « l'existence d'un préjudice et l'évaluation de celui-ci relèvent du pouvoir souverain d'appréciation des juges du fond »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/JURITEXT000032414283",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N8-4",
+      "type": "reference_floue",
+      "attendu": "gris",
+      "ok": true,
+      "constats": [
+        "Aucune source identifiable dans le passage : gris par définition."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N9-1",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 9 — Code de procédure civile.",
+        "Date des faits 2023-01-10 : version du 1976-01-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Il incombe à chaque partie de prouver conformément à la loi les faits nécessaires au succès de sa prétention. »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006410102",
+      "versionDesFaits": {
+        "debut": "1976-01-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N9-2",
+      "type": "pas_en_vigueur",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 750-1 — Code de procédure civile.",
+        "Date des faits 2023-01-10 : aucune version en vigueur → contrôle date rouge.",
+        "Version actuelle seulement : « En application de l'article 4 de la loi n° 2016-1547 du 18 novembre 2016 »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000047539064",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N9-3",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 538 — Code de procédure civile.",
+        "Date des faits 2023-01-10 : version du 1976-01-01 au aujourd'hui → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « Le délai de recours par une voie ordinaire est d'un mois en matière contentieuse »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006410858",
+      "versionDesFaits": {
+        "debut": "1976-01-01",
+        "fin": null
+      }
+    },
+    {
+      "id": "N9-4",
+      "type": "texte_modifie",
+      "attendu": "orange",
+      "ok": true,
+      "constats": [
+        "Trouvée : Article 909 — Code de procédure civile.",
+        "Date des faits 2023-01-10 : version du 2017-09-01 au 2024-09-01 → contrôle date orange.",
+        "Extrait retrouvé mot pour mot : « d'un délai de trois mois à compter de la notification des conclusions de l'appelant prévues à l'article 908 ».",
+        "Version actuelle seulement : « à compter de la notification qui lui est faite des conclusions de l'appelant »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000048868939",
+      "versionDesFaits": {
+        "debut": "2017-09-01",
+        "fin": "2024-09-01"
+      }
+    },
+    {
+      "id": "N9-5",
+      "type": "juste",
+      "attendu": "vert",
+      "ok": true,
+      "constats": [
+        "Trouvée : Cour de cassation, civile, Chambre civile 2, 17 septembre 2020, 18-23.626, Publié au bulletin.",
+        "Date des faits 2023-01-10 : décision (pas de versions) → contrôle date vert.",
+        "Extrait retrouvé mot pour mot : « lorsque l'appelant ne demande dans le dispositif de ses conclusions ni l'infirmation ni l'annulation du jugement, la cour d'appel ne peut que confirmer le jugement »."
+      ],
+      "url": "https://www.legifrance.gouv.fr/juri/id/JURITEXT000042372073",
+      "versionDesFaits": null
+    },
+    {
+      "id": "N9-6",
+      "type": "article_inexistant",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance.",
+        "Recherche Légifrance des codes au 2023-01-10 : aucun article 700-1.",
+        "Recherche Légifrance des codes au 2026-10-04 : aucun article 700-1."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    },
+    {
+      "id": "N9-7",
+      "type": "decision_inventee",
+      "attendu": "rouge",
+      "ok": true,
+      "constats": [
+        "Introuvable sur Légifrance (JURI) et Judilibre."
+      ],
+      "url": null,
+      "versionDesFaits": null
+    }
+  ]
+}
