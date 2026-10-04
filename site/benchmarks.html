@@ -414,7 +414,7 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
  <div class="legend" role="list" aria-label="Status legend">
   <p role="listitem"><span class="status measured"><span class="l-en">Measured</span><span class="l-fr">Mesuré</span></span><span class="l-en">final number, run as stated</span><span class="l-fr">chiffre définitif, passage décrit</span></p>
   <p role="listitem"><span class="status dev"><span class="l-en">Development task</span><span class="l-fr">Tâche de mise au point</span></span><span class="l-en">rubric read, method tuned on it</span><span class="l-fr">grille lue, méthode réglée dessus</span></p>
-  <p role="listitem"><span class="status pending"><span class="dot live" aria-hidden="true"></span><span class="l-en">In progress</span><span class="l-fr">En cours</span></span><span class="l-en">still running when the paper was written</span><span class="l-fr">encore en calcul à l’écriture du papier</span></p>
+  <p role="listitem"><span class="status pending"><span class="dot live" aria-hidden="true"></span><span class="l-en">In progress</span><span class="l-fr">En cours</span></span><span class="l-en">incomplete or awaiting valid grading</span><span class="l-fr">incomplet ou en attente d’une notation valide</span></p>
  </div>
 </section>
 
@@ -455,7 +455,7 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
     <div><dt><span class="l-en">Measures</span><span class="l-fr">Mesure</span></dt><dd><span class="l-en">Criteria passed on the official rubric. A task passes only if <strong>every</strong> criterion passes.</span><span class="l-fr">Critères réussis sur la grille officielle. Une tâche ne passe que si <strong>tous</strong> les critères passent.</span></dd></div>
     <div><dt><span class="l-en">Why</span><span class="l-fr">Pourquoi</span></dt><dd><span class="l-en">Complete work product, scored all-or-nothing: one omission fails the task.</span><span class="l-fr">Un livrable complet, noté tout ou rien : un seul oubli fait rater la tâche.</span></dd></div>
    </dl>
-   <span class="status dev"><span class="l-en">Dev measured · test in progress</span><span class="l-fr">Mise au point · test en cours</span></span>
+   <span class="status dev"><span class="l-en">Dev measured · test partial</span><span class="l-fr">Mise au point · test partiel</span></span>
   </article>
   <article class="bed">
    <span class="n">02</span>
@@ -517,7 +517,7 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
    <div class="box"><b>Mistral Medium 3.5</b><span><span class="l-en">Harvey’s official harness, no network</span><span class="l-fr">harnais officiel de Harvey, sans réseau</span></span></div>
   </div>
   <div class="stage"><span class="tag"><span class="l-en">04 · Two judges</span><span class="l-fr">04 · Deux juges</span></span>
-   <div class="box judge"><div><b>Opus 5.5</b><span>Claude · max</span></div><i aria-hidden="true">⟷</i><div><b>GPT-5.5</b><span>OpenAI · high</span></div></div>
+   <div class="box judge"><div><b>Opus 5.5</b><span>Claude · max / medium</span></div><i aria-hidden="true">⟷</i><div><b>GPT-5.5</b><span>OpenAI · high</span></div></div>
    <div class="box"><b><span class="l-en">Official rubric, official judge prompt</span><span class="l-fr">Grille et prompt de juge officiels</span></b><span><span class="l-en">graded independently, criterion by criterion</span><span class="l-fr">notation indépendante, critère par critère</span></span></div>
   </div>
   <div class="wall"><svg class="lock" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="11"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><p><span class="l-en"><b>The rubric never reaches the agent.</b> A run that touches <span class="mono">task.json</span>, the benchmark checkout or another run’s workspace is flagged and excluded.</span><span class="l-fr"><b>La grille n’atteint jamais l’agent.</b> Un passage qui touche <span class="mono">task.json</span>, le dépôt du benchmark ou l’espace d’un autre passage est signalé et exclu.</span></p></div>
@@ -644,12 +644,12 @@ footer{border-top:1px solid var(--saul-line);padding:80px 0 32px;overflow:hidden
  <div class="result">
   <div class="result-head"><span class="tag">05</span><h3><span class="l-en">Harvey’s LAB: seven held-out tasks</span><span class="l-fr">LAB de Harvey : sept tâches de test</span></h3><span class="status pending"><span class="dot live" aria-hidden="true"></span><span class="l-en">In progress</span><span class="l-fr">En cours</span></span></div>
   <div class="pending-grid">
-   <div><strong>7 / 7</strong><p><span class="l-en">Claude Code deliverables without the method</span><span class="l-fr">livrables Claude Code sans la méthode</span></p></div>
-   <div><strong>5 / 7</strong><p><span class="l-en">with the method</span><span class="l-fr">avec la méthode</span></p></div>
-   <div><strong>3</strong><p><span class="l-en">running with the loop</span><span class="l-fr">en cours avec la boucle</span></p></div>
-   <div><strong>1</strong><p><span class="l-en">Legora task complete, without and with its skill</span><span class="l-fr">tâche Legora terminée, sans et avec le skill</span></p></div>
+   <div><strong>3</strong><p><span class="l-en">complete, valid Claude Code task pairs</span><span class="l-fr">paires de tâches Claude Code complètes et valides</span></p></div>
+   <div><strong>124 → 123</strong><p><span class="l-en">criteria / 131 · without → with method · Opus max</span><span class="l-fr">critères / 131 · sans → avec méthode · Opus max</span></p></div>
+   <div><strong>124 → 121</strong><p><span class="l-en">criteria / 131 · without → with method · GPT high</span><span class="l-fr">critères / 131 · sans → avec méthode · GPT high</span></p></div>
+   <div><strong>0</strong><p><span class="l-en">gain in fully passed tasks on those pairs</span><span class="l-fr">gain en tâches entièrement réussies sur ces paires</span></p></div>
   </div>
-  <p class="note"><span class="l-en">Grading with both judges is in progress. Tasks passed and criteria passed will be reported, without reading criterion-level results. Two Claude Code runs were flagged by the isolation detector and do not count.</span><span class="l-fr">La notation par les deux juges est en cours. On publiera tâches et critères réussis, sans lire le détail critère par critère. Deux passages Claude Code ont été signalés par le détecteur d’isolation et ne comptent pas.</span></p>
+  <p class="note"><span class="l-en"><strong>Partial results, no overall score on the seven tasks.</strong> The loop has two complete pairs, with no gain. Legora has one pair: 31/38 → 31/38 (Opus), 28/38 → 31/38 (GPT), no full pass. Of the last eight grading jobs, GPT completed eight; Opus at medium effort completed one and returned errors on seven. Incomplete grades and two runs flagged by the isolation detector are excluded.</span><span class="l-fr"><strong>Résultats partiels, aucun score global sur les sept tâches.</strong> La boucle dispose de deux paires complètes, sans gain. Legora dispose d’une paire : 31/38 → 31/38 (Opus), 28/38 → 31/38 (GPT), sans réussite complète. Sur les huit dernières notations, GPT en a terminé huit ; Opus en effort moyen en a terminé une et a renvoyé des erreurs sur sept. Les notations incomplètes et deux passages signalés par le détecteur d’isolation sont exclus.</span></p>
  </div>
 </section>
 
