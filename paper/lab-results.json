@@ -1,0 +1,977 @@
+{
+  "generated_at": "2026-10-04T14:57:06.450710+00:00",
+  "judges": [
+    "claude-code-opus-5-5@max",
+    "codex-gpt-5.5@high"
+  ],
+  "selection": "All runs; raw incomplete counts retained for audit, never included in aggregates. Original judge profile fixed.",
+  "development_agreement": {
+    "runs": 13,
+    "agree": 550,
+    "total": 563
+  },
+  "runs": [
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/claude-code-sonnet-base/20261004-130212-039488",
+      "condition": "claude-code-sonnet-base",
+      "excluded": "profil perso (réglages et CLAUDE.md chargés)",
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/claude-code-sonnet-base/20261004-131336-947962",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T11:55:14.539242+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T11:56:23.183372+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/claude-code-sonnet-skill/20261004-131831-582658",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 37,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T11:58:33.276113+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 37,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:01:11.409730+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/legora-base/20261004-131842-558458",
+      "condition": "legora-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 26,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:09:24.230767+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 26,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:10:52.113487+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/legora-skill/20261004-133520-495811",
+      "condition": "legora-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T12:12:46.616426+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T12:13:51.165854+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/mistral-medium-3.5-high-base/20261004-130034-231825",
+      "condition": "mistral-medium-3.5-high-base",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/mistral-medium-3.5-high-base/20261004-132529-319324",
+      "condition": "mistral-medium-3.5-high-base",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/mistral-medium-3.5-high-base/20261004-132603-069767",
+      "condition": "mistral-medium-3.5-high-base",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/mistral-medium-3.5-high-skill/20261004-130034-231910",
+      "condition": "mistral-medium-3.5-high-skill",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/mistral-medium-3.5-high-skill/20261004-132529-319426",
+      "condition": "mistral-medium-3.5-high-skill",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-checklist-against-ma-agreement",
+      "run_id": "corporate-ma/compare-closing-checklist-against-ma-agreement/mistral-medium-3.5-high-skill/20261004-132603-069885",
+      "condition": "mistral-medium-3.5-high-skill",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness",
+      "run_id": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness/claude-code-sonnet-base/20261004-134830-495786",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 48,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:07:08.624911+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 48,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:09:15.834344+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness",
+      "run_id": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness/claude-code-sonnet-boucle/20261004-151510-284624",
+      "condition": "claude-code-sonnet-boucle",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 52,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:31:15.998013+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 52,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:43:44.653649+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness",
+      "run_id": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness/claude-code-sonnet-skill/20261004-133851-230603",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 48,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:16:08.361457+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 50,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:18:29.738253+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness",
+      "run_id": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness/legora-base/20261004-150946-572367",
+      "condition": "legora-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 45,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:15:35.470063+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 45,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:18:54.360967+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness",
+      "run_id": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness/mistral-medium-3.5-high-base/20261004-141516-096437",
+      "condition": "mistral-medium-3.5-high-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 38,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:34:42.827824+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 36,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T12:37:37.520668+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness",
+      "run_id": "corporate-ma/review-disclosure-schedules-against-representations-for-completeness/mistral-medium-3.5-high-skill/20261004-143737-681436",
+      "condition": "mistral-medium-3.5-high-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 48,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:03:36.576603+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 48,
+          "n_criteria": 52,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:08:29.210184+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-docs",
+      "run_id": "corporate-ma/compare-closing-docs/claude-code-sonnet-base/20261004-133414-134739",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 33,
+          "n_criteria": 33,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T12:20:02.846610+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 33,
+          "n_criteria": 33,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T12:21:25.118567+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-docs",
+      "run_id": "corporate-ma/compare-closing-docs/claude-code-sonnet-skill/20261004-134412-236589",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 33,
+          "n_criteria": 33,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T12:23:45.150717+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 33,
+          "n_criteria": 33,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T12:25:08.700070+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-docs",
+      "run_id": "corporate-ma/compare-closing-docs/mistral-medium-3.5-high-base/20261004-150829-400171",
+      "condition": "mistral-medium-3.5-high-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 18,
+          "n_criteria": 33,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:18:34.535584+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 19,
+          "n_criteria": 33,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:20:00.292595+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "dev",
+      "task": "corporate-ma/compare-closing-docs",
+      "run_id": "corporate-ma/compare-closing-docs/mistral-medium-3.5-high-skill/20261004-152000-494852",
+      "condition": "mistral-medium-3.5-high-skill",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 18,
+          "n_criteria": 33,
+          "n_grading_errors": 8,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:03:25.457788+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 25,
+          "n_criteria": 33,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:05:22.661337+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/extract-change-of-control-provisions",
+      "run_id": "corporate-ma/extract-change-of-control-provisions/claude-code-sonnet-base/20261004-145523-838260",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 49,
+          "n_criteria": 55,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:50:09.484788+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 48,
+          "n_criteria": 55,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:59:42.070587+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/extract-change-of-control-provisions",
+      "run_id": "corporate-ma/extract-change-of-control-provisions/claude-code-sonnet-boucle/20261004-152439-910335",
+      "condition": "claude-code-sonnet-boucle",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/extract-change-of-control-provisions",
+      "run_id": "corporate-ma/extract-change-of-control-provisions/claude-code-sonnet-skill/20261004-151836-763774",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 50,
+          "n_criteria": 55,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:41:08.628679+00:00",
+          "complete": true
+        },
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 46,
+          "n_criteria": 55,
+          "n_grading_errors": 3,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:47:40.721274+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 49,
+          "n_criteria": 55,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:52:56.640734+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts",
+      "run_id": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts/claude-code-sonnet-base/20261004-153303-522337",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 36,
+          "n_criteria": 57,
+          "n_grading_errors": 15,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:49:26.095119+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 48,
+          "n_criteria": 57,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:54:40.448855+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts",
+      "run_id": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts/claude-code-sonnet-skill/20261004-155216-400498",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts",
+      "run_id": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts/claude-code-sonnet-skill/20261004-160130-861065",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {}
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts",
+      "run_id": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts/claude-code-sonnet-skill/20261004-160701-335273",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 37,
+          "n_criteria": 57,
+          "n_grading_errors": 13,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:49:08.207702+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 48,
+          "n_criteria": 57,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:54:28.853403+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/identify-disclosure-schedule-issues",
+      "run_id": "corporate-ma/identify-disclosure-schedule-issues/claude-code-sonnet-base/20261004-141609-025163",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:17:08.415900+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:19:19.634948+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/identify-disclosure-schedule-issues",
+      "run_id": "corporate-ma/identify-disclosure-schedule-issues/claude-code-sonnet-boucle/20261004-152441-947827",
+      "condition": "claude-code-sonnet-boucle",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:19:25.423843+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:24:09.816964+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/identify-disclosure-schedule-issues",
+      "run_id": "corporate-ma/identify-disclosure-schedule-issues/claude-code-sonnet-skill/20261004-142513-181886",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 35,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:50:10.980897+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 35,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:58:44.053382+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/identify-disclosure-schedule-issues",
+      "run_id": "corporate-ma/identify-disclosure-schedule-issues/legora-base/20261004-153152-982513",
+      "condition": "legora-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 31,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:39:38.126680+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 28,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:43:33.818944+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/identify-disclosure-schedule-issues",
+      "run_id": "corporate-ma/identify-disclosure-schedule-issues/legora-skill/20261004-154334-018745",
+      "condition": "legora-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 31,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:49:56.799743+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 31,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T13:58:20.630259+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/review-data-room-red-flag-review",
+      "run_id": "corporate-ma/review-data-room-red-flag-review/claude-code-sonnet-base/20261004-152451-124002",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": false,
+      "scores": {
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 43,
+          "n_criteria": 50,
+          "n_grading_errors": 2,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:47:41.126486+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 42,
+          "n_criteria": 50,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:53:16.707501+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/review-data-room-red-flag-review",
+      "run_id": "corporate-ma/review-data-room-red-flag-review/claude-code-sonnet-skill/20261004-155328-490430",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 46,
+          "n_criteria": 50,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:41:52.768732+00:00",
+          "complete": true
+        },
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 40,
+          "n_criteria": 50,
+          "n_grading_errors": 6,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:47:49.066880+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 46,
+          "n_criteria": 50,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:53:17.239694+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/track-third-party-consents",
+      "run_id": "corporate-ma/track-third-party-consents/claude-code-sonnet-base/20261004-150154-023344",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 54,
+          "n_criteria": 60,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:42:33.502527+00:00",
+          "complete": true
+        },
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 42,
+          "n_criteria": 60,
+          "n_grading_errors": 13,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:49:17.141942+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 53,
+          "n_criteria": 60,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:54:34.546786+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/track-third-party-consents",
+      "run_id": "corporate-ma/track-third-party-consents/claude-code-sonnet-skill/20261004-151938-825937",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": "a touché à task.json, à harvey-labs, au corrigé ou au dossier d'un autre lancement",
+      "original_profile_complete": false,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 55,
+          "n_criteria": 60,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:42:17.092824+00:00",
+          "complete": true
+        },
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 42,
+          "n_criteria": 60,
+          "n_grading_errors": 10,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:48:33.495799+00:00",
+          "complete": false
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 48,
+          "n_criteria": 60,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:54:29.890337+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/compare-target-representations-vs-diligence",
+      "run_id": "corporate-ma/compare-target-representations-vs-diligence/claude-code-sonnet-base/20261004-143707-444393",
+      "condition": "claude-code-sonnet-base",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 37,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:39:57.915096+00:00",
+          "complete": true
+        },
+        "claude-code-opus-5-5@medium": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:45:54.133268+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:50:12.037562+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/compare-target-representations-vs-diligence",
+      "run_id": "corporate-ma/compare-target-representations-vs-diligence/claude-code-sonnet-boucle/20261004-152443-955221",
+      "condition": "claude-code-sonnet-boucle",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 37,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:17:37.310618+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:19:55.541759+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/compare-target-representations-vs-diligence",
+      "run_id": "corporate-ma/compare-target-representations-vs-diligence/claude-code-sonnet-skill/20261004-145535-824443",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 38,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": true,
+          "scored_at": "2026-10-04T14:09:08.260985+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 37,
+          "n_criteria": 38,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:12:44.058926+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/analyze-disclosure-schedule-markup-against-merger-agreement",
+      "run_id": "corporate-ma/analyze-disclosure-schedule-markup-against-merger-agreement/claude-code-sonnet-base/20261004-142605-218008",
+      "condition": "claude-code-sonnet-base",
+      "excluded": "a touché à task.json, à harvey-labs ou au dossier d'un autre lancement",
+      "original_profile_complete": false,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 49,
+          "n_criteria": 51,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:19:01.189424+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 46,
+          "n_criteria": 51,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:24:46.224825+00:00",
+          "complete": true
+        }
+      }
+    },
+    {
+      "split": "test",
+      "task": "corporate-ma/analyze-disclosure-schedule-markup-against-merger-agreement",
+      "run_id": "corporate-ma/analyze-disclosure-schedule-markup-against-merger-agreement/claude-code-sonnet-skill/20261004-141611-034825",
+      "condition": "claude-code-sonnet-skill",
+      "excluded": null,
+      "original_profile_complete": true,
+      "scores": {
+        "claude-code-opus-5-5@max": {
+          "n_passed": 49,
+          "n_criteria": 51,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:31:09.501340+00:00",
+          "complete": true
+        },
+        "codex-gpt-5.5@high": {
+          "n_passed": 47,
+          "n_criteria": 51,
+          "n_grading_errors": 0,
+          "all_pass": false,
+          "scored_at": "2026-10-04T14:43:27.026160+00:00",
+          "complete": true
+        }
+      }
+    }
+  ]
+}

@@ -4,15 +4,15 @@
 
 *Code: `saul/app` (application), `skills/` (agent skills), `bench/` (benchmark harness).*
 
-*Working paper, version 2. Results marked [PENDING] were still being computed when this version was written. Every figure below was re-read from the result files; measured results and inferences are labelled as such.*
+*Working paper, version 3, results audited 4 October 2026. Incomplete grading is explicitly separated from measured results; aggregate evidence is archived in `paper/lab-results.json`. Every figure below was re-read from the result files; measured results and inferences are labelled as such.*
 
 ## Abstract
 
-Legal AI tools now draft memos, compare contracts and review data rooms, but lawyers cannot rely on their output: tools invent authorities, make real sources say what they do not say, and silently omit items. We ask whether a **verification layer**, which forces every claim to be tied to a verbatim, machine-checked source and every requirement of a governing document to be accounted for, makes legal AI more reliable. Saul applies this principle in three forms: an after-the-fact checker that verifies each claim of an AI answer against official French sources (Légifrance, Judilibre) under the rule *no proof, no green*; a loop that sends each problem, with its official evidence, back to the AI that wrote the text and re-verifies the correction; and a "concordance" method that an agent follows while working. On French claims whose labels were each proven on Légifrance, including references that courts found fabricated in real filings, the same Mistral model marks 17 of 42 false claims as correct when used alone, and 1 of 42 inside Saul; on the 58-claim base set, Saul flagged all 30 false claims in two passes without a false green. On Harvey's public Legal Agent Bench (LAB), we ran three agents (Legora, Claude Code with Sonnet 5.5, Mistral Medium 3.5) without and with the method on identical inputs, graded against the official rubric by two judges from different model families, which agree on 498 of 511 criterion verdicts. On development tasks, the method takes Legora from 26/38 to 38/38 (a full pass) by recovering four omitted closing deliverables, and Mistral Medium 3.5 from 36–38/52 to 48/52; it is neutral to slightly negative for Claude Code, which already solves these tasks, but the judge-then-correct loop takes Claude Code from 48/52 to a full pass on the one task it failed, by catching an arithmetic error in the documents. On ContractNLI, Saul lowers false entailments from 28% to 3% at the cost of confirming far fewer true ones. Held-out LAB measurements are in progress.
+Legal AI tools now draft memos, compare contracts and review data rooms, but lawyers cannot rely on their output: tools invent authorities, make real sources say what they do not say, and silently omit items. We ask whether a **verification layer**, which forces every claim to be tied to a verbatim, machine-checked source and every requirement of a governing document to be accounted for, makes legal AI more reliable. Saul applies this principle in three forms: an after-the-fact checker that verifies each claim of an AI answer against official French sources (Légifrance, Judilibre) under the rule *no proof, no green*; a loop that sends each problem, with its official evidence, back to the AI that wrote the text and re-verifies the correction; and a "concordance" method that an agent follows while working. On French claims whose labels were each proven on Légifrance, including references that courts found fabricated in real filings, the same Mistral model marks 17 of 42 false claims as correct when used alone, and 1 of 42 inside Saul; on the 58-claim base set, Saul flagged all 30 false claims in two passes without a false green. On Harvey's public Legal Agent Bench (LAB), we ran three agents (Legora, Claude Code with Sonnet 5.5, Mistral Medium 3.5) without and with the method on identical inputs, graded against the official rubric by two judges from different model families, which agree on 550 of 563 criterion verdicts across 13 completely graded development runs (97.7%). On development tasks, the method takes Legora from 26/38 to 38/38 (a full pass) by recovering four omitted closing deliverables, and Mistral Medium 3.5 from 36–38/52 to 48/52; it is neutral to slightly negative for Claude Code, which already solves these tasks, but the judge-then-correct loop takes Claude Code from 48/52 to a full pass on the one task it failed, by catching an arithmetic error in the documents. On ContractNLI, Saul lowers false entailments from 28% to 3% at the cost of confirming far fewer true ones. On three held-out tasks with valid paired Claude Code results under the original judge profile, the method changes criteria passed from 124/131 to 123/131 according to Opus and from 124/131 to 121/131 according to GPT; neither judge shows an increase in tasks passed. Other held-out grading remains incomplete.
 
 ## 1. Introduction
 
-Trust is the main barrier to legal AI. In a 2025 survey of 4,457 French lawyers by the Conseil national des barreaux (CNB) and Viavoice, 64% use ChatGPT, 46% cite errors as their main concern, and 70% of non-users say they do not trust these tools. The concern has reached the courts: Charlotin's database lists 2,145 decisions dealing with hallucinated material, 14 of them in France; in one of them (administrative court of Orléans, 29 December 2025, no. 2506461), the database records 15 fabricated decisions and one misrepresented decision in a single filing. Professional tools are not immune: in a preregistered evaluation, Lexis+ AI and Westlaw AI-Assisted Research hallucinate on 17% and 33% of queries (Magesh et al., 2025). Since March 2026, the CNB's guide on ethics and AI asks lawyers to document their use of AI.
+Trust is the main barrier to legal AI. In a 2025 survey of 4,457 French lawyers by the Conseil national des barreaux (CNB) and Viavoice, 64% use ChatGPT, 46% cite errors as their main concern, and 70% of non-users say they do not trust these tools. The concern has reached the courts: Charlotin's database lists 2,145 decisions dealing with hallucinated material, 14 of them in France; in one of them (administrative court of Orléans, 29 December 2025, no. 2506461), the judgment enumerates 15 nonexistent or incorrectly identified references and one real decision cited for an issue it does not concern ([judgment, “Sur les décisions juridictionnelles citées”](https://websitedc.s3.amazonaws.com/documents/TA_Orleans_n_2506461_France_29_dec._2025.pdf)). Professional tools are not immune: in a preregistered evaluation, Lexis+ AI and Westlaw AI-Assisted Research hallucinate on 17% and 33% of queries (Magesh et al., 2025). Since March 2026, the CNB's guide on ethics and AI asks lawyers to document their use of AI.
 
 Agentic benchmarks show the same pattern at the level of complete work products. On Harvey's LAB, models pass roughly 90 to 96% of rubric criteria individually but rarely a whole task, because a task counts only if every criterion passes. On the Vals AI leaderboard of 1 October 2026, the best model completes 25.4% of tasks, Claude Fable 5 11.3%, and Mistral Medium 3.5 0.4%. In an observational analysis of agent traces, Harvey associates revise-after-check behaviour with the largest gain (+1.5 points); this is a correlation, not a controlled measurement.
 
@@ -146,9 +146,11 @@ Scores are criteria passed out of the task's criteria, given as Opus 5.5 / GPT-5
 | Claude Code, with | 37 | 48 / 50 | **33 (pass)** |
 | Claude Code, with the loop | — | **52 (pass)** | — |
 | Mistral Medium 3.5, without | 23 † | 38 / 36 | 18 / 19 |
-| Mistral Medium 3.5, with | 25 † | **48** | 18 / 25 |
+| Mistral Medium 3.5, with | 25 † | **48** | incomplete / 25 ‡ |
 
 † Graded by Claude Sonnet 5.5 only; dual grading pending.
+
+‡ GPT completed grading (25/33); Opus returned 8 grading errors. Its 18 passed criteria are not a complete score and are excluded from comparisons and judge-agreement statistics.
 
 **Legora, task 1.** Without the method, Legora finds every value discrepancy (escrow amount, indemnification cap, escrow period, transition services fee, non-compete term, outside date, and an internal inconsistency in the buyer's name) and cites its sources. It misses all four closing deliverables that the agreement requires and the checklist omits: the FIRPTA certificate, the Northwind Aerospace consent, the title insurance commitment and the landlord estoppel certificate. These four omissions account for 11 of its 12 failed criteria, because each one is graded separately for identification, section reference, recommendation and, for FIRPTA, severity; the twelfth is the closing-payment reconciliation. With the method, the same tool recovers all four omissions and passes all 38 criteria, even though it inverted the roles and took the checklist as reference; we infer, without having measured it, that the reverse pass surfaced the missing deliverables.
 
@@ -158,19 +160,36 @@ Scores are criteria passed out of the task's criteria, given as Opus 5.5 / GPT-5
 
 **Claude Code with the loop, task 2.** An independent reviewer (Mistral Medium 3.5, without the rubric) read the deliverable Claude Code wrote without the method against the data room, quoted each point verbatim (checked by script) and recomputed every figure by script. It returned 5 blocking points (1 omission, 4 calculations) and 5 minor ones. Claude Code checked each point against the documents, kept the one that held (the $4.8M against $4.9M error), set aside three recomputations that were wrong, and corrected its report in one round (83 seconds, about $0.42). The corrected report passes all 52 criteria according to both judges (48 before); the four criteria recovered all concern that arithmetic error. This is a development task and a single run.
 
-**Mistral Medium 3.5, task 3.** With the method, the judges diverge: Opus 5.5 gives 18/33, as without the method, and GPT-5.5 gives 25/33 (19 without). It is the largest disagreement in our data (8 of 33 verdicts), so we report no gain for this cell.
+**Mistral Medium 3.5, task 3.** GPT-5.5 gives 25/33 with the method (19 without). Opus grading with the method has 8 errors and is incomplete. Missing verdicts must not be counted as disagreements or failures; we cannot claim a gain confirmed by both judges for this cell.
 
-**Judge agreement.** Over the fourteen development runs graded by both judges (596 criterion verdicts), Opus 5.5 and GPT-5.5 agree on 575 (96.5%); 9 of the 21 disagreements are on Mistral's two runs of task 3. On task 1 they agree on all 152 verdicts of the four dual-graded runs, including the identity of each failed criterion. We see no sign that a Claude judge grades Claude's output more leniently than a GPT judge does.
+**Judge agreement.** Over thirteen development runs completely graded by both judges (563 criterion verdicts), Opus 5.5 and GPT-5.5 agree on 550 (97.7%). The incomplete Mistral skill run on task 3 is excluded, rather than treating grading errors as model disagreements. On task 1 they agree on all 152 verdicts of the four dual-graded runs. This small sample does not establish the absence of judge self-preference.
 
 ### 5.2 Held-out test tasks (7 tasks, measured once)
 
-[PENDING] At the time of writing, Claude Code deliverables exist without the method on all seven test tasks and with it on five; a third condition, the benchmark loop (an independent Mistral reviewer returns problems to the agent, which corrects them), is running on three. Legora runs without and with the Legora skill are complete on one test task. Grading with both judges is in progress. One Claude Code run was flagged by the isolation detector and does not count. We will report task passes and criteria passed, without reading criterion-level results.
+The table reports only identical tasks with complete, valid results in both conditions. Scores are Opus 5.5 (effort max) / GPT-5.5 (effort high), the original judge profile. We read aggregate scores only; held-out criterion verdicts and reasoning remain sealed. All runs and grading status are archived in `paper/lab-results.json`.
 
-| Agent | Tasks passed without | Tasks passed with | Criteria passed without | Criteria passed with |
+| Agent / paired subset | Tasks passed without | Tasks passed with | Criteria passed without | Criteria passed with |
 |---|---|---|---|---|
-| Claude Code, Sonnet 5.5 | [PENDING] | [PENDING] | [PENDING] | [PENDING] |
-| Claude Code, Sonnet 5.5, with the loop | — | [PENDING] | — | [PENDING] |
-| Legora | [PENDING] | [PENDING] | [PENDING] | [PENDING] |
+| Claude Code, method (3 tasks) | 1/3 / 2/3 | 1/3 / 0/3 | 124/131 / 124/131 | 123/131 / 121/131 |
+| Claude Code, loop (2 tasks) | 1/2 / 2/2 | 1/2 / 2/2 | 75/76 / 76/76 | 75/76 / 76/76 |
+| Legora, method (1 task) | 0/1 / 0/1 | 0/1 / 0/1 | 31/38 / 28/38 | 31/38 / 31/38 |
+
+The three Claude Code method pairs are `extract-change-of-control-provisions`, `identify-disclosure-schedule-issues`, and `compare-target-representations-vs-diligence`. The loop pairs are the latter two. Legora was measured on `identify-disclosure-schedule-issues`. These partial results do not demonstrate improved task completion on held-out tasks. The loop has not improved scores on its two completed test pairs.
+
+**Incomplete and excluded results.** The seven-task evaluation is not complete. The isolation detector excludes two runs: `track-third-party-consents` with the method and `analyze-disclosure-schedule-markup-against-merger-agreement` without it. Their opposite conditions cannot form valid pairs. Other runs have unfinished or incomplete grading; several Opus medium regrades contain 2–15 grading errors. We neither turn those errors into failures nor substitute a more favorable regrade for the original profile. For example, the baseline on `compare-target-representations-vs-diligence` receives 37/38 from the original Opus max judge and 38/38 on its medium regrade; the table retains the original profile. Pending runs are not scored as zero, and the denominators above are paired subsets, not all seven tasks.
+
+**Last eight grading jobs (Opus medium / GPT high).** All eight produced score files. Only one Opus medium result is complete; all eight GPT results are complete. Incomplete Opus results stay unscored in the table below. No grading job was relaunched after the usage limit.
+
+| Task / condition | Opus medium | GPT high |
+|---|---|---|
+| extract-change-of-control-provisions / skill | incomplete (3 grading errors) | 49/55 |
+| analyze-change-of-control-provisions-across-targets-material-contracts / base | incomplete (15 grading errors) | 48/57 |
+| analyze-change-of-control-provisions-across-targets-material-contracts / skill | incomplete (13 grading errors) | 48/57 |
+| review-data-room-red-flag-review / base | incomplete (2 grading errors) | 42/50 |
+| review-data-room-red-flag-review / skill | incomplete (6 grading errors) | 46/50 |
+| track-third-party-consents / base | incomplete (13 grading errors) | 53/60 |
+| track-third-party-consents / skill (excluded: isolation) | incomplete (10 grading errors) | 48/60 |
+| compare-target-representations-vs-diligence / base | 38/38 | 38/38 |
 
 ### 5.3 French claim set (after-the-fact Saul)
 
@@ -199,7 +218,7 @@ Every error type was flagged in every instance (invented decisions 4/4, nonexist
 
 ### 5.4 The Saul loop on the demonstration memo
 
-On the demonstration memo (a 2016 dismissal and non-compete clause, ten claims), the first verification found 5 false claims, 3 to review and 2 verified. After one round of the loop, the second version had 0 false claims, 4 to review and 2 verified. The model rewrote two passages against the version in force on 15 March 2016: "capped at four months' salary" became "the indemnity, payable by the employer, cannot be lower than the last six months' salaries (article L. 1235-3 of the Labour Code, in its version in force on 15 March 2016)", with the official excerpt found verbatim; the statutory severance of "a quarter of a month per year of service" became one fifth, plus two fifteenths beyond ten years (article R. 1234-2, same date). It deleted four passages: a false "one-year maximum", a real decision cited for something it does not say, a circular presented as binding, and an old article number (L. 122-14-4) that Saul reported as not found although it did exist, most likely a retrieval miss, so that deletion was over-cautious. While the correction step was being developed, the guard rejected two proposed corrections: one cited an invented article (L. 1121-5), the other an off-topic Social Security Code article. Corrected passages mostly remain orange, because the current rule flags any text amended since the facts even when the correct version is cited; and the A3 rewrite omits that in 2016 the six-month floor applied only with two years of service and eleven employees (article L. 1235-5), because Saul only sees the cited article. This is a single demonstration run, not reviewed by a lawyer. The loop on LAB deliverables is reported in Section 5.1 (one development task); held-out runs are [PENDING].
+On the demonstration memo (a 2016 dismissal and non-compete clause, ten claims), the first verification found 5 false claims, 3 to review and 2 verified. After one round of the loop, the second version had 0 false claims, 4 to review and 2 verified. The model rewrote two passages against the version in force on 15 March 2016: "capped at four months' salary" became "the indemnity, payable by the employer, cannot be lower than the last six months' salaries (article L. 1235-3 of the Labour Code, in its version in force on 15 March 2016)", with the official excerpt found verbatim; the statutory severance of "a quarter of a month per year of service" became one fifth, plus two fifteenths beyond ten years (article R. 1234-2, same date). It deleted four passages: a false "one-year maximum", a real decision cited for something it does not say, a circular presented as binding, and an old article number (L. 122-14-4) that Saul reported as not found although it did exist, most likely a retrieval miss, so that deletion was over-cautious. While the correction step was being developed, the guard rejected two proposed corrections: one cited an invented article (L. 1121-5), the other an off-topic Social Security Code article. Corrected passages mostly remain orange, because the current rule flags any text amended since the facts even when the correct version is cited; and the A3 rewrite omits that in 2016 the six-month floor applied only with two years of service and eleven employees (article L. 1235-5), because Saul only sees the cited article. This is a single demonstration run, not reviewed by a lawyer. The loop on LAB deliverables is reported in Section 5.1 (one development task); completed held-out loop pairs are reported in Section 5.2; a third remains incomplete.
 
 ### 5.5 Due diligence on a French data room
 
@@ -239,7 +258,7 @@ The three false greens of Saul are also false greens of the model alone; Saul av
 
 ## 7. Limitations
 
-- **Small n and a single run per condition.** Agent runs vary; three development tasks cannot establish an effect size, and held-out results are pending.
+- **Small n and a single run per condition.** Agent runs vary; three development tasks and partial held-out subsets cannot establish an effect size. Missing and excluded test runs limit interpretation.
 - **Development tasks read before the Legora method text was pasted.** The text is the generic method from the skill, written earlier, and was not tailored to the omissions it recovered, but only held-out results can show that the method generalizes.
 - **Non-official judges.** The judges run through subscription clients that do not expose temperature; Mistral's runs on task 1 were graded by one judge only. Rubric text may partly drive judge outputs (Bagaria et al., 2026).
 - **Public tasks.** Possible training contamination.
@@ -250,7 +269,7 @@ The three false greens of Saul are also false greens of the model alone; Saul av
 
 ## 8. Conclusion and future work
 
-A verification layer is cheap to add and agent-agnostic. On the first M&A task it turned a failing commercial tool into a passing one by forcing it to account for every requirement of the governing document; on a French claim set it flagged every false claim without a single false green; and its loop returns proven problems to the AI that made them. Next steps:
+A verification layer is cheap to add and agent-agnostic. On the first M&A task it turned a failing commercial tool into a passing one by forcing it to account for every requirement of the governing document; on the 58-claim French base set it flagged all 30 false claims without a single false green (the expanded set contains one false green among 42 false claims); and its loop returns proven problems to the AI that made them. Next steps:
 
 - complete the held-out LAB measurement, and have the French claim set reviewed by independent lawyers;
 - give the judge a real "not mentioned" answer and accept quotes cut with an ellipsis when every piece is verbatim and in order;
@@ -260,7 +279,7 @@ A verification layer is cheap to add and agent-agnostic. On the first M&A task i
 
 ## Appendix A. Reproducibility
 
-All code is in `github.com/cedric190703/harness-law`, branch `youssef/bench-revue`. The LAB checkout lives in `harvey-labs/` (not committed).
+All code is in `github.com/cedric190703/harness-law`. The version-3 evidence snapshot and paper are on branch `youssef/resultats-papier`. The LAB checkout lives in `harvey-labs/` (not committed).
 
 ### A.1 Commands
 
@@ -278,6 +297,9 @@ python3 bench/externe.py importer <task> --source legora --fichier <file> [--con
 
 # (Re)grade existing runs with both judges
 python3 bench/externe.py noter <run_id> --judges "claude-code-opus-5-5@max" "codex-gpt-5.5@high"
+
+# Aggregate evidence snapshot (no API calls, no held-out rubric export)
+python3 bench/paper_snapshot.py /path/to/harvey-labs/results > paper/lab-results.json
 
 # Review pages and dashboard
 python3 bench/revue.py <task>
@@ -300,7 +322,7 @@ Run identifiers under `harvey-labs/results/corporate-ma/<task>/`.
 | 2 | Claude Code | `claude-code-sonnet-base/20261004-134830-495786` | `claude-code-sonnet-skill/20261004-133851-230603` |
 | 2 | Mistral | `mistral-medium-3.5-high-base/20261004-141516-096437` | `mistral-medium-3.5-high-skill/20261004-143737-681436` |
 | 3 | Claude Code | `claude-code-sonnet-base/20261004-133414-134739` | `claude-code-sonnet-skill/20261004-134412-236589` |
-| 3 | Mistral | `mistral-medium-3.5-high-base/20261004-150829-400171` | — |
+| 3 | Mistral | `mistral-medium-3.5-high-base/20261004-150829-400171` | `mistral-medium-3.5-high-skill/20261004-152000-494852` (Opus incomplete) |
 
 ### A.3 Method text pasted into Legora (task 1)
 
